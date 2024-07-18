@@ -1,0 +1,22 @@
+.layout {
+    display: flex;
+    min-height: 100vh;
+    background-color: #1e1e1e;
+}
+
+.main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+}
+
+@media (max-width: 991px) {
+    .layout {
+        flex-direction: column;
+    }
+
+    .main {
+        order: -1; /* 모바일에서 메인 컨텐츠를 위로 */
+    }
+}

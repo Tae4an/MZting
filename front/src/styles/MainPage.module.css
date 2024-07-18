@@ -1,0 +1,92 @@
+.mainContent {
+    background-color: rgba(1, 0, 9, 0.9);
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.title {
+    color: #d4d7f6;
+    font: italic 800 45px/140% Roboto, sans-serif;
+}
+
+.iconContainer {
+    display: flex;
+}
+
+.icon {
+    border-radius: 20px;
+    background-color: #c1bae7;
+    width: 58px;
+    height: 58px;
+}
+
+.divider {
+    border: none;
+    height: 4px;
+    background-color: #fff;
+    margin: 16px 0;
+}
+
+.profileGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.profileCard {
+    border-radius: 20px;
+    background-color: rgba(117, 109, 161, 0.41);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    color: #fff;
+}
+
+.profileImage {
+    aspect-ratio: 0.75;
+    object-fit: cover;
+    width: 100%;
+    border-radius: 10px;
+}
+
+.profileInfo {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 13px;
+    font-size: 24px;
+    font-weight: 800;
+}
+
+.profileName, .profileType {
+    font-family: Inter, sans-serif;
+    font-style: italic;
+}
+
+.profileTags {
+    margin-top: 10px;
+    font: 600 16px Inter, sans-serif;
+}
+
+.scrollIndicator {
+    border-radius: 15px;
+    background-color: #978cc2;
+    width: 18px;
+    height: 129px;
+    align-self: flex-end;
+    margin-top: 20px;
+}
+
+@media (max-width: 991px) {
+    .profileGrid {
+        grid-template-columns: 1fr;
+    }
+}

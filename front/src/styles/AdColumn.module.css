@@ -1,0 +1,19 @@
+.adColumn {
+    flex: 0 0 15%; /* 광고 열의 너비를 15%로 조정 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #746e96;
+    padding: 20px;
+}
+
+.adContent {
+    color: white;
+    font-size: 24px;
+}
+
+@media (max-width: 991px) {
+    .adColumn {
+        height: 100px; /* 모바일에서 높이 조정 */
+    }
+}

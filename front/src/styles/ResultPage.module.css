@@ -1,0 +1,330 @@
+.container {
+    background-color: var(--sds-color-background-default-default);
+}
+
+.content {
+    display: flex;
+    justify-content: center;
+}
+
+.mainColumn {
+    width: 100%;
+    min-width: 1000px; /* 또는 원하는 최대 너비 */
+    margin: 0 auto;
+}
+
+@media (max-width: 991px) {
+    .content {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+    }
+}
+
+.sideColumn {
+    display: flex;
+    flex-direction: column;
+    line-height: normal;
+    width: 23%;
+    margin-left: 0;
+}
+
+@media (max-width: 991px) {
+    .sideColumn {
+        width: 100%;
+    }
+}
+
+.adContainer {
+    background-color: rgba(0, 0, 0, 0.84);
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    font-size: 57px;
+    color: #fff;
+    font-weight: 600;
+    white-space: nowrap;
+    text-align: center;
+    line-height: 140%;
+    justify-content: center;
+    width: 100%;
+    padding: 60px;
+}
+
+@media (max-width: 991px) {
+    .adContainer {
+        max-width: 100%;
+        font-size: 40px;
+        white-space: initial;
+        padding: 0 20px;
+    }
+}
+
+.adContent {
+    font-family: Inter, sans-serif;
+    background-color: #746e96;
+    width: 240px;
+    max-width: 100%;
+    align-items: center;
+    justify-content: center;
+    padding: 453px 60px 363px;
+}
+
+@media (max-width: 991px) {
+    .adContent {
+        font-size: 40px;
+        white-space: initial;
+        padding: 40px 20px;
+    }
+}
+
+.mainColumn {
+    display: flex;
+    flex-direction: column;
+    line-height: normal;
+    width: 54%;
+    margin-left: 20px;
+}
+
+@media (max-width: 991px) {
+    .mainColumn {
+        width: 100%;
+    }
+}
+
+.conversationContainer {
+    background-color: rgba(1, 0, 9, 0.9);
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    color: #fff;
+    width: 100%;
+    padding: 0 31px 7px;
+}
+
+@media (max-width: 991px) {
+    .conversationContainer {
+        max-width: 100%;
+        padding: 0 20px;
+    }
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    color: #d4d7f6;
+    line-height: 140%;
+}
+
+@media (max-width: 991px) {
+    .header {
+        max-width: 100%;
+        flex-wrap: wrap;
+    }
+}
+
+.backButton {
+    text-align: center;
+    align-self: stretch;
+    margin: auto 0;
+    font: 900 60px Inter, sans-serif;
+}
+
+@media (max-width: 991px) {
+    .backButton {
+        font-size: 40px;
+    }
+}
+
+.profileImage {
+    aspect-ratio: 0.96;
+    object-fit: auto;
+    object-position: center;
+    width: 113px;
+    align-self: stretch;
+    max-width: 100%;
+}
+
+.title {
+    align-self: stretch;
+    flex-grow: 1;
+    flex-basis: auto;
+    margin: auto 0;
+    font: italic 800 57px Roboto, -apple-system, Roboto, Helvetica, sans-serif;
+}
+
+@media (max-width: 991px) {
+    .title {
+        max-width: 100%;
+        font-size: 40px;
+    }
+}
+
+.profileCard {
+    border-radius: 24px;
+    background-color: rgba(116, 110, 150, 0.95);
+    display: flex;
+    margin-top: 49px;
+    flex-direction: column;
+    font-weight: 800;
+    padding: 36px 36px 19px;
+}
+
+@media (max-width: 991px) {
+    .profileCard {
+        max-width: 100%;
+        margin: 40px 7px 0 0;
+        padding: 0 20px;
+    }
+}
+
+.profileHeader {
+    display: flex;
+    gap: 20px;
+    font-size: 50px;
+    line-height: 140%;
+}
+
+@media (max-width: 991px) {
+    .profileHeader {
+        max-width: 100%;
+        flex-wrap: wrap;
+        font-size: 40px;
+    }
+}
+
+.profileName {
+    font-family: Inter, sans-serif;
+    font-style: italic;
+    flex-grow: 1;
+    flex-basis: auto;
+}
+
+@media (max-width: 991px) {
+    .profileName {
+        font-size: 40px;
+    }
+}
+
+.personalityType {
+    text-align: center;
+    font-family: Inter, sans-serif;
+    font-style: italic;
+    flex-grow: 1;
+    flex-basis: auto;
+    margin: auto 0;
+}
+
+@media (max-width: 991px) {
+    .personalityType {
+        font-size: 40px;
+    }
+}
+
+.profileDetails {
+    align-self: start;
+    margin: 24px 0 0 13px;
+    font: italic 30px/42px Inter, -apple-system, Roboto, Helvetica, sans-serif;
+}
+
+@media (max-width: 991px) {
+    .profileDetails {
+        max-width: 100%;
+    }
+}
+
+.actionButton {
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    text-overflow: ellipsis;
+    justify-content: center;
+    align-items: center;
+    border-radius: 64px;
+    border: 1px solid rgba(44, 44, 44, 1);
+    background-color: #c1bae7;
+    margin-top: 24px;
+    color: #000;
+    text-align: center;
+    padding: 12px;
+    font: 400 64px/100% Inter, -apple-system, Roboto, Helvetica, sans-serif;
+}
+
+@media (max-width: 991px) {
+    .actionButton {
+        font-size: 40px;
+        max-width: 100%;
+        margin-right: 7px;
+        padding: 0 20px;
+    }
+}
+
+.scoreCard {
+    border-radius: 24px;
+    background-color: rgba(116, 110, 150, 0.95);
+    display: flex;
+    margin-top: 32px;
+    flex-direction: column;
+    align-items: start;
+    font-size: 50px;
+    font-weight: 800;
+    line-height: 140%;
+    padding: 33px 80px 80px 36px;
+}
+
+@media (max-width: 991px) {
+    .scoreCard {
+        max-width: 100%;
+        margin-right: 7px;
+        font-size: 40px;
+        padding: 0 20px;
+    }
+}
+
+.compatibilityScore {
+    font-family: Inter, sans-serif;
+    font-style: italic;
+}
+
+@media (max-width: 991px) {
+    .compatibilityScore {
+        font-size: 40px;
+    }
+}
+
+.finalScore {
+    font-family: Inter, sans-serif;
+    font-style: italic;
+    margin: 33px 0 95px;
+}
+
+@media (max-width: 991px) {
+    .finalScore {
+        margin-bottom: 40px;
+        font-size: 40px;
+    }
+}
+
+.reviewButton {
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    text-overflow: ellipsis;
+    justify-content: center;
+    align-items: center;
+    border-radius: 64px;
+    border: 1px solid rgba(44, 44, 44, 1);
+    background-color: #c1bae7;
+    margin-top: 20px;
+    color: #000;
+    text-align: center;
+    padding: 12px;
+    font: 400 64px/100% Inter, -apple-system, Roboto, Helvetica, sans-serif;
+}
+
+@media (max-width: 991px) {
+    .reviewButton {
+        font-size: 40px;
+        max-width: 100%;
+        padding: 0 20px;
+    }
+}
