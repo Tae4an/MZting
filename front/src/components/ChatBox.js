@@ -17,17 +17,31 @@ const ChatBox = () => (
             (ex 당신은 주선자의 소개를 통해 연락이 닿았습니다.)<br />
         </p>
         <div className={styles.messageContainer}>
-            <div className={styles.receivedMessage}>
-                <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/8f5dd0d11485f72df622564a688aea72f15bc048e514e524c65571bb0142fcc1?apiKey=49c1e3d53b81482bb61cc4f10fd5a261&" alt="Message avatar" className={styles.messageAvatar} />
-                <div className={styles.message}>내용내용내용내용내용</div>
-            </div>
-            <div className={styles.receivedMessage}>
-                <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/8f5dd0d11485f72df622564a688aea72f15bc048e514e524c65571bb0142fcc1?apiKey=49c1e3d53b81482bb61cc4f10fd5a261&" alt="Message avatar" className={styles.messageAvatar} />
-                <div className={styles.message}>대화내용</div>
-            </div>
-            <div className={styles.messageSent}>내용대화</div>
+            <ChatBubble
+                content="내용내용내용내용내용"
+                isSent={false}
+                avatar="https://cdn.builder.io/api/v1/image/assets/TEMP/8f5dd0d11485f72df622564a688aea72f15bc048e514e524c65571bb0142fcc1?apiKey=49c1e3d53b81482bb61cc4f10fd5a261&"
+            />
+            <ChatBubble
+                content="대화내용"
+                isSent={false}
+                avatar="https://cdn.builder.io/api/v1/image/assets/TEMP/8f5dd0d11485f72df622564a688aea72f15bc048e514e524c65571bb0142fcc1?apiKey=49c1e3d53b81482bb61cc4f10fd5a261&"
+            />
+            <ChatBubble
+                content="내용대화"
+                isSent={true}
+            />
         </div>
     </section>
+);
+
+const ChatBubble = ({ content, isSent, avatar }) => (
+    <div className={isSent ? styles.messageSent : styles.receivedMessage}>
+        {!isSent && (
+            <img src={avatar} alt="Message avatar" className={styles.messageAvatar} />
+        )}
+        <div className={styles.message}>{content}</div>
+    </div>
 );
 
 export {
