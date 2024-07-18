@@ -13,10 +13,8 @@ const ChatBox = () => (
             <div className={styles.statusIndicator} />
         </header>
         <p className={styles.situationDescription}>
-            상황 설명 상황 설명 설명 상황 설명 상황<br />
-            끄어엄 끄어어엄<br />
-            (ex 당신은 주선자의 소개를 통해 연락이<br />
-            닿았습니다.)
+            상황 설명 상황 설명 설명 상황 설명 상황 끄어엄 끄어어엄<br />
+            (ex 당신은 주선자의 소개를 통해 연락이 닿았습니다.)<br />
         </p>
         <div className={styles.messageContainer}>
             <div className={styles.receivedMessage}>
