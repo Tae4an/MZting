@@ -1,0 +1,29 @@
+.page {
+    background-color: var(--sds-color-background-default-default);
+}
+
+.content {
+    display: flex;
+    gap: 20px;
+}
+
+.mainColumn {
+    width: 54%;
+}
+
+.adColumn {
+    width: 23%;
+}
+
+@media (max-width: 991px) {
+    .content {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+    }
+
+    .mainColumn,
+    .adColumn {
+        width: 100%;
+    }
+}

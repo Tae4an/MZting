@@ -1,0 +1,37 @@
+import React from 'react';
+import styles from '../styles/ChatBox.module.css';
+
+const ChatBox = () => (
+    <section className={styles.chatContainer}>
+        <header className={styles.chatHeader}>
+            <div className={styles.userInfo}>
+                <span className={styles.navArrow}>&lt;</span>
+                <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/8f5dd0d11485f72df622564a688aea72f15bc048e514e524c65571bb0142fcc1?apiKey=49c1e3d53b81482bb61cc4f10fd5a261&" alt="User avatar" className={styles.avatar} />
+                <span className={styles.userName}>이지은</span>
+                <span className={styles.navArrow}>&gt;</span>
+            </div>
+            <div className={styles.statusIndicator} />
+        </header>
+        <p className={styles.situationDescription}>
+            상황 설명 상황 설명 설명 상황 설명 상황<br />
+            끄어엄 끄어어엄<br />
+            (ex 당신은 주선자의 소개를 통해 연락이<br />
+            닿았습니다.)
+        </p>
+        <div className={styles.messageContainer}>
+            <div className={styles.receivedMessage}>
+                <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/8f5dd0d11485f72df622564a688aea72f15bc048e514e524c65571bb0142fcc1?apiKey=49c1e3d53b81482bb61cc4f10fd5a261&" alt="Message avatar" className={styles.messageAvatar} />
+                <div className={styles.message}>내용내용내용내용내용</div>
+            </div>
+            <div className={styles.receivedMessage}>
+                <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/8f5dd0d11485f72df622564a688aea72f15bc048e514e524c65571bb0142fcc1?apiKey=49c1e3d53b81482bb61cc4f10fd5a261&" alt="Message avatar" className={styles.messageAvatar} />
+                <div className={styles.message}>대화내용</div>
+            </div>
+            <div className={styles.messageSent}>내용대화</div>
+        </div>
+    </section>
+);
+
+export {
+    ChatBox
+};

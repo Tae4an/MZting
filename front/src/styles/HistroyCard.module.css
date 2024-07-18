@@ -1,0 +1,125 @@
+.card {
+    border-radius: 24px;
+    background-color: rgba(116, 110, 150, 0.95);
+    display: flex;
+    flex-direction: column;
+    padding: 9px 26px;
+    margin-top: 54px;
+}
+
+.cardContent {
+    display: flex;
+    gap: 20px;
+}
+
+.conversationInfo {
+    display: flex;
+    gap: 20px;
+    flex-grow: 1;
+}
+
+.avatarWrapper {
+    width: 26%;
+}
+
+.avatar {
+    aspect-ratio: 0.93;
+    object-fit: auto;
+    object-position: center;
+    width: 120px;
+    max-width: 100%;
+    flex-grow: 1;
+}
+
+.titleWrapper {
+    width: 74%;
+    display: flex;
+    align-items: center;
+}
+
+.title {
+    color: #fff;
+    align-self: stretch;
+    font: italic 800 50px/140% Inter, -apple-system, Roboto, Helvetica, sans-serif;
+}
+
+.statusWrapper {
+    width: 38%;
+}
+
+.status {
+    border-radius: 20px;
+    background-color: rgba(182, 173, 228, 1);
+    border: 1px solid transparent;
+    color: #000;
+    text-align: center;
+    width: 100%;
+    padding: 20px 60px;
+    font: 400 57px/140% Inter, -apple-system, Roboto, Helvetica, sans-serif;
+}
+
+.actionButton {
+    border-radius: 64px;
+    border: 1px solid rgba(44, 44, 44, 1);
+    background-color: #b6ade4;
+    margin-top: 14px;
+    color: #000;
+    text-align: center;
+    padding: 12px;
+    font: italic 500 44px/100% Inter, -apple-system, Roboto, Helvetica, sans-serif;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media (max-width: 991px) {
+    .card {
+        max-width: 100%;
+        margin-top: 40px;
+        padding: 0 20px;
+    }
+
+    .cardContent {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+    }
+
+    .conversationInfo {
+        max-width: 100%;
+        margin-top: 40px;
+    }
+
+    .avatarWrapper {
+        width: 100%;
+    }
+
+    .avatar {
+        margin-top: 30px;
+    }
+
+    .titleWrapper {
+        width: 100%;
+    }
+
+    .title {
+        margin-top: 40px;
+        font-size: 40px;
+    }
+
+    .statusWrapper {
+        width: 100%;
+    }
+
+    .status {
+        font-size: 40px;
+        margin-top: 40px;
+        white-space: initial;
+        padding: 0 20px;
+    }
+
+    .actionButton {
+        max-width: 100%;
+        padding: 0 20px;
+    }
+}
