@@ -1,19 +1,17 @@
 .mainContainer {
-    background-color: var(--sds-color-background-default-default);
+    background-color: #1a1a2e;
     display: flex;
     justify-content: center;
-    min-height: 100vh;
+    align-items: center;
+    height: 100vh;
+    padding: 0;
 }
 
 .contentWrapper {
-    flex: 1;
-    min-width: 1000px;
-    max-width: 1200px; /* 또는 원하는 최대 너비 */
-    margin: 0 20px; /* 좌우 여백 추가 */
-}
-
-@media (max-width: 991px) {
-    .contentWrapper {
-        margin: 0 10px;
-    }
+    width: 100%;
+    min-width: 1200px;
+    max-width: 1200px;
+    height: 100vh;
+    background-color: #1a1a2e;
+    overflow: hidden;
 }
