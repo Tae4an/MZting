@@ -1,0 +1,17 @@
+.mainContainer {
+    background-color: #1a1a2e;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 0;
+}
+
+.contentWrapper {
+    width: 100%;
+    min-width: 1200px;
+    max-width: 1200px;
+    height: 100vh;
+    background-color: #1a1a2e;
+    overflow: hidden;
+}

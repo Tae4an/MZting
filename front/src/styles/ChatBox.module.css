@@ -1,0 +1,136 @@
+.chatContainer {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    color: #e0e0e0;
+    background-color: #1a1a2e;
+}
+
+.chatHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: #252542;
+}
+
+.userInfo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.navArrow {
+    font-size: 24px;
+    color: #6a6a8e;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.userName {
+    font-size: 18px;
+    font-weight: 600;
+    color: #d4d4f0;
+}
+
+.statusIndicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #4CAF50;
+}
+
+.situationDescription {
+    color: #b6b6d4;
+    text-align: center;
+    padding: 15px;
+    background-color: #252542;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.messageContainer {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    background-color: #1a1a2e;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.inputArea {
+    padding: 15px;
+    background-color: #1a1a2e;
+    border-top: 1px solid #252542;
+    display: flex;
+    align-items: center;
+}
+
+.inputField {
+    flex: 1;
+    padding: 10px 15px;
+    border: none;
+    background-color: #252542;
+    color: #e0e0e0;
+    font-size: 14px;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.inputField::placeholder {
+    color: #6a6a8e;
+}
+
+.sendButton {
+    padding: 10px 15px;
+    background-color: #3a3a5a;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.messageBubble {
+    max-width: 70%;
+    padding: 10px 15px;
+    border-radius: 18px;
+    font-size: 14px;
+    line-height: 1.4;
+    word-wrap: break-word;
+}
+
+.receivedMessage {
+    align-self: flex-start;
+    background-color: #2a2a4a;
+    color: #e0e0e0;
+    border-bottom-left-radius: 4px;
+}
+
+.sentMessage {
+    align-self: flex-end;
+    background-color: #3a3a5a;
+    color: #ffffff;
+    border-bottom-right-radius: 4px;
+}
+
+.messageAvatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.messageWrapper {
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 10px;
+}
+
+.messageText {
+    white-space: pre-wrap;
+}

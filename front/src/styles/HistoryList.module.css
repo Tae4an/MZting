@@ -1,0 +1,43 @@
+.conversationList {
+    background-color: rgba(1, 0, 9, 0.9);
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    width: 100%;
+    padding: 31px 31px 80px;
+}
+
+.header {
+    display: flex;
+    width: 241px;
+    max-width: 100%;
+    gap: 20px;
+    color: #d4d7f6;
+    line-height: 140%;
+}
+
+.backButton {
+    text-align: center;
+    font: 900 60px Inter, sans-serif;
+}
+
+.title {
+    flex-grow: 1;
+    flex-basis: auto;
+    font: italic 800 57px Roboto, -apple-system, Roboto, Helvetica, sans-serif;
+}
+
+@media (max-width: 991px) {
+    .conversationList {
+        max-width: 100%;
+        padding: 0 20px;
+    }
+
+    .backButton {
+        font-size: 40px;
+    }
+
+    .title {
+        font-size: 40px;
+    }
+}
