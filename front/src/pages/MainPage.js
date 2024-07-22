@@ -24,8 +24,8 @@ const MainPage = () => {
 
     const handleScroll = () => {
         const totalScrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        const currnetScrollPosition = window.scrollY;
-        const scrollIndicatorPosition = (currnetScrollPosition / totalScrollHeight) * (document.documentElement.clientHeight - 129);
+        const currentScrollPosition = window.scrollY;
+        const scrollIndicatorPosition = (currentScrollPosition / totalScrollHeight) * (document.documentElement.clientHeight - 129);
         setScrollPosition(scrollIndicatorPosition)
     };
 
