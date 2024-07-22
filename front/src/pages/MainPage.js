@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from '../styles/MainPage.module.css';
 import { ProfileCard } from "../components";
 
@@ -20,6 +20,20 @@ const profileData = [
 ];
 
 const MainPage = () => {
+    const [scrollWidth, setScrollWidth] = useState('0%');
+
+    const handleScroll = () => {
+        const scrollTop = document.documentElement.scrollTop;
+        const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrollPercentage = (scrollTop / scrollHeight) * 100;
+        setScrollWidth(`${scrollPercentage}%`);
+    };
+
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
     return (
         <div className={styles.mainContent}>
             <header className={styles.header}>
@@ -34,7 +48,7 @@ const MainPage = () => {
                     <ProfileCard key={index} {...profile} />
                 ))}
             </div>
-            <div className={styles.scrollIndicator} />
+            <div className={styles.scrollIndicator} style={{ '--scroll-width': scrollWidth }} />
         </div>
     );
 };

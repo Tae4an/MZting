@@ -86,14 +86,14 @@
     background: lightgray;
 }
 
-/*.scrollIndicator::after {*/
-/*    content: '';*/
-/*    display: block;*/
-/*    height: 100%;*/
-/*    width: 10%;*/
-/*    background: blue;*/
-/*    transition: width 0.25s ease-in-out;*/
-/*}*/
+.scrollIndicator::after {
+    content: '';
+    display: block;
+    height: 100%;
+    width: 10%;
+    background: blue;
+    transition: width 0.25s ease-in-out;
+}
 
 @media (max-width: 991px) {
     .profileGrid {
