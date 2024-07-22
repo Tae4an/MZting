@@ -25,8 +25,18 @@ const MainPage = () => {
     const handleScroll = () => {
         const totalScrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
         const currentScrollPosition = window.scrollY;
-        const scrollIndicatorPosition = (currentScrollPosition / totalScrollHeight) * (document.documentElement.clientHeight - 129);
-        setScrollPosition(scrollIndicatorPosition)
+        const maxScrollIndicatorPosition = document.documentElement.clientHeight - 129; // 129는 인디케이터의 height
+        const headerHeight = 183; // 헤더 높이 (px 단위로 정확한 값을 설정하세요)
+
+        let scrollIndicatorPosition = (currentScrollPosition / totalScrollHeight) * maxScrollIndicatorPosition;
+
+        if (scrollIndicatorPosition < headerHeight) {
+            scrollIndicatorPosition = headerHeight;
+        } else if (scrollIndicatorPosition > maxScrollIndicatorPosition) {
+            scrollIndicatorPosition = maxScrollIndicatorPosition;
+        }
+
+        setScrollPosition(scrollIndicatorPosition);
     };
 
     useEffect(() => {
