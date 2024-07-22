@@ -44,7 +44,7 @@ const MainPage = () => {
             </header>
             <hr className={styles.divider} />
             <div className={styles.profileGrid}>
-                {profileData.map((profile, index) => (
+                {profileData.map((profile) => (
                     <ProfileCard key={profile.id} {...profile} />
                 ))}
             </div>
