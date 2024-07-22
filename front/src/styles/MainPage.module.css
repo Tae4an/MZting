@@ -77,13 +77,23 @@
 }
 
 .scrollIndicator {
-    border-radius: 15px;
-    background-color: #978cc2;
-    width: 18px;
-    height: 129px;
-    align-self: flex-end;
-    margin-top: 20px;
+    position: fixed;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 10px;
+    background: lightgray;
 }
+
+/*.scrollIndicator::after {*/
+/*    content: '';*/
+/*    display: block;*/
+/*    height: 100%;*/
+/*    width: 10%;*/
+/*    background: blue;*/
+/*    transition: width 0.25s ease-in-out;*/
+/*}*/
 
 @media (max-width: 991px) {
     .profileGrid {
