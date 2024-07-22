@@ -81,6 +81,8 @@
     background-color: #978cc2;
     width: 18px;
     height: 129px;
+    position: fixed;
+    right: 322px;
     align-self: flex-end;
     margin-top: 20px;
 }

@@ -58,7 +58,7 @@ const MainPage = () => {
                     <ProfileCard key={profile.id} {...profile} />
                 ))}
             </div>
-            <div className={styles.scrollIndicator} style={{ position: 'fixed', top: scrollPosition}}/>
+            <div className={styles.scrollIndicator} style={{ top: scrollPosition }}/>
         </div>
     );
 };
