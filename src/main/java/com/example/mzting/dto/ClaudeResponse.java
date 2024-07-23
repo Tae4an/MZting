@@ -1,44 +1,39 @@
 package com.example.mzting.dto;
 
 import lombok.Getter;
+import lombok.Setter;
 
 public class ClaudeResponse {
+    @Setter
     @Getter
     private String text;
+    @Setter
+    @Getter
     private String feel;
+    @Setter
+    @Getter
     private String evaluation;
+    @Setter
+    @Getter
     private int score;
+    private String errorMessage;
 
-    public String getText() {
-        return text;
+    // toString 메서드 오버라이드
+    @Override
+    public String toString() {
+        return "ClaudeResponse{" +
+                "text='" + text + '\'' +
+                ", feel='" + feel + '\'' +
+                ", evaluation='" + evaluation + '\'' +
+                ", score=" + score +
+                '}';
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public String getErrorMessage() {
+        return errorMessage;
     }
 
-    public String getFeel() {
-        return feel;
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
     }
-
-    public void setFeel(String feel) {
-        this.feel = feel;
-    }
-
-    public String getEvaluation() {
-        return evaluation;
-    }
-
-    public void setEvaluation(String evaluation) {
-        this.evaluation = evaluation;
-    }
-
-    public int getScore() {
-        return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
-    }
-// getters and setters
 }
