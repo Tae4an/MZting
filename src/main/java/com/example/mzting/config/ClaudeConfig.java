@@ -4,16 +4,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class ApiConfig {
-
+public class ClaudeConfig {
     @Value("${claude.api.url}")
-    private String claudeApiUrl;
+    private String apiUrl;
 
     @Value("${claude.api.key}")
     private String apiKey;
 
-    public String getClaudeApiUrl() {
-        return claudeApiUrl;
+    public String getApiUrl() {
+        return apiUrl;
     }
 
     public String getApiKey() {
