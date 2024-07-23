@@ -3,14 +3,14 @@ import styles from '../styles/MainPage.module.css';
 import { ProfileCard } from "../components";
 
 // 이미지 동적 import 함수
-function importALL(r) {
+function importAll(r) {
     let images = {};
     r.keys().forEach((item) => { images[item.replace('./','')] = r(item); });
     return images;
 }
 
 // 이미지를 동적으로 import
-const images = importALL(require.context('../assets', false, /\.(png|jps?g|svg)$/));
+const images = importAll(require.context('../assets', false, /\.(png|jpe?g|svg)$/));
 
 const profileData = [
     { id: 1, image: images['image1.jpg'], name: "이지은", type: "#INFJ", tags: "#배려심 #사려깊은 #내향적" },
