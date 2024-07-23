@@ -17,11 +17,16 @@
     background: #423F54;
     padding: 20px;
     border-radius: 15px;
-    max-width: 400px;
+    max-width: 1000px; /* 너비 조절 */
     width: 100%;
+    max-height: 800px; /* 최대 높이 설정 */
+    height: 80%; /* 높이 설정 */
     position: relative;
     color: white;
     text-align: center;
+    display: flex;
+    flex-direction: column; /* Flexbox로 변경 */
+    justify-content: space-between; /* 내용과 버튼을 양 끝에 배치 */
 }
 
 .closeButton {
@@ -35,74 +40,85 @@
     cursor: pointer;
 }
 
-.profileContainer {
+.profileHeader {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    width: 100%;
+    margin-bottom: 20px; /* 아래 내용과 간격 */
 }
 
 .profileImage {
-    width: 150px;
-    height: 150px;
+    width: 450px; /* 이미지 크기 조절 */
+    height: 560px;
     border-radius: 75px;
-    margin-bottom: 20px;
     object-fit: cover; /* 이미지 비율 유지하며 자르기 */
 }
 
-.profileDetails {
+.profileInfo {
     text-align: left;
+    margin-left: 20px; /* 이미지와의 간격 */
+    flex: 1;
 }
 
-.profileDetails h2 {
+.profileInfo h2 {
     margin-bottom: 10px;
+    font-size: 2rem; /* 헤더 폰트 크기 조절 */
 }
 
 .profileType {
     color: #ffffff;
-    background-color: #2A2544;
+    background-color: #4545A9;
     padding: 2px 8px;
     border-radius: 8px;
     margin-left: 5px;
+    font-size: 1.2rem; /* 타입 폰트 크기 조절 */
+}
+
+.profileDetail {
+    font-size: 1.5rem; /* 기본 폰트 크기 조절 */
 }
 
 .profileTags {
     margin: 10px 0;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: left;
 }
 
 .profileTags span {
-    background-color: #2A2544;
+    background-color: #675BA7;
     border-radius: 8px;
     padding: 5px 10px;
     margin: 2px;
+    font-size: 1rem; /* 태그 폰트 크기 조절 */
 }
 
 .profileDescription {
-    margin: 20px 0;
     line-height: 1.5;
+    font-size: 1.2rem; /* 설명 폰트 크기 조절 */
+    text-align: left;
+    overflow-y: auto; /* 스크롤 가능하도록 설정 */
+    flex: 1; /* 남은 공간을 차지하도록 설정 */
 }
 
 .buttonContainer {
     display: flex;
-    justify-content: space-between;
-}
-
-.prevButton, .chatButton {
-    background-color: #2A2544;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-}
-
-.prevButton {
-    margin-right: 10px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 10px 0; /* 위아래 여백을 줄임 */
+    position: sticky; /* 스크롤 시 하단에 고정 */
+    bottom: 0;
+    background: #423F54; /* 모달 배경과 동일한 색상 */
 }
 
 .chatButton {
-    background-color: #2A2544; /* 색상 변경 */
-    margin-left: 10px;
+    background-color: #2A2544;
+    color: white;
+    border: none;
+    padding: 15px 30px; /* 버튼의 패딩을 줄여 크기를 줄임 */
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.2rem; /* 버튼 폰트 크기 조절 */
+    width: 200px; /* 버튼 너비 설정 */
+    height: 60px; /* 버튼 높이 설정 */
 }
