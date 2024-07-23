@@ -3,9 +3,13 @@ import axios from "axios";
 const API_URL = 'http://localhost:8080';
 
 const sendMessage = async (message) => {
+    const mbti = "ENTP"
     try {
-        const response = await axios.post(`${API_URL}/ask-claude`,
-            { "message": message },
+        const response = await axios.post(`${API_URL}/api/ask-claude`,
+            {
+                "message": message,
+                "mbti" : mbti
+            },
             {
                 headers: {
                     'Content-Type': 'application/json'
