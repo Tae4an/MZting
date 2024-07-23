@@ -5,7 +5,7 @@ import { ProfileCard } from "../components";
 // 이미지 동적 import 함수
 function importALL(r) {
     let images = {};
-    r.keys().map((item, index) => { images[item.replace('./','')] = r(item); });
+    r.keys().forEach((item) => { images[item.replace('./','')] = r(item); });
     return images;
 }
 
