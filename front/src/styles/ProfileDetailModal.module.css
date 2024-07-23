@@ -1,0 +1,108 @@
+/* ProfileDetailModal.module.css */
+
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modalContent {
+    background: #423F54;
+    padding: 20px;
+    border-radius: 15px;
+    max-width: 400px;
+    width: 100%;
+    position: relative;
+    color: white;
+    text-align: center;
+}
+
+.closeButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: white;
+    cursor: pointer;
+}
+
+.profileContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profileImage {
+    width: 150px;
+    height: 150px;
+    border-radius: 75px;
+    margin-bottom: 20px;
+    object-fit: cover; /* 이미지 비율 유지하며 자르기 */
+}
+
+.profileDetails {
+    text-align: left;
+}
+
+.profileDetails h2 {
+    margin-bottom: 10px;
+}
+
+.profileType {
+    color: #ffffff;
+    background-color: #2A2544;
+    padding: 2px 8px;
+    border-radius: 8px;
+    margin-left: 5px;
+}
+
+.profileTags {
+    margin: 10px 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.profileTags span {
+    background-color: #2A2544;
+    border-radius: 8px;
+    padding: 5px 10px;
+    margin: 2px;
+}
+
+.profileDescription {
+    margin: 20px 0;
+    line-height: 1.5;
+}
+
+.buttonContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.prevButton, .chatButton {
+    background-color: #2A2544;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.prevButton {
+    margin-right: 10px;
+}
+
+.chatButton {
+    background-color: #2A2544; /* 색상 변경 */
+    margin-left: 10px;
+}
