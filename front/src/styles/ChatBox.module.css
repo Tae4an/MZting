@@ -30,17 +30,26 @@
     cursor: pointer; /* 클릭 가능한 포인터로 변경 */
 }
 
+.profileContainer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
 .avatar {
     width: 60px;
     height: 60px;
     border-radius: 50%;
     object-fit: cover;
+    border: none;
 }
 
 .userName {
     font-size: 24px;
     font-weight: 800;
     font-style: italic;
+    border: none;
 }
 
 .statusIndicator {
