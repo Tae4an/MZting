@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import styles from '../styles/ChatPage.module.css';
 import { ChatBox, ProfileDetailModal } from '../components';
@@ -15,6 +15,10 @@ const ChatPage = () => {
     const handleCloseModal = () => {
         setShowModal(false);
     };
+
+    useEffect(() => {
+        console.log('ChatPage loaded with state:', location.state);
+    }, [location.state]);
 
     return (
         <main className={styles.mainContainer}>
