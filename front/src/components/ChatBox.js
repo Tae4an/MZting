@@ -3,19 +3,32 @@ import PropTypes from 'prop-types';
 import { useNavigate } from "react-router-dom";
 import styles from '../styles/ChatBox.module.css';
 
-const ChatBox = ({ image, name }) => {
+const ChatBox = ({ image, name, onProfileClick }) => {
     const navigate = useNavigate();
 
     const handleBackClick = () => {
         navigate(-1); // 이전 페이지로 이동
     }
+
+    const handleProfileKeyDown = (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            onProfileClick();
+        }
+    };
+
     return (
         <section className={styles.chatContainer}>
             <header className={styles.chatHeader}>
                 <div className={styles.userInfo}>
                     <button className={styles.backbutton} onClick={handleBackClick}>←</button>
-                    <img src= {image} alt="User avatar" className={styles.avatar} />
-                    <span className={styles.userName}>{name}</span>
+                    <button
+                        className={styles.profileContainer}
+                        onClick={onProfileClick}
+                        onKeyDown={handleProfileKeyDown}
+                    >
+                        <img src={image} alt="User avatar" className={styles.avatar} />
+                        <span className={styles.userName}>{name}</span>
+                    </button>
                 </div>
                 <div className={styles.statusIndicator} />
             </header>
@@ -41,8 +54,7 @@ const ChatBox = ({ image, name }) => {
 ChatBox.propTypes = {
     image: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
+    onProfileClick: PropTypes.func.isRequired,
 };
 
-export {
-    ChatBox
-};
+export { ChatBox };
