@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from '../styles/ProfileDetailModal.module.css';
 
-const ProfileDetailModal = ({ show, onClose, profile }) => {
+const ProfileDetailModal = ({ show, onClose, profile, onClick }) => { // onClick으로 변경
     if (!show || !profile) {
         return null;
     }
@@ -30,7 +30,7 @@ const ProfileDetailModal = ({ show, onClose, profile }) => {
                     <p>{profile.description}</p>
                 </div>
                 <div className={styles.buttonContainer}>
-                    <button className={styles.chatButton}>대화 시작하기</button>
+                    <button className={styles.chatButton} onClick={onClick}>대화 시작하기</button> {/* onClick으로 변경 */}
                 </div>
             </div>
         </div>
@@ -51,6 +51,7 @@ ProfileDetailModal.propTypes = {
         tags: PropTypes.string.isRequired,
         description: PropTypes.string.isRequired,
     }).isRequired,
+    onClick: PropTypes.func.isRequired, // onStartChat을 onClick으로 변경
 };
 
 export {
