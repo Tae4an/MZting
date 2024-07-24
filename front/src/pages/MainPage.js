@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import styles from '../styles/MainPage.module.css';
 import { ProfileCard } from "../components";
-import ProfileDetailModal from "../components/ProfileDetailModal";
+import { ProfileDetailModal } from "../components/ProfileDetailModal";
 
 // 이미지 동적 import 함수
 function importAll(r) {
