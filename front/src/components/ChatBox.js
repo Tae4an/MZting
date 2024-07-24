@@ -1,14 +1,16 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from '../styles/ChatBox.module.css';
 
-const ChatBox = () => (
+const ChatBox = ({ image, name }) => (
+
+
     <section className={styles.chatContainer}>
         <header className={styles.chatHeader}>
             <div className={styles.userInfo}>
                 <span className={styles.backbutton}>&lt;</span>
-                <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/8f5dd0d11485f72df622564a688aea72f15bc048e514e524c65571bb0142fcc1?apiKey=49c1e3d53b81482bb61cc4f10fd5a261&" alt="User avatar" className={styles.avatar} />
-                <span className={styles.userName}>이지은</span>
-                <span className={styles.backbutton}>&gt;</span>
+                <img src={image} alt="User avatar" className={styles.avatar} />
+                <span className={styles.userName}>{name}</span>
             </div>
             <div className={styles.statusIndicator} />
         </header>
@@ -18,17 +20,22 @@ const ChatBox = () => (
         </p>
         <div className={styles.messageContainer}>
             <div className={styles.receivedMessage}>
-                <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/8f5dd0d11485f72df622564a688aea72f15bc048e514e524c65571bb0142fcc1?apiKey=49c1e3d53b81482bb61cc4f10fd5a261&" alt="Message avatar" className={styles.messageAvatar} />
-                <div className={styles.message}>내용내용내용내용내용</div>
+                <img src={image} alt="Message avatar" className={styles.messageAvatar} />
+                <div className={styles.message}>안녕하세요 이번에 소개받게 된 {name}(이)라고 합니다~</div>
             </div>
             <div className={styles.receivedMessage}>
-                <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/8f5dd0d11485f72df622564a688aea72f15bc048e514e524c65571bb0142fcc1?apiKey=49c1e3d53b81482bb61cc4f10fd5a261&" alt="Message avatar" className={styles.messageAvatar} />
+                <img src={image} alt="Message avatar" className={styles.messageAvatar} />
                 <div className={styles.message}>대화내용</div>
             </div>
             <div className={styles.messageSent}>내용대화</div>
         </div>
     </section>
 );
+
+ChatBox.propTypes = {
+    image: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired
+};
 
 export {
     ChatBox

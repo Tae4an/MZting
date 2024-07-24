@@ -1,14 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'; // 추가
 import styles from '../styles/ProfileDetailModal.module.css';
 
 const ProfileDetailModal = ({ show, onClose, profile }) => {
-    const navigate = useNavigate();
-
-    if (!show || !profile) {
-        return null;
-    }
+    const navigate = useNavigate(); // 추가
 
     const handleChatStart = () => {
         onClose();
@@ -17,10 +13,19 @@ const ProfileDetailModal = ({ show, onClose, profile }) => {
                 image: profile.image,
                 name: profile.name,
                 type: profile.type,
-                tags: profile.tags
+                age: profile.age,
+                height: profile.height,
+                job: profile.job,
+                hobbies: profile.hobbies,
+                tags: profile.tags,
+                description: profile.description
             }
         });
     };
+
+    if (!show || !profile) {
+        return null;
+    }
 
     return (
         <div className={styles.modalOverlay}>
@@ -45,7 +50,7 @@ const ProfileDetailModal = ({ show, onClose, profile }) => {
                     <p>{profile.description}</p>
                 </div>
                 <div className={styles.buttonContainer}>
-                    <button className={styles.chatButton} onClick={handleChatStart}>대화 시작하기</button>
+                    <button className={styles.chatButton} onClick={handleChatStart}>대화 시작하기</button> {/* 핸들러 변경 */}
                 </div>
             </div>
         </div>
@@ -65,7 +70,7 @@ ProfileDetailModal.propTypes = {
         hobbies: PropTypes.string.isRequired,
         tags: PropTypes.string.isRequired,
         description: PropTypes.string.isRequired,
-    }).isRequired,
+    }).isRequired
 };
 
 export {
