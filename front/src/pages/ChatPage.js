@@ -1,12 +1,17 @@
-import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styles from '../styles/ChatPage.module.css';
 import { ChatBox, ProfileDetailModal } from '../components';
 
 const ChatPage = () => {
     const location = useLocation();
+    const navigate = useNavigate();
     const { image, name, type, tags } = location.state || {};
     const [showModal, setShowModal] = useState(false);
+
+    useEffect(() => {
+        console.log('ChatPage loaded with state:', { image, name, type, tags });
+    }, [location.state]);
 
     const handleProfileClick = () => {
         setShowModal(true);
@@ -14,6 +19,11 @@ const ChatPage = () => {
 
     const handleCloseModal = () => {
         setShowModal(false);
+    };
+
+    const handleStartChat = () => {
+        setShowModal(false);
+        navigate('/chat', { state: { image, name, type, tags } });
     };
 
     return (
@@ -31,7 +41,8 @@ const ChatPage = () => {
                 <ProfileDetailModal
                     show={showModal}
                     onClose={handleCloseModal}
-                    profile={{ image: image, name, type, tags }}
+                    profile={{ image, name, type, tags }}
+                    onClick={handleStartChat} // onStartChat을 onClick으로 변경
                 />
             )}
         </main>
