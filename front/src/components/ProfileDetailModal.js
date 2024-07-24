@@ -53,4 +53,6 @@ ProfileDetailModal.propTypes = {
     }).isRequired,
 };
 
-export default ProfileDetailModal;
+export {
+    ProfileDetailModal
+};
