@@ -1,26 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useNavigate } from 'react-router-dom'; // 추가
 import styles from '../styles/ProfileDetailModal.module.css';
 
-const ProfileDetailModal = ({ show, onClose, profile }) => {
-    const navigate = useNavigate(); // 추가
-
+const ProfileDetailModal = ({ show, onClose, profile, onClick, showChatButton }) => {
     const handleChatStart = () => {
         onClose();
-        navigate('/chat', {
-            state: {
-                image: profile.image,
-                name: profile.name,
-                type: profile.type,
-                age: profile.age,
-                height: profile.height,
-                job: profile.job,
-                hobbies: profile.hobbies,
-                tags: profile.tags,
-                description: profile.description
-            }
-        });
+        if (onClick) onClick();
     };
 
     if (!show || !profile) {
@@ -39,19 +24,23 @@ const ProfileDetailModal = ({ show, onClose, profile }) => {
                         <p className={styles.profileDetail}>키 : {profile.height}</p>
                         <p className={styles.profileDetail}>직업 : {profile.job}</p>
                         <p className={styles.profileDetail}>취미 : {profile.hobbies}</p>
-                        <div className={styles.profileTags}>
-                            {profile.tags.split(' ').map((tag) => (
-                                <span key={tag}>{tag}</span>
-                            ))}
-                        </div>
+                        {profile.tags && (
+                            <div className={styles.profileTags}>
+                                {profile.tags.split(' ').map((tag) => (
+                                    <span key={tag}>{tag}</span>
+                                ))}
+                            </div>
+                        )}
                     </div>
                 </div>
                 <div className={styles.profileDescription}>
                     <p>{profile.description}</p>
                 </div>
-                <div className={styles.buttonContainer}>
-                    <button className={styles.chatButton} onClick={handleChatStart}>대화 시작하기</button> {/* 핸들러 변경 */}
-                </div>
+                {showChatButton && (
+                    <div className={styles.buttonContainer}>
+                        <button className={styles.chatButton} onClick={handleChatStart}>대화 시작하기</button>
+                    </div>
+                )}
             </div>
         </div>
     );
@@ -68,9 +57,16 @@ ProfileDetailModal.propTypes = {
         height: PropTypes.number.isRequired,
         job: PropTypes.string.isRequired,
         hobbies: PropTypes.string.isRequired,
-        tags: PropTypes.string.isRequired,
+        tags: PropTypes.string,
         description: PropTypes.string.isRequired,
-    }).isRequired
+    }).isRequired,
+    onClick: PropTypes.func,
+    showChatButton: PropTypes.bool
+};
+
+ProfileDetailModal.defaultProps = {
+    onClick: null,
+    showChatButton: true
 };
 
 export {

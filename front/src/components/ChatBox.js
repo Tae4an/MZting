@@ -1,13 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
+import { ProfileDetailModal } from '../components';
 import styles from '../styles/ChatBox.module.css';
 
-const ChatBox = ({ image, name }) => {
+const ChatBox = ({ image, name, onProfileClick }) => {
+    const [showModal, setShowModal] = useState(false);
     const navigate = useNavigate();
 
     const handleBackClick = () => {
         navigate(-1); // 이전 페이지로 이동
+    };
+
+    const handleProfileClick = () => {
+        setShowModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setShowModal(false);
     };
 
     return (
@@ -22,8 +32,26 @@ const ChatBox = ({ image, name }) => {
                     >
                         &lt;
                     </button>
-                    <img src={image} alt="User avatar" className={styles.avatar} />
-                    <span className={styles.userName}>{name}</span>
+                    <img
+                        src={image}
+                        alt="User avatar"
+                        className={styles.avatar}
+                        onClick={handleProfileClick}
+                        onKeyDown={(e) => { if (e.key === 'Enter') handleProfileClick(); }}
+                        role="button"
+                        tabIndex={0}
+                        aria-label="View profile"
+                    />
+                    <span
+                        className={styles.userName}
+                        onClick={handleProfileClick}
+                        onKeyDown={(e) => { if (e.key === 'Enter') handleProfileClick(); }}
+                        role="button"
+                        tabIndex={0}
+                        aria-label="View profile"
+                    >
+                        {name}
+                    </span>
                 </div>
                 <div className={styles.statusIndicator} />
             </header>
@@ -42,13 +70,22 @@ const ChatBox = ({ image, name }) => {
                 </div>
                 <div className={styles.messageSent}>내용대화</div>
             </div>
+            {showModal && (
+                <ProfileDetailModal
+                    show={showModal}
+                    onClose={handleCloseModal}
+                    profile={{ image, name }}
+                    showChatButton={false} // "대화 시작하기" 버튼 숨기기
+                />
+            )}
         </section>
     );
 };
 
 ChatBox.propTypes = {
     image: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired
+    name: PropTypes.string.isRequired,
+    onProfileClick: PropTypes.func.isRequired
 };
 
 export {

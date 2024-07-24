@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from '../styles/MainPage.module.css';
 import { ProfileCard } from "../components";
 import { ProfileDetailModal } from "../components/ProfileDetailModal";
@@ -38,6 +39,7 @@ const MainPage = () => {
     const [showModal, setShowModal] = useState(false);
     const [selectedProfile, setSelectedProfile] = useState(null);
     const mainContentRef = useRef(null); // 가운데 영역을 참조하기 위한 ref
+    const navigate = useNavigate();
 
     const handleScroll = () => {
         const totalScrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
@@ -68,6 +70,11 @@ const MainPage = () => {
         setShowModal(true);
     };
 
+    const handleStartChat = () => {
+        setShowModal(false);
+        navigate('/chat', { state: selectedProfile });
+    };
+
     return (
         <div ref={mainContentRef} className={styles.mainContent}>
             <header className={styles.header}>
@@ -82,7 +89,15 @@ const MainPage = () => {
                     <ProfileCard key={profile.id} {...profile} onClick={() => handleProfileClick(profile)} />
                 ))}
             </div>
-            <ProfileDetailModal show={showModal} onClose={() => setShowModal(false)} profile={selectedProfile} />
+            {showModal && (
+                <ProfileDetailModal
+                    show={showModal}
+                    onClose={() => setShowModal(false)}
+                    profile={selectedProfile}
+                    onClick={handleStartChat}
+                    showChatButton={true} // "대화 시작하기" 버튼 활성화
+                />
+            )}
             <div
                 className={styles.scrollIndicator}
                 style={{
