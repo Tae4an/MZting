@@ -1,60 +1,35 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { useNavigate } from "react-router-dom";
 import styles from '../styles/ChatBox.module.css';
 
-const ChatBox = ({ image, name, onProfileClick }) => {
-    const navigate = useNavigate();
-
-    const handleBackClick = () => {
-        navigate(-1); // 이전 페이지로 이동
-    }
-
-    const handleProfileKeyDown = (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-            onProfileClick();
-        }
-    };
-
-    return (
-        <section className={styles.chatContainer}>
-            <header className={styles.chatHeader}>
-                <div className={styles.userInfo}>
-                    <button className={styles.backbutton} onClick={handleBackClick}>←</button>
-                    <button
-                        className={styles.profileContainer}
-                        onClick={onProfileClick}
-                        onKeyDown={handleProfileKeyDown}
-                    >
-                        <img src={image} alt="User avatar" className={styles.avatar} />
-                        <span className={styles.userName}>{name}</span>
-                    </button>
-                </div>
-                <div className={styles.statusIndicator} />
-            </header>
-            <p className={styles.situationDescription}>
-                상황 설명 상황 설명 설명 상황 설명 상황 끄어엄 끄어어엄<br />
-                (ex 당신은 주선자의 소개를 통해 연락이 닿았습니다.)<br />
-            </p>
-            <div className={styles.messageContainer}>
-                <div className={styles.receivedMessage}>
-                    <img src={image} alt="Message avatar" className={styles.messageAvatar} />
-                    <div className={styles.message}>안녕하세요 이번에 소개받게 된 {name}이라고 합니다~</div>
-                </div>
-                <div className={styles.receivedMessage}>
-                    <img src={image} alt="Message avatar" className={styles.messageAvatar} />
-                    <div className={styles.message}>대화내용</div>
-                </div>
-                <div className={styles.messageSent}>내용대화</div>
+const ChatBox = () => (
+    <section className={styles.chatContainer}>
+        <header className={styles.chatHeader}>
+            <div className={styles.userInfo}>
+                <span className={styles.backbutton}>&lt;</span>
+                <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/8f5dd0d11485f72df622564a688aea72f15bc048e514e524c65571bb0142fcc1?apiKey=49c1e3d53b81482bb61cc4f10fd5a261&" alt="User avatar" className={styles.avatar} />
+                <span className={styles.userName}>이지은</span>
+                <span className={styles.backbutton}>&gt;</span>
             </div>
-        </section>
-    );
-};
+            <div className={styles.statusIndicator} />
+        </header>
+        <p className={styles.situationDescription}>
+            상황 설명 상황 설명 설명 상황 설명 상황 끄어엄 끄어어엄<br />
+            (ex 당신은 주선자의 소개를 통해 연락이 닿았습니다.)<br />
+        </p>
+        <div className={styles.messageContainer}>
+            <div className={styles.receivedMessage}>
+                <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/8f5dd0d11485f72df622564a688aea72f15bc048e514e524c65571bb0142fcc1?apiKey=49c1e3d53b81482bb61cc4f10fd5a261&" alt="Message avatar" className={styles.messageAvatar} />
+                <div className={styles.message}>내용내용내용내용내용</div>
+            </div>
+            <div className={styles.receivedMessage}>
+                <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/8f5dd0d11485f72df622564a688aea72f15bc048e514e524c65571bb0142fcc1?apiKey=49c1e3d53b81482bb61cc4f10fd5a261&" alt="Message avatar" className={styles.messageAvatar} />
+                <div className={styles.message}>대화내용</div>
+            </div>
+            <div className={styles.messageSent}>내용대화</div>
+        </div>
+    </section>
+);
 
-ChatBox.propTypes = {
-    image: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    onProfileClick: PropTypes.func.isRequired,
+export {
+    ChatBox
 };
-
-export { ChatBox };
