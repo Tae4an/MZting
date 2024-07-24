@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import styles from '../styles/MainPage.module.css';
 import { ProfileCard } from "../components";
 import ProfileDetailModal from "../components/ProfileDetailModal";
@@ -37,17 +37,16 @@ const MainPage = () => {
     const [scrollPosition, setScrollPosition] = useState(0);
     const [showModal, setShowModal] = useState(false);
     const [selectedProfile, setSelectedProfile] = useState(null);
+    const mainContentRef = useRef(null); // 가운데 영역을 참조하기 위한 ref
 
     const handleScroll = () => {
         const totalScrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
         const currentScrollPosition = window.scrollY;
-        const maxScrollIndicatorPosition = document.documentElement.clientHeight - 129; // 129는 인디케이터의 height
+        const maxScrollIndicatorPosition = window.innerHeight - 129; // 129는 인디케이터의 height
 
         let scrollIndicatorPosition = (currentScrollPosition / totalScrollHeight) * maxScrollIndicatorPosition;
 
-        if (scrollIndicatorPosition < 0) {
-            scrollIndicatorPosition = 0;
-        } else if (scrollIndicatorPosition > maxScrollIndicatorPosition) {
+        if (scrollIndicatorPosition > maxScrollIndicatorPosition) {
             scrollIndicatorPosition = maxScrollIndicatorPosition;
         }
 
@@ -56,16 +55,21 @@ const MainPage = () => {
 
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
+        window.addEventListener('resize', handleScroll); // 창 크기 변경 시에도 위치 재계산
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            window.removeEventListener('resize', handleScroll);
+        };
     }, []);
 
     const handleProfileClick = (profile) => {
         setSelectedProfile(profile);
         setShowModal(true);
-    }
+    };
 
     return (
-        <div className={styles.mainContent}>
+        <div ref={mainContentRef} className={styles.mainContent}>
             <header className={styles.header}>
                 <h1 className={styles.title}>추천</h1>
                 <div className={styles.iconContainer}>
@@ -79,7 +83,13 @@ const MainPage = () => {
                 ))}
             </div>
             <ProfileDetailModal show={showModal} onClose={() => setShowModal(false)} profile={selectedProfile} />
-            <div className={styles.scrollIndicator} style={{ top: scrollPosition }}/>
+            <div
+                className={styles.scrollIndicator}
+                style={{
+                    top: `${scrollPosition}px`,
+                    left: `${mainContentRef.current ? mainContentRef.current.getBoundingClientRect().right - 19 : 0}px`
+                }}
+            />
         </div>
     );
 };
