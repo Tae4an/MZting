@@ -1,26 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useNavigate } from 'react-router-dom';
 import styles from '../styles/ProfileDetailModal.module.css';
 
 const ProfileDetailModal = ({ show, onClose, profile }) => {
-    const navigate = useNavigate();
-
     if (!show || !profile) {
         return null;
     }
-
-    const handleChatStart = () => {
-        onClose();
-        navigate('/chat', {
-            state: {
-                image: profile.image,
-                name: profile.name,
-                type: profile.type,
-                tags: profile.tags
-            }
-        });
-    };
 
     return (
         <div className={styles.modalOverlay}>
@@ -45,7 +30,7 @@ const ProfileDetailModal = ({ show, onClose, profile }) => {
                     <p>{profile.description}</p>
                 </div>
                 <div className={styles.buttonContainer}>
-                    <button className={styles.chatButton} onClick={handleChatStart}>대화 시작하기</button>
+                    <button className={styles.chatButton}>대화 시작하기</button>
                 </div>
             </div>
         </div>
