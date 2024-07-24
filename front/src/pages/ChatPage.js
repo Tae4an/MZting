@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styles from '../styles/ChatPage.module.css';
-import { ChatBox } from '../components';
-import { ProfileDetailModal } from "../components/ProfileDetailModal";
+import { ChatBox, ProfileDetailModal } from '../components';
 
 const ChatPage = () => {
     const location = useLocation();
@@ -39,4 +38,6 @@ const ChatPage = () => {
     );
 };
 
-export { ChatPage };
+export {
+    ChatPage
+};
