@@ -37,17 +37,16 @@
     cursor: pointer;
 }
 
-.avatar {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    object-fit: cover;
+.avatarButton {
+    background: none;
     border: none;
+    padding: 0;
     cursor: pointer;
-    background-color: #000000;
+    display: flex;
+    align-items: center;
 }
 
-.userName {
+.userNameButton {
     font-size: 24px;
     font-weight: 800;
     font-style: italic;
@@ -55,6 +54,21 @@
     cursor: pointer;
     background-color: #000000;
     color: #b6ade4;
+}
+
+  .avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: none;
+}
+
+.userName {
+    font-size: 24px;
+    font-weight: 800;
+    font-style: italic;
+    border: none;
 }
 
 .statusIndicator {
