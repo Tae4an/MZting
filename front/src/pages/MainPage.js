@@ -78,11 +78,11 @@ const MainPage = () => {
         <div ref={mainContentRef} className={styles.mainContent}>
             <header className={styles.header}>
                 <h1 className={styles.mainTitle}>mzting</h1>
-                <h2 className={styles.title}>추천</h2>
                 <div className={styles.iconContainer}>
-                    <div className={styles.icon} />
-                    <div className={styles.icon} />
+                    <div className={styles.icon}/>
+                    <div className={styles.icon}/>
                 </div>
+                <h2 className={styles.title}>추천</h2>
             </header>
             <hr className={styles.divider} />
             <div className={styles.profileGrid}>
