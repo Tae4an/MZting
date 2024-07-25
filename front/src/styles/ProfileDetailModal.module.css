@@ -92,6 +92,15 @@
     font-size: 1rem; /* 태그 폰트 크기 조절 */
 }
 
+.profileImageButton {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
 .profileDescription {
     line-height: 1.5;
     font-size: 1.2rem; /* 설명 폰트 크기 조절 */
