@@ -15,9 +15,8 @@ const SignupForm = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        // 회원가입 로직 추가
-        navigate('/');
         if (password !== passwordCheck) {
+            setError('Passwords do not match');
             return;
         }
 
