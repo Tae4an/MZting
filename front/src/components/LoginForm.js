@@ -11,6 +11,10 @@ const LoginForm = () => {
         navigate('/main');
     };
 
+    const handleSignUpClick = () => {
+        navigate('/signup');
+    };
+
     return (
         <div className={styles.loginFormContainer}>
             <form className={styles.loginForm} onSubmit={handleSubmit}>
@@ -24,7 +28,7 @@ const LoginForm = () => {
                     <input type="password" id="userPassword" />
                 </div>
                 <button type="submit" className={styles.button}>Login</button>
-                <button type="button" className={styles.button}>Sign Up</button>
+                <button type="button" className={styles.button} onClick={handleSignUpClick}>Sign Up</button>
             </form>
         </div>
     );
