@@ -25,7 +25,8 @@
     color: #d4d7f6;
     font-style: italic;
     font-weight: bold;
-    margin-right: 20px; /* 아이콘과 간격을 벌리기 위해 오른쪽 여백 추가 */
+    margin-right: 10px; /* 아이콘과 간격을 벌리기 위해 오른쪽 여백 추가 */
+    flex: 1;
 }
 
 .iconContainer {
@@ -43,7 +44,8 @@
 .title {
     color: #d4d7f6;
     font: italic 800 45px/140% Roboto, sans-serif;
-    margin-top: 20px; /* "추천" 텍스트와 나머지 요소 사이의 간격 조절 */
+    margin-top: 20px;
+    align-self: flex-start;
 }
 
 .divider {
