@@ -6,6 +6,7 @@ import { Layout } from "./Layout";
 import { ProfileCard } from "./ProfileCard";
 import { ChatBox } from "./ChatBox";
 import { ProfileDetailModal } from "./ProfileDetailModal";
+import { ImageModal } from "./ImageModal";
 
 export {
     LoginForm,
@@ -15,5 +16,6 @@ export {
     Layout,
     ProfileCard,
     ChatBox,
-    ProfileDetailModal
+    ProfileDetailModal,
+    ImageModal
 }
