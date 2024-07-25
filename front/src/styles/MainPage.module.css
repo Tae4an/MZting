@@ -77,12 +77,12 @@
 }
 
 .scrollIndicator {
+    position: fixed;
     border-radius: 15px;
     background-color: #978cc2;
     width: 18px;
     height: 129px;
-    position: fixed;
-    right: 322px;
+    top: 0;
     align-self: flex-end;
     margin-top: 20px;
 }
