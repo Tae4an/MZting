@@ -43,6 +43,8 @@
     border-radius: 50%;
     object-fit: cover;
     border: none;
+    cursor: pointer;
+    background-color: #000000;
 }
 
 .userName {
@@ -50,6 +52,9 @@
     font-weight: 800;
     font-style: italic;
     border: none;
+    cursor: pointer;
+    background-color: #000000;
+    color: #b6ade4;
 }
 
 .statusIndicator {
