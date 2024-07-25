@@ -8,18 +8,32 @@
 
 .header {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
     padding: 10px 0;
 }
 
-.title {
+.mainTitleContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    border-bottom: 2px solid #d4d7f6;
+    padding-bottom: 10px;
+}
+
+.mainTitle {
+    font-size: 3rem;
     color: #d4d7f6;
-    font: italic 800 45px/140% Roboto, sans-serif;
+    font-style: italic;
+    font-weight: bold;
+    margin-right: 10px; /* 아이콘과 간격을 벌리기 위해 오른쪽 여백 추가 */
+    flex: 1;
 }
 
 .iconContainer {
     display: flex;
+    gap: 10px; /* 아이콘 사이의 간격 */
 }
 
 .icon {
@@ -27,6 +41,13 @@
     background-color: #c1bae7;
     width: 58px;
     height: 58px;
+}
+
+.title {
+    color: #d4d7f6;
+    font: italic 800 45px/140% Roboto, sans-serif;
+    margin-top: 20px;
+    align-self: flex-start;
 }
 
 .divider {
@@ -86,7 +107,6 @@
     align-self: flex-end;
     margin-top: 20px;
 }
-
 
 @media (max-width: 991px) {
     .profileGrid {

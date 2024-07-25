@@ -7,6 +7,8 @@ import { ProfileCard } from "./ProfileCard";
 import { ChatBox } from "./ChatBox";
 import { ProfileDetailModal } from "./ProfileDetailModal";
 import { ImageModal } from "./ImageModal";
+import { SignupForm } from './SignupForm'
+import { LoadingSpinner } from "./LoadingSpinner";
 
 export {
     LoginForm,
@@ -17,5 +19,7 @@ export {
     ProfileCard,
     ChatBox,
     ProfileDetailModal,
-    ImageModal
+    LoadingSpinner,
+    ImageModal,
+    SignupForm
 }
