@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from '../styles/MainPage.module.css';
-import { ProfileCard } from "../components";
-import { ProfileDetailModal } from "../components/ProfileDetailModal";
+import { ProfileCard,ProfileDetailModal } from "../components";
 
 // 이미지 동적 import 함수
 function importAll(r) {
@@ -78,8 +77,10 @@ const MainPage = () => {
     return (
         <div ref={mainContentRef} className={styles.mainContent}>
             <header className={styles.header}>
-                <h1 className={styles.title}>추천</h1>
+                <h1 className={styles.mainTitle}>mzting</h1>
+                <h2 className={styles.title}>추천</h2>
                 <div className={styles.iconContainer}>
+                    <div className={styles.icon} />
                     <div className={styles.icon} />
                 </div>
             </header>
