@@ -18,6 +18,8 @@
     align-items: center;
     justify-content: center;
     width: 100%;
+    border-bottom: 2px solid #d4d7f6;
+    padding-bottom: 10px;
 }
 
 .mainTitle {
