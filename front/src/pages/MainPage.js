@@ -84,7 +84,10 @@ const MainPage = () => {
                         <div className={styles.icon} />
                     </div>
                 </div>
-                <h2 className={styles.title}>추천</h2>
+                <div className={styles.subTitleContainer}>
+                    <h2 className={styles.subtitle}>추천</h2>
+                    <div className={styles.icon} />
+                </div>
             </header>
             <hr className={styles.divider} />
             <div className={styles.profileGrid}>
