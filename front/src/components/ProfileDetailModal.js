@@ -1,8 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styles from '../styles/ProfileDetailModal.module.css';
+import { ImageModal } from '../components/ImageModal';  // ImageModal import 추가
 
 const ProfileDetailModal = ({ show, onClose, profile, onClick, showChatButton }) => {
+    const [showImageModal, setShowImageModal] = useState(false);
+
+    const handleImageClick = () => {
+        setShowImageModal(true);
+    };
+
+    const handleImageModalClose = () => {
+        setShowImageModal(false);
+    };
+
     const handleChatStart = () => {
         onClose();
         if (onClick) onClick();
@@ -13,36 +24,56 @@ const ProfileDetailModal = ({ show, onClose, profile, onClick, showChatButton })
     }
 
     return (
-        <div className={styles.modalOverlay}>
-            <div className={styles.modalContent}>
-                <button className={styles.closeButton} onClick={onClose}>×</button>
-                <div className={styles.profileHeader}>
-                    <img src={profile.image} alt={profile.name} className={styles.profileImage} />
-                    <div className={styles.profileInfo}>
-                        <h2>{profile.name} <span className={styles.profileType}>{profile.type}</span></h2>
-                        <p className={styles.profileDetail}>나이 : {profile.age}</p>
-                        <p className={styles.profileDetail}>키 : {profile.height}</p>
-                        <p className={styles.profileDetail}>직업 : {profile.job}</p>
-                        <p className={styles.profileDetail}>취미 : {profile.hobbies}</p>
-                        {profile.tags && (
-                            <div className={styles.profileTags}>
-                                {profile.tags.split(' ').map((tag) => (
-                                    <span key={tag}>{tag}</span>
-                                ))}
-                            </div>
-                        )}
+        <>
+            <div className={styles.modalOverlay}>
+                <div className={styles.modalContent}>
+                    <button className={styles.closeButton} onClick={onClose}>×</button>
+                    <div className={styles.profileHeader}>
+                        <button
+                            className={styles.profileImageButton}
+                            onClick={handleImageClick}
+                            onKeyDown={(e) => { if (e.key === 'Enter') handleImageClick(); }}
+                            aria-label="View profile image"
+                        >
+                            <img
+                                src={profile.image}
+                                alt={profile.name}
+                                className={styles.profileImage}
+                            />
+                        </button>
+                        <div className={styles.profileInfo}>
+                            <h2>{profile.name} <span className={styles.profileType}>{profile.type}</span></h2>
+                            <p className={styles.profileDetail}>나이 : {profile.age}</p>
+                            <p className={styles.profileDetail}>키 : {profile.height}</p>
+                            <p className={styles.profileDetail}>직업 : {profile.job}</p>
+                            <p className={styles.profileDetail}>취미 : {profile.hobbies}</p>
+                            {profile.tags && (
+                                <div className={styles.profileTags}>
+                                    {profile.tags.split(' ').map((tag) => (
+                                        <span key={tag}>{tag}</span>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
                     </div>
-                </div>
-                <div className={styles.profileDescription}>
-                    <p>{profile.description}</p>
-                </div>
-                {showChatButton && (
-                    <div className={styles.buttonContainer}>
-                        <button className={styles.chatButton} onClick={handleChatStart}>대화 시작하기</button>
+                    <div className={styles.profileDescription}>
+                        <p>{profile.description}</p>
                     </div>
-                )}
+                    {showChatButton && (
+                        <div className={styles.buttonContainer}>
+                            <button className={styles.chatButton} onClick={handleChatStart}>대화 시작하기</button>
+                        </div>
+                    )}
+                </div>
             </div>
-        </div>
+            {showImageModal && (
+                <ImageModal
+                    show={showImageModal}
+                    onClose={handleImageModalClose}
+                    image={profile.image}
+                />
+            )}
+        </>
     );
 };
 
