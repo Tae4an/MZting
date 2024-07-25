@@ -32,5 +32,5 @@ public class Comment {
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
     @Setter(AccessLevel.NONE)
-    private LocalDateTime timestamp;
+    private LocalDateTime cw_time;
 }
