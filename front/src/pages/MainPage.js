@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from '../styles/MainPage.module.css';
-import { ProfileCard } from "../components";
-import { ProfileDetailModal } from "../components/ProfileDetailModal";
+import { ProfileCard, ProfileDetailModal } from "../components";
 
 // 이미지 동적 import 함수
 function importAll(r) {
@@ -38,13 +37,13 @@ const MainPage = () => {
     const [scrollPosition, setScrollPosition] = useState(0);
     const [showModal, setShowModal] = useState(false);
     const [selectedProfile, setSelectedProfile] = useState(null);
-    const mainContentRef = useRef(null); // 가운데 영역을 참조하기 위한 ref
+    const mainContentRef = useRef(null);
     const navigate = useNavigate();
 
     const handleScroll = () => {
         const totalScrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
         const currentScrollPosition = window.scrollY;
-        const maxScrollIndicatorPosition = window.innerHeight - 129; // 129는 인디케이터의 height
+        const maxScrollIndicatorPosition = window.innerHeight - 129;
 
         let scrollIndicatorPosition = (currentScrollPosition / totalScrollHeight) * maxScrollIndicatorPosition;
 
@@ -57,7 +56,7 @@ const MainPage = () => {
 
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
-        window.addEventListener('resize', handleScroll); // 창 크기 변경 시에도 위치 재계산
+        window.addEventListener('resize', handleScroll);
 
         return () => {
             window.removeEventListener('scroll', handleScroll);
@@ -78,10 +77,14 @@ const MainPage = () => {
     return (
         <div ref={mainContentRef} className={styles.mainContent}>
             <header className={styles.header}>
-                <h1 className={styles.title}>추천</h1>
-                <div className={styles.iconContainer}>
-                    <div className={styles.icon} />
+                <div className={styles.mainTitleContainer}>
+                    <h1 className={styles.mainTitle}>mzting</h1>
+                    <div className={styles.iconContainer}>
+                        <div className={styles.icon} />
+                        <div className={styles.icon} />
+                    </div>
                 </div>
+                <h2 className={styles.title}>추천</h2>
             </header>
             <hr className={styles.divider} />
             <div className={styles.profileGrid}>
@@ -95,7 +98,7 @@ const MainPage = () => {
                     onClose={() => setShowModal(false)}
                     profile={selectedProfile}
                     onClick={handleStartChat}
-                    showChatButton={true} // "대화 시작하기" 버튼 활성화
+                    showChatButton={true}
                 />
             )}
             <div
