@@ -9,7 +9,9 @@ import lombok.AllArgsConstructor;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class LikeDisLikeCountInfo {
-    private long totalLikeCount;
-    private long totalDislikeCount;
+public class CommentRequest {
+    private Long userId;
+    private Long postId;
+    private String content;
+    private Boolean isLike;
 }
