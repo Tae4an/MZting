@@ -13,6 +13,14 @@
     padding: 10px 0;
 }
 
+.mainTitle {
+    font-size: 3rem;
+    color: #d4d7f6;
+    font-style: italic;
+    font-weight: bold;
+    margin: 20px 0;
+}
+
 .title {
     color: #d4d7f6;
     font: italic 800 45px/140% Roboto, sans-serif;
