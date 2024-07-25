@@ -1,5 +1,6 @@
-import { sendMessage } from "./sendMessage";
+import { sendMessage, sendGetRequest } from "./sendMessage";
 
 export {
-    sendMessage
+    sendMessage,
+    sendGetRequest
 }

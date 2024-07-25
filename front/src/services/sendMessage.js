@@ -24,6 +24,23 @@ const sendMessage = async (message) => {
     }
 };
 
+const sendGetRequest = async (data, endpoint) => {
+    try {
+        const response = await axios.get(endpoint, {
+            params: data,
+            headers : {
+                "Accept": "application/json"
+            }
+        })
+        console.log(response.data);
+        return response.data;
+    } catch (error) {
+        console.error('Error sending message:', error);
+        throw error;
+    }
+};
+
 export {
-    sendMessage
+    sendMessage,
+    sendGetRequest
 }
