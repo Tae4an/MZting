@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styles from '../styles/ProfileDetailModal.module.css';
-import { ImageModal } from '../components/ImageModal';  // ImageModal import 추가
+import { ImageModal } from '../components';
 
 const ProfileDetailModal = ({ show, onClose, profile, onClick, showChatButton }) => {
     const [showImageModal, setShowImageModal] = useState(false);
