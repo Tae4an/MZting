@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { ProfileDetailModal } from '../components';
 import styles from '../styles/ChatBox.module.css';
 
-const ChatBox = ({ image, name, onProfileClick }) => {
+const ChatBox = ({ image, name, profileDetails }) => {
     const [showModal, setShowModal] = useState(false);
     const navigate = useNavigate();
 
@@ -32,26 +32,26 @@ const ChatBox = ({ image, name, onProfileClick }) => {
                     >
                         &lt;
                     </button>
-                    <img
-                        src={image}
-                        alt="User avatar"
-                        className={styles.avatar}
+                    <button
+                        className={styles.avatarButton}
                         onClick={handleProfileClick}
                         onKeyDown={(e) => { if (e.key === 'Enter') handleProfileClick(); }}
-                        role="button"
-                        tabIndex={0}
                         aria-label="View profile"
-                    />
-                    <span
-                        className={styles.userName}
+                    >
+                        <img
+                            src={image}
+                            alt="User avatar"
+                            className={styles.avatar}
+                        />
+                    </button>
+                    <button
+                        className={styles.userNameButton}
                         onClick={handleProfileClick}
                         onKeyDown={(e) => { if (e.key === 'Enter') handleProfileClick(); }}
-                        role="button"
-                        tabIndex={0}
                         aria-label="View profile"
                     >
                         {name}
-                    </span>
+                    </button>
                 </div>
                 <div className={styles.statusIndicator} />
             </header>
@@ -74,7 +74,7 @@ const ChatBox = ({ image, name, onProfileClick }) => {
                 <ProfileDetailModal
                     show={showModal}
                     onClose={handleCloseModal}
-                    profile={{ image, name }}
+                    profile={profileDetails}
                     showChatButton={false} // "대화 시작하기" 버튼 숨기기
                 />
             )}
@@ -85,7 +85,7 @@ const ChatBox = ({ image, name, onProfileClick }) => {
 ChatBox.propTypes = {
     image: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    onProfileClick: PropTypes.func.isRequired
+    profileDetails: PropTypes.object.isRequired
 };
 
 export {
