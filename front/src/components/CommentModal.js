@@ -17,7 +17,7 @@ const CommentModal = ({ show, onClose, mbti }) => {
         const fetchedComments = [
             { id: 1, user: 'User1', comment: '좋아요!', rating: '좋아요' },
             { id: 2, user: 'User2', comment: '별로에요.', rating: '싫어요' },
-            { id: 3, user: '슬픈 공대생', comment: '실제로 아이유와 대화를 한다면 이런 느낌일까..', rating: '좋아요' }
+            { id: 3, user: '슬픈 공대생', comment: '실제로 연예인과 대화한다면 이런 느낌일까..', rating: '좋아요' }
         ];
         setComments(fetchedComments);
     };
@@ -76,13 +76,15 @@ const CommentModal = ({ show, onClose, mbti }) => {
                     </form>
                     <div className={styles.commentsSection}>
                         <h3 className={styles.commentsTitle}>댓글 및 후기</h3>
-                        {comments.map(({ id, user, comment, rating }) => (
-                            <div key={id} className={styles.comment}>
-                                <p><strong>{user}</strong></p>
-                                <p>{comment}</p>
-                                <p>{rating === '좋아요' ? '👍 좋아요' : '👎 싫어요'}</p>
-                            </div>
-                        ))}
+                        <div className={styles.commentsContainer}>
+                            {comments.map(({ id, user, comment, rating }) => (
+                                <div key={id} className={styles.comment}>
+                                    <p><strong>{user}</strong></p>
+                                    <p>{comment}</p>
+                                    <p>{rating === '좋아요' ? '👍 좋아요' : '👎 싫어요'}</p>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>

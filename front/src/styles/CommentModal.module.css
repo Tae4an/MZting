@@ -15,8 +15,10 @@
     background: #423F54;
     padding: 20px;
     border-radius: 15px;
-    max-width: 600px;
+    max-width: 900px;
     width: 100%;
+    max-height: 725px;
+    height: 100%;
     position: relative;
     color: white;
     display: flex;
@@ -43,24 +45,24 @@
 .modalForm {
     display: flex;
     flex-direction: column;
+    margin-bottom: 0; /* 여백 제거 */
 }
 
 .modalTextarea {
     resize: none;
     padding: 10px;
-    margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 16px;
-    height: 10px;
+    height: 20px;
     background-color: #3d3d56;
     color: white;
+    margin-bottom: 5px;
 }
 
 .modalRating {
     display: flex;
     justify-content: center;
-    margin-bottom: 10px;
 }
 
 .ratingButton {
@@ -106,15 +108,20 @@
 }
 
 .commentsSection {
-    margin-top: 20px;
-    background-color: #3d3d56;
-    padding: 10px;
-    border-radius: 4px;
+    flex-grow: 1; /* 공간을 차지하도록 설정 */
 }
 
 .commentsTitle {
     font-size: 20px;
     margin-bottom: 10px;
+}
+
+.commentsContainer {
+    max-height: 440px; /* 적절한 높이로 설정 */
+    overflow-y: auto;
+    background-color: #3d3d56;
+    padding: 10px;
+    border-radius: 4px;
 }
 
 .comment {
