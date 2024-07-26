@@ -71,7 +71,6 @@ const CommentModal = ({ show, onClose, mbti }) => {
                         </div>
                         <div className={styles.modalButtons}>
                             <button type="submit" className={styles.submitButton}>제출</button>
-                            <button type="button" onClick={onClose} className={styles.cancelButton}>취소</button>
                         </div>
                     </form>
                     <div className={styles.commentsSection}>
