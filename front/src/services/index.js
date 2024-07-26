@@ -1,6 +1,7 @@
-import { sendMessage, sendGetRequest } from "./sendMessage";
+import { sendMessage, sendGetRequest, sendPostRequest } from "./sendMessage";
 
 export {
     sendMessage,
-    sendGetRequest
+    sendGetRequest,
+    sendPostRequest
 }
