@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import { ProfileDetailModal } from '../components';
+import { sendMessage } from "../services";
 import styles from '../styles/ChatBox.module.css';
 
 const ChatBox = ({ image, name, profileDetails }) => {
     const [showModal, setShowModal] = useState(false);
+    const [message, setMessage] = useState(''); // 입력된 메시지를 저장할 상태 추가
     const navigate = useNavigate();
 
     const handleBackClick = () => {
@@ -18,6 +20,19 @@ const ChatBox = ({ image, name, profileDetails }) => {
 
     const handleCloseModal = () => {
         setShowModal(false);
+    };
+
+    const handleMessageChange = (event) => {
+        setMessage(event.target.value);
+    };
+
+    const handleSendClick = async () => {
+        try {
+            const response = await sendMessage(message);
+            console.log(response);
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     return (
@@ -69,6 +84,20 @@ const ChatBox = ({ image, name, profileDetails }) => {
                     <div className={styles.message}>대화내용</div>
                 </div>
                 <div className={styles.messageSent}>내용대화</div>
+            </div>
+            <div className={styles.inputContainer}>
+                <input
+                    type="text"
+                    value={message}
+                    onChange={handleMessageChange}
+                    className={styles.input}
+                />
+                <button
+                    onClick={handleSendClick}
+                    className={styles.sendButton}
+                >
+                    Send
+                </button>
             </div>
             {showModal && (
                 <ProfileDetailModal
