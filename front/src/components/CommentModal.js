@@ -76,13 +76,15 @@ const CommentModal = ({ show, onClose, mbti }) => {
                     </form>
                     <div className={styles.commentsSection}>
                         <h3 className={styles.commentsTitle}>댓글 및 후기</h3>
-                        {comments.map(({ id, user, comment, rating }) => (
-                            <div key={id} className={styles.comment}>
-                                <p><strong>{user}</strong></p>
-                                <p>{comment}</p>
-                                <p>{rating === '좋아요' ? '👍 좋아요' : '👎 싫어요'}</p>
-                            </div>
-                        ))}
+                        <div className={styles.commentsContainer}>
+                            {comments.map(({ id, user, comment, rating }) => (
+                                <div key={id} className={styles.comment}>
+                                    <p><strong>{user}</strong></p>
+                                    <p>{comment}</p>
+                                    <p>{rating === '좋아요' ? '👍 좋아요' : '👎 싫어요'}</p>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>
