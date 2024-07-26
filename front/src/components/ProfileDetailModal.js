@@ -73,9 +73,6 @@ const ProfileDetailModal = ({ show, onClose, profile, onClick, showChatButton })
                             <button className={styles.chatButton} onClick={handleChatStart}>대화 시작하기</button>
                         </div>
                     )}
-                    <div className={styles.buttonContainer}>
-                        <button className={styles.commentButton} onClick={handleCommentClick}>댓글 및 후기 작성</button>
-                    </div>
                 </div>
             </div>
             {showImageModal && (
@@ -92,6 +89,7 @@ const ProfileDetailModal = ({ show, onClose, profile, onClick, showChatButton })
                     mbti={profile.type}
                 />
             )}
+            <button className={styles.commentButton} onClick={handleCommentClick}>댓글 및 후기</button>
         </>
     );
 };
