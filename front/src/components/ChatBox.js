@@ -34,9 +34,7 @@ const ChatBox = ({ image, name, profileDetails, messages, onSendMessage }) => {
             <header className={styles.chatHeader}>
                 <button className={styles.backButton} onClick={handleBackClick}>&lt;</button>
                 <img src={image} alt={name} className={styles.avatar} onClick={handleProfileClick} />
-                <span className={styles.userName}>{name}</span>
-                <button className={styles.forwardButton}>&gt;</button>
-                <div className={styles.statusIndicator} />
+                <span className={styles.userName} onClick={handleProfileClick}>{name}</span>
             </header>
             <div className={styles.situationDescription}>
                 상황 설명: 간략한 상황에 대한 설명 또는 미션 부여<br />
