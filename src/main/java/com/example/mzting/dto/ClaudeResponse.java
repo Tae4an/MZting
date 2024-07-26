@@ -3,18 +3,12 @@ package com.example.mzting.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+@Setter
+@Getter
 public class ClaudeResponse {
-    @Setter
-    @Getter
     private String text;
-    @Setter
-    @Getter
     private String feel;
-    @Setter
-    @Getter
     private String evaluation;
-    @Setter
-    @Getter
     private int score;
     private String errorMessage;
 
@@ -29,11 +23,4 @@ public class ClaudeResponse {
                 '}';
     }
 
-    public String getErrorMessage() {
-        return errorMessage;
-    }
-
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
-    }
 }

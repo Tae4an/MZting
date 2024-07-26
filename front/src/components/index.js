@@ -9,6 +9,7 @@ import { ProfileDetailModal } from "./ProfileDetailModal";
 import { ImageModal } from "./ImageModal";
 import { SignupForm } from './SignupForm'
 import { LoadingSpinner } from "./LoadingSpinner";
+import { CommentModal } from "./CommentModal";
 
 export {
     LoginForm,
@@ -21,5 +22,6 @@ export {
     ProfileDetailModal,
     LoadingSpinner,
     ImageModal,
-    SignupForm
+    SignupForm,
+    CommentModal
 }

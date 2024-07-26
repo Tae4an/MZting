@@ -1,0 +1,129 @@
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal {
+    background: #423F54;
+    padding: 20px;
+    border-radius: 15px;
+    max-width: 600px;
+    width: 100%;
+    position: relative;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.closeButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: white;
+    cursor: pointer;
+}
+
+.modalTitle {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.modalForm {
+    display: flex;
+    flex-direction: column;
+}
+
+.modalTextarea {
+    resize: none;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    height: 10px;
+    background-color: #3d3d56;
+    color: white;
+}
+
+.modalRating {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.ratingButton {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 0 5px;
+    background-color: #3d3d56;
+    color: white;
+}
+
+.ratingButton:hover {
+    opacity: 0.7;
+}
+
+.selected {
+    background-color: #4CAF50;
+}
+
+.modalButtons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.submitButton, .cancelButton {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.submitButton {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.cancelButton {
+    background-color: #f44336;
+    color: white;
+}
+
+.commentsSection {
+    margin-top: 20px;
+    background-color: #3d3d56;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.commentsTitle {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.comment {
+    background-color: #2A2544;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.comment p {
+    margin: 5px 0;
+}
