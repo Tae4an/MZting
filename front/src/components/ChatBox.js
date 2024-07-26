@@ -2,16 +2,15 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import { ProfileDetailModal } from '../components';
-import { sendMessage } from "../services";
 import styles from '../styles/ChatBox.module.css';
 
-const ChatBox = ({ image, name, profileDetails }) => {
+const ChatBox = ({ image, name, profileDetails, messages, onSendMessage }) => {
     const [showModal, setShowModal] = useState(false);
-    const [message, setMessage] = useState(''); // 입력된 메시지를 저장할 상태 추가
+    const [inputMessage, setInputMessage] = useState('');
     const navigate = useNavigate();
 
     const handleBackClick = () => {
-        navigate(-1); // 이전 페이지로 이동
+        navigate(-1);
     };
 
     const handleProfileClick = () => {
@@ -22,101 +21,81 @@ const ChatBox = ({ image, name, profileDetails }) => {
         setShowModal(false);
     };
 
-    const handleMessageChange = (event) => {
-        setMessage(event.target.value);
-    };
-
-    const handleSendClick = async () => {
-        try {
-            const response = await sendMessage(message);
-            console.log(response);
-        } catch (error) {
-            console.error(error);
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (inputMessage.trim()) {
+            onSendMessage(inputMessage);
+            setInputMessage('');
         }
     };
 
     return (
         <section className={styles.chatContainer}>
             <header className={styles.chatHeader}>
-                <div className={styles.userInfo}>
-                    <button
-                        className={styles.backbutton}
-                        onClick={handleBackClick}
-                        onKeyDown={(e) => { if (e.key === 'Enter') handleBackClick(); }}
-                        aria-label="Go back"
-                    >
-                        &lt;
-                    </button>
-                    <button
-                        className={styles.avatarButton}
-                        onClick={handleProfileClick}
-                        onKeyDown={(e) => { if (e.key === 'Enter') handleProfileClick(); }}
-                        aria-label="View profile"
-                    >
-                        <img
-                            src={image}
-                            alt="User avatar"
-                            className={styles.avatar}
-                        />
-                    </button>
-                    <button
-                        className={styles.userNameButton}
-                        onClick={handleProfileClick}
-                        onKeyDown={(e) => { if (e.key === 'Enter') handleProfileClick(); }}
-                        aria-label="View profile"
-                    >
-                        {name}
-                    </button>
-                </div>
+                <button className={styles.backButton} onClick={handleBackClick}>&lt;</button>
+                <img src={image} alt={name} className={styles.avatar} onClick={handleProfileClick} />
+                <span className={styles.userName}>{name}</span>
+                <button className={styles.forwardButton}>&gt;</button>
                 <div className={styles.statusIndicator} />
             </header>
-            <p className={styles.situationDescription}>
-                상황 설명 상황 설명 설명 상황 설명 상황 끄어엄 끄어어엄<br />
-                (ex 당신은 주선자의 소개를 통해 연락이 닿았습니다.)<br />
-            </p>
-            <div className={styles.messageContainer}>
-                <div className={styles.receivedMessage}>
-                    <img src={image} alt="Message avatar" className={styles.messageAvatar} />
-                    <div className={styles.message}>안녕하세요 이번에 소개받게 된 {name}(이)라고 합니다~</div>
-                </div>
-                <div className={styles.receivedMessage}>
-                    <img src={image} alt="Message avatar" className={styles.messageAvatar} />
-                    <div className={styles.message}>대화내용</div>
-                </div>
-                <div className={styles.messageSent}>내용대화</div>
+            <div className={styles.situationDescription}>
+                상황 설명: 간략한 상황에 대한 설명 또는 미션 부여<br />
+                (예: 당신은 주선자의 소개를 통해 연락이 닿았습니다.)
             </div>
-            <div className={styles.inputContainer}>
+            <div className={styles.messageContainer}>
+                {messages && messages.map((message, index) => (
+                    <ChatBubble
+                        key={index}
+                        content={message.content}
+                        isSent={message.isSent}
+                        avatar={message.isSent ? null : image}
+                    />
+                ))}
+            </div>
+            <form onSubmit={handleSubmit} className={styles.inputArea}>
                 <input
                     type="text"
-                    value={message}
-                    onChange={handleMessageChange}
-                    className={styles.input}
+                    value={inputMessage}
+                    onChange={(e) => setInputMessage(e.target.value)}
+                    placeholder="메시지를 입력하세요"
+                    className={styles.inputField}
                 />
-                <button
-                    onClick={handleSendClick}
-                    className={styles.sendButton}
-                >
-                    Send
-                </button>
-            </div>
+                <button type="submit" className={styles.sendButton}>전송</button>
+            </form>
             {showModal && (
                 <ProfileDetailModal
                     show={showModal}
                     onClose={handleCloseModal}
                     profile={profileDetails}
-                    showChatButton={false} // "대화 시작하기" 버튼 숨기기
+                    showChatButton={false}
                 />
             )}
         </section>
     );
 };
 
+const ChatBubble = ({ content, isSent, avatar }) => (
+    <div className={`${styles.messageWrapper} ${isSent ? styles.sentMessage : styles.receivedMessage}`}>
+        {!isSent && <img src={avatar} alt="Avatar" className={styles.messageAvatar} />}
+        <div className={styles.messageBubble}>
+            <div className={styles.messageText}>{isSent ? content : content.text}</div>
+            {!isSent && (
+                <div className={styles.messageInfo}>
+                    <p>Feel: {content.feel}</p>
+                    <p>Evaluation: {content.evaluation}</p>
+                    <p>Score: {content.score}</p>
+                </div>
+            )}
+        </div>
+    </div>
+);
+
 ChatBox.propTypes = {
     image: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    profileDetails: PropTypes.object.isRequired
+    profileDetails: PropTypes.object.isRequired,
+    messages: PropTypes.array.isRequired,
+    onSendMessage: PropTypes.func.isRequired
 };
 
-export {
-    ChatBox
-};
+export { ChatBox };
