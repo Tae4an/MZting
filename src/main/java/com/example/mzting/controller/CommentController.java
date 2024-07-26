@@ -34,7 +34,7 @@ public class CommentController {
             comment.setPostId(postId);
             comment.setContent(PostPostsCommentRequest.getContent());
             comment.setIsLike(PostPostsCommentRequest.getIsLike());
-
+            System.out.println("postId : " + postId);
             Comment savedComment = commentService.saveComment(comment);
 
             CommentDTO.PostPostsCommentsResponse response = new CommentDTO.PostPostsCommentsResponse();
