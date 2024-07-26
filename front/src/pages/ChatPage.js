@@ -8,10 +8,13 @@ import { sendMessage } from '../services';
 const ChatPage = () => {
     const location = useLocation();
     const { image, name, type, age, height, job, hobbies, tags, description } = location.state || {};
+    const mbti = type.replace('#', ''); // type에서 #을 제거하여 mbti 추출
+
 
     useEffect(() => {
         console.log('ChatPage loaded with state:', location.state);
     }, [location.state]);
+
     const [messages, setMessages] = useState([]);
 
     const handleSendMessage = async (content) => {
@@ -19,7 +22,7 @@ const ChatPage = () => {
             const newMessage = { content, isSent: true };
             setMessages(prevMessages => [...prevMessages, newMessage]);
 
-            const response = await sendMessage(content);
+            const response = await sendMessage(content,mbti);
             const responseMessage = {
                 content: response,
                 isSent: false,
