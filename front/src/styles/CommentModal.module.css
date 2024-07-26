@@ -52,13 +52,34 @@
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 16px;
-    height: 100px;
+    height: 10px;
     background-color: #3d3d56;
     color: white;
 }
 
 .modalRating {
+    display: flex;
+    justify-content: center;
     margin-bottom: 10px;
+}
+
+.ratingButton {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 0 5px;
+    background-color: #3d3d56;
+    color: white;
+}
+
+.ratingButton:hover {
+    opacity: 0.7;
+}
+
+.selected {
+    background-color: #4CAF50;
 }
 
 .modalButtons {
