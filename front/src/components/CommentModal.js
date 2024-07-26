@@ -4,34 +4,40 @@ import styles from '../styles/CommentModal.module.css';
 
 const CommentModal = ({ show, onClose, mbti }) => {
     const [comment, setComment] = useState('');
-    const [rating, setRating] = useState(0);
+    const [rating, setRating] = useState(null); // "좋아요" 또는 "싫어요"로만 구분
     const [comments, setComments] = useState([]);
 
     useEffect(() => {
         if (show) {
-            // 댓글 및 후기 데이터를 가져오는 API 호출 로직 추가 (예: fetchComments())
             fetchComments();
         }
     }, [show]);
 
     const fetchComments = async () => {
-        // 실제 API 호출로 데이터를 가져오는 로직을 구현
         const fetchedComments = [
-            { id: 1, user: 'User1', comment: '좋아요!', rating: 5 },
-            { id: 2, user: 'User2', comment: '별로에요.', rating: 2 },
+            { id: 1, user: 'User1', comment: '좋아요!', rating: '좋아요' },
+            { id: 2, user: 'User2', comment: '별로에요.', rating: '싫어요' },
+            { id: 3, user: '슬픈 공대생', comment: '실제로 아이유와 대화를 한다면 이런 느낌일까..', rating: '좋아요' }
         ];
         setComments(fetchedComments);
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (comment.trim() && rating > 0) {
-            // 제출 로직 구현
-            console.log({ mbti, comment, rating });
-            setComments([...comments, { user: '현재 사용자', comment, rating }]);
+        if (comment.trim() && rating) {
+            const newComment = { id: comments.length + 1, user: '현재 사용자', comment, rating };
+            setComments([...comments, newComment]);
             setComment('');
-            setRating(0);
+            setRating(null);
         }
+    };
+
+    const handleLike = () => {
+        setRating('좋아요');
+    };
+
+    const handleDislike = () => {
+        setRating('싫어요');
     };
 
     return (
@@ -48,15 +54,20 @@ const CommentModal = ({ show, onClose, mbti }) => {
                             className={styles.modalTextarea}
                         />
                         <div className={styles.modalRating}>
-                            <label>
-                                평점:
-                                <select value={rating} onChange={(e) => setRating(Number(e.target.value))}>
-                                    <option value="0">선택하세요</option>
-                                    {[1, 2, 3, 4, 5].map(num => (
-                                        <option key={num} value={num}>{num}</option>
-                                    ))}
-                                </select>
-                            </label>
+                            <button
+                                type="button"
+                                onClick={handleLike}
+                                className={`${styles.ratingButton} ${rating === '좋아요' ? styles.selected : ''}`}
+                            >
+                                좋아요
+                            </button>
+                            <button
+                                type="button"
+                                onClick={handleDislike}
+                                className={`${styles.ratingButton} ${rating === '싫어요' ? styles.selected : ''}`}
+                            >
+                                싫어요
+                            </button>
                         </div>
                         <div className={styles.modalButtons}>
                             <button type="submit" className={styles.submitButton}>제출</button>
@@ -69,7 +80,7 @@ const CommentModal = ({ show, onClose, mbti }) => {
                             <div key={id} className={styles.comment}>
                                 <p><strong>{user}</strong></p>
                                 <p>{comment}</p>
-                                <p>평점: {rating}</p>
+                                <p>{rating === '좋아요' ? '👍 좋아요' : '👎 싫어요'}</p>
                             </div>
                         ))}
                     </div>
