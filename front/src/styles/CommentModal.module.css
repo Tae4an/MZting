@@ -48,6 +48,12 @@
     margin-bottom: 0; /* 여백 제거 */
 }
 
+.textareaAndButtons {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px; /* 여백 추가 */
+}
+
 .modalTextarea {
     resize: none;
     padding: 10px;
@@ -57,7 +63,8 @@
     height: 20px;
     background-color: #3d3d56;
     color: white;
-    margin-bottom: 5px;
+    flex: 1; /* 텍스트 영역이 가능한 많은 공간을 차지하도록 설정 */
+    margin-right: 10px; /* 버튼과의 간격 추가 */
 }
 
 .modalRating {
@@ -95,9 +102,6 @@
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
-}
-
-.submitButton {
     background-color: #4CAF50;
     color: white;
 }
