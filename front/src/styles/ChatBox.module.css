@@ -40,7 +40,7 @@
     background-color: #2b2b3e;
 }
 
-.backButton, .forwardButton {
+.backButton {
     background: none;
     border: none;
     color: #ffffff;
@@ -53,25 +53,23 @@
     height: 60px;
     border-radius: 50%;
     margin: 0 15px;
+    object-fit: cover;
+    cursor: pointer;
 }
 
 .userName {
     flex-grow: 1;
     font-size: 20px;
-}
-
-.statusIndicator {
-    width: 10px;
-    height: 10px;
-    background-color: #4CAF50;
-    border-radius: 50%;
+    cursor: pointer;
 }
 
 .situationDescription {
-    padding: 10px;
-    background-color: #2b2b3e;
-    border-top: 1px solid #3d3d56;
-    border-bottom: 1px solid #3d3d56;
+    color: #fff;
+    text-align: center;
+    margin: 20px 0;
+    font-size: 18px;
+    font-style: italic;
+    line-height: 1.5;
 }
 
 .messageContainer {
@@ -98,6 +96,7 @@
     height: 40px;
     border-radius: 50%;
     margin-right: 15px;
+    object-fit: cover;
 }
 
 .messageBubble {
