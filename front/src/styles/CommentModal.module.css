@@ -89,7 +89,7 @@
     justify-content: space-between;
 }
 
-.submitButton, .cancelButton {
+.submitButton {
     padding: 10px 20px;
     border: none;
     border-radius: 4px;
@@ -99,11 +99,6 @@
 
 .submitButton {
     background-color: #4CAF50;
-    color: white;
-}
-
-.cancelButton {
-    background-color: #f44336;
     color: white;
 }
 
