@@ -40,7 +40,24 @@ const sendGetRequest = async (data, endpoint) => {
     }
 };
 
+const sendPostRequest = async (data, endpoint) => {
+    try {
+        const response = await axios.post(endpoint, data, {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+        console.log(response.data);
+        return response.data;
+    } catch (error) {
+        console.error('Error sending message:', error);
+        throw error;
+    }
+};
+
+
 export {
     sendMessage,
-    sendGetRequest
+    sendGetRequest,
+    sendPostRequest
 }
