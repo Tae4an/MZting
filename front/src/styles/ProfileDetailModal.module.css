@@ -1,5 +1,3 @@
-/* ProfileDetailModal.module.css */
-
 .modalOverlay {
     position: fixed;
     top: 0;
@@ -17,16 +15,16 @@
     background: #423F54;
     padding: 20px;
     border-radius: 15px;
-    max-width: 1000px; /* 너비 조절 */
+    max-width: 1000px;
     width: 100%;
-    max-height: 800px; /* 최대 높이 설정 */
-    height: 80%; /* 높이 설정 */
+    max-height: 800px;
+    height: 80%;
     position: relative;
     color: white;
     text-align: center;
     display: flex;
-    flex-direction: column; /* Flexbox로 변경 */
-    justify-content: space-between; /* 내용과 버튼을 양 끝에 배치 */
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .closeButton {
@@ -43,25 +41,25 @@
 .profileHeader {
     display: flex;
     width: 100%;
-    margin-bottom: 20px; /* 아래 내용과 간격 */
+    margin-bottom: 20px;
 }
 
 .profileImage {
-    width: 450px; /* 이미지 크기 조절 */
+    width: 450px;
     height: 560px;
     border-radius: 75px;
-    object-fit: cover; /* 이미지 비율 유지하며 자르기 */
+    object-fit: cover;
 }
 
 .profileInfo {
     text-align: left;
-    margin-left: 20px; /* 이미지와의 간격 */
+    margin-left: 20px;
     flex: 1;
 }
 
 .profileInfo h2 {
     margin-bottom: 10px;
-    font-size: 2rem; /* 헤더 폰트 크기 조절 */
+    font-size: 2rem;
 }
 
 .profileType {
@@ -70,11 +68,11 @@
     padding: 2px 8px;
     border-radius: 8px;
     margin-left: 5px;
-    font-size: 1.2rem; /* 타입 폰트 크기 조절 */
+    font-size: 1.2rem;
 }
 
 .profileDetail {
-    font-size: 1.5rem; /* 기본 폰트 크기 조절 */
+    font-size: 1.5rem;
 }
 
 .profileTags {
@@ -89,7 +87,7 @@
     border-radius: 8px;
     padding: 5px 10px;
     margin: 2px;
-    font-size: 1rem; /* 태그 폰트 크기 조절 */
+    font-size: 1rem;
 }
 
 .profileImageButton {
@@ -103,10 +101,10 @@
 
 .profileDescription {
     line-height: 1.5;
-    font-size: 1.2rem; /* 설명 폰트 크기 조절 */
+    font-size: 1.2rem;
     text-align: left;
-    overflow-y: auto; /* 스크롤 가능하도록 설정 */
-    flex: 1; /* 남은 공간을 차지하도록 설정 */
+    overflow-y: auto;
+    flex: 1;
 }
 
 .buttonContainer {
@@ -114,32 +112,37 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    padding: 10px 0; /* 위아래 여백을 줄임 */
-    position: sticky; /* 스크롤 시 하단에 고정 */
+    padding: 10px 0;
+    position: sticky;
     bottom: 0;
-    background: #423F54; /* 모달 배경과 동일한 색상 */
+    background: #423F54;
 }
 
 .chatButton {
     background-color: #2A2544;
     color: white;
     border: none;
-    padding: 15px 30px; /* 버튼의 패딩을 줄여 크기를 줄임 */
+    padding: 15px 30px;
     border-radius: 8px;
     cursor: pointer;
-    font-size: 1.2rem; /* 버튼 폰트 크기 조절 */
-    width: 200px; /* 버튼 너비 설정 */
-    height: 60px; /* 버튼 높이 설정 */
+    font-size: 1.2rem;
+    width: 200px;
+    height: 60px;
 }
 
 .commentButton {
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
     background-color: #2A2544;
     color: white;
     border: none;
-    padding: 15px 30px; /* 버튼의 패딩을 줄여 크기를 줄임 */
+    padding: 15px 30px;
     border-radius: 8px;
     cursor: pointer;
-    font-size: 1.2rem; /* 버튼 폰트 크기 조절 */
-    width: 200px; /* 버튼 너비 설정 */
-    height: 60px; /* 버튼 높이 설정 */
+    font-size: 1.2rem;
+    width: 200px;
+    height: 60px;
+    z-index: 1000;
+    position: fixed;
 }
