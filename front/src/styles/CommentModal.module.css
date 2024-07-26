@@ -12,11 +12,27 @@
 }
 
 .modal {
-    background: #fff;
+    background: #423F54;
     padding: 20px;
-    border-radius: 8px;
-    max-width: 500px;
+    border-radius: 15px;
+    max-width: 600px;
     width: 100%;
+    position: relative;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.closeButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: white;
+    cursor: pointer;
 }
 
 .modalTitle {
@@ -37,6 +53,8 @@
     border-radius: 4px;
     font-size: 16px;
     height: 100px;
+    background-color: #3d3d56;
+    color: white;
 }
 
 .modalRating {
@@ -58,10 +76,33 @@
 
 .submitButton {
     background-color: #4CAF50;
-    color: #fff;
+    color: white;
 }
 
 .cancelButton {
     background-color: #f44336;
-    color: #fff;
+    color: white;
+}
+
+.commentsSection {
+    margin-top: 20px;
+    background-color: #3d3d56;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.commentsTitle {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.comment {
+    background-color: #2A2544;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.comment p {
+    margin: 5px 0;
 }
