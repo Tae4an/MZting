@@ -131,3 +131,15 @@
     width: 200px; /* 버튼 너비 설정 */
     height: 60px; /* 버튼 높이 설정 */
 }
+
+.commentButton {
+    background-color: #2A2544;
+    color: white;
+    border: none;
+    padding: 15px 30px; /* 버튼의 패딩을 줄여 크기를 줄임 */
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.2rem; /* 버튼 폰트 크기 조절 */
+    width: 200px; /* 버튼 너비 설정 */
+    height: 60px; /* 버튼 높이 설정 */
+}
