@@ -2,7 +2,8 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from '../styles/MainPage.module.css';
 import { ProfileCard, ProfileDetailModal } from "../components";
-import { sendGetRequest } from "../services";
+import { sendGetRequest } from "../services/sendMessage";
+
 import { LoadingSpinner } from "../components";
 
 // 이미지 동적 import 함수

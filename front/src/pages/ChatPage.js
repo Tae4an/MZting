@@ -2,7 +2,7 @@ import React, { useEffect,useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styles from '../styles/ChatPage.module.css';
 import { ChatBox } from '../components';
-import { sendMessage } from '../services';
+import { sendMessage } from '../services/sendMessage';
 
 
 const ChatPage = () => {
