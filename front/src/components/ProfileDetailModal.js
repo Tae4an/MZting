@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styles from '../styles/ProfileDetailModal.module.css';
-import { ImageModal } from '../components';
+import { ImageModal, CommentModal } from '../components';
 
 const ProfileDetailModal = ({ show, onClose, profile, onClick, showChatButton }) => {
     const [showImageModal, setShowImageModal] = useState(false);
+    const [showCommentModal, setShowCommentModal] = useState(false);
 
     const handleImageClick = () => {
         setShowImageModal(true);
@@ -12,6 +13,14 @@ const ProfileDetailModal = ({ show, onClose, profile, onClick, showChatButton })
 
     const handleImageModalClose = () => {
         setShowImageModal(false);
+    };
+
+    const handleCommentClick = () => {
+        setShowCommentModal(true);
+    };
+
+    const handleCommentModalClose = () => {
+        setShowCommentModal(false);
     };
 
     const handleChatStart = () => {
@@ -64,6 +73,9 @@ const ProfileDetailModal = ({ show, onClose, profile, onClick, showChatButton })
                             <button className={styles.chatButton} onClick={handleChatStart}>대화 시작하기</button>
                         </div>
                     )}
+                    <div className={styles.buttonContainer}>
+                        <button className={styles.commentButton} onClick={handleCommentClick}>댓글 및 후기 작성</button>
+                    </div>
                 </div>
             </div>
             {showImageModal && (
@@ -71,6 +83,13 @@ const ProfileDetailModal = ({ show, onClose, profile, onClick, showChatButton })
                     show={showImageModal}
                     onClose={handleImageModalClose}
                     image={profile.image}
+                />
+            )}
+            {showCommentModal && (
+                <CommentModal
+                    show={showCommentModal}
+                    onClose={handleCommentModalClose}
+                    mbti={profile.type}
                 />
             )}
         </>
