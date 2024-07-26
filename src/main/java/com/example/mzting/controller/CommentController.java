@@ -1,6 +1,6 @@
 package com.example.mzting.controller;
 
-import com.example.mzting.DTO.CommentRequest;
+import com.example.mzting.dto.CommentRequest;
 import com.example.mzting.entity.Comment;
 import com.example.mzting.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;

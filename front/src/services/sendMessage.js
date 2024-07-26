@@ -2,8 +2,8 @@ import axios from "axios";
 
 const API_URL = 'http://localhost:8080';
 
-const sendMessage = async (message) => {
-    const mbti = "ENTP"
+const sendMessage = async (message,mbti) => {
+    console.log("Send Message :"+message+"MBTI:"+mbti)
     try {
         const response = await axios.post(`${API_URL}/api/ask-claude`,
             {

@@ -2,7 +2,8 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from '../styles/MainPage.module.css';
 import { ProfileCard, ProfileDetailModal } from "../components";
-import { sendGetRequest } from "../services";
+import { sendGetRequest } from "../services/sendMessage";
+
 import { LoadingSpinner } from "../components";
 
 // 이미지 동적 import 함수
@@ -107,7 +108,10 @@ const MainPage = () => {
                         <div className={styles.icon} />
                     </div>
                 </div>
-                <h2 className={styles.title}>추천</h2>
+                <div className={styles.subTitleContainer}>
+                    <h2 className={styles.subtitle}>추천</h2>
+                    <div className={styles.icon} />
+                </div>
             </header>
             <hr className={styles.divider} />
             {!isLoading && (<div className={styles.profileGrid}>
