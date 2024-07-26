@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styles from '../styles/CommentModal.module.css';
+import 'bootstrap-icons/font/bootstrap-icons.css'; // Bootstrap Icons CSS 포함
 
 const CommentModal = ({ show, onClose, mbti }) => {
     const [comment, setComment] = useState('');
@@ -47,31 +48,30 @@ const CommentModal = ({ show, onClose, mbti }) => {
                     <button className={styles.closeButton} onClick={onClose}>×</button>
                     <h2 className={styles.modalTitle}>{mbti}에 대한 댓글 및 후기</h2>
                     <form onSubmit={handleSubmit} className={styles.modalForm}>
-                        <textarea
-                            value={comment}
-                            onChange={(e) => setComment(e.target.value)}
-                            placeholder="댓글을 입력하세요"
-                            className={styles.modalTextarea}
-                        />
+                        <div className={styles.textareaAndButtons}>
+                            <textarea
+                                value={comment}
+                                onChange={(e) => setComment(e.target.value)}
+                                placeholder="댓글을 입력하세요"
+                                className={styles.modalTextarea}
+                            />
+                            <button type="submit" className={styles.submitButton}>제출</button>
+                        </div>
                         <div className={styles.modalRating}>
                             <button
                                 type="button"
                                 onClick={handleLike}
                                 className={`${styles.ratingButton} ${rating === '좋아요' ? styles.selected : ''}`}
                             >
-                                좋아요
+                                <i className="bi bi-hand-thumbs-up-fill"></i> {/* 좋아요 아이콘 */}
                             </button>
                             <button
                                 type="button"
                                 onClick={handleDislike}
                                 className={`${styles.ratingButton} ${rating === '싫어요' ? styles.selected : ''}`}
                             >
-                                싫어요
+                                <i className="bi bi-hand-thumbs-down-fill"></i> {/* 싫어요 아이콘 */}
                             </button>
-                        </div>
-                        <div className={styles.modalButtons}>
-                            <button type="submit" className={styles.submitButton}>제출</button>
-                            <button type="button" onClick={onClose} className={styles.cancelButton}>취소</button>
                         </div>
                     </form>
                     <div className={styles.commentsSection}>
