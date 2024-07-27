@@ -16,4 +16,9 @@ public class Situation {
 
     @OneToMany(mappedBy = "situation", cascade = CascadeType.ALL, orphanRemoval = true)
     private Collection<Choice> choices = new ArrayList<>();
+
+    public Collection<Choice> getChoices() {
+        return choices;
+    }
+
 }

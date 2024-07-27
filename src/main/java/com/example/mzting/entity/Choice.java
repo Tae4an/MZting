@@ -18,4 +18,12 @@ public class Choice {
     @JoinColumn(name = "next_situation_id")
     private Situation nextSituation;
 
+    public Integer getChoiceId() {
+        return choiceId;
+    }
+
+    public Situation getNextSituation() {
+        return nextSituation;
+    }
+
 }
