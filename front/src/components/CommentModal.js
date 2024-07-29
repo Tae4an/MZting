@@ -109,7 +109,12 @@ const CommentModal = ({ show, onClose, mbti }) => {
                                 <div key={id} className={styles.comment}>
                                     <p><strong>{user}</strong></p>
                                     <p>{comment}</p>
-                                    <p>{rating === '좋아요' ? '👍 좋아요' : '👎 싫어요'}</p>
+                                    <p>{rating === '좋아요' ? (
+                                            <i className="bi bi-hand-thumbs-up-fill" style={{ color: 'blue' }} />
+                                        ) : (
+                                            <i className="bi bi-hand-thumbs-down-fill" style={{ color: 'red' }} />
+                                        ) }
+                                    </p>
                                     <div className={styles.commentActions}>
                                         <button
                                             onClick={() => handleLike(id)}
