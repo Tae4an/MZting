@@ -25,7 +25,7 @@
 .subTitleContainer {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-end; /* 오른쪽 정렬을 위해 변경 */
     width: 100%;
 }
 
@@ -50,14 +50,16 @@
     height: 58px;
 }
 
-.subtitle {
+.subtitleButton {
     color: #d4d7f6;
     font: italic 800 45px/140% Roboto, sans-serif;
-    align-self: flex-start;
-    margin-right: 10px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    flex: 1;
+    margin: 36px 10px 10px;
+    display: flex;
+    align-items: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
 }
 
 .divider {
