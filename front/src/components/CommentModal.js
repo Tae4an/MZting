@@ -7,7 +7,7 @@ const CommentModal = ({ show, onClose, mbti }) => {
     const [comment, setComment] = useState('');
     const [rating, setRating] = useState(null); // "좋아요" 또는 "싫어요"로만 구분
     const [comments, setComments] = useState([]);
-    const [userActions, setUserActions] = useState({});
+    const [userActions, setUserActions] = useState({}); // 유저의 좋아요/싫어요 상태 저장
 
     useEffect(() => {
         if (show) {
@@ -36,13 +36,23 @@ const CommentModal = ({ show, onClose, mbti }) => {
     };
 
     const handleLike = (id) => {
-        setComments(comments.map(comment => comment.id === id ? { ...comment, likes: comment.likes + 1 } : comment));
-        setUserActions({ ...userActions, [id]: 'like' });
+        if (userActions[id] === 'like') {
+            setComments(comments.map(comment => comment.id === id ? { ...comment, likes: comment.likes - 1 } : comment));
+            setUserActions({ ...userActions, [id]: null });
+        } else {
+            setComments(comments.map(comment => comment.id === id ? { ...comment, likes: comment.likes + 1, dislikes: comment.dislikes - (userActions[id] === 'dislike' ? 1 : 0) } : comment));
+            setUserActions({ ...userActions, [id]: 'like' });
+        }
     };
 
     const handleDislike = (id) => {
-        setComments(comments.map(comment => comment.id === id ? { ...comment, dislikes: comment.dislikes + 1 } : comment));
-        setUserActions({ ...userActions, [id]: 'dislike' });
+        if (userActions[id] === 'dislike') {
+            setComments(comments.map(comment => comment.id === id ? { ...comment, dislikes: comment.dislikes - 1 } : comment));
+            setUserActions({ ...userActions, [id]: null });
+        } else {
+            setComments(comments.map(comment => comment.id === id ? { ...comment, dislikes: comment.dislikes + 1, likes: comment.likes - (userActions[id] === 'like' ? 1 : 0) } : comment));
+            setUserActions({ ...userActions, [id]: 'dislike' });
+        }
     };
 
     const handleRatingClick = (type) => {
@@ -94,14 +104,12 @@ const CommentModal = ({ show, onClose, mbti }) => {
                                         <button
                                             onClick={() => handleLike(id)}
                                             className={`${styles.actionButton} ${userActions[id] === 'like' ? styles.liked : ''}`}
-                                            disabled={!!userActions[id]}
                                         >
                                             <i className="bi bi-hand-thumbs-up"></i> {likes}
                                         </button>
                                         <button
                                             onClick={() => handleDislike(id)}
                                             className={`${styles.actionButton} ${userActions[id] === 'dislike' ? styles.disliked : ''}`}
-                                            disabled={!!userActions[id]}
                                         >
                                             <i className="bi bi-hand-thumbs-down"></i> {dislikes}
                                         </button>
