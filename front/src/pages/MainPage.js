@@ -1,9 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from '../styles/MainPage.module.css';
-import { ProfileCard, ProfileDetailModal } from "../components";
+import { ProfileCard, ProfileDetailModal, LoadingSpinner } from "../components";
 import { sendGetRequest } from "../services";
-import { LoadingSpinner } from "../components";
 
 // 이미지 동적 import 함수
 function importAll(r) {
@@ -62,8 +61,6 @@ const MainPage = () => {
         window.addEventListener('scroll', handleScroll);
         window.addEventListener('resize', handleScroll);
 
-        const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-
         const extractProfile = async () => {
             try {
                 const data = await sendGetRequest({}, "/api/profiles");
@@ -111,11 +108,15 @@ const MainPage = () => {
                 </div>
             </header>
             <hr className={styles.divider} />
-            {!isLoading && (<div className={styles.profileGrid}>
-                {profileData.map((profile) => (
-                    <ProfileCard key={profile.id} {...profile} onClick={() => handleProfileClick(profile)} />
-                ))}
-            </div>)}
+            {isLoading ? (
+                <LoadingSpinner />
+            ) : (
+                <div className={styles.profileGrid}>
+                    {profileData.map((profile) => (
+                        <ProfileCard key={profile.id} {...profile} onClick={() => handleProfileClick(profile)} />
+                    ))}
+                </div>
+            )}
             {showModal && (
                 <ProfileDetailModal
                     show={showModal}
@@ -139,7 +140,7 @@ const MainPage = () => {
 const transformProfileData = (data) => {
     return data.map((profile, index) => ({
         id: profile.profileId,
-        image: images[profile.characterImage] || images[`image${index + 1}.jpg`], // 기본 이미지 처리
+        image: images[profile.characterImage] || images[`image${index + 1}.jpg`],
         name: profile.name,
         type: `#${profile.mbti}`,
         tags: profile.characterKeywords.map(keyword => keyword.keyword.keyword).join(' '),
