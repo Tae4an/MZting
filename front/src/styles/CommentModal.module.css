@@ -147,10 +147,10 @@
     margin-left: 10px;
 }
 
-.actionButton.liked i {
+.liked {
     color: blue;
 }
 
-.actionButton.disliked i {
+.disliked {
     color: red;
 }
