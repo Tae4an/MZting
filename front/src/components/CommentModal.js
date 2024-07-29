@@ -16,9 +16,9 @@ const CommentModal = ({ show, onClose, mbti }) => {
 
     const fetchComments = async () => {
         const fetchedComments = [
-            { id: 1, user: 'User1', comment: '좋아요!', rating: '좋아요' },
-            { id: 2, user: 'User2', comment: '별로에요.', rating: '싫어요' },
-            { id: 3, user: '슬픈 공대생', comment: '실제로 연예인과 대화한다면 이런 느낌일까..', rating: '좋아요' }
+            { id: 1, user: 'User1', comment: '좋아요!', rating: '좋아요', likes: 19, dislikes: 1 },
+            { id: 2, user: 'User2', comment: '별로에요.', rating: '싫어요', likes: 3, dislikes: 25 },
+            { id: 3, user: '슬픈 공대생', comment: '실제로 연예인과 대화한다면 이런 느낌일까..', rating: '좋아요', likes: 30, dislikes: 3 }
         ];
         setComments(fetchedComments);
     };
@@ -26,19 +26,23 @@ const CommentModal = ({ show, onClose, mbti }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (comment.trim() && rating) {
-            const newComment = { id: comments.length + 1, user: '현재 사용자', comment, rating };
+            const newComment = { id: comments.length + 1, user: '현재 사용자', comment, rating, likes: 0, dislikes: 0 };
             setComments([...comments, newComment]);
             setComment('');
             setRating(null);
         }
     };
 
-    const handleLike = () => {
-        setRating('좋아요');
+    const handleLike = (id) => {
+        setComments(comments.map(comment => comment.id === id ? { ...comment, likes: comment.likes + 1 } : comment));
     };
 
-    const handleDislike = () => {
-        setRating('싫어요');
+    const handleDislike = (id) => {
+        setComments(comments.map(comment => comment.id === id ? { ...comment, dislikes: comment.dislikes + 1 } : comment));
+    };
+
+    const handleRatingClick = (type) => {
+        setRating(type);
     };
 
     return (
@@ -60,28 +64,36 @@ const CommentModal = ({ show, onClose, mbti }) => {
                         <div className={styles.modalRating}>
                             <button
                                 type="button"
-                                onClick={handleLike}
+                                onClick={() => handleRatingClick('좋아요')}
                                 className={`${styles.ratingButton} ${rating === '좋아요' ? styles.selected : ''}`}
                             >
-                                <i className="bi bi-hand-thumbs-up-fill"></i> {/* 좋아요 아이콘 */}
+                                <i className="bi bi-hand-thumbs-up-fill"></i>
                             </button>
                             <button
                                 type="button"
-                                onClick={handleDislike}
+                                onClick={() => handleRatingClick('싫어요')}
                                 className={`${styles.ratingButton} ${rating === '싫어요' ? styles.selected : ''}`}
                             >
-                                <i className="bi bi-hand-thumbs-down-fill"></i> {/* 싫어요 아이콘 */}
+                                <i className="bi bi-hand-thumbs-down-fill"></i>
                             </button>
                         </div>
                     </form>
                     <div className={styles.commentsSection}>
                         <h3 className={styles.commentsTitle}>댓글 및 후기</h3>
                         <div className={styles.commentsContainer}>
-                            {comments.map(({ id, user, comment, rating }) => (
+                            {comments.map(({ id, user, comment, rating, likes, dislikes }) => (
                                 <div key={id} className={styles.comment}>
                                     <p><strong>{user}</strong></p>
                                     <p>{comment}</p>
                                     <p>{rating === '좋아요' ? '👍 좋아요' : '👎 싫어요'}</p>
+                                    <div className={styles.commentActions}>
+                                        <button onClick={() => handleLike(id)} className={styles.actionButton}>
+                                            <i className="bi bi-hand-thumbs-up"></i> {likes}
+                                        </button>
+                                        <button onClick={() => handleDislike(id)} className={styles.actionButton}>
+                                            <i className="bi bi-hand-thumbs-down"></i> {dislikes}
+                                        </button>
+                                    </div>
                                 </div>
                             ))}
                         </div>
