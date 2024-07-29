@@ -36,21 +36,31 @@ const CommentModal = ({ show, onClose, mbti }) => {
     };
 
     const handleLike = (id) => {
-        if (userActions[id] === 'like') {
+        const currentAction = userActions[id];
+
+        if (currentAction === 'like') {
             setComments(comments.map(comment => comment.id === id ? { ...comment, likes: comment.likes - 1 } : comment));
             setUserActions({ ...userActions, [id]: null });
+        } else if (currentAction === 'dislike') {
+            setComments(comments.map(comment => comment.id === id ? { ...comment, likes: comment.likes + 1, dislikes: comment.dislikes - 1 } : comment));
+            setUserActions({ ...userActions, [id]: 'like' });
         } else {
-            setComments(comments.map(comment => comment.id === id ? { ...comment, likes: comment.likes + 1, dislikes: comment.dislikes - (userActions[id] === 'dislike' ? 1 : 0) } : comment));
+            setComments(comments.map(comment => comment.id === id ? { ...comment, likes: comment.likes + 1 } : comment));
             setUserActions({ ...userActions, [id]: 'like' });
         }
     };
 
     const handleDislike = (id) => {
-        if (userActions[id] === 'dislike') {
+        const currentAction = userActions[id];
+
+        if (currentAction === 'dislike') {
             setComments(comments.map(comment => comment.id === id ? { ...comment, dislikes: comment.dislikes - 1 } : comment));
             setUserActions({ ...userActions, [id]: null });
+        } else if (currentAction === 'like') {
+            setComments(comments.map(comment => comment.id === id ? { ...comment, dislikes: comment.dislikes + 1, likes: comment.likes - 1 } : comment));
+            setUserActions({ ...userActions, [id]: 'dislike' });
         } else {
-            setComments(comments.map(comment => comment.id === id ? { ...comment, dislikes: comment.dislikes + 1, likes: comment.likes - (userActions[id] === 'like' ? 1 : 0) } : comment));
+            setComments(comments.map(comment => comment.id === id ? { ...comment, dislikes: comment.dislikes + 1 } : comment));
             setUserActions({ ...userActions, [id]: 'dislike' });
         }
     };
