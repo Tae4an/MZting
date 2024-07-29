@@ -10,7 +10,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 10px 0;
+    padding: 10px 0 10px 0;
 }
 
 .mainTitleContainer {
@@ -27,6 +27,7 @@
     align-items: center;
     justify-content: flex-end; /* 오른쪽 정렬을 위해 변경 */
     width: 100%;
+    padding-top: 10px;
 }
 
 .mainTitle {
@@ -43,30 +44,39 @@
     gap: 10px; /* 아이콘 사이의 간격 */
 }
 
-.icon {
-    border-radius: 20px;
-    background-color: #c1bae7;
-    width: 58px;
-    height: 58px;
+.iconButton {
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 3rem;
+    color: #d4d7f6;
 }
 
 .subtitleButton {
+    background: #3d3d56; /* 기존 색상과 조화를 이루는 어두운 배경색 */
     color: #d4d7f6;
-    font: italic 800 45px/140% Roboto, sans-serif;
-    margin: 36px 10px 10px;
+    border: 2px solid #d4d7f6; /* 테두리 추가 */
+    border-radius: 8px; /* 둥근 모서리 */
+    padding: 10px 20px; /* 내부 여백 추가 */
+    font: italic 800 30px/140% Roboto, sans-serif;
     display: flex;
     align-items: center;
-    background: none;
-    border: none;
     cursor: pointer;
-    padding: 0;
+    transition: background 0.3s, color 0.3s, transform 0.3s; /* 부드러운 전환 효과 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+}
+
+.subtitleButton:hover {
+    background: #4b4b65; /* 약간 더 밝은 색상으로 변경 */
+    color: #ffffff; /* 텍스트 색상을 약간 더 밝게 변경 */
+    transform: scale(1.05); /* 약간 확대 효과 */
 }
 
 .divider {
     border: none;
     height: 4px;
     background-color: #fff;
-    margin: 16px 0;
+    margin: 0 0 10px;
 }
 
 .profileGrid {
