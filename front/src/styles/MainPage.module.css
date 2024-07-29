@@ -50,6 +50,12 @@
     cursor: pointer;
     font-size: 3rem;
     color: #d4d7f6;
+    transition: transform 0.3s, color 0.3s; /* 부드러운 전환 효과 추가 */
+}
+
+.iconButton:hover {
+    color: #ffffff; /* 아이콘 색상 변경 */
+    transform: scale(1.1); /* 약간 확대 효과 */
 }
 
 .subtitleButton {
@@ -134,4 +140,23 @@
     .profileGrid {
         grid-template-columns: 1fr;
     }
+}
+
+/* 공통 버튼 스타일 */
+button {
+    background: #3d3d56;
+    color: #d4d7f6;
+    border: 2px solid #d4d7f6;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s, transform 0.3s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+    background: #4b4b65;
+    color: #ffffff;
+    transform: scale(1.05);
 }
