@@ -41,7 +41,7 @@ const MainPage = () => {
     const [selectedProfile, setSelectedProfile] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [profileData, setProfileData] = useState([]);
-    const mainContentRef = useRef(null); // 가운데 영역을 참조하기 위한 ref
+    const mainContentRef = useRef(null);
     const navigate = useNavigate();
 
     const handleScroll = () => {
@@ -67,7 +67,6 @@ const MainPage = () => {
         const extractProfile = async () => {
             try {
                 const data = await sendGetRequest({}, "/api/profiles");
-                console.log(data);
                 const transformedData = transformProfileData(data);
                 transformedData.push({ id: 17, image: images['imageR.jpg'], name: "???", type: "#????", tags: "#모든 것이 랜덤입니다!", age: "???", height: "???", job: "???", hobbies: "???", description: "선택 장애가 온 당신! 모든 것을 랜덤에 맡겨보는 건 어떨까요?" })
                 setProfileData(transformedData);
@@ -108,8 +107,7 @@ const MainPage = () => {
                     </div>
                 </div>
                 <div className={styles.subTitleContainer}>
-                    <h2 className={styles.subtitle}>추천</h2>
-                    <div className={styles.icon} />
+                    <button className={styles.subtitleButton}>추천</button>
                 </div>
             </header>
             <hr className={styles.divider} />
