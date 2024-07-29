@@ -146,3 +146,11 @@
     cursor: pointer;
     margin-left: 10px;
 }
+
+.actionButton.liked i {
+    color: blue;
+}
+
+.actionButton.disliked i {
+    color: red;
+}
