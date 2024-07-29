@@ -87,8 +87,12 @@
     opacity: 0.7;
 }
 
-.selected {
-    background-color: #4CAF50;
+.like {
+    background-color: blue;
+}
+
+.dislike {
+    background-color: red;
 }
 
 .modalButtons {
