@@ -89,14 +89,14 @@ const CommentModal = ({ show, onClose, mbti }) => {
                             <button
                                 type="button"
                                 onClick={() => handleRatingClick('좋아요')}
-                                className={`${styles.ratingButton} ${rating === '좋아요' ? styles.selected : ''}`}
+                                className={`${styles.ratingButton} ${rating === '좋아요' ? styles.like : ''}`}
                             >
                                 <i className="bi bi-hand-thumbs-up-fill"></i>
                             </button>
                             <button
                                 type="button"
                                 onClick={() => handleRatingClick('싫어요')}
-                                className={`${styles.ratingButton} ${rating === '싫어요' ? styles.selected : ''}`}
+                                className={`${styles.ratingButton} ${rating === '싫어요' ? styles.dislike : ''}`}
                             >
                                 <i className="bi bi-hand-thumbs-down-fill"></i>
                             </button>
