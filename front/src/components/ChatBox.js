@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
-import { ProfileDetailModal } from '../components';
+import { ProfileDetailModal, TypingIndicator } from '../components'; // TypingIndicator 추가
 import styles from '../styles/ChatBox.module.css';
 
 const ChatBox = ({ image, name, profileDetails, messages, onSendMessage }) => {
     const [showModal, setShowModal] = useState(false);
     const [inputMessage, setInputMessage] = useState('');
+    const [isTyping, setIsTyping] = useState(false); // 타이핑 상태 추가
     const navigate = useNavigate();
 
     const handleBackClick = () => {
@@ -26,8 +27,16 @@ const ChatBox = ({ image, name, profileDetails, messages, onSendMessage }) => {
         if (inputMessage.trim()) {
             onSendMessage(inputMessage);
             setInputMessage('');
+            setIsTyping(true); // 타이핑 시작
         }
     };
+
+    useEffect(() => {
+        const lastMessage = messages[messages.length - 1];
+        if (lastMessage && !lastMessage.isSent) {
+            setIsTyping(false); // AI 응답이 오면 타이핑 중지
+        }
+    }, [messages]);
 
     return (
         <section className={styles.chatContainer}>
@@ -49,6 +58,7 @@ const ChatBox = ({ image, name, profileDetails, messages, onSendMessage }) => {
                         avatar={message.isSent ? null : image}
                     />
                 ))}
+                {isTyping && <TypingIndicator />} {/* 타이핑 인디케이터 표시 */}
             </div>
             <form onSubmit={handleSubmit} className={styles.inputArea}>
                 <input
