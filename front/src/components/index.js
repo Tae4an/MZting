@@ -10,6 +10,8 @@ import { ImageModal } from "./ImageModal";
 import { SignupForm } from './SignupForm'
 import { LoadingSpinner } from "./LoadingSpinner";
 import { CommentModal } from "./CommentModal";
+import { TypingIndicator } from "./TypingIndicator";
+
 
 export {
     LoginForm,
@@ -23,5 +25,6 @@ export {
     LoadingSpinner,
     ImageModal,
     SignupForm,
-    CommentModal
+    CommentModal,
+    TypingIndicator
 }
