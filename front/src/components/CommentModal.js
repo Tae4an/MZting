@@ -7,6 +7,7 @@ const CommentModal = ({ show, onClose, mbti }) => {
     const [comment, setComment] = useState('');
     const [rating, setRating] = useState(null); // "좋아요" 또는 "싫어요"로만 구분
     const [comments, setComments] = useState([]);
+    const [userActions, setUserActions] = useState({});
 
     useEffect(() => {
         if (show) {
@@ -16,9 +17,10 @@ const CommentModal = ({ show, onClose, mbti }) => {
 
     const fetchComments = async () => {
         const fetchedComments = [
-            { id: 1, user: 'User1', comment: '좋아요!', rating: '좋아요', likes: 19, dislikes: 1 },
-            { id: 2, user: 'User2', comment: '별로에요.', rating: '싫어요', likes: 3, dislikes: 25 },
-            { id: 3, user: '슬픈 공대생', comment: '실제로 연예인과 대화한다면 이런 느낌일까..', rating: '좋아요', likes: 30, dislikes: 3 }
+            { id: 1, user: '엠제팅화이팅', comment: '좋아요!', rating: '좋아요', likes: 19, dislikes: 1 },
+            { id: 2, user: '프로불편러', comment: '별로에요.', rating: '싫어요', likes: 3, dislikes: 25 },
+            { id: 3, user: '슬픈 공대생', comment: '실제로 연예인과 대화한다면 이런 느낌일까..', rating: '좋아요', likes: 30, dislikes: 3 },
+            { id: 4, user: '빅빅', comment: '이게 뭐가 재밌다고 그러냐 씹덕들', rating: '싫어요', likes: 2, dislikes: 50 }
         ];
         setComments(fetchedComments);
     };
@@ -35,10 +37,12 @@ const CommentModal = ({ show, onClose, mbti }) => {
 
     const handleLike = (id) => {
         setComments(comments.map(comment => comment.id === id ? { ...comment, likes: comment.likes + 1 } : comment));
+        setUserActions({ ...userActions, [id]: 'like' });
     };
 
     const handleDislike = (id) => {
         setComments(comments.map(comment => comment.id === id ? { ...comment, dislikes: comment.dislikes + 1 } : comment));
+        setUserActions({ ...userActions, [id]: 'dislike' });
     };
 
     const handleRatingClick = (type) => {
@@ -87,10 +91,18 @@ const CommentModal = ({ show, onClose, mbti }) => {
                                     <p>{comment}</p>
                                     <p>{rating === '좋아요' ? '👍 좋아요' : '👎 싫어요'}</p>
                                     <div className={styles.commentActions}>
-                                        <button onClick={() => handleLike(id)} className={styles.actionButton}>
+                                        <button
+                                            onClick={() => handleLike(id)}
+                                            className={`${styles.actionButton} ${userActions[id] === 'like' ? styles.liked : ''}`}
+                                            disabled={!!userActions[id]}
+                                        >
                                             <i className="bi bi-hand-thumbs-up"></i> {likes}
                                         </button>
-                                        <button onClick={() => handleDislike(id)} className={styles.actionButton}>
+                                        <button
+                                            onClick={() => handleDislike(id)}
+                                            className={`${styles.actionButton} ${userActions[id] === 'dislike' ? styles.disliked : ''}`}
+                                            disabled={!!userActions[id]}
+                                        >
                                             <i className="bi bi-hand-thumbs-down"></i> {dislikes}
                                         </button>
                                     </div>
