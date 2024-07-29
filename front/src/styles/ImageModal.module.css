@@ -36,4 +36,5 @@
     max-width: 90vw;
     max-height: 90vh;
     border-radius: 10px;
+    object-fit: contain; /* 이미지 비율을 유지하며 컨테이너에 맞춤 */
 }
