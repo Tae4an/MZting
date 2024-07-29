@@ -131,9 +131,6 @@
 }
 
 .commentButton {
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
     background-color: #2A2544;
     color: white;
     border: none;
@@ -145,4 +142,13 @@
     height: 60px;
     z-index: 1000;
     position: fixed;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: background 0.3s, transform 0.3s; /* 부드러운 전환 효과 */
+}
+
+.commentButton:hover {
+    background-color: #3d3d56; /* 색상 변경 */
+    transform: translateX(-50%) scale(1.05); /* 버튼 크기 확대 */
 }
