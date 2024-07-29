@@ -1,0 +1,11 @@
+.typingIndicator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.typingIndicator img {
+    width: 50px; /* 필요한 크기로 조정 */
+    height: auto;
+}
