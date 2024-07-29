@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styles from '../styles/MainPage.module.css';
 import { ProfileCard, ProfileDetailModal, LoadingSpinner } from "../components";
 import { sendGetRequest } from "../services";
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 // 이미지 동적 import 함수
 function importAll(r) {
@@ -99,8 +100,12 @@ const MainPage = () => {
                 <div className={styles.mainTitleContainer}>
                     <h1 className={styles.mainTitle}>mzting</h1>
                     <div className={styles.iconContainer}>
-                        <div className={styles.icon} />
-                        <div className={styles.icon} />
+                        <button className={styles.iconButton}>
+                            <i className="bi bi-chat-dots-fill"></i>
+                        </button>
+                        <button className={styles.iconButton}>
+                            <i className="bi bi-gear-fill"></i>
+                        </button>
                     </div>
                 </div>
                 <div className={styles.subTitleContainer}>
