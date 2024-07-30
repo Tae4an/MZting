@@ -94,6 +94,10 @@ const MainPage = () => {
         navigate('/chat', { state: selectedProfile });
     };
 
+    const handleSettingsClick = () => {
+        navigate('/settings');
+    };
+
     return (
         <div ref={mainContentRef} className={styles.mainContent}>
             <header className={styles.header}>
@@ -103,7 +107,7 @@ const MainPage = () => {
                         <button className={styles.iconButton}>
                             <i className="bi bi-chat-dots-fill"></i>
                         </button>
-                        <button className={styles.iconButton}>
+                        <button className={styles.iconButton} onClick={handleSettingsClick}>
                             <i className="bi bi-gear-fill"></i>
                         </button>
                     </div>
