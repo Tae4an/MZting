@@ -1,0 +1,114 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    height: 96vh;
+    width: 100%;
+    background-color: rgba(1, 0, 9, 0.9);
+    color: #ffffff;
+    padding: 20px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border-bottom: 10px solid #d4d7f6;
+    padding-bottom: 10px;
+    background-color: rgba(1, 0, 9, 0.9);
+}
+
+.backButton {
+    background: none;
+    border: none;
+    color: #ffffff;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.title {
+    font-size: 3rem;
+    color: #d4d7f6;
+    font-style: italic;
+    font-weight: bold;
+    margin-left: 10px;
+    flex: 1;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+}
+
+.card {
+    background-color: rgba(117, 109, 161, 0.41);
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.cardContent {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.conversationInfo {
+    display: flex;
+    align-items: center;
+}
+
+.avatarWrapper {
+    margin-right: 10px;
+}
+
+.avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.titleWrapper {
+    flex-grow: 1;
+}
+
+.conversationTitle {
+    font-size: 1.5rem;
+    color: #d4d7f6;
+}
+
+.statusWrapper {
+    display: flex;
+    align-items: center;
+}
+
+.status {
+    font-size: 1rem;
+    color: #d4d7f6;
+    margin-right: 10px;
+}
+
+.actionButton {
+    background-color: #c1bae7;
+    color: #000;
+    border: none;
+    border-radius: 25px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 10px;
+    align-self: flex-start;
+}
+
+.scrollIndicator {
+    position: fixed;
+    border-radius: 15px;
+    background-color: #978cc2;
+    width: 18px;
+    height: 129px;
+    top: 0;
+    align-self: flex-end;
+    margin-top: 20px;
+}
