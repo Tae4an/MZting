@@ -9,6 +9,7 @@ import { SignupForm } from './SignupForm'
 import { LoadingSpinner } from "./LoadingSpinner";
 import { CommentModal } from "./CommentModal";
 import { TypingIndicator } from "./TypingIndicator";
+import { RecommendModal } from "./RecommendModal";
 
 
 export {
@@ -22,5 +23,6 @@ export {
     ImageModal,
     SignupForm,
     CommentModal,
-    TypingIndicator
+    TypingIndicator,
+    RecommendModal
 }
