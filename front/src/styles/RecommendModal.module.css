@@ -5,7 +5,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.7);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -13,11 +13,18 @@
 }
 
 .modal {
-    background: #fff;
-    border-radius: 8px;
-    width: 80%;
-    max-width: 500px;
+    background: #423F54;
     padding: 20px;
+    border-radius: 15px;
+    max-width: 1000px;
+    width: 100%;
+    max-height: 800px;
+    height: 80%;
+    position: relative;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     animation: slide-down 0.3s ease-out forwards;
 }
@@ -40,6 +47,7 @@
     border-bottom: 1px solid #eaeaea;
     padding-bottom: 10px;
     margin-bottom: 20px;
+    color: white;
 }
 
 .modalHeader h2 {
@@ -47,13 +55,20 @@
 }
 
 .closeButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
     background: none;
     border: none;
     font-size: 1.5rem;
+    color: white;
     cursor: pointer;
 }
 
 .modalBody {
-    font-size: 1rem;
+    font-size: 1.2rem;
     line-height: 1.5;
+    text-align: left;
+    overflow-y: auto;
+    flex: 1;
 }
