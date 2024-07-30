@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
-import { ProfileDetailModal } from '../components';
+import { ProfileDetailModal, TypingIndicator } from '../components';
 import ChoiceModal from './ChoiceModal';
 import styles from '../styles/ChatBox.module.css';
 
@@ -18,6 +18,7 @@ const ChatBox = ({
                  }) => {
     const [showProfileModal, setShowProfileModal] = useState(false);
     const [inputMessage, setInputMessage] = useState('');
+    const [isTyping, setIsTyping] = useState(false);
     const navigate = useNavigate();
 
     const handleBackClick = () => {
@@ -37,8 +38,16 @@ const ChatBox = ({
         if (inputMessage.trim()) {
             onSendMessage(inputMessage);
             setInputMessage('');
+            setIsTyping(true); // TypingIndicator 표시 시작
         }
     };
+
+    useEffect(() => {
+        const lastMessage = messages[messages.length - 1];
+        if (lastMessage && !lastMessage.isSent) {
+            setIsTyping(false); // AI 응답이 오면 TypingIndicator 중지
+        }
+    }, [messages]);
 
     return (
         <section className={styles.chatContainer}>
@@ -60,6 +69,12 @@ const ChatBox = ({
                         avatar={message.isSent ? null : image}
                     />
                 ))}
+                {isTyping && (
+                    <div className={styles.messageWrapper} style={{ justifyContent: 'flex-start' }}>
+                        <img src={image} alt="Avatar" className={styles.messageAvatar} />
+                        <TypingIndicator />
+                    </div>
+                )}
             </div>
             <form onSubmit={handleSubmit} className={styles.inputArea}>
                 <input
