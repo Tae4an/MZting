@@ -6,7 +6,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css'; // Bootstrap Icons CSS 포함
 
 const CommentModal = ({ show, onClose, mbti }) => {
     const [comment, setComment] = useState('');
-    const [rating, setRating] = useState(null); // 초기값을 null로 설정
+    const [rating, setRating] = useState(null); // 초기값은 null로 설정
     const [comments, setComments] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -31,7 +31,16 @@ const CommentModal = ({ show, onClose, mbti }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (comment.trim() && rating !== null) {
-            const newComment = { id: comments.length + 1, username: '현재 사용자', content: comment, isLike: rating, likeCount: 0, dislikeCount: 0, userLiked: false, userDisliked: false };
+            const newComment = {
+                id: comments.length + 1,
+                username: '현재 사용자',
+                content: comment,
+                isLike: rating,
+                likeCount: 0,
+                dislikeCount: 0,
+                userLiked: false,
+                userDisliked: false
+            };
             setComments([...comments, newComment]);
             setComment('');
             setRating(null);
@@ -67,7 +76,13 @@ const CommentModal = ({ show, onClose, mbti }) => {
                     if (c.userLiked) {
                         return { ...c, likeCount: c.likeCount - 1, userLiked: false };
                     } else {
-                        return { ...c, likeCount: c.likeCount + 1, dislikeCount: c.userDisliked ? c.dislikeCount - 1 : c.dislikeCount, userLiked: true, userDisliked: false };
+                        return {
+                            ...c,
+                            likeCount: c.likeCount + 1,
+                            userLiked: true,
+                            userDisliked: false,
+                            dislikeCount: c.userDisliked ? c.dislikeCount - 1 : c.dislikeCount
+                        };
                     }
                 }
                 return c;
@@ -82,7 +97,13 @@ const CommentModal = ({ show, onClose, mbti }) => {
                     if (c.userDisliked) {
                         return { ...c, dislikeCount: c.dislikeCount - 1, userDisliked: false };
                     } else {
-                        return { ...c, dislikeCount: c.dislikeCount + 1, likeCount: c.userLiked ? c.likeCount - 1 : c.likeCount, userDisliked: true, userLiked: false };
+                        return {
+                            ...c,
+                            dislikeCount: c.dislikeCount + 1,
+                            userDisliked: true,
+                            userLiked: false,
+                            likeCount: c.userLiked ? c.likeCount - 1 : c.likeCount
+                        };
                     }
                 }
                 return c;
@@ -144,13 +165,13 @@ const CommentModal = ({ show, onClose, mbti }) => {
                                             onClick={() => toggleLike(id)}
                                             className={`${styles.actionButton} ${userLiked ? styles.liked : ''}`}
                                         >
-                                            <i className="bi bi-hand-thumbs-up"></i> {likeCount}
+                                            <i className={`bi ${userLiked ? 'bi-hand-thumbs-up-fill' : 'bi-hand-thumbs-up'}`}></i> {likeCount}
                                         </button>
                                         <button
                                             onClick={() => toggleDislike(id)}
                                             className={`${styles.actionButton} ${userDisliked ? styles.disliked : ''}`}
                                         >
-                                            <i className="bi bi-hand-thumbs-down"></i> {dislikeCount}
+                                            <i className={`bi ${userDisliked ? 'bi-hand-thumbs-down-fill' : 'bi-hand-thumbs-down'}`}></i> {dislikeCount}
                                         </button>
                                     </div>
                                 </div>
