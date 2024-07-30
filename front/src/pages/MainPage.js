@@ -94,6 +94,10 @@ const MainPage = () => {
         navigate('/chat', { state: selectedProfile });
     };
 
+    const handleHistoryClick = () => {
+        navigate('/history');
+    };
+
     const handleSettingsClick = () => {
         navigate('/settings');
     };
@@ -104,7 +108,7 @@ const MainPage = () => {
                 <div className={styles.mainTitleContainer}>
                     <h1 className={styles.mainTitle}>mzting</h1>
                     <div className={styles.iconContainer}>
-                        <button className={styles.iconButton}>
+                        <button className={styles.iconButton} onClick={handleHistoryClick}>
                             <i className="bi bi-chat-dots-fill"></i>
                         </button>
                         <button className={styles.iconButton} onClick={handleSettingsClick}>
