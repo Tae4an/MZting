@@ -35,7 +35,8 @@
     color: #d4d7f6;
     font-style: italic;
     font-weight: bold;
-    margin-right: 10px; /* 아이콘과 간격을 벌리기 위해 오른쪽 여백 추가 */
+    margin-right: 10px;
+    margin-left: 10px;
     flex: 1;
 }
 
