@@ -1,5 +1,5 @@
 import { LoginPage } from "./LoginPage"
-import { HistoryListPage } from "./HistoryListPage";
+import { HistoryPage } from "./HistoryPage";
 import { MainPage } from "./MainPage";
 import { ChatPage } from "./ChatPage"
 import { ResultPage } from "./ResultPage";
@@ -8,7 +8,7 @@ import { SettingsPage } from "./SettingsPage"
 
 export {
     LoginPage,
-    HistoryListPage,
+    HistoryPage,
     MainPage,
     ChatPage,
     ResultPage,
