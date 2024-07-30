@@ -1,0 +1,67 @@
+.settingsContainer {
+    display: flex;
+    flex-direction: column;
+    height: 96vh;
+    width: 100%;
+    background-color: rgba(1, 0, 9, 0.9);
+    color: #ffffff;
+    padding: 20px;
+}
+
+.settingsHeader {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border-bottom: 10px solid #d4d7f6;
+    padding-bottom: 10px;
+    background-color: rgba(1, 0, 9, 0.9);
+}
+
+.backButton {
+    background: none;
+    border: none;
+    color: #ffffff;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.settingsTitle {
+    font-size: 3rem;
+    color: #d4d7f6;
+    font-style: italic;
+    font-weight: bold;
+    margin-left: 10px; /* 아이콘과 간격을 벌리기 위해 오른쪽 여백 추가 */
+    flex: 1;
+}
+
+.settingsContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+.logoutButton {
+    font-style: italic;
+    font-weight: bold;
+    background-color: #ff4757;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 20px;
+}
+
+.scrollIndicator {
+    position: fixed;
+    border-radius: 15px;
+    background-color: #978cc2;
+    width: 18px;
+    height: 129px;
+    top: 0;
+    align-self: flex-end;
+    margin-top: 20px;
+}
