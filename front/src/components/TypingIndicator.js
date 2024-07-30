@@ -1,10 +1,10 @@
 import React from 'react';
-import styles from '../styles/TypingIndicator.module.css';
+import typing from '../assets/TypingEllipse.gif';
 
 const TypingIndicator = () => {
     return (
-        <div className={styles.typingIndicator}>
-            <img src="/path/to/your/loading-indicator.gif" alt="Typing..." />
+        <div style={{ display: 'flex', alignItems: 'center', marginLeft: '10px' }}>
+            <img src={typing} alt="Typing..." style={{ width: '65px', height: '45px', backgroundColor: '#3D3D56', borderRadius: '20px', objectFit: 'cover' }} />
         </div>
     );
 };
