@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import { ProfileDetailModal, TypingIndicator } from '../components';
-import ChoiceModal from './ChoiceModal';
 import styles from '../styles/ChatBox.module.css';
+import ChoiceModal from './ChoiceModal';
 
 const ChatBox = ({
                      image,
@@ -20,6 +20,7 @@ const ChatBox = ({
     const [inputMessage, setInputMessage] = useState('');
     const [isTyping, setIsTyping] = useState(false);
     const navigate = useNavigate();
+    const messagesEndRef = useRef(null);
 
     const handleBackClick = () => {
         navigate(-1);
@@ -49,6 +50,14 @@ const ChatBox = ({
         }
     }, [messages]);
 
+    const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    };
+
+    useEffect(() => {
+        scrollToBottom();
+    }, [messages, isTyping]);
+
     return (
         <section className={styles.chatContainer}>
             <header className={styles.chatHeader}>
@@ -75,6 +84,7 @@ const ChatBox = ({
                         <TypingIndicator />
                     </div>
                 )}
+                <div ref={messagesEndRef} />
             </div>
             <form onSubmit={handleSubmit} className={styles.inputArea}>
                 <input
