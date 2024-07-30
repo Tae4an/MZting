@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from '../styles/MainPage.module.css';
-import { ProfileCard, ProfileDetailModal, LoadingSpinner } from "../components";
-import { sendGetRequest } from "../services";
+import { ProfileCard, ProfileDetailModal } from "../components";
+import { sendGetRequest } from "../services/sendMessage";
+import { LoadingSpinner } from "../components";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 // 이미지 동적 import 함수

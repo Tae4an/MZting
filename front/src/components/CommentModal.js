@@ -1,13 +1,20 @@
 import React, { useState, useEffect } from 'react';
+import { sendGetRequest, sendPostRequest } from '../services'
 import PropTypes from 'prop-types';
 import styles from '../styles/CommentModal.module.css';
 import 'bootstrap-icons/font/bootstrap-icons.css'; // Bootstrap Icons CSS 포함
 
+// const fetchedComments = [
+//     { id: 1, user: 'User1', comment: '좋아요!', rating: '좋아요' },
+//     { id: 2, user: 'User2', comment: '별로에요.', rating: '싫어요' },
+//     { id: 3, user: '슬픈 공대생', comment: '실제로 연예인과 대화한다면 이런 느낌일까..', rating: '좋아요' }
+// ];
+
 const CommentModal = ({ show, onClose, mbti }) => {
     const [comment, setComment] = useState('');
-    const [rating, setRating] = useState(null); // "좋아요" 또는 "싫어요"로만 구분
+    const [rating, setRating] = useState(true); // "좋아요" 또는 "싫어요"로만 구분
     const [comments, setComments] = useState([]);
-    const [userActions, setUserActions] = useState({}); // 유저의 좋아요/싫어요 상태 저장
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         if (show) {
@@ -16,58 +23,43 @@ const CommentModal = ({ show, onClose, mbti }) => {
     }, [show]);
 
     const fetchComments = async () => {
-        const fetchedComments = [
-            { id: 1, user: '엠제팅화이팅', comment: '좋아요!', rating: '좋아요', likes: 19, dislikes: 1 },
-            { id: 2, user: '프로불편러', comment: '별로에요.', rating: '싫어요', likes: 3, dislikes: 25 },
-            { id: 3, user: '슬픈 공대생', comment: '실제로 연예인과 대화한다면 이런 느낌일까..', rating: '좋아요', likes: 30, dislikes: 3 },
-            { id: 4, user: '빅빅', comment: '이게 뭐가 재밌다고 그러냐 씹덕들', rating: '싫어요', likes: 2, dislikes: 50 }
-        ];
-        setComments(fetchedComments);
+        const fetchedComments = await sendGetRequest({}, '/api/posts/1/comments')
+        const extractedComments = fetchedComments.commentInfos
+        console.log(extractedComments)
+        setComments(extractedComments);
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if (comment.trim() && rating) {
-            const newComment = { id: comments.length + 1, user: '현재 사용자', comment, rating, likes: 0, dislikes: 0 };
+            const newComment = { id: comments.length + 1, user: '현재 사용자', comment, rating };
             setComments([...comments, newComment]);
             setComment('');
             setRating(null);
         }
     };
 
-    const handleLike = (id) => {
-        const currentAction = userActions[id];
+    const handleLike = () => {
+        setRating(true);
+    };
 
-        if (currentAction === 'like') {
-            setComments(comments.map(comment => comment.id === id ? { ...comment, likes: comment.likes - 1 } : comment));
-            setUserActions({ ...userActions, [id]: null });
-        } else if (currentAction === 'dislike') {
-            setComments(comments.map(comment => comment.id === id ? { ...comment, likes: comment.likes + 1, dislikes: comment.dislikes - 1 } : comment));
-            setUserActions({ ...userActions, [id]: 'like' });
-        } else {
-            setComments(comments.map(comment => comment.id === id ? { ...comment, likes: comment.likes + 1 } : comment));
-            setUserActions({ ...userActions, [id]: 'like' });
+    const handleDislike = () => {
+        setRating(false);
+    };
+
+    const handleRequestComment = async () => {
+        const data = {
+            userId : 2,
+            content : comment,
+            isLike : rating
         }
-    };
-
-    const handleDislike = (id) => {
-        const currentAction = userActions[id];
-
-        if (currentAction === 'dislike') {
-            setComments(comments.map(comment => comment.id === id ? { ...comment, dislikes: comment.dislikes - 1 } : comment));
-            setUserActions({ ...userActions, [id]: null });
-        } else if (currentAction === 'like') {
-            setComments(comments.map(comment => comment.id === id ? { ...comment, dislikes: comment.dislikes + 1, likes: comment.likes - 1 } : comment));
-            setUserActions({ ...userActions, [id]: 'dislike' });
-        } else {
-            setComments(comments.map(comment => comment.id === id ? { ...comment, dislikes: comment.dislikes + 1 } : comment));
-            setUserActions({ ...userActions, [id]: 'dislike' });
+        try {
+            await sendPostRequest(data, "/api/posts/1/comments")
+            alert("댓글 저장 완료");
+        } catch (e) {
+            alert("댓글 저장 실패");
         }
-    };
-
-    const handleRatingClick = (type) => {
-        setRating(type);
-    };
+    }
 
     return (
         show ? (
@@ -83,52 +75,33 @@ const CommentModal = ({ show, onClose, mbti }) => {
                                 placeholder="댓글을 입력하세요"
                                 className={styles.modalTextarea}
                             />
-                            <button type="submit" className={styles.submitButton}>제출</button>
+                            <button type="submit" onClick={handleRequestComment} className={styles.submitButton}>제출</button>
                         </div>
                         <div className={styles.modalRating}>
                             <button
                                 type="button"
-                                onClick={() => handleRatingClick('좋아요')}
-                                className={`${styles.ratingButton} ${rating === '좋아요' ? styles.like : ''}`}
+                                onClick={handleLike}
+                                className={`${styles.ratingButton} ${rating === '좋아요' ? styles.selected : ''}`}
                             >
-                                <i className="bi bi-hand-thumbs-up-fill"></i>
+                                <i className="bi bi-hand-thumbs-up-fill"></i> {/* 좋아요 아이콘 */}
                             </button>
                             <button
                                 type="button"
-                                onClick={() => handleRatingClick('싫어요')}
-                                className={`${styles.ratingButton} ${rating === '싫어요' ? styles.dislike : ''}`}
+                                onClick={handleDislike}
+                                className={`${styles.ratingButton} ${rating === '싫어요' ? styles.selected : ''}`}
                             >
-                                <i className="bi bi-hand-thumbs-down-fill"></i>
+                                <i className="bi bi-hand-thumbs-down-fill"></i> {/* 싫어요 아이콘 */}
                             </button>
                         </div>
                     </form>
                     <div className={styles.commentsSection}>
                         <h3 className={styles.commentsTitle}>댓글 및 후기</h3>
                         <div className={styles.commentsContainer}>
-                            {comments.map(({ id, user, comment, rating, likes, dislikes }) => (
+                            {comments.map(({ id, username, content, isLike }) => (
                                 <div key={id} className={styles.comment}>
-                                    <p><strong>{user}</strong></p>
-                                    <p>{comment}</p>
-                                    <p>{rating === '좋아요' ? (
-                                            <i className="bi bi-hand-thumbs-up-fill" style={{ color: 'blue' }} />
-                                        ) : (
-                                            <i className="bi bi-hand-thumbs-down-fill" style={{ color: 'red' }} />
-                                        ) }
-                                    </p>
-                                    <div className={styles.commentActions}>
-                                        <button
-                                            onClick={() => handleLike(id)}
-                                            className={`${styles.actionButton} ${userActions[id] === 'like' ? styles.liked : ''}`}
-                                        >
-                                            <i className="bi bi-hand-thumbs-up"></i> {likes}
-                                        </button>
-                                        <button
-                                            onClick={() => handleDislike(id)}
-                                            className={`${styles.actionButton} ${userActions[id] === 'dislike' ? styles.disliked : ''}`}
-                                        >
-                                            <i className="bi bi-hand-thumbs-down"></i> {dislikes}
-                                        </button>
-                                    </div>
+                                    <p><strong>{username}</strong></p>
+                                    <p>{content}</p>
+                                    <p>{isLike === true ? '👍 좋아요' : '👎 싫어요'}</p>
                                 </div>
                             ))}
                         </div>
