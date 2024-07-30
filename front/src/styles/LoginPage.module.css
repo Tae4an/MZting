@@ -65,7 +65,7 @@
 }
 
 .inputGroup input {
-    width: 100%;
+    width: calc(100% - 24px); /* 오른쪽 여백 추가 */
     padding: 0.8rem;
     background-color: #484461;
     border: none;
@@ -100,6 +100,7 @@
         flex: 1;
     }
 }
+
 .iconButton {
     background-color: transparent;
     border: none;
