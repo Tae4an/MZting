@@ -2,10 +2,21 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import { ProfileDetailModal } from '../components';
+import ChoiceModal from './ChoiceModal';
 import styles from '../styles/ChatBox.module.css';
 
-const ChatBox = ({ image, name, profileDetails, messages, onSendMessage }) => {
-    const [showModal, setShowModal] = useState(false);
+const ChatBox = ({
+                     image,
+                     name,
+                     profileDetails,
+                     messages,
+                     onSendMessage,
+                     choices,
+                     showChoiceModal,
+                     onChoiceSelect,
+                     onCloseChoiceModal
+                 }) => {
+    const [showProfileModal, setShowProfileModal] = useState(false);
     const [inputMessage, setInputMessage] = useState('');
     const navigate = useNavigate();
 
@@ -14,11 +25,11 @@ const ChatBox = ({ image, name, profileDetails, messages, onSendMessage }) => {
     };
 
     const handleProfileClick = () => {
-        setShowModal(true);
+        setShowProfileModal(true);
     };
 
-    const handleCloseModal = () => {
-        setShowModal(false);
+    const handleCloseProfileModal = () => {
+        setShowProfileModal(false);
     };
 
     const handleSubmit = (e) => {
@@ -60,14 +71,20 @@ const ChatBox = ({ image, name, profileDetails, messages, onSendMessage }) => {
                 />
                 <button type="submit" className={styles.sendButton}>전송</button>
             </form>
-            {showModal && (
+            {showProfileModal && (
                 <ProfileDetailModal
-                    show={showModal}
-                    onClose={handleCloseModal}
+                    show={showProfileModal}
+                    onClose={handleCloseProfileModal}
                     profile={profileDetails}
                     showChatButton={false}
                 />
             )}
+            <ChoiceModal
+                show={showChoiceModal}
+                choices={choices}
+                onChoiceSelect={onChoiceSelect}
+                onClose={onCloseChoiceModal}
+            />
         </section>
     );
 };
@@ -93,7 +110,11 @@ ChatBox.propTypes = {
     name: PropTypes.string.isRequired,
     profileDetails: PropTypes.object.isRequired,
     messages: PropTypes.array.isRequired,
-    onSendMessage: PropTypes.func.isRequired
+    onSendMessage: PropTypes.func.isRequired,
+    choices: PropTypes.array,
+    showChoiceModal: PropTypes.bool,
+    onChoiceSelect: PropTypes.func,
+    onCloseChoiceModal: PropTypes.func
 };
 
 export { ChatBox };
