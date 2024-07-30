@@ -1,8 +1,12 @@
 package com.example.mzting.controller;
 
+import com.example.mzting.DTO.ChatRoomRequest;
+import com.example.mzting.DTO.ChatRoomWithHistoryDTO;
 import com.example.mzting.dto.UserMessage;
 import com.example.mzting.dto.ClaudeResponse;
 import com.example.mzting.entity.Chat;
+import com.example.mzting.entity.ChatRoom;
+import com.example.mzting.service.ChatRoomService;
 import com.example.mzting.service.ClaudeApiService;
 import com.example.mzting.service.ChatService;
 import com.example.mzting.service.TempChatService;
@@ -25,11 +29,13 @@ public class ChatController2 {
     private final ClaudeApiService claudeApiService;
     private final ChatService chatService;
     private final TempChatService tempChatService;
+    private final ChatRoomService chatRoomService;
 
-    public ChatController2(ClaudeApiService claudeApiService, ChatService chatService, TempChatService tempChatService) {
+    public ChatController2(ClaudeApiService claudeApiService, ChatService chatService, TempChatService tempChatService, ChatRoomService chatRoomService) {
         this.claudeApiService = claudeApiService;
         this.chatService = chatService;
         this.tempChatService = tempChatService;
+        this.chatRoomService = chatRoomService;
     }
 
     @PostMapping(value = "/ask-claude2", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -72,5 +78,23 @@ public class ChatController2 {
     @GetMapping("/get-conversation2")
     public ResponseEntity<List<String>> getConversation() {
         return ResponseEntity.ok(chatService.getConversation());
+    }
+
+    @PostMapping("/chatroom/create")
+    public ResponseEntity<ChatRoom> createChatRoom(@RequestBody ChatRoomRequest request) {
+        ChatRoom chatRoom = chatRoomService.createChatRoom(request);
+        return ResponseEntity.ok(chatRoom);
+    }
+
+    @GetMapping("/chatroom/list/{userId}")
+    public ResponseEntity<List<ChatRoom>> getChatRoomList(@PathVariable Long userId) {
+        List<ChatRoom> chatRooms = chatRoomService.getChatRoomsByUserId(userId);
+        return ResponseEntity.ok(chatRooms);
+    }
+
+    @GetMapping("/chatroom/{chatRoomId}")
+    public ResponseEntity<ChatRoomWithHistoryDTO> getChatRoomWithHistory(@PathVariable Long chatRoomId) {
+        ChatRoomWithHistoryDTO chatRoomWithHistory = chatRoomService.getChatRoomWithHistory(chatRoomId);
+        return ResponseEntity.ok(chatRoomWithHistory);
     }
 }
