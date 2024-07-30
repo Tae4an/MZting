@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from '../styles/MainPage.module.css';
-import { ProfileCard, ProfileDetailModal, LoadingSpinner } from "../components";
+import { ProfileCard, ProfileDetailModal, LoadingSpinner, RecommendModal } from "../components";
 import { sendGetRequest } from "../services/sendMessage";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
@@ -38,6 +38,7 @@ const images = importAll(require.context('../assets/Images', false, /\.(png|jpe?
 const MainPage = () => {
     const [scrollPosition, setScrollPosition] = useState(0);
     const [showModal, setShowModal] = useState(false);
+    const [showRecommendModal, setShowRecommendModal] = useState(false);
     const [selectedProfile, setSelectedProfile] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [profileData, setProfileData] = useState([]);
@@ -102,6 +103,10 @@ const MainPage = () => {
         navigate('/settings');
     };
 
+    const handleRecommendClick = () => {
+        setShowRecommendModal(true);
+    };
+
     return (
         <div ref={mainContentRef} className={styles.mainContent}>
             <header className={styles.header}>
@@ -117,7 +122,7 @@ const MainPage = () => {
                     </div>
                 </div>
                 <div className={styles.subTitleContainer}>
-                    <button className={styles.subtitleButton}>추천</button>
+                    <button className={styles.subtitleButton} onClick={handleRecommendClick}>추천</button>
                 </div>
             </header>
             <hr className={styles.divider} />
@@ -139,6 +144,10 @@ const MainPage = () => {
                     showChatButton={true}
                 />
             )}
+            <RecommendModal
+                show={showRecommendModal}
+                onClose={() => setShowRecommendModal(false)}
+            />
             <div
                 className={styles.scrollIndicator}
                 style={{
