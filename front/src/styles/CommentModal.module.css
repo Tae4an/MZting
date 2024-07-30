@@ -83,16 +83,16 @@
     color: white;
 }
 
-.liked {
+.ratingButton:hover {
+    opacity: 0.7;
+}
+
+.ratinglike {
     background-color: blue;
 }
 
-.disliked {
+.ratingdislike {
     background-color: red;
-}
-
-.ratingButton:hover {
-    opacity: 0.7;
 }
 
 .modalButtons {
@@ -149,4 +149,14 @@
     color: white;
     cursor: pointer;
     margin-left: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.liked {
+    color: blue;
+}
+
+.disliked {
+    color: red;
 }
