@@ -1,139 +1,71 @@
-.container {
+.page {
+    display: flex;
+    flex-direction: column;
+    height: 96vh;
+    width: 100%;
     background-color: #f0f0f5; /* 배경 색상을 밝게 변경 */
+    color: #333333; /* 텍스트 색상을 어둡게 변경 */
+    padding: 20px;
 }
 
-.content {
-    display: flex;
-    justify-content: center;
-}
-
-.mainColumn {
-    display: flex;
-    flex-direction: column;
-    line-height: normal;
-    width: 100%;
-    min-width: 1000px; /* 또는 원하는 최대 너비 */
-    margin: 0 auto;
-}
-
-@media (max-width: 991px) {
-    .content {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 0;
-    }
-}
-
-.sideColumn {
+.sideColumn,
+.adContent,
+.profileCard,
+.actionButton,
+.scoreCard,
+.reviewButton {
     display: flex;
     flex-direction: column;
-    line-height: normal;
-    width: 23%;
-    margin-left: 0;
-}
-
-@media (max-width: 991px) {
-    .sideColumn {
-        width: 100%;
-    }
-}
-
-.adContainer {
-    background-color: rgba(0, 0, 0, 0.84);
-    display: flex;
-    flex-grow: 1;
     align-items: center;
-    font-size: 57px;
-    color: #fff;
-    font-weight: 600;
-    white-space: nowrap;
-    text-align: center;
-    line-height: 140%;
     justify-content: center;
+    text-align: center;
+    padding: 20px;
     width: 100%;
-    padding: 60px;
-}
-
-@media (max-width: 991px) {
-    .adContainer {
-        max-width: 100%;
-        font-size: 40px;
-        white-space: initial;
-        padding: 0 20px;
-    }
+    max-width: 100%;
+    box-sizing: border-box; /* 패딩과 보더를 너비에 포함 */
 }
 
 .adContent {
     font-family: Inter, sans-serif;
     background-color: #746e96;
-    width: 240px;
-    max-width: 100%;
-    align-items: center;
-    justify-content: center;
-    padding: 453px 60px 363px;
+    padding: 20px;
 }
 
-@media (max-width: 991px) {
-    .adContent {
-        font-size: 40px;
-        white-space: initial;
-        padding: 40px 20px;
-    }
-}
-
-.conversationContainer {
+.Container {
     background-color: #ffffff; /* 배경 색상을 밝게 변경 */
-    display: flex;
     flex-grow: 1;
     flex-direction: column;
     color: #333333; /* 텍스트 색상을 어둡게 변경 */
-    width: 100%;
-    padding: 0 31px 7px;
+    padding: 20px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
     border-radius: 10px;
-}
-
-@media (max-width: 991px) {
-    .conversationContainer {
-        max-width: 100%;
-        padding: 0 20px;
-    }
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box; /* 패딩과 보더를 너비에 포함 */
 }
 
 .header {
     display: flex;
     align-items: center;
-    gap: 20px;
-    color: #ff6b6b; /* 강조 색상으로 변경 */
-    line-height: 140%;
-    background-color: #ffffff; /* 배경 색상을 밝게 변경 */
+    width: 100%;
     border-bottom: 10px solid #ff6b6b; /* 강조 색상으로 변경 */
-    padding-bottom: 10px;
-}
-
-@media (max-width: 991px) {
-    .header {
-        max-width: 100%;
-        flex-wrap: wrap;
-    }
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: #ffffff; /* 배경 색상을 밝게 변경 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+    border-radius: 10px;
+    gap: 10px;
 }
 
 .backButton {
     text-align: center;
-    align-self: stretch;
-    margin: auto 0;
     font: 900 60px Inter, sans-serif;
     cursor: pointer;
     background: none;
     border: none;
     color: #ff6b6b; /* 버튼 색상 밝게 변경 */
     font-size: 24px;
-}
-
-@media (max-width: 991px) {
-    .backButton {
-        font-size: 40px;
-    }
+    margin-left: 10px;
 }
 
 .profileImage {
@@ -141,61 +73,42 @@
     object-fit: cover;
     object-position: center;
     width: 113px;
-    align-self: stretch;
     max-width: 100%;
     border-radius: 50%;
 }
 
 .title {
     align-self: stretch;
-    flex-grow: 1;
     flex-basis: auto;
     margin: auto 0;
-    font: italic 800 57px Roboto, -apple-system, Roboto, Helvetica, sans-serif;
+    font-size: 3rem;
     color: #ff6b6b; /* 강조 색상으로 변경 */
-}
-
-@media (max-width: 991px) {
-    .title {
-        max-width: 100%;
-        font-size: 40px;
-    }
+    font-style: italic;
+    font-weight: bold;
 }
 
 .profileCard {
     border-radius: 10px; /* 모서리 둥글게 변경 */
     background-color: #ffffff; /* 배경 색상을 밝게 변경 */
     display: flex;
-    margin-top: 49px;
+    margin-top: 20px;
     flex-direction: column;
     font-weight: 800;
-    padding: 36px 36px 19px;
+    padding: 20px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
     color: #333333; /* 텍스트 색상을 어둡게 변경 */
-}
-
-@media (max-width: 991px) {
-    .profileCard {
-        max-width: 100%;
-        margin: 40px 7px 0 0;
-        padding: 0 20px;
-    }
+    box-sizing: border-box; /* 패딩과 보더를 너비에 포함 */
+    width: 100%;
 }
 
 .profileHeader {
     display: flex;
     gap: 20px;
-    font-size: 50px;
+    font-size: 30px;
     line-height: 140%;
     color: #333333; /* 텍스트 색상을 어둡게 변경 */
-}
-
-@media (max-width: 991px) {
-    .profileHeader {
-        max-width: 100%;
-        flex-wrap: wrap;
-        font-size: 40px;
-    }
+    width: 100%;
+    box-sizing: border-box; /* 패딩과 보더를 너비에 포함 */
 }
 
 .profileName {
@@ -203,12 +116,6 @@
     font-style: italic;
     flex-grow: 1;
     flex-basis: auto;
-}
-
-@media (max-width: 991px) {
-    .profileName {
-        font-size: 40px;
-    }
 }
 
 .personalityType {
@@ -221,23 +128,13 @@
     color: #ff6b6b; /* 강조 색상으로 변경 */
 }
 
-@media (max-width: 991px) {
-    .personalityType {
-        font-size: 40px;
-    }
-}
-
 .profileDetails {
     align-self: start;
-    margin: 24px 0 0 13px;
+    margin: 24px 0 0 0;
     font: italic 30px/42px Inter, -apple-system, Roboto, Helvetica, sans-serif;
     color: #333333; /* 텍스트 색상을 어둡게 변경 */
-}
-
-@media (max-width: 991px) {
-    .profileDetails {
-        max-width: 100%;
-    }
+    width: 100%;
+    box-sizing: border-box; /* 패딩과 보더를 너비에 포함 */
 }
 
 .actionButton {
@@ -253,18 +150,12 @@
     color: #ffffff; /* 텍스트 색상을 밝게 변경 */
     text-align: center;
     padding: 12px;
-    font: 400 64px/100% Inter, -apple-system, Roboto, Helvetica, sans-serif;
+    font: 400 20px/100% Inter, -apple-system, Roboto, Helvetica, sans-serif;
     cursor: pointer;
     transition: background 0.3s, transform 0.3s; /* 부드러운 전환 효과 추가 */
-}
-
-@media (max-width: 991px) {
-    .actionButton {
-        font-size: 40px;
-        max-width: 100%;
-        margin-right: 7px;
-        padding: 0 20px;
-    }
+    width: auto;
+    max-width: 100%;
+    box-sizing: border-box; /* 패딩과 보더를 너비에 포함 */
 }
 
 .actionButton:hover {
@@ -279,47 +170,31 @@
     margin-top: 32px;
     flex-direction: column;
     align-items: start;
-    font-size: 50px;
+    font-size: 30px;
     font-weight: 800;
     line-height: 140%;
-    padding: 33px 80px 80px 36px;
+    padding: 20px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
     color: #333333; /* 텍스트 색상을 어둡게 변경 */
-}
-
-@media (max-width: 991px) {
-    .scoreCard {
-        max-width: 100%;
-        margin-right: 7px;
-        font-size: 40px;
-        padding: 0 20px;
-    }
+    width: 100%;
+    box-sizing: border-box; /* 패딩과 보더를 너비에 포함 */
 }
 
 .compatibilityScore {
     font-family: Inter, sans-serif;
     font-style: italic;
     color: #333333; /* 텍스트 색상을 어둡게 변경 */
-}
-
-@media (max-width: 991px) {
-    .compatibilityScore {
-        font-size: 40px;
-    }
+    width: 100%;
+    box-sizing: border-box; /* 패딩과 보더를 너비에 포함 */
 }
 
 .finalScore {
     font-family: Inter, sans-serif;
     font-style: italic;
-    margin: 33px 0 95px;
+    margin: 20px 0 40px;
     color: #333333; /* 텍스트 색상을 어둡게 변경 */
-}
-
-@media (max-width: 991px) {
-    .finalScore {
-        margin-bottom: 40px;
-        font-size: 40px;
-    }
+    width: 100%;
+    box-sizing: border-box; /* 패딩과 보더를 너비에 포함 */
 }
 
 .reviewButton {
@@ -335,17 +210,12 @@
     color: #ffffff; /* 텍스트 색상을 밝게 변경 */
     text-align: center;
     padding: 12px;
-    font: 400 64px/100% Inter, -apple-system, Roboto, Helvetica, sans-serif;
+    font: 400 20px/100% Inter, -apple-system, Roboto, Helvetica, sans-serif;
     cursor: pointer;
     transition: background 0.3s, transform 0.3s; /* 부드러운 전환 효과 추가 */
-}
-
-@media (max-width: 991px) {
-    .reviewButton {
-        font-size: 40px;
-        max-width: 100%;
-        padding: 0 20px;
-    }
+    width: auto;
+    max-width: 100%;
+    box-sizing: border-box; /* 패딩과 보더를 너비에 포함 */
 }
 
 .reviewButton:hover {
