@@ -7,6 +7,7 @@
     background-color: #ffffff; /* 배경 색상을 밝게 변경 */
     padding: 20px;
     border-right: 1px solid #d4d7f6; /* 오른쪽 테두리 추가 */
+    border-left: 1px solid #d4d7f6;
 }
 
 .adContent {
