@@ -45,7 +45,7 @@
     font-style: italic;
     font-weight: bold;
     margin-right: 10px;
-    margin-left: 74px;
+    margin-left: 30px;
     flex: 1;
 }
 
@@ -61,11 +61,10 @@
     cursor: pointer;
     font-size: 3rem;
     color: #ff6b6b; /* 아이콘 색상 변경 */
-    transition: transform 0.3s, color 0.3s; /* 부드러운 전환 효과 추가 */
+    transition: transform 0.3s; /* 부드러운 전환 효과 추가 */
 }
 
 .iconButton:hover {
-    color: #e45b5b; /* 아이콘 색상 변경 */
     transform: scale(1.1); /* 약간 확대 효과 */
 }
 
@@ -79,13 +78,11 @@
     display: flex;
     align-items: center;
     cursor: pointer;
-    transition: background 0.3s, color 0.3s, transform 0.3s; /* 부드러운 전환 효과 */
+    transition: transform 0.3s; /* 부드러운 전환 효과 */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
 }
 
 .subtitleButton:hover {
-    background: #e45b5b; /* 약간 더 밝은 색상으로 변경 */
-    color: #ffffff; /* 텍스트 색상을 약간 더 밝게 변경 */
     transform: scale(1.05); /* 약간 확대 효과 */
 }
 
@@ -156,13 +153,11 @@ button {
     padding: 10px 20px;
     font-size: 1rem;
     cursor: pointer;
-    transition: background 0.3s, color 0.3s, transform 0.3s;
+    transition: transform 0.3s;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
 }
 
 button:hover {
-    background: #e45b5b; /* 약간 더 밝은 색상으로 변경 */
-    color: #ffffff; /* 텍스트 색상을 약간 더 밝게 변경 */
     transform: scale(1.05); /* 약간 확대 효과 */
 }
 
