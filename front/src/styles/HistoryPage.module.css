@@ -1,10 +1,11 @@
+/* src/styles/HistoryPage.module.css */
 .page {
     display: flex;
     flex-direction: column;
     height: 96vh;
     width: 100%;
-    background-color: rgba(1, 0, 9, 0.9);
-    color: #ffffff;
+    background-color: #f0f0f5; /* 배경 색상을 밝게 변경 */
+    color: #333333; /* 텍스트 색상을 어둡게 변경 */
     padding: 20px;
 }
 
@@ -12,22 +13,22 @@
     display: flex;
     align-items: center;
     width: 100%;
-    border-bottom: 10px solid #d4d7f6;
+    border-bottom: 10px solid #ff6b6b; /* 강조 색상으로 변경 */
     padding-bottom: 10px;
-    background-color: rgba(1, 0, 9, 0.9);
+    background-color: #ffffff; /* 배경 색상을 밝게 변경 */
 }
 
 .backButton {
     background: none;
     border: none;
-    color: #ffffff;
+    color: #ff6b6b; /* 버튼 색상 밝게 변경 */
     font-size: 24px;
     cursor: pointer;
 }
 
 .title {
     font-size: 3rem;
-    color: #d4d7f6;
+    color: #ff6b6b; /* 강조 색상으로 변경 */
     font-style: italic;
     font-weight: bold;
     margin-left: 10px;
@@ -42,11 +43,12 @@
 }
 
 .card {
-    background-color: rgba(117, 109, 161, 0.41);
+    background-color: #ffffff; /* 배경 색상을 밝게 변경 */
     border-radius: 10px;
     padding: 20px;
     display: flex;
     flex-direction: column;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
 }
 
 .cardContent {
@@ -76,7 +78,7 @@
 
 .conversationTitle {
     font-size: 1.5rem;
-    color: #d4d7f6;
+    color: #333333; /* 텍스트 색상을 어둡게 변경 */
 }
 
 .statusWrapper {
@@ -86,13 +88,13 @@
 
 .status {
     font-size: 1rem;
-    color: #d4d7f6;
+    color: #666666; /* 텍스트 색상 어둡게 변경 */
     margin-right: 10px;
 }
 
 .actionButton {
-    background-color: #c1bae7;
-    color: #000;
+    background-color: #ff6b6b; /* 버튼 배경 색상 밝게 변경 */
+    color: #ffffff; /* 텍스트 색상 밝게 변경 */
     border: none;
     border-radius: 25px;
     padding: 10px 20px;
@@ -100,12 +102,18 @@
     font-size: 1rem;
     margin-top: 10px;
     align-self: flex-start;
+    transition: background 0.3s, transform 0.3s; /* 부드러운 전환 효과 추가 */
+}
+
+.actionButton:hover {
+    background-color: #e45b5b; /* 호버 시 색상 변경 */
+    transform: scale(1.05); /* 약간 확대 효과 추가 */
 }
 
 .scrollIndicator {
     position: fixed;
     border-radius: 15px;
-    background-color: #978cc2;
+    background-color: #ff6b6b; /* 강조 색상으로 변경 */
     width: 18px;
     height: 129px;
     top: 0;
