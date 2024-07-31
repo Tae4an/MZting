@@ -1,8 +1,8 @@
 package com.example.mzting.config;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.mzting.security.JwtAuthenticationFilter;
+import com.example.mzting.security.JwtTokenProvider;
+import com.example.mzting.service.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,10 +12,11 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
-import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestResolver;
 import org.springframework.security.oauth2.client.web.DefaultOAuth2AuthorizationRequestResolver;
+import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestResolver;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -27,24 +28,33 @@ import java.util.Arrays;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Autowired
-    private ClientRegistrationRepository clientRegistrationRepository;
-    private static final Logger logger = LoggerFactory.getLogger(SecurityConfig.class);
+    private final ClientRegistrationRepository clientRegistrationRepository;
+    private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
+    private final JwtTokenProvider jwtTokenProvider;
+    private final CustomUserDetailsService customUserDetailsService;
+
+    public SecurityConfig(ClientRegistrationRepository clientRegistrationRepository,
+                          OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler,
+                          JwtTokenProvider jwtTokenProvider,
+                          CustomUserDetailsService customUserDetailsService) {
+        this.clientRegistrationRepository = clientRegistrationRepository;
+        this.oAuth2AuthenticationSuccessHandler = oAuth2AuthenticationSuccessHandler;
+        this.jwtTokenProvider = jwtTokenProvider;
+        this.customUserDetailsService = customUserDetailsService;
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
         http
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/api/**", "/login", "/oauth2/**", "/send-verification", "/verify-email").permitAll()
+                        .requestMatchers("/api/**", "/login", "/oauth2/**", "/send-verification", "/verify-email", "/home").permitAll()
                         .anyRequest().authenticated()
                 )
                 .oauth2Login(oauth2 -> oauth2
                         .loginPage("/login")
-                        .defaultSuccessUrl("/loginSuccess")
-                        .failureUrl("/loginFailure")
+                        .successHandler(oAuth2AuthenticationSuccessHandler)
                         .authorizationEndpoint(authorizationEndpoint ->
                                 authorizationEndpoint.authorizationRequestResolver(
                                         new OAuth2AuthorizationRequestResolver() {
@@ -57,32 +67,19 @@ public class SecurityConfig {
                                             @Override
                                             public OAuth2AuthorizationRequest resolve(HttpServletRequest request) {
                                                 OAuth2AuthorizationRequest authorizationRequest = defaultResolver.resolve(request);
-                                                if (authorizationRequest != null) {
-                                                    logger.info("OAuth2 authorization request: {}", authorizationRequest);
-                                                }
                                                 return authorizationRequest;
                                             }
 
                                             @Override
                                             public OAuth2AuthorizationRequest resolve(HttpServletRequest request, String clientRegistrationId) {
                                                 OAuth2AuthorizationRequest authorizationRequest = defaultResolver.resolve(request, clientRegistrationId);
-                                                if (authorizationRequest != null) {
-                                                    logger.info("OAuth2 authorization request for client registration ID {}: {}", clientRegistrationId, authorizationRequest);
-                                                }
                                                 return authorizationRequest;
                                             }
                                         }
                                 )
                         )
                 )
-                .logout(logout -> logout
-                        .logoutSuccessUrl("/")
-                        .permitAll()
-                )
-                .formLogin(form -> form
-                        .loginPage("/login")
-                        .permitAll()
-                );
+                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, customUserDetailsService), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
