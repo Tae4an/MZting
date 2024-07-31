@@ -165,3 +165,52 @@ button:hover {
     color: #ffffff; /* 텍스트 색상을 약간 더 밝게 변경 */
     transform: scale(1.05); /* 약간 확대 효과 */
 }
+
+.profileCard {
+    background-color: white;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.profileImage {
+    width: 100%;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.profileHeader {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.profileName {
+    font-size: 18px;
+    font-weight: 600;
+    margin-right: 8px;
+}
+
+.mbtiTag {
+    background-color: #fff0f0;
+    color: #ff6b6b;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.profileTags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.tag {
+    background-color: #fff0f0;
+    color: #ff6b6b;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+}
