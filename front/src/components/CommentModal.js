@@ -1,12 +1,20 @@
 import React, { useState, useEffect } from 'react';
+import { sendGetRequest, sendPostRequest } from '../services'
 import PropTypes from 'prop-types';
 import styles from '../styles/CommentModal.module.css';
 import 'bootstrap-icons/font/bootstrap-icons.css'; // Bootstrap Icons CSS 포함
 
+// const fetchedComments = [
+//     { id: 1, user: 'User1', comment: '좋아요!', rating: '좋아요' },
+//     { id: 2, user: 'User2', comment: '별로에요.', rating: '싫어요' },
+//     { id: 3, user: '슬픈 공대생', comment: '실제로 연예인과 대화한다면 이런 느낌일까..', rating: '좋아요' }
+// ];
+
 const CommentModal = ({ show, onClose, mbti }) => {
     const [comment, setComment] = useState('');
-    const [rating, setRating] = useState(null); // "좋아요" 또는 "싫어요"로만 구분
+    const [rating, setRating] = useState(true); // "좋아요" 또는 "싫어요"로만 구분
     const [comments, setComments] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         if (show) {
@@ -15,12 +23,10 @@ const CommentModal = ({ show, onClose, mbti }) => {
     }, [show]);
 
     const fetchComments = async () => {
-        const fetchedComments = [
-            { id: 1, user: 'User1', comment: '좋아요!', rating: '좋아요' },
-            { id: 2, user: 'User2', comment: '별로에요.', rating: '싫어요' },
-            { id: 3, user: '슬픈 공대생', comment: '실제로 연예인과 대화한다면 이런 느낌일까..', rating: '좋아요' }
-        ];
-        setComments(fetchedComments);
+        const fetchedComments = await sendGetRequest({}, '/api/posts/1/comments')
+        const extractedComments = fetchedComments.commentInfos
+        console.log(extractedComments)
+        setComments(extractedComments);
     };
 
     const handleSubmit = (e) => {
@@ -34,12 +40,26 @@ const CommentModal = ({ show, onClose, mbti }) => {
     };
 
     const handleLike = () => {
-        setRating('좋아요');
+        setRating(true);
     };
 
     const handleDislike = () => {
-        setRating('싫어요');
+        setRating(false);
     };
+
+    const handleRequestComment = async () => {
+        const data = {
+            userId : 2,
+            content : comment,
+            isLike : rating
+        }
+        try {
+            await sendPostRequest(data, "/api/posts/1/comments")
+            alert("댓글 저장 완료");
+        } catch (e) {
+            alert("댓글 저장 실패");
+        }
+    }
 
     return (
         show ? (
@@ -55,7 +75,7 @@ const CommentModal = ({ show, onClose, mbti }) => {
                                 placeholder="댓글을 입력하세요"
                                 className={styles.modalTextarea}
                             />
-                            <button type="submit" className={styles.submitButton}>제출</button>
+                            <button type="submit" onClick={handleRequestComment} className={styles.submitButton}>제출</button>
                         </div>
                         <div className={styles.modalRating}>
                             <button
@@ -77,11 +97,11 @@ const CommentModal = ({ show, onClose, mbti }) => {
                     <div className={styles.commentsSection}>
                         <h3 className={styles.commentsTitle}>댓글 및 후기</h3>
                         <div className={styles.commentsContainer}>
-                            {comments.map(({ id, user, comment, rating }) => (
+                            {comments.map(({ id, username, content, isLike }) => (
                                 <div key={id} className={styles.comment}>
-                                    <p><strong>{user}</strong></p>
-                                    <p>{comment}</p>
-                                    <p>{rating === '좋아요' ? '👍 좋아요' : '👎 싫어요'}</p>
+                                    <p><strong>{username}</strong></p>
+                                    <p>{content}</p>
+                                    <p>{isLike === true ? '👍 좋아요' : '👎 싫어요'}</p>
                                 </div>
                             ))}
                         </div>
