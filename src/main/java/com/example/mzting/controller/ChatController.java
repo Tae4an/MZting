@@ -2,6 +2,7 @@ package com.example.mzting.controller;
 
 import com.example.mzting.dto.UserMessage;
 import com.example.mzting.dto.ClaudeResponse;
+import com.example.mzting.entity.Chat;
 import com.example.mzting.service.ClaudeApiService;
 import com.example.mzting.service.ChatService;
 import org.slf4j.Logger;
@@ -33,6 +34,10 @@ public class ChatController {
         try {
             String userMessage = userMessageObj.getMessage();
             String userMbti = userMessageObj.getMbti();
+            Long chatRoomId = 1L; // 추가: 채팅방 ID를 받아옴
+
+            // 사용자 메시지를 DB에 저장
+            chatService.saveUserMessage(userMessage, chatRoomId);
 
             chatService.addUserRequest(userMessage);
 
@@ -47,11 +52,14 @@ public class ChatController {
             // 컨텍스트 업데이트
             updateContext(userMessage, claudeResponse.getText());
 
-
+            // Claude의 응답도 DB에 저장 (선택적)
+            chatService.saveUserMessage(claudeResponse, chatRoomId);
+          
             Map<String, Object> response = new HashMap<>();
             response.put("claudeResponse", claudeResponse);
 
             return ResponseEntity.ok(response);
+
         } catch (Exception e) {
             logger.error("Error processing request", e);
             Map<String, String> errorResponse = new HashMap<>();

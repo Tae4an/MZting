@@ -10,7 +10,9 @@ import lombok.AllArgsConstructor;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class LikeDislikeCountInfo {
-    private long totalLikeCount;
-    private long totalDislikeCount;
+public class Answer {
+    private Long questionId;
+    private String option;
+
+    // Getters and Setters
 }

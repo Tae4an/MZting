@@ -1,6 +1,7 @@
 package com.example.mzting.controller;
 
-import com.example.mzting.DTO.CommentDTO;
+
+import com.example.mzting.dto.CommentDTO;
 import com.example.mzting.entity.Comment;
 import com.example.mzting.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,8 @@ public class CommentController {
             comment.setContent(PostPostsCommentRequest.getContent());
             comment.setIsLike(PostPostsCommentRequest.getIsLike());
             System.out.println("postId : " + postId);
-            Comment savedComment = commentService.saveComment(comment);
+            commentService.saveComment(comment);
+
 
             CommentDTO.PostPostsCommentsResponse response = new CommentDTO.PostPostsCommentsResponse();
             response.setSuccess(true);
