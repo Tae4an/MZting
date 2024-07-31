@@ -1,7 +1,7 @@
 package com.example.mzting.service;
 
-import com.example.mzting.DTO.CommentDTO;
-import com.example.mzting.DTO.LikeDislikeCountInfo;
+import com.example.mzting.dto.CommentDTO;
+import com.example.mzting.dto.LikeDislikeCountInfo;
 import com.example.mzting.entity.Comment;
 import com.example.mzting.entity.MBTIPosts;
 import com.example.mzting.repository.CommentRepository;
