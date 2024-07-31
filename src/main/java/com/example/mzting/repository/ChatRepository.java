@@ -2,6 +2,12 @@ package com.example.mzting.repository;
 
 import com.example.mzting.entity.Chat;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface ChatRepository extends JpaRepository<Chat, Integer> {
+import java.util.List;
+
+@Repository
+public interface ChatRepository extends JpaRepository<Chat, Long> {
+    List<Chat> findByChatRoomIdOrderBySendAtAsc(Long chatRoomId);
+    List<Chat> findByChatRoomIdAndIsBotTrueOrderBySendAtAsc(Long chatRoomId);
 }

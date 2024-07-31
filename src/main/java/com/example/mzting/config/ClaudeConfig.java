@@ -1,8 +1,10 @@
 package com.example.mzting.config;
 
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
+@Getter
 @Configuration
 public class ClaudeConfig {
     @Value("${claude.api.url}")
@@ -11,11 +13,4 @@ public class ClaudeConfig {
     @Value("${claude.api.key}")
     private String apiKey;
 
-    public String getApiUrl() {
-        return apiUrl;
-    }
-
-    public String getApiKey() {
-        return apiKey;
-    }
 }
