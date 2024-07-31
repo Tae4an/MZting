@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from "react-router-dom";
 import styles from '../styles/HistoryPage.module.css';
+import image2 from '../assets/Images/image2.jpg';
 
 const HistoryPage = () => {
     const navigate = useNavigate();
@@ -15,7 +16,7 @@ const HistoryPage = () => {
             actionText: "이어서 대화 하기"
         },
         {
-            avatarSrc: "https://cdn.builder.io/api/v1/image/assets/TEMP/f312af922c0a98448cf4a4b68cf50ce014690f6158cf485c528a8307c494fe5f?apiKey=49c1e3d53b81482bb61cc4f10fd5a261&",
+            avatarSrc: image2,
             title: "#ENFJ와의 대화",
             status: "완료",
             actionText: "대화 결과 보기"
