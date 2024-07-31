@@ -1,5 +1,5 @@
 .container {
-    background-color: var(--sds-color-background-default-default);
+    background-color: #f0f0f5; /* 배경 색상을 밝게 변경 */
 }
 
 .content {
@@ -8,6 +8,9 @@
 }
 
 .mainColumn {
+    display: flex;
+    flex-direction: column;
+    line-height: normal;
     width: 100%;
     min-width: 1000px; /* 또는 원하는 최대 너비 */
     margin: 0 auto;
@@ -78,28 +81,16 @@
     }
 }
 
-.mainColumn {
-    display: flex;
-    flex-direction: column;
-    line-height: normal;
-    width: 54%;
-    margin-left: 20px;
-}
-
-@media (max-width: 991px) {
-    .mainColumn {
-        width: 100%;
-    }
-}
-
 .conversationContainer {
-    background-color: rgba(1, 0, 9, 0.9);
+    background-color: #ffffff; /* 배경 색상을 밝게 변경 */
     display: flex;
     flex-grow: 1;
     flex-direction: column;
-    color: #fff;
+    color: #333333; /* 텍스트 색상을 어둡게 변경 */
     width: 100%;
     padding: 0 31px 7px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+    border-radius: 10px;
 }
 
 @media (max-width: 991px) {
@@ -113,8 +104,11 @@
     display: flex;
     align-items: center;
     gap: 20px;
-    color: #d4d7f6;
+    color: #ff6b6b; /* 강조 색상으로 변경 */
     line-height: 140%;
+    background-color: #ffffff; /* 배경 색상을 밝게 변경 */
+    border-bottom: 10px solid #ff6b6b; /* 강조 색상으로 변경 */
+    padding-bottom: 10px;
 }
 
 @media (max-width: 991px) {
@@ -129,6 +123,11 @@
     align-self: stretch;
     margin: auto 0;
     font: 900 60px Inter, sans-serif;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: #ff6b6b; /* 버튼 색상 밝게 변경 */
+    font-size: 24px;
 }
 
 @media (max-width: 991px) {
@@ -139,11 +138,12 @@
 
 .profileImage {
     aspect-ratio: 0.96;
-    object-fit: auto;
+    object-fit: cover;
     object-position: center;
     width: 113px;
     align-self: stretch;
     max-width: 100%;
+    border-radius: 50%;
 }
 
 .title {
@@ -152,6 +152,7 @@
     flex-basis: auto;
     margin: auto 0;
     font: italic 800 57px Roboto, -apple-system, Roboto, Helvetica, sans-serif;
+    color: #ff6b6b; /* 강조 색상으로 변경 */
 }
 
 @media (max-width: 991px) {
@@ -162,13 +163,15 @@
 }
 
 .profileCard {
-    border-radius: 24px;
-    background-color: rgba(116, 110, 150, 0.95);
+    border-radius: 10px; /* 모서리 둥글게 변경 */
+    background-color: #ffffff; /* 배경 색상을 밝게 변경 */
     display: flex;
     margin-top: 49px;
     flex-direction: column;
     font-weight: 800;
     padding: 36px 36px 19px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+    color: #333333; /* 텍스트 색상을 어둡게 변경 */
 }
 
 @media (max-width: 991px) {
@@ -184,6 +187,7 @@
     gap: 20px;
     font-size: 50px;
     line-height: 140%;
+    color: #333333; /* 텍스트 색상을 어둡게 변경 */
 }
 
 @media (max-width: 991px) {
@@ -214,6 +218,7 @@
     flex-grow: 1;
     flex-basis: auto;
     margin: auto 0;
+    color: #ff6b6b; /* 강조 색상으로 변경 */
 }
 
 @media (max-width: 991px) {
@@ -226,6 +231,7 @@
     align-self: start;
     margin: 24px 0 0 13px;
     font: italic 30px/42px Inter, -apple-system, Roboto, Helvetica, sans-serif;
+    color: #333333; /* 텍스트 색상을 어둡게 변경 */
 }
 
 @media (max-width: 991px) {
@@ -240,14 +246,16 @@
     text-overflow: ellipsis;
     justify-content: center;
     align-items: center;
-    border-radius: 64px;
-    border: 1px solid rgba(44, 44, 44, 1);
-    background-color: #c1bae7;
+    border-radius: 25px; /* 모서리 둥글게 변경 */
+    border: none;
+    background-color: #ff6b6b; /* 버튼 배경 색상 밝게 변경 */
     margin-top: 24px;
-    color: #000;
+    color: #ffffff; /* 텍스트 색상을 밝게 변경 */
     text-align: center;
     padding: 12px;
     font: 400 64px/100% Inter, -apple-system, Roboto, Helvetica, sans-serif;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s; /* 부드러운 전환 효과 추가 */
 }
 
 @media (max-width: 991px) {
@@ -259,9 +267,14 @@
     }
 }
 
+.actionButton:hover {
+    background-color: #e45b5b; /* 호버 시 색상 변경 */
+    transform: scale(1.05); /* 약간 확대 효과 추가 */
+}
+
 .scoreCard {
-    border-radius: 24px;
-    background-color: rgba(116, 110, 150, 0.95);
+    border-radius: 10px; /* 모서리 둥글게 변경 */
+    background-color: #ffffff; /* 배경 색상을 밝게 변경 */
     display: flex;
     margin-top: 32px;
     flex-direction: column;
@@ -270,6 +283,8 @@
     font-weight: 800;
     line-height: 140%;
     padding: 33px 80px 80px 36px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+    color: #333333; /* 텍스트 색상을 어둡게 변경 */
 }
 
 @media (max-width: 991px) {
@@ -284,6 +299,7 @@
 .compatibilityScore {
     font-family: Inter, sans-serif;
     font-style: italic;
+    color: #333333; /* 텍스트 색상을 어둡게 변경 */
 }
 
 @media (max-width: 991px) {
@@ -296,6 +312,7 @@
     font-family: Inter, sans-serif;
     font-style: italic;
     margin: 33px 0 95px;
+    color: #333333; /* 텍스트 색상을 어둡게 변경 */
 }
 
 @media (max-width: 991px) {
@@ -311,14 +328,16 @@
     text-overflow: ellipsis;
     justify-content: center;
     align-items: center;
-    border-radius: 64px;
-    border: 1px solid rgba(44, 44, 44, 1);
-    background-color: #c1bae7;
+    border-radius: 25px; /* 모서리 둥글게 변경 */
+    border: none;
+    background-color: #ff6b6b; /* 버튼 배경 색상 밝게 변경 */
     margin-top: 20px;
-    color: #000;
+    color: #ffffff; /* 텍스트 색상을 밝게 변경 */
     text-align: center;
     padding: 12px;
     font: 400 64px/100% Inter, -apple-system, Roboto, Helvetica, sans-serif;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s; /* 부드러운 전환 효과 추가 */
 }
 
 @media (max-width: 991px) {
@@ -327,4 +346,9 @@
         max-width: 100%;
         padding: 0 20px;
     }
+}
+
+.reviewButton:hover {
+    background-color: #e45b5b; /* 호버 시 색상 변경 */
+    transform: scale(1.05); /* 약간 확대 효과 추가 */
 }
