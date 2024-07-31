@@ -1,5 +1,6 @@
+/* src/styles/ChatPage.module.css */
 .mainContainer {
-    background-color: #1a1a2e;
+    background-color: #f0f0f5; /* 밝은 배경 색상으로 변경 */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -12,6 +13,7 @@
     min-width: 1200px;
     max-width: 1200px;
     height: 100vh;
-    background-color: #1a1a2e;
+    background-color: #ffffff; /* 배경 색상 밝게 변경 */
     overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
 }
