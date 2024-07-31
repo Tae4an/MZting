@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { sendGetRequest, sendPostRequest } from '../services';
 import PropTypes from 'prop-types';
 import styles from '../styles/CommentModal.module.css';
 import 'bootstrap-icons/font/bootstrap-icons.css'; // Bootstrap Icons CSS 포함
 
 const CommentModal = ({ show, onClose, mbti }) => {
     const [comment, setComment] = useState('');
-    const [rating, setRating] = useState(null); // 초기값은 null로 설정
+    const [rating, setRating] = useState(null); // "좋아요" 또는 "싫어요"로만 구분
     const [comments, setComments] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         if (show) {
@@ -30,17 +28,8 @@ const CommentModal = ({ show, onClose, mbti }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (comment.trim() && rating !== null) {
-            const newComment = {
-                id: comments.length + 1,
-                username: '현재 사용자',
-                content: comment,
-                isLike: rating,
-                likeCount: 0,
-                dislikeCount: 0,
-                userLiked: false,
-                userDisliked: false
-            };
+        if (comment.trim() && rating) {
+            const newComment = { id: comments.length + 1, user: '현재 사용자', comment, rating };
             setComments([...comments, newComment]);
             setComment('');
             setRating(null);
