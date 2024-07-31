@@ -1,7 +1,5 @@
 import { LoginForm } from "./LoginForm";
 import { AdColumn } from "./AdColumn";
-import { HistoryCard } from "./HistoryCard";
-import { HistoryList } from "./HistoryList";
 import { Layout } from "./Layout";
 import { ProfileCard } from "./ProfileCard";
 import { ChatBox } from "./ChatBox";
@@ -10,12 +8,13 @@ import { ImageModal } from "./ImageModal";
 import { SignupForm } from './SignupForm'
 import { LoadingSpinner } from "./LoadingSpinner";
 import { CommentModal } from "./CommentModal";
+import { TypingIndicator } from "./TypingIndicator";
+import { RecommendModal } from "./RecommendModal";
+
 
 export {
     LoginForm,
     AdColumn,
-    HistoryCard,
-    HistoryList,
     Layout,
     ProfileCard,
     ChatBox,
@@ -23,5 +22,7 @@ export {
     LoadingSpinner,
     ImageModal,
     SignupForm,
-    CommentModal
+    CommentModal,
+    TypingIndicator,
+    RecommendModal
 }

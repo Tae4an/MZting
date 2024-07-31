@@ -8,7 +8,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "chat_temp")
+@Table(name = "chat")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -30,7 +30,7 @@ public class Chat {
     @Column(columnDefinition = "json")
     private String botInfo;
 
-    @Column(nullable = false)
+    @Column
     private Integer mission;
 
     @CreationTimestamp

@@ -1,6 +1,4 @@
 package com.example.mzting.dto;
-
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;

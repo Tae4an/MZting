@@ -1,14 +1,17 @@
+/* src/styles/AdColumn.module.css */
 .adColumn {
     flex: 0 0 15%; /* 광고 열의 너비를 15%로 조정 */
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #746e96;
+    background-color: #e4e4e4; /* 배경 색상을 밝게 변경 */
     padding: 20px;
+    border-right: 1px solid #d4d7f6; /* 오른쪽 테두리 추가 */
+    border-left: 1px solid #d4d7f6;
 }
 
 .adContent {
-    color: white;
+    color: #333333; /* 텍스트 색상 어둡게 변경 */
     font-size: 24px;
 }
 

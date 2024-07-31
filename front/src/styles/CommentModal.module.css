@@ -4,15 +4,15 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
+    z-index: 1002;
 }
 
 .modal {
-    background: #423F54;
+    background: #ffffff; /* 배경 색상을 밝게 변경 */
     padding: 20px;
     border-radius: 15px;
     max-width: 900px;
@@ -20,10 +20,38 @@
     max-height: 725px;
     height: 100%;
     position: relative;
-    color: white;
+    color: #333333; /* 텍스트 색상을 어둡게 변경 */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    animation: slide-down 0.3s ease-out forwards;
+}
+
+@keyframes slide-down {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modalHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eaeaea;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    color: #333333; /* 텍스트 색상을 어둡게 변경 */
+}
+
+.modalHeader h2 {
+    margin: 0;
+    color: #ff6b6b; /* 강조 색상으로 변경 */
 }
 
 .closeButton {
@@ -33,62 +61,74 @@
     background: none;
     border: none;
     font-size: 1.5rem;
-    color: white;
+    color: #ff6b6b; /* 강조 색상으로 변경 */
     cursor: pointer;
 }
 
-.modalTitle {
-    font-size: 24px;
-    margin-bottom: 20px;
+.modalBody {
+    font-size: 1.2rem;
+    line-height: 1.5;
+    text-align: left;
+    overflow-y: auto;
+    flex: 1;
+    color: #333333; /* 텍스트 색상을 어둡게 변경 */
 }
 
 .modalForm {
     display: flex;
     flex-direction: column;
-    margin-bottom: 0; /* 여백 제거 */
+    margin-bottom: 0;
 }
 
 .textareaAndButtons {
     display: flex;
     align-items: center;
-    margin-bottom: 10px; /* 여백 추가 */
+    margin-bottom: 10px;
 }
 
 .modalTextarea {
     resize: none;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #d4d7f6; /* 테두리 추가 */
     border-radius: 4px;
     font-size: 16px;
     height: 20px;
-    background-color: #3d3d56;
-    color: white;
-    flex: 1; /* 텍스트 영역이 가능한 많은 공간을 차지하도록 설정 */
-    margin-right: 10px; /* 버튼과의 간격 추가 */
+    background-color: #ffffff; /* 배경 색상 밝게 변경 */
+    color: #333333; /* 텍스트 색상 어둡게 변경 */
+    flex: 1;
+    margin-right: 10px;
 }
 
 .modalRating {
     display: flex;
     justify-content: center;
+    gap: 10px; /* 버튼 사이의 간격 추가 */
 }
 
 .ratingButton {
-    padding: 10px 20px;
+    padding: 15px 25px; /* 버튼 크기 증가 */
     border: none;
-    border-radius: 4px;
+    border-radius: 8px; /* 둥근 모서리 */
     cursor: pointer;
-    font-size: 16px;
+    font-size: 18px; /* 폰트 크기 증가 */
     margin: 0 5px;
-    background-color: #3d3d56;
-    color: white;
+    transition: background 0.3s, transform 0.3s; /* 부드러운 전환 효과 추가 */
+    background-color: #ffffff;
 }
 
 .ratingButton:hover {
-    opacity: 0.7;
+    transform: scale(1.1); /* 약간 확대 효과 추가 */
+    opacity: 0.8; /* 약간의 투명도 효과 추가 */
 }
 
-.selected {
-    background-color: #4CAF50;
+.ratinglike {
+    background-color: #4CAF50; /* 좋아요 색상 밝게 변경 */
+    color: #ffffff; /* 텍스트 색상 밝게 변경 */
+}
+
+.ratingdislike {
+    background-color: #f44336; /* 싫어요 색상 밝게 변경 */
+    color: #ffffff; /* 텍스트 색상 밝게 변경 */
 }
 
 .modalButtons {
@@ -102,34 +142,68 @@
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
-    background-color: #4CAF50;
+    background-color: #ff3b3b; /* 버튼 배경 색상 밝게 변경 */
     color: white;
 }
 
 .commentsSection {
-    flex-grow: 1; /* 공간을 차지하도록 설정 */
+    flex-grow: 1;
 }
 
 .commentsTitle {
     font-size: 20px;
     margin-bottom: 10px;
+    color: #ff6b6b; /* 강조 색상으로 변경 */
 }
 
 .commentsContainer {
-    max-height: 440px; /* 적절한 높이로 설정 */
+    max-height: 440px;
     overflow-y: auto;
-    background-color: #3d3d56;
+    background-color: #f0f0f5; /* 배경 색상 밝게 변경 */
     padding: 10px;
     border-radius: 4px;
+    border: 1px solid #d4d7f6; /* 테두리 추가 */
 }
 
 .comment {
-    background-color: #2A2544;
+    background-color: #ffffff; /* 배경 색상 밝게 변경 */
     padding: 10px;
     border-radius: 4px;
     margin-bottom: 10px;
+    color: #333333; /* 텍스트 색상 어둡게 변경 */
+    border: 1px solid #d4d7f6; /* 테두리 추가 */
 }
 
 .comment p {
     margin: 5px 0;
+}
+
+.commentActions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.actionButton {
+    background: none;
+    border: none;
+    color: #ff6b6b; /* 버튼 색상 밝게 변경 */
+    cursor: pointer;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    font-size: 18px; /* 폰트 크기 증가 */
+    transition: color 0.3s, transform 0.3s; /* 부드러운 전환 효과 추가 */
+}
+
+.actionButton:hover {
+    color: #ff3b3b; /* 버튼 색상 강조 */
+    transform: scale(1.1); /* 약간 확대 효과 추가 */
+}
+
+.liked {
+    color: #4CAF50; /* 좋아요 색상 밝게 변경 */
+}
+
+.disliked {
+    color: #f44336; /* 싫어요 색상 밝게 변경 */
 }
