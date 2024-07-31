@@ -49,8 +49,7 @@
     align-items: center;
     width: 100%;
     border-bottom: 10px solid #ff6b6b; /* 강조 색상으로 변경 */
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding-bottom: 10px;
     background-color: #ffffff; /* 배경 색상을 밝게 변경 */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
     border-radius: 10px;
@@ -58,13 +57,11 @@
 }
 
 .backButton {
-    text-align: center;
-    font: 900 60px Inter, sans-serif;
-    cursor: pointer;
     background: none;
     border: none;
     color: #ff6b6b; /* 버튼 색상 밝게 변경 */
     font-size: 24px;
+    cursor: pointer;
     margin-left: 10px;
 }
 
@@ -72,19 +69,17 @@
     aspect-ratio: 0.96;
     object-fit: cover;
     object-position: center;
-    width: 113px;
+    width: 123.19px;
     max-width: 100%;
     border-radius: 50%;
 }
 
 .title {
-    align-self: stretch;
-    flex-basis: auto;
-    margin: auto 0;
     font-size: 3rem;
     color: #ff6b6b; /* 강조 색상으로 변경 */
     font-style: italic;
     font-weight: bold;
+    flex: 1;
 }
 
 .profileCard {
