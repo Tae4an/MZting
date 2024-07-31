@@ -1,10 +1,28 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from '../styles/ResultPage.module.css'
 import image2 from '../assets/Images/image2.jpg'
+import {sendGetRequest} from "../services";
+
+
+const chatRoomId = 1;
 
 const ResultPage = () => {
     const navigate = useNavigate();
+    const [result, setResult] = useState(null);
+
+    useEffect(() => {
+        const fetchResult = async () => {
+            try {
+                const response = await sendGetRequest({}, `/api/chat/result/${chatRoomId}`)
+                setResult(response);
+            } catch (error) {
+                console.error("Error fetching result:", error);
+            }
+        };
+
+        fetchResult();
+    }, [chatRoomId]);
 
     return (
         <div className={styles.page}>
@@ -28,10 +46,15 @@ const ResultPage = () => {
             </div>
             <div className={styles.actionButton}>대화 로그 보기</div>
             <div className={styles.scoreCard}>
-                <div className={styles.compatibilityScore}>궁합 점수 : ㅇㅇ</div>
-                <div className={styles.finalScore}>최종 호감도 : ㅇㅇ</div>
+                <div className={styles.compatibilityScore}>궁합 점수 : {result ? result.score : "로딩 중..."}</div>
             </div>
-            <div className={styles.reviewButton}>대화 후기 보기</div>
+            <div className={styles.summaryCard}>
+                <h3>감정 요약</h3>
+                <p>{result ? result.summaryFeel : "로딩 중..."}</p>
+                <h3>평가 요약</h3>
+                <p>{result ? result.summaryEval: "로딩 중..."}</p>
+            </div>
+            <div className={styles.reviewButton}>댓글 보기</div>
         </div>
     );
 }
