@@ -1,0 +1,76 @@
+/* src/styles/RecommendModal.module.css */
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal {
+    background: #ffffff; /* 배경 색상을 밝게 변경 */
+    padding: 20px;
+    border-radius: 15px;
+    max-width: 1000px;
+    width: 100%;
+    max-height: 800px;
+    height: 80%;
+    position: relative;
+    color: #333333; /* 텍스트 색상을 어둡게 변경 */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    animation: slide-down 0.3s ease-out forwards;
+}
+
+@keyframes slide-down {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modalHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eaeaea;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    color: #333333; /* 텍스트 색상을 어둡게 변경 */
+}
+
+.modalHeader h2 {
+    margin: 0;
+    color: #ff6b6b; /* 강조 색상으로 변경 */
+}
+
+.closeButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #ff6b6b; /* 강조 색상으로 변경 */
+    cursor: pointer;
+}
+
+.modalBody {
+    font-size: 1.2rem;
+    line-height: 1.5;
+    text-align: left;
+    overflow-y: auto;
+    flex: 1;
+    color: #333333; /* 텍스트 색상을 어둡게 변경 */
+}

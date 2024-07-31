@@ -1,7 +1,8 @@
+/* src/styles/Layout.module.css */
 .layout {
     display: flex;
     min-height: 100vh;
-    background-color: #1e1e1e;
+    background-color: #ffffff; /* 배경 색상을 밝게 변경 */
 }
 
 .main {
@@ -9,6 +10,7 @@
     display: flex;
     justify-content: center;
     padding: 20px 0;
+    background-color: #f0f0f5; /* 메인 컨텐츠 배경 색상 밝게 변경 */
 }
 
 @media (max-width: 991px) {

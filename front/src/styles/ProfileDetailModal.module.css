@@ -1,10 +1,11 @@
+/* src/styles/ProfileDetailModal.module.css */
 .modalOverlay {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.5); /* 배경 투명도 줄임 */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -12,7 +13,7 @@
 }
 
 .modalContent {
-    background: #423F54;
+    background: #ffffff; /* 배경 색상을 밝게 변경 */
     padding: 20px;
     border-radius: 15px;
     max-width: 1000px;
@@ -20,11 +21,12 @@
     max-height: 800px;
     height: 80%;
     position: relative;
-    color: white;
+    color: #333333; /* 텍스트 색상 어둡게 변경 */
     text-align: center;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
 }
 
 .closeButton {
@@ -34,7 +36,7 @@
     background: none;
     border: none;
     font-size: 1.5rem;
-    color: white;
+    color: #ff6b6b; /* 버튼 색상 밝게 변경 */
     cursor: pointer;
 }
 
@@ -47,7 +49,7 @@
 .profileImage {
     width: 450px;
     height: 560px;
-    border-radius: 75px;
+    border-radius: 15px; /* 모서리 둥글게 변경 */
     object-fit: cover;
 }
 
@@ -60,11 +62,12 @@
 .profileInfo h2 {
     margin-bottom: 10px;
     font-size: 2rem;
+    color: #ff6b6b; /* 강조 색상으로 변경 */
 }
 
 .profileType {
     color: #ffffff;
-    background-color: #4545A9;
+    background-color: #ff6b6b; /* 배경 색상 밝게 변경 */
     padding: 2px 8px;
     border-radius: 8px;
     margin-left: 5px;
@@ -83,11 +86,12 @@
 }
 
 .profileTags span {
-    background-color: #675BA7;
+    background-color: #ff6b6b; /* 배경 색상 밝게 변경 */
     border-radius: 8px;
     padding: 5px 10px;
     margin: 2px;
     font-size: 1rem;
+    color: #ffffff; /* 텍스트 색상 밝게 변경 */
 }
 
 .profileImageButton {
@@ -105,6 +109,7 @@
     text-align: left;
     overflow-y: auto;
     flex: 1;
+    color: #333333; /* 텍스트 색상 어둡게 변경 */
 }
 
 .buttonContainer {
@@ -115,11 +120,11 @@
     padding: 10px 0;
     position: sticky;
     bottom: 0;
-    background: #423F54;
+    background: #ffffff; /* 배경 색상 밝게 변경 */
 }
 
 .chatButton {
-    background-color: #2A2544;
+    background-color: #ff6b6b; /* 버튼 배경 색상 밝게 변경 */
     color: white;
     border: none;
     padding: 15px 30px;
@@ -128,13 +133,16 @@
     font-size: 1.2rem;
     width: 200px;
     height: 60px;
+    transition: background 0.3s, transform 0.3s; /* 부드러운 전환 효과 */
+}
+
+.chatButton:hover {
+    background-color: #e45b5b; /* 색상 변경 */
+    transform: scale(1.05); /* 약간 확대 효과 */
 }
 
 .commentButton {
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #2A2544;
+    background-color: #ff6b6b; /* 버튼 배경 색상 밝게 변경 */
     color: white;
     border: none;
     padding: 15px 30px;
@@ -145,4 +153,13 @@
     height: 60px;
     z-index: 1000;
     position: fixed;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: background 0.3s, transform 0.3s; /* 부드러운 전환 효과 */
+}
+
+.commentButton:hover {
+    background-color: #e45b5b; /* 색상 변경 */
+    transform: translateX(-50%) scale(1.05); /* 버튼 크기 확대 */
 }
