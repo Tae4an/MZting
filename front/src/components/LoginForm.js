@@ -19,7 +19,7 @@ const LoginForm = () => {
                 username,
                 password
             });
-            alert(response.data);
+            alert("로그인 성공");
             navigate('/main');
         } catch (error) {
             if (error.response) {
