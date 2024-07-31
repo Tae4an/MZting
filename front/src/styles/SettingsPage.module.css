@@ -1,10 +1,11 @@
+/* src/styles/SettingsPage.module.css */
 .settingsContainer {
     display: flex;
     flex-direction: column;
     height: 96vh;
     width: 100%;
-    background-color: rgba(1, 0, 9, 0.9);
-    color: #ffffff;
+    background-color: #f0f0f5; /* 배경 색상을 밝게 변경 */
+    color: #333333; /* 텍스트 색상을 어둡게 변경 */
     padding: 20px;
 }
 
@@ -12,22 +13,22 @@
     display: flex;
     align-items: center;
     width: 100%;
-    border-bottom: 10px solid #d4d7f6;
+    border-bottom: 10px solid #ff6b6b; /* 강조 색상으로 변경 */
     padding-bottom: 10px;
-    background-color: rgba(1, 0, 9, 0.9);
+    background-color: #ffffff; /* 배경 색상을 밝게 변경 */
 }
 
 .backButton {
     background: none;
     border: none;
-    color: #ffffff;
+    color: #ff6b6b; /* 버튼 색상 밝게 변경 */
     font-size: 24px;
     cursor: pointer;
 }
 
 .settingsTitle {
     font-size: 3rem;
-    color: #d4d7f6;
+    color: #ff6b6b; /* 강조 색상으로 변경 */
     font-style: italic;
     font-weight: bold;
     margin-left: 10px; /* 아이콘과 간격을 벌리기 위해 오른쪽 여백 추가 */
@@ -45,20 +46,26 @@
 .logoutButton {
     font-style: italic;
     font-weight: bold;
-    background-color: #ff4757;
+    background-color: #ff6b6b; /* 버튼 배경 색상 밝게 변경 */
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 25px; /* 둥근 모서리 */
     padding: 10px 20px;
     cursor: pointer;
     font-size: 1rem;
     margin-top: 20px;
+    transition: background 0.3s, transform 0.3s; /* 부드러운 전환 효과 추가 */
+}
+
+.logoutButton:hover {
+    background-color: #e45b5b; /* 호버 시 색상 변경 */
+    transform: scale(1.05); /* 약간 확대 효과 추가 */
 }
 
 .scrollIndicator {
     position: fixed;
     border-radius: 15px;
-    background-color: #978cc2;
+    background-color: #ff6b6b; /* 강조 색상으로 변경 */
     width: 18px;
     height: 129px;
     top: 0;
