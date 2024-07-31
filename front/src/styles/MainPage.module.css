@@ -1,11 +1,12 @@
 /* src/styles/MainPage.module.css */
 .mainContent {
-    background-color: #ffffff; /* 밝은 배경 색상으로 변경 */
     display: flex;
     flex-direction: column;
+    height: 100%;
     width: 100%;
+    background-color: #f0f0f5; /* 배경 색상을 밝게 변경 */
+    color: #333333; /* 텍스트 색상을 어둡게 변경 */
     padding: 20px;
-    color: #333333; /* 어두운 텍스트 색상으로 변경 */
 }
 
 .header {
@@ -15,6 +16,9 @@
     padding: 10px 0 10px 0;
     background-color: #ffffff; /* 헤더 배경 색상 밝게 변경 */
     color: #333333; /* 헤더 텍스트 색상 어둡게 변경 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+    border-radius: 10px 10px 0 0;
+    border-bottom: 5px solid #ff6b6b;
 }
 
 .mainTitleContainer {
@@ -32,6 +36,7 @@
     justify-content: flex-end; /* 오른쪽 정렬을 위해 변경 */
     width: 100%;
     padding-top: 10px;
+    margin-right: 10px;
 }
 
 .mainTitle {
@@ -40,13 +45,14 @@
     font-style: italic;
     font-weight: bold;
     margin-right: 10px;
-    margin-left: 10px;
+    margin-left: 74px;
     flex: 1;
 }
 
 .iconContainer {
     display: flex;
     gap: 10px; /* 아이콘 사이의 간격 */
+    margin-right: 10px;
 }
 
 .iconButton {
@@ -81,13 +87,6 @@
     background: #e45b5b; /* 약간 더 밝은 색상으로 변경 */
     color: #ffffff; /* 텍스트 색상을 약간 더 밝게 변경 */
     transform: scale(1.05); /* 약간 확대 효과 */
-}
-
-.divider {
-    border: none;
-    height: 4px;
-    background-color: #ff6b6b; /* 강조 색상으로 변경 */
-    margin: 0 0 10px;
 }
 
 .profileGrid {

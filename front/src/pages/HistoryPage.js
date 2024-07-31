@@ -11,15 +11,17 @@ const HistoryPage = () => {
     const conversations = [
         {
             avatarSrc: "https://cdn.builder.io/api/v1/image/assets/TEMP/f312af922c0a98448cf4a4b68cf50ce014690f6158cf485c528a8307c494fe5f?apiKey=49c1e3d53b81482bb61cc4f10fd5a261&",
-            title: "#INFJ와의 대화",
+            title: "#INFJ 와의 대화",
             status: "진행중",
-            actionText: "이어서 대화 하기"
+            actionText: "이어서 대화 하기",
+            route: "/continue-conversation" // 이어서 대화 하기 페이지 경로
         },
         {
             avatarSrc: image2,
-            title: "#ENFJ와의 대화",
+            title: "#ENFJ 와의 대화",
             status: "완료",
-            actionText: "대화 결과 보기"
+            actionText: "대화 결과 보기",
+            route: "/result" // ResultPage 경로
         }
     ];
 
@@ -47,6 +49,10 @@ const HistoryPage = () => {
         };
     }, []);
 
+    const handleActionClick = (route) => {
+        navigate(route);
+    };
+
     return (
         <div ref={mainContentRef} className={styles.page}>
             <header className={styles.header}>
@@ -71,7 +77,12 @@ const HistoryPage = () => {
                                 <div className={styles.status}>{conversation.status}</div>
                             </div>
                         </div>
-                        <button className={styles.actionButton}>{conversation.actionText}</button>
+                        <button
+                            className={styles.actionButton}
+                            onClick={() => handleActionClick(conversation.route)}
+                        >
+                            {conversation.actionText}
+                        </button>
                     </div>
                 ))}
             </div>

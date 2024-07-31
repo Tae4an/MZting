@@ -16,6 +16,9 @@
     border-bottom: 10px solid #ff6b6b; /* 강조 색상으로 변경 */
     padding-bottom: 10px;
     background-color: #ffffff; /* 배경 색상을 밝게 변경 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+    border-radius: 10px;
+    gap: 10px;
 }
 
 .backButton {
@@ -24,6 +27,7 @@
     color: #ff6b6b; /* 버튼 색상 밝게 변경 */
     font-size: 24px;
     cursor: pointer;
+    margin-left: 10px;
 }
 
 .title {
@@ -31,7 +35,6 @@
     color: #ff6b6b; /* 강조 색상으로 변경 */
     font-style: italic;
     font-weight: bold;
-    margin-left: 10px;
     flex: 1;
 }
 
