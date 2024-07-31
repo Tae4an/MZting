@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styles from '../styles/CommentModal.module.css';
 import 'bootstrap-icons/font/bootstrap-icons.css'; // Bootstrap Icons CSS 포함
+import { sendPostRequest, sendGetRequest } from "../services";
 
 const CommentModal = ({ show, onClose, mbti }) => {
     const [comment, setComment] = useState('');
