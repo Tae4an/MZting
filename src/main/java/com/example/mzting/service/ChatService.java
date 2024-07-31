@@ -1,5 +1,11 @@
 package com.example.mzting.service;
 
+import com.example.mzting.entity.Chat;
+import com.example.mzting.repository.ChatRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.Getter;
 import org.springframework.stereotype.Service;
 import java.util.*;
@@ -12,15 +18,18 @@ import java.util.*;
  */
 @Service
 public class ChatService {
+    private final ChatRepository chatRepository;
+    private final ObjectMapper objectMapper;
     @Getter
     private List<String> savedResponses = new ArrayList<>(); // 저장된 응답 리스트
     private List<String> userRequests = new ArrayList<>(); // 사용자 요청 리스트
     private Map<String, String> context = new HashMap<>();
 
-    /**
-     * 사용자 요청을 추가하는 메서드
-     * @param request 사용자 요청 문자열
-     */
+    public ChatService(ChatRepository chatRepository, ObjectMapper objectMapper) {
+        this.chatRepository = chatRepository;
+        this.objectMapper = objectMapper;
+    }
+
     public void addUserRequest(String request) {
         userRequests.add(request);
     }
@@ -62,6 +71,40 @@ public class ChatService {
         }
         return messages;
     }
+
+    public Chat saveUserMessage(String content, Long chatRoomId) {
+        Chat chat = new Chat();
+        chat.setChatRoomId(chatRoomId);
+        chat.setIsBot(false);
+        chat.setContent(content);
+        chat.setBotInfo(null);
+        return chatRepository.save(chat);
+    }
+
+    public Chat saveUserMessage(com.example.mzting.dto.ClaudeResponse content, Long chatRoomId) {
+        Chat chat = new Chat();
+        chat.setChatRoomId(chatRoomId);
+        chat.setIsBot(true);
+        chat.setContent(content.getText());
+        try {
+            // ClaudeResponse 객체를 JSON으로 변환
+            String jsonString = objectMapper.writeValueAsString(content);
+            JsonNode jsonNode = objectMapper.readTree(jsonString);
+
+            // text 필드 제거
+            ((ObjectNode) jsonNode).remove("text");
+            ((ObjectNode) jsonNode).remove("errorMessage");
+
+            // 남은 정보를 botInfo에 저장
+            chat.setBotInfo(jsonNode.toString());
+        } catch (JsonProcessingException e) {
+            chat.setBotInfo(null);
+            e.printStackTrace();
+        }
+
+        return chatRepository.save(chat);
+    }
+
     public void addContext(String key, String value) {
         context.put(key, value);
     }

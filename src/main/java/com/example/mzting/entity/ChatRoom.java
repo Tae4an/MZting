@@ -1,40 +1,44 @@
 package com.example.mzting.entity;
 
+import lombok.*;
 
 import jakarta.persistence.*;
-import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "chat_temp")
+@Table(name = "chat_room")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Chat {
+public class ChatRoom {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
-    private Long chatRoomId;
+    @Column(nullable = false)
+    private String name;
 
     @Column(nullable = false)
-    private Boolean isBot;
-
-    @Column(nullable = false)
-    private String content;
-
-    @Column(columnDefinition = "json")
-    private String botInfo;
-
-    @Column(nullable = false)
-    private Integer mission;
+    private Long userId;
 
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
     @Setter(AccessLevel.NONE)
-    private LocalDateTime sendAt;
+    private LocalDateTime createTime;
+
+    @Column(nullable = false, columnDefinition = "boolean default true")
+    private Boolean isProcessing;
+
+    @Column(nullable = false)
+    private Integer missionFlag;
+
+    @Column(nullable = false)
+    private Integer profileId;
+
+    @Column(columnDefinition = "json")
+    private String result;
 }
