@@ -1,18 +1,24 @@
 package com.example.mzting.controller;
 
-import com.example.mzting.DTO.ChatResultResponse;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.mzting.dto.ChatResultResponse;
+import com.example.mzting.entity.Chat;
+import com.example.mzting.service.ChatResultService;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(origins = "http://localhost:3000")
 public class ChatResultController {
+    private final ChatResultService chatResultService;
 
-    @PostMapping("/chat/result")
-    public ChatResultResponse responseResult() {
-        return new ChatResultResponse(1, "으에에", "으에에");
+    public ChatResultController(ChatResultService chatResultService) {
+        this.chatResultService = chatResultService;
+    }
+
+    @GetMapping("chat/result/{chatRoomId}")
+    public ChatResultResponse getChatSummary(@PathVariable Long chatRoomId) {
+        return chatResultService.getBotMessagesWithSummary(chatRoomId);
     }
 }

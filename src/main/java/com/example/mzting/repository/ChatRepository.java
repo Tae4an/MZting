@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface ChatRepository extends JpaRepository<Chat, Long> {
     List<Chat> findByChatRoomIdOrderBySendAtAsc(Long chatRoomId);
+    List<Chat> findByChatRoomIdAndIsBotTrueOrderBySendAtAsc(Long chatRoomId);
 }
