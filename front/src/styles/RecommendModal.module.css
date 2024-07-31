@@ -5,72 +5,111 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.5);
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     z-index: 1000;
 }
 
 .modal {
-    background: #ffffff; /* 배경 색상을 밝게 변경 */
+    background: #ffffff;
     padding: 20px;
-    border-radius: 15px;
-    max-width: 1000px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
     width: 100%;
-    max-height: 800px;
-    height: 80%;
-    position: relative;
-    color: #333333; /* 텍스트 색상을 어둡게 변경 */
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    animation: slide-down 0.3s ease-out forwards;
-}
-
-@keyframes slide-down {
-    from {
-        transform: translateY(-20px);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
+    max-height: 80vh; /* 모달의 최대 높이를 설정하여 화면에 맞게 조절 */
+    overflow-y: auto; /* 모달 내에서 스크롤 가능하게 설정 */
 }
 
 .modalHeader {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #eaeaea;
+    border-bottom: 1px solid #ddd;
     padding-bottom: 10px;
-    margin-bottom: 20px;
-    color: #333333; /* 텍스트 색상을 어둡게 변경 */
-}
-
-.modalHeader h2 {
-    margin: 0;
-    color: #ff6b6b; /* 강조 색상으로 변경 */
 }
 
 .closeButton {
-    position: absolute;
-    top: 10px;
-    right: 10px;
     background: none;
     border: none;
     font-size: 1.5rem;
-    color: #ff6b6b; /* 강조 색상으로 변경 */
     cursor: pointer;
+    color: #ff6b6b;
 }
 
 .modalBody {
-    font-size: 1.2rem;
-    line-height: 1.5;
-    text-align: left;
-    overflow-y: auto;
-    flex: 1;
-    color: #333333; /* 텍스트 색상을 어둡게 변경 */
+    padding: 20px 0;
+}
+
+.choiceView {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.questionBlock {
+    margin-bottom: 20px;
+}
+
+.optionButtons {
+    display: flex;
+    gap: 10px;
+}
+
+.optionButton {
+    background-color: #f0f0f5; /* 버튼 배경 색상 밝게 변경 */
+    color: #333333; /* 버튼 텍스트 색상 어둡게 변경 */
+    border: 2px solid #ccc; /* 기본 테두리 색상 */
+    border-radius: 8px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s, border 0.3s; /* 테두리 전환 효과 추가 */
+}
+
+.optionButton:hover {
+    background: #e0e0e0; /* 호버 시 색상 변경 */
+    transform: scale(1.05); /* 약간 확대 효과 */
+}
+
+.selected {
+    background-color: #4cae50; /* 배경 색상 밝게 변경 */
+    color: #ffffff; /* 텍스트 색상 밝게 변경 */
+    border: 2px solid #3a8e40; /* 테두리 색상 변경 */
+}
+
+.nextButton {
+    background-color: #ff6b6b; /* 버튼 배경 색상 밝게 변경 */
+    color: #ffffff; /* 버튼 텍스트 색상 밝게 변경 */
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+}
+
+.nextButton:disabled {
+    background-color: #ddd; /* 비활성화 상태 색상 */
+    cursor: not-allowed;
+}
+
+.nextButton:hover:not(:disabled) {
+    background: #e45b5b; /* 호버 시 색상 변경 */
+    transform: scale(1.05); /* 약간 확대 효과 */
+}
+
+.profileCard {
+    width: 100%; /* 카드의 너비를 100%로 설정 */
+    max-width: 300px; /* 카드의 최대 너비를 300px로 설정 */
+    margin: 10px; /* 카드 사이에 간격 추가 */
+}
+
+.tempCharacterView {
+    display: flex;
+    flex-wrap: wrap; /* 여러 줄로 카드가 배치되도록 설정 */
+    justify-content: center; /* 중앙 정렬 */
 }
