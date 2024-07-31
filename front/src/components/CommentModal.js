@@ -137,14 +137,14 @@ const CommentModal = ({ show, onClose, mbti }) => {
                                 onClick={handleLike}
                                 className={`${styles.ratingButton} ${rating === true ? styles.ratinglike : ''}`}
                             >
-                                <i className="bi bi-hand-thumbs-up"></i>
+                                <i className="bi bi-hand-thumbs-up" style={{ color: "black" }}></i>
                             </button>
                             <button
                                 type="button"
                                 onClick={handleDislike}
                                 className={`${styles.ratingButton} ${rating === false ? styles.ratingdislike : ''}`}
                             >
-                                <i className="bi bi-hand-thumbs-down"></i>
+                                <i className="bi bi-hand-thumbs-down" style={{ color: "black" }}></i>
                             </button>
                         </div>
                     </form>
@@ -156,8 +156,8 @@ const CommentModal = ({ show, onClose, mbti }) => {
                                     <p><strong>{username}</strong></p>
                                     <p>{content}</p>
                                     <p>{isLike === true ? (
-                                            <i className="bi bi-hand-thumbs-up-fill" style={{ color: 'blue' }} />
-                                        ) : (<i className="bi bi-hand-thumbs-down-fill" style={{ color: 'red' }} />
+                                            <i className="bi bi-hand-thumbs-up-fill" style={{ color: '#4CAF50' }} />
+                                        ) : (<i className="bi bi-hand-thumbs-down-fill" style={{ color: '#f44336' }} />
                                         ) }
                                     </p>
                                     <div className={styles.commentActions}>
