@@ -1,5 +1,6 @@
 package com.example.mzting.controller;
 
+
 import com.example.mzting.dto.CommentDTO;
 import com.example.mzting.entity.Comment;
 import com.example.mzting.service.CommentService;
@@ -36,6 +37,7 @@ public class CommentController {
             comment.setIsLike(PostPostsCommentRequest.getIsLike());
             System.out.println("postId : " + postId);
             commentService.saveComment(comment);
+
 
             CommentDTO.PostPostsCommentsResponse response = new CommentDTO.PostPostsCommentsResponse();
             response.setSuccess(true);

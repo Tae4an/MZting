@@ -2,13 +2,14 @@ import axios from "axios";
 
 const API_URL = 'http://localhost:8080';
 
-const sendMessage = async (message,mbti) => {
-    console.log("Send Message :"+message+"MBTI:"+mbti)
+const sendMessage = async (message,mbti,context) => {
+    console.log("Send Message :"+message+"MBTI:"+mbti + "context :" + context)
     try {
         const response = await axios.post(`${API_URL}/api/ask-claude`,
             {
                 "message": message,
-                "mbti" : mbti
+                "mbti" : mbti,
+                "context": context
             },
             {
                 headers: {
