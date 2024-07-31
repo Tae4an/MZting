@@ -1,6 +1,6 @@
 package com.example.mzting.controller;
 
-import com.example.mzting.DTO.Answer;
+import com.example.mzting.dto.Answer;
 import com.example.mzting.entity.MBTIQuestion;
 import com.example.mzting.repository.MBTIQuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +23,7 @@ public class MBTIQuestionController {
     @PostMapping("/submit")
     public String submitAnswers(@RequestBody List<Answer> answers) {
         // MBTI 판별 로직
-        String mbti = determineMBTI(answers);
-        return mbti;
+        return determineMBTI(answers);
     }
 
     private String determineMBTI(List<Answer> answers) {

@@ -4,7 +4,7 @@ import com.example.mzting.entity.MBTICompatibility;
 import com.example.mzting.repository.MBTICompatibilityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.example.mzting.DTO.MBTIRecommendDTO;
+import com.example.mzting.dto.MBTIRecommendDTO;
 
 import java.util.*;
 

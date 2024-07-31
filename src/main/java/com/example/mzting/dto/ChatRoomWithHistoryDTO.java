@@ -1,4 +1,4 @@
-package com.example.mzting.DTO;
+package com.example.mzting.dto;
 
 import com.example.mzting.entity.Chat;
 import com.example.mzting.entity.ChatRoom;

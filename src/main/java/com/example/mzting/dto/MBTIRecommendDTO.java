@@ -1,4 +1,4 @@
-package com.example.mzting.DTO;
+package com.example.mzting.dto;
 import lombok.Data;
 import java.util.List;
 import java.util.Map;

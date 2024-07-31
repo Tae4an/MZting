@@ -1,4 +1,4 @@
-package com.example.mzting.DTO;
+package com.example.mzting.dto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -6,8 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.List;
-
-import org.springframework.data.domain.Page;
 
 
 public class CommentDTO {

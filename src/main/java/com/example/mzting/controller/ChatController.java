@@ -2,12 +2,12 @@ package com.example.mzting.controller;
 
 import com.example.mzting.dto.UserMessage;
 import com.example.mzting.dto.ClaudeResponse;
+import com.example.mzting.entity.Chat;
 import com.example.mzting.service.ClaudeApiService;
 import com.example.mzting.service.ChatService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.*;
-import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -33,6 +33,10 @@ public class ChatController {
         try {
             String userMessage = userMessageObj.getMessage();
             String userMbti = userMessageObj.getMbti();
+            Long chatRoomId = 1L; // 추가: 채팅방 ID를 받아옴
+
+            // 사용자 메시지를 DB에 저장
+            chatService.saveUserMessage(userMessage, chatRoomId);
 
             chatService.addUserRequest(userMessage);
 
@@ -42,6 +46,9 @@ public class ChatController {
             );
 
             chatService.addClaudeResponse(claudeResponse.getText());
+
+            // Claude의 응답도 DB에 저장 (선택적)
+            chatService.saveUserMessage(claudeResponse, chatRoomId);
 
             return ResponseEntity.ok(claudeResponse);
         } catch (Exception e) {

@@ -1,7 +1,7 @@
 package com.example.mzting.service;
 
-import com.example.mzting.DTO.ChatRoomRequest;
-import com.example.mzting.DTO.ChatRoomWithHistoryDTO;
+import com.example.mzting.dto.ChatRoomRequest;
+import com.example.mzting.dto.ChatRoomWithHistoryDTO;
 import com.example.mzting.entity.Chat;
 import com.example.mzting.entity.ChatRoom;
 import com.example.mzting.exception.ResourceNotFoundException;

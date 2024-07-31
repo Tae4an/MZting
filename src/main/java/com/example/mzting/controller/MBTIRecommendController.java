@@ -1,7 +1,6 @@
 package com.example.mzting.controller;
 
-import com.example.mzting.entity.MBTICompatibility;
-import com.example.mzting.DTO.MBTIRecommendDTO;
+import com.example.mzting.dto.MBTIRecommendDTO;
 import com.example.mzting.service.MBTIRecommendService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
