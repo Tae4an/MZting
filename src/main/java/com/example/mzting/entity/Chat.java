@@ -30,6 +30,9 @@ public class Chat {
     @Column(columnDefinition = "json")
     private String botInfo;
 
+    @Column(nullable = false)
+    private Integer mission;
+
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
     @Setter(AccessLevel.NONE)

@@ -30,6 +30,15 @@ public class ChatRoom {
     @Setter(AccessLevel.NONE)
     private LocalDateTime createTime;
 
+    @Column(nullable = false, columnDefinition = "boolean default true")
+    private Boolean isProcessing;
+
+    @Column(nullable = false)
+    private Integer missionFlag;
+
     @Column(nullable = false)
     private Integer profileId;
+
+    @Column(columnDefinition = "json")
+    private String result;
 }
