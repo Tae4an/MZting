@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { ProfileDetailModal, TypingIndicator } from '../components';
 import styles from '../styles/ChatBox.module.css';
 import ChoiceModal from './ChoiceModal';
+import FeedbackBanner from "./FeedbackBanner";
 
 const ChatBox = ({
                      image,
@@ -18,6 +19,9 @@ const ChatBox = ({
     const [isTyping, setIsTyping] = useState(false);
     const navigate = useNavigate();
     const messagesEndRef = useRef(null);
+    const [prevScore, setPrevScore] = useState(0);
+
+
 
     const handleBackClick = () => {
         navigate(-1);
@@ -68,21 +72,46 @@ const ChatBox = ({
                     : "상황 설명: 간략한 상황에 대한 설명 또는 미션 부여 (예: 당신은 주선자의 소개를 통해 연락이 닿았습니다.)"}
             </div>
             <div className={styles.messageContainer}>
-                {messages && messages.map((message, index) => (
-                    <ChatBubble
-                        key={index}
-                        content={message.content}
-                        isSent={message.isSent}
-                        avatar={message.isSent ? null : image}
-                    />
-                ))}
+                {messages && messages.map((message, index) => {
+                    if (!message.isSent && message.content && typeof message.content === 'object') {
+                        const currentScore = message.content.score || 0;
+
+                        return (
+                            <React.Fragment key={index}>
+                                <ChatBubble
+                                    content={message.content.text}
+                                    isSent={message.isSent}
+                                    avatar={message.isSent ? null : image}
+                                />
+                                <FeedbackBanner
+                                    feel={message.content.feel}
+                                    score={currentScore}
+                                    evaluation={message.content.evaluation}
+                                    prevScore={prevScore}
+                                />
+                            </React.Fragment>
+                        );
+
+                        // 점수 업데이트
+                        setPrevScore(currentScore);
+                    } else {
+                        return (
+                            <ChatBubble
+                                key={index}
+                                content={message.content}
+                                isSent={message.isSent}
+                                avatar={message.isSent ? null : image}
+                            />
+                        );
+                    }
+                })}
                 {isTyping && (
-                    <div className={styles.messageWrapper} style={{ justifyContent: 'flex-start' }}>
-                        <img src={image} alt="Avatar" className={styles.messageAvatar} />
-                        <TypingIndicator />
+                    <div className={styles.messageWrapper} style={{justifyContent: 'flex-start'}}>
+                        <img src={image} alt="Avatar" className={styles.messageAvatar}/>
+                        <TypingIndicator/>
                     </div>
                 )}
-                <div ref={messagesEndRef} />
+                <div ref={messagesEndRef}/>
             </div>
             <form onSubmit={handleSubmit} className={styles.inputArea}>
                 <input
@@ -125,4 +154,4 @@ ChatBox.propTypes = {
     onSendMessage: PropTypes.func.isRequired,
 };
 
-export { ChatBox };
+export {ChatBox};

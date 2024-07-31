@@ -27,23 +27,19 @@ const ChatPage = () => {
 
             const response = await sendMessage(content, mbti);
 
-            if (response.claudeResponse && typeof response.claudeResponse === 'string') {
+            if (response.claudeResponse && response.claudeResponse.text) {
                 const responseMessage = {
-                    content: response.claudeResponse,
-                    isSent: false,
-                    avatar: image,
-                };
-                setMessages(prevMessages => [...prevMessages, responseMessage]);
-            } else if (response.claudeResponse && response.claudeResponse.text) {
-                const responseMessage = {
-                    content: response.claudeResponse.text,
+                    content: {
+                        text: response.claudeResponse.text,
+                        feel: response.claudeResponse.feel,
+                        score: response.claudeResponse.score,
+                        evaluation: response.claudeResponse.evaluation
+                    },
                     isSent: false,
                     avatar: image,
                 };
                 setMessages(prevMessages => [...prevMessages, responseMessage]);
             }
-
-
         } catch (error) {
             console.error('Error sending message:', error);
         }
