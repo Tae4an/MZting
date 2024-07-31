@@ -5,7 +5,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.5);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -13,7 +13,7 @@
 }
 
 .modal {
-    background: #423F54;
+    background: #ffffff; /* 배경 색상을 밝게 변경 */
     padding: 20px;
     border-radius: 15px;
     max-width: 1000px;
@@ -21,7 +21,7 @@
     max-height: 800px;
     height: 80%;
     position: relative;
-    color: white;
+    color: #333333; /* 텍스트 색상을 어둡게 변경 */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -47,11 +47,12 @@
     border-bottom: 1px solid #eaeaea;
     padding-bottom: 10px;
     margin-bottom: 20px;
-    color: white;
+    color: #333333; /* 텍스트 색상을 어둡게 변경 */
 }
 
 .modalHeader h2 {
     margin: 0;
+    color: #ff6b6b; /* 강조 색상으로 변경 */
 }
 
 .closeButton {
@@ -61,7 +62,7 @@
     background: none;
     border: none;
     font-size: 1.5rem;
-    color: white;
+    color: #ff6b6b; /* 강조 색상으로 변경 */
     cursor: pointer;
 }
 
@@ -71,4 +72,5 @@
     text-align: left;
     overflow-y: auto;
     flex: 1;
+    color: #333333; /* 텍스트 색상을 어둡게 변경 */
 }
