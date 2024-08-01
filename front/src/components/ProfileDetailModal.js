@@ -24,8 +24,10 @@ const ProfileDetailModal = ({ show, onClose, profile, onClick, showChatButton })
     };
 
     const handleChatStart = () => {
-        onClose();
-        if (onClick) onClick();
+        if (onClick) {
+            onClose(); // 모달을 먼저 닫고
+            onClick(); // 이후 onClick 콜백 호출
+        }
     };
 
     if (!show || !profile) {
