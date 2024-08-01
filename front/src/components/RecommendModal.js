@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { sendPostRequest, sendGetRequest } from "../services";
 import styles from '../styles/RecommendModal.module.css';
 import { ProfileCard } from "./ProfileCard";
-import { ProfileDetailModal } from "./ProfileDetailModal"; // ProfileDetailModal 가져오기
+import { ProfileDetailModal } from "./ProfileDetailModal";
 
 // Constants
 const QUESTIONS_PER_PAGE = 4;
@@ -39,6 +40,7 @@ const RecommendModal = ({ show, onClose }) => {
     const [recommend, setRecommend] = useState(null);
     const [profileData, setProfileData] = useState([]);
     const [selectedProfile, setSelectedProfile] = useState(null); // 선택된 프로필 상태 추가
+    const navigate = useNavigate(); // useNavigate 훅 가져오기
 
     const handleChoiceComplete = async (completeAnswers) => {
         try {
@@ -111,6 +113,10 @@ const RecommendModal = ({ show, onClose }) => {
         setSelectedProfile(null);
     };
 
+    const handleChatClick = (profile) => {
+        navigate('/chat', { state: profile });
+    };
+
     if (!show) return null;
 
     return (
@@ -133,6 +139,8 @@ const RecommendModal = ({ show, onClose }) => {
                         show={!!selectedProfile}
                         onClose={handleProfileClose}
                         profile={selectedProfile}
+                        onClick={() => handleChatClick(selectedProfile)} // 대화하기 클릭 핸들러 추가
+                        showChatButton={true}
                     />
                 )}
             </div>
