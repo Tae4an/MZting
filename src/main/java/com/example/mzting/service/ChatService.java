@@ -25,6 +25,9 @@ public class ChatService {
     private List<String> userRequests = new ArrayList<>(); // 사용자 요청 리스트
     private Map<String, String> context = new HashMap<>();
 
+    private Map<Long, Boolean> initializedChats = new HashMap<>();
+
+
     public ChatService(ChatRepository chatRepository, ObjectMapper objectMapper) {
         this.chatRepository = chatRepository;
         this.objectMapper = objectMapper;
@@ -115,5 +118,13 @@ public class ChatService {
 
     public Map<String, String> getFullContext() {
         return new HashMap<>(context);
+    }
+
+    public boolean isInitialized(Long chatRoomId) {
+        return initializedChats.getOrDefault(chatRoomId, false);
+    }
+
+    public void setInitialized(Long chatRoomId, boolean initialized) {
+        initializedChats.put(chatRoomId, initialized);
     }
 }
