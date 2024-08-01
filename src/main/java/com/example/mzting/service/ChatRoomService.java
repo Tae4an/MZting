@@ -76,4 +76,7 @@ public class ChatRoomService {
     public List<ChatRoom> getChatRoomsByUserId(Long userId) {
         return chatRoomRepository.findByUserId(userId);
     }
+    public List<ChatRoom> getChatRoomsByUserIdAndProfileId(Long userId, Integer profileId) {
+        return chatRoomRepository.findByUserIdAndProfileId(userId, profileId);
+    }
 }

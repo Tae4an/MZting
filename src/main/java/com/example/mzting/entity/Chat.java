@@ -32,7 +32,7 @@ public class Chat {
     private Boolean isBot;
 
     // 메시지 내용
-    @Column(nullable = false)
+    @Column(nullable = false, length = 1024)
     private String content;
 
     // 봇 정보 (JSON 형식)

@@ -79,7 +79,7 @@ public class ChatRoomController {
     }
 
     @GetMapping("/chatroom/list/{profileId}")
-    public ResponseEntity<List<ChatRoom>> getChatRoomListByProfileId(@PathVariable Long profileId) {
+    public ResponseEntity<List<ChatRoom>> getChatRoomListByProfileId(@PathVariable Integer profileId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         long uid = 1;
         if (authentication != null && authentication.isAuthenticated()) {
@@ -87,7 +87,7 @@ public class ChatRoomController {
             uid = userRepository.findIdByUsername(username);
         }
 
-        List<ChatRoom> chatRooms = chatRoomService.getChatRoomsByUserId(uid);
+        List<ChatRoom> chatRooms = chatRoomService.getChatRoomsByUserIdAndProfileId(uid, profileId);
         return ResponseEntity.ok(chatRooms);
     }
 
