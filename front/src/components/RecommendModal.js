@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { sendPostRequest, sendGetRequest } from "../services";
 import styles from '../styles/RecommendModal.module.css';
 import { ProfileCard } from "./ProfileCard";
+import { ProfileDetailModal } from "./ProfileDetailModal"; // ProfileDetailModal 가져오기
 
 // Constants
 const QUESTIONS_PER_PAGE = 4;
@@ -37,6 +38,7 @@ const RecommendModal = ({ show, onClose }) => {
     const [choice, setChoice] = useState([]);
     const [recommend, setRecommend] = useState(null);
     const [profileData, setProfileData] = useState([]);
+    const [selectedProfile, setSelectedProfile] = useState(null); // 선택된 프로필 상태 추가
 
     const handleChoiceComplete = async (completeAnswers) => {
         try {
@@ -86,6 +88,7 @@ const RecommendModal = ({ show, onClose }) => {
             setChoice([]);
             setRecommend(null);
             setProfileData([]);
+            setSelectedProfile(null); // 모달을 닫을 때 선택된 프로필 초기화
         } else {
             fetchProfileData();
         }
@@ -98,6 +101,14 @@ const RecommendModal = ({ show, onClose }) => {
         } catch (error) {
             console.error("Error fetching profile data:", error);
         }
+    };
+
+    const handleProfileClick = (profile) => {
+        setSelectedProfile(profile);
+    };
+
+    const handleProfileClose = () => {
+        setSelectedProfile(null);
     };
 
     if (!show) return null;
@@ -115,7 +126,15 @@ const RecommendModal = ({ show, onClose }) => {
                     recommend={recommend}
                     profileData={profileData}
                     isLoading={isLoading}
+                    onProfileClick={handleProfileClick} // 프로필 클릭 핸들러 추가
                 />
+                {selectedProfile && (
+                    <ProfileDetailModal
+                        show={!!selectedProfile}
+                        onClose={handleProfileClose}
+                        profile={selectedProfile}
+                    />
+                )}
             </div>
         </div>
     );
@@ -129,7 +148,7 @@ const ModalHeader = ({ onClose }) => (
     </div>
 );
 
-const ModalBody = ({ option, handleMyMBTI, handleSelectChoice, choice, handleChoiceComplete, recommend, profileData, isLoading }) => (
+const ModalBody = ({ option, handleMyMBTI, handleSelectChoice, choice, handleChoiceComplete, recommend, profileData, isLoading, onProfileClick }) => (
     <div className={styles.modalBody}>
         {option === null ? (
             <>
@@ -141,7 +160,7 @@ const ModalBody = ({ option, handleMyMBTI, handleSelectChoice, choice, handleCho
         ) : isLoading ? (
             <div>로딩 중...</div>
         ) : recommend && profileData.length !== 0 ? (
-            <TempCharacterView recommend={recommend} profileData={profileData} />
+            <TempCharacterView recommend={recommend} profileData={profileData} onProfileClick={onProfileClick} />
         ) : null}
     </div>
 );
@@ -159,7 +178,7 @@ const OptionSelection = ({ handleMyMBTI, handleSelectChoice }) => (
     </div>
 );
 
-const TempCharacterView = ({ recommend, profileData }) => (
+const TempCharacterView = ({ recommend, profileData, onProfileClick }) => (
     <div className={styles.tempCharacterView}>
         {recommend.map((mbti, index) => {
             const profile = profileData.find(p => p.type.toLowerCase() === "#" + mbti.toLowerCase());
@@ -168,7 +187,7 @@ const TempCharacterView = ({ recommend, profileData }) => (
                     key={index}
                     image={profile.image}
                     name={profile.name}
-                    onClick={() => console.log("클릭")}
+                    onClick={() => onProfileClick(profile)}
                     tags={profile.tags}
                     type={profile.type}
                 />
