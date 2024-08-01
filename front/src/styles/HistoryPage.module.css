@@ -2,7 +2,7 @@
 .page {
     display: flex;
     flex-direction: column;
-    height: 96vh;
+    height: 100%;
     width: 100%;
     background-color: #f0f0f5; /* 배경 색상을 밝게 변경 */
     color: #333333; /* 텍스트 색상을 어둡게 변경 */
