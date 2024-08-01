@@ -2,7 +2,7 @@
 .chatContainer {
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 100%;
     background-color: #f0f0f5; /* 밝은 배경 색상으로 변경 */
     color: #333333; /* 텍스트 색상 어둡게 변경 */
 }
