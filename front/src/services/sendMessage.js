@@ -5,6 +5,15 @@ const API_URL = 'http://localhost:8080';
 const sendMessage = async (message,mbti,context) => {
     console.log("Send Message :"+message+"MBTI:"+mbti + "context :" + context)
     try {
+        const header = {
+            'Content-Type': 'application/json'
+        }
+
+        const authToken = sessionStorage.getItem('authToken');
+        if(authToken) {
+            header['Authorization'] = `Bearer ${authToken}`;
+        }
+
         const response = await axios.post(`${API_URL}/api/ask-claude`,
             {
                 "message": message,
@@ -12,9 +21,7 @@ const sendMessage = async (message,mbti,context) => {
                 "context": context
             },
             {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
+                headers: header
             }
         );
         console.log(response.data);
@@ -27,12 +34,20 @@ const sendMessage = async (message,mbti,context) => {
 
 const sendGetRequest = async (data, endpoint) => {
     try {
+        const header = {
+            "Accept": "application/json"
+        }
+
+        const authToken = sessionStorage.getItem('authToken');
+        if(authToken) {
+            header['Authorization'] = `Bearer ${authToken}`;
+        }
+
         const response = await axios.get(endpoint, {
             params: data,
-            headers : {
-                "Accept": "application/json"
-            }
+            headers : header
         })
+
         console.log(response.data);
         return response.data;
     } catch (error) {
@@ -43,10 +58,17 @@ const sendGetRequest = async (data, endpoint) => {
 
 const sendPostRequest = async (data, endpoint) => {
     try {
+        const header = {
+            'Content-Type': 'application/json'
+        }
+
+        const authToken = sessionStorage.getItem('authToken');
+        if(authToken) {
+            header['Authorization'] = `Bearer ${authToken}`;
+        }
+
         const response = await axios.post(endpoint, data, {
-            headers: {
-                "Content-Type": "application/json"
-            }
+            headers: header
         });
         console.log(response.data);
         return response.data;
