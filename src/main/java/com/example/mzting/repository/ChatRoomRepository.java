@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long> {
     List<ChatRoom> findByUserId(Long userId);
+    List<ChatRoom> findByUserIdAndProfileRoomId(Long userId, Integer profileId);
 }

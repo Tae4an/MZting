@@ -51,7 +51,7 @@ public class ChatRoomController {
             String username = authentication.getName();
             System.out.println(username);
             uid = userRepository.findIdByUsername(username);
-            chatRoomName = username + "와" + profileId + "번 프로필의 채팅방";
+            chatRoomName = username + "와 " + profileId + "번 프로필의 채팅방";
         }
 
         ChatRoomRequest request = new ChatRoomRequest(chatRoomName, uid, profileId);
@@ -63,11 +63,10 @@ public class ChatRoomController {
     /**
      * 사용자 ID에 따른 채팅방 목록을 조회하는 엔드포인트
      *
-     * @param userId 사용자 ID
      * @return 채팅방 목록을 포함한 ResponseEntity 객체
      */
-    @GetMapping("/chatroom/list/{userId}")
-    public ResponseEntity<List<ChatRoom>> getChatRoomList(@PathVariable Long userId) {
+    @GetMapping("/chatroom/list/all")
+    public ResponseEntity<List<ChatRoom>> getAllChatRoomList() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         long uid = 1;
         if (authentication != null && authentication.isAuthenticated()) {
@@ -79,6 +78,20 @@ public class ChatRoomController {
         return ResponseEntity.ok(chatRooms);
     }
 
+    @GetMapping("/chatroom/list/{profileId}")
+    public ResponseEntity<List<ChatRoom>> getChatRoomListByProfileId(@PathVariable Long profileId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        long uid = 1;
+        if (authentication != null && authentication.isAuthenticated()) {
+            String username = authentication.getName();
+            uid = userRepository.findIdByUsername(username);
+        }
+
+        List<ChatRoom> chatRooms = chatRoomService.getChatRoomsByUserId(uid);
+        return ResponseEntity.ok(chatRooms);
+    }
+
+
     /**
      * 특정 채팅방의 히스토리를 조회하는 엔드포인트
      *
@@ -87,6 +100,7 @@ public class ChatRoomController {
      */
     @GetMapping("/chatroom/{chatRoomId}")
     public ResponseEntity<ChatRoomWithHistoryDTO> getChatRoomWithHistory(@PathVariable Long chatRoomId) {
+        // 채팅방이 유저의 것인지 검증하는 로직 추가 필요
         ChatRoomWithHistoryDTO chatRoomWithHistory = chatRoomService.getChatRoomWithHistory(chatRoomId);
         return ResponseEntity.ok(chatRoomWithHistory);
     }
