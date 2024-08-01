@@ -4,10 +4,9 @@ import styles from '../styles/ChatPage.module.css';
 import { ChatBox } from '../components';
 import { sendMessage } from '../services/sendMessage';
 
-
 const ChatPage = () => {
     const location = useLocation();
-    const { image, name, type, age, height, job, hobbies, tags, description } = location.state || {};
+    const { image, name, type = '', age, height, job, hobbies, tags, description } = location.state || {};
     const mbti = type.replace('#', '');
 
     const [messages, setMessages] = useState([]);
@@ -17,8 +16,6 @@ const ChatPage = () => {
     useEffect(() => {
         console.log('ChatPage loaded with state:', location.state);
     }, [location.state]);
-
-
 
     const handleSendMessage = async (content) => {
         try {
