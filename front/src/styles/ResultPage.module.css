@@ -8,42 +8,6 @@
     padding: 20px;
 }
 
-.sideColumn,
-.adContent,
-.profileCard,
-.actionButton,
-.scoreCard,
-.reviewButton {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 20px;
-    width: 100%;
-    max-width: 100%;
-    box-sizing: border-box; /* 패딩과 보더를 너비에 포함 */
-}
-
-.adContent {
-    font-family: Inter, sans-serif;
-    background-color: #746e96;
-    padding: 20px;
-}
-
-.Container {
-    background-color: #ffffff; /* 배경 색상을 밝게 변경 */
-    flex-grow: 1;
-    flex-direction: column;
-    color: #333333; /* 텍스트 색상을 어둡게 변경 */
-    padding: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
-    border-radius: 10px;
-    width: 100%;
-    max-width: 100%;
-    box-sizing: border-box; /* 패딩과 보더를 너비에 포함 */
-}
-
 .header {
     display: flex;
     align-items: center;
@@ -94,6 +58,10 @@
     color: #333333; /* 텍스트 색상을 어둡게 변경 */
     box-sizing: border-box; /* 패딩과 보더를 너비에 포함 */
     width: 100%;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    max-width: 100%;
 }
 
 .profileHeader {
@@ -164,7 +132,6 @@
     display: flex;
     margin-top: 32px;
     flex-direction: column;
-    align-items: start;
     font-size: 30px;
     font-weight: 800;
     line-height: 140%;
@@ -173,6 +140,10 @@
     color: #333333; /* 텍스트 색상을 어둡게 변경 */
     width: 100%;
     box-sizing: border-box; /* 패딩과 보더를 너비에 포함 */
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    max-width: 100%;
 }
 
 .compatibilityScore {
@@ -216,4 +187,26 @@
 .reviewButton:hover {
     background-color: #e45b5b; /* 호버 시 색상 변경 */
     transform: scale(1.05); /* 약간 확대 효과 추가 */
+}
+
+.summaryCard {
+    border-radius: 10px;
+    background-color: #ffffff;
+    margin-top: 32px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    color: #333333;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.scrollIndicator {
+    position: fixed;
+    border-radius: 15px;
+    background-color: #ff6b6b; /* 강조 색상으로 변경 */
+    width: 18px;
+    height: 129px;
+    top: 0;
+    align-self: flex-end;
+    margin-top: 20px;
 }
