@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styles from '../styles/ResultPage.module.css';
 import image2 from '../assets/Images/image2.jpg';
 import { sendGetRequest } from "../services";
+import { CommentModal } from '../components/CommentModal';
 
 const chatRoomId = 1;
 
@@ -11,6 +12,7 @@ const ResultPage = () => {
     const mainContentRef = useRef(null);
     const [result, setResult] = useState(null);
     const [scrollPosition, setScrollPosition] = useState(0);
+    const [isCommentModalOpen, setCommentModalOpen] = useState(false);
 
     const handleScroll = () => {
         const totalScrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
@@ -29,7 +31,7 @@ const ResultPage = () => {
     useEffect(() => {
         const fetchResult = async () => {
             try {
-                const response = await sendGetRequest({}, `/api/chat/result/${chatRoomId}`)
+                const response = await sendGetRequest({}, `/api/chat/result/${chatRoomId}`);
                 setResult(response);
             } catch (error) {
                 console.error("Error fetching result:", error);
@@ -45,7 +47,15 @@ const ResultPage = () => {
             window.removeEventListener('scroll', handleScroll);
             window.removeEventListener('resize', handleScroll);
         };
-    }, [chatRoomId]);
+    }, []);
+
+    const openCommentModal = () => {
+        setCommentModalOpen(true);
+    };
+
+    const closeCommentModal = () => {
+        setCommentModalOpen(false);
+    };
 
     return (
         <div ref={mainContentRef} className={styles.page}>
@@ -77,7 +87,7 @@ const ResultPage = () => {
                 <h3 style={{ fontStyle: "italic" }}>평가 요약</h3>
                 <p>{result ? result.summaryEval : "로딩 중..."}</p>
             </div>
-            <div className={styles.reviewButton}>댓글 보기</div>
+            <div className={styles.reviewButton} onClick={openCommentModal}>댓글 보기</div>
             <div
                 className={styles.scrollIndicator}
                 style={{
@@ -85,10 +95,11 @@ const ResultPage = () => {
                     left: `${mainContentRef.current ? mainContentRef.current.getBoundingClientRect().right - 19 : 0}px`
                 }}
             />
+            <CommentModal show={isCommentModalOpen} onClose={closeCommentModal} mbti="ENFJ" />
         </div>
     );
 };
 
 export {
     ResultPage
-}
+};
