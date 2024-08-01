@@ -46,7 +46,7 @@
     align-items: center;
 }
 
-.title {
+.signupTitle {
     color: #ff6b6b; /* 강조 색상으로 변경 */
     font-size: 3rem;
     margin-bottom: 2rem;
@@ -57,10 +57,13 @@
 .inputGroup {
     width: 100%;
     margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .inputGroup label {
-    display: block;
+    width: 100%;
     color: #333333; /* 텍스트 색상을 어둡게 변경 */
     margin-bottom: 0.5rem;
     font-size: 1.2rem;
@@ -76,7 +79,7 @@
     font-size: 1rem;
 }
 
-.button {
+.signupButton {
     width: 100%;
     padding: 0.8rem;
     margin-top: 1rem;
@@ -89,9 +92,16 @@
     transition: background 0.3s, transform 0.3s; /* 부드러운 전환 효과 추가 */
 }
 
-.button:hover {
+.signupButton:hover {
     background-color: #e45b5b; /* 호버 시 색상 변경 */
     transform: scale(1.05); /* 약간 확대 효과 추가 */
+}
+
+.error {
+    color: #ff6b6b; /* 에러 텍스트 색상을 강조 */
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    text-align: center;
 }
 
 @media (max-width: 768px) {
