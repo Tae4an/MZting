@@ -29,10 +29,17 @@ import java.util.*;
 public class ClaudeApiService {
     private static final Logger logger = LoggerFactory.getLogger(ClaudeApiService.class);
 
-    private final ClaudeConfig claudeConfig; // Claude API 설정
-    private final RestTemplate restTemplate; // RestTemplate 객체
-    private final ObjectMapper objectMapper; // JSON 파싱을 위한 ObjectMapper
-    private final ProfileService profileService; // 프로필 관리를 위한 ProfileService
+    // Claude API 설정
+    private final ClaudeConfig claudeConfig;
+
+    // RestTemplate 객체
+    private final RestTemplate restTemplate;
+
+    // JSON 파싱을 위한 ObjectMapper
+    private final ObjectMapper objectMapper;
+
+    // 프로필 관리를 위한 ProfileService
+    private final ProfileService profileService;
 
     // 고정된 프롬프트 문자열을 정의
     private static final String FIXED_PROMPT = "너는 지인의 소개로 소개팅에 참여한 사람이야. " +
@@ -84,6 +91,15 @@ public class ClaudeApiService {
             "단계가 완료되지 않았거나 아직 진행 중이라면 false로 유지해. " +
             "이전 단계가 완료되지 않은 상태에서 다음 단계로 넘어가지 않도록 주의해.";
 
+    /**
+     * ClaudeApiService 생성자
+     * 필요한 의존성을 주입받아 초기화
+     *
+     * @param claudeConfig Claude API 설정 객체
+     * @param restTemplate RestTemplate 객체
+     * @param objectMapper ObjectMapper 객체
+     * @param profileService ProfileService 객체
+     */
     public ClaudeApiService(ClaudeConfig claudeConfig, RestTemplate restTemplate,
                             ObjectMapper objectMapper, ProfileService profileService) {
         this.claudeConfig = claudeConfig;
@@ -97,14 +113,16 @@ public class ClaudeApiService {
         this.objectMapper.configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true);
     }
 
-    @Cacheable(value = "claudeResponses", key = "#mbti + '-' + #messages.hashCode() + '-' + #context.hashCode()")
-    public ClaudeResponse getClaudeResponseByMbti(String mbti, List<Map<String, String>> messages, Map<String, String> context) {
+    /**
+     * 주어진 MBTI 유형과 메시지를 기반으로 Claude AI의 응답을 가져오는 메서드
+     *
+     * @param mbti MBTI 유형
+     * @param messages 메시지 목록
+     * @return ClaudeResponse 객체
+     */
+    @Cacheable(value = "claudeResponses", key = "#mbti + '-' + #messages.hashCode()")
+    public ClaudeResponse getClaudeResponseByMbti(String mbti, List<Map<String, String>> messages) {
         logger.info("Generating Claude response for MBTI: {}", mbti);
-        Profile profile = profileService.getRandomProfileByMbti(mbti)
-                .orElseThrow(() -> new RuntimeException("No profile found for MBTI: " + mbti));
-
-        String prompt = FIXED_PROMPT + "\n" + profileService.generatePrompt(profile) + "\n컨텍스트: " + context;
-        logger.debug("Generated prompt: {}", maskSensitiveInfo(prompt));
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -114,7 +132,6 @@ public class ClaudeApiService {
         Map<String, Object> requestBody = new HashMap<>();
         requestBody.put("model", "claude-3-5-sonnet-20240620");
         requestBody.put("max_tokens", 1024);
-        requestBody.put("system", prompt);
         requestBody.put("messages", messages);
 
         HttpEntity<Map<String, Object>> entity = new HttpEntity<>(requestBody, headers);
@@ -133,6 +150,14 @@ public class ClaudeApiService {
         return parseClaudeResponse(response.getBody());
     }
 
+    /**
+     * Claude API 응답을 파싱하여 ClaudeResponse 객체로 변환하는 메서드
+     *
+     * @param responseBody 응답 본문
+     * @return ClaudeResponse 객체
+     * @throws ClaudeApiJsonParsingException JSON 파싱 예외
+     * @throws ClaudeApiException 일반 예외
+     */
     private ClaudeResponse parseClaudeResponse(String responseBody) {
         try {
             logger.debug("Parsing Claude API response");
@@ -168,6 +193,12 @@ public class ClaudeApiService {
         }
     }
 
+    /**
+     * JSON 문자열을 적절히 변환하는 메서드
+     *
+     * @param jsonString JSON 문자열
+     * @return 변환된 JSON 문자열
+     */
     private String sanitizeJsonString(String jsonString) {
         if (jsonString.startsWith("{") && jsonString.endsWith("}")) {
             return jsonString;
@@ -183,6 +214,15 @@ public class ClaudeApiService {
         return sb.toString();
     }
 
+    /**
+     * JsonNode 객체에서 안전하게 값을 추출하는 메서드
+     *
+     * @param node JsonNode 객체
+     * @param fieldName 필드 이름
+     * @param clazz 값의 클래스 타입
+     * @param <T> 값의 타입
+     * @return 추출된 값
+     */
     private <T> T getNodeValueSafely(JsonNode node, String fieldName, Class<T> clazz) {
         JsonNode field = node.get(fieldName);
         if (field == null) {
@@ -203,8 +243,58 @@ public class ClaudeApiService {
         return null;
     }
 
+    /**
+     * 민감한 정보를 마스킹하는 메서드
+     *
+     * @param input 입력 문자열
+     * @return 마스킹된 문자열
+     */
     private String maskSensitiveInfo(String input) {
         return input.replaceAll("(\\w+@\\w+\\.\\w+)", "***@***.***")
                 .replaceAll("\\d{10,}", "**********");
+    }
+
+    /**
+     * MBTI 유형에 따른 Claude 채팅을 초기화하는 메서드
+     *
+     * @param mbti MBTI 유형
+     * @return ClaudeResponse 객체
+     */
+    public ClaudeResponse initializeClaudeChat(String mbti) {
+        logger.info("Initializing Claude chat for MBTI: {}", mbti);
+
+        Profile profile = profileService.getRandomProfileByMbti(mbti)
+                .orElseThrow(() -> new RuntimeException("No profile found for MBTI: " + mbti));
+
+        String prompt = FIXED_PROMPT + "\n" + profileService.generatePrompt(profile);
+        logger.debug("Generated initialization prompt: {}", maskSensitiveInfo(prompt));
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("x-api-key", claudeConfig.getApiKey());
+        headers.set("anthropic-version", "2023-06-01");
+
+        Map<String, Object> requestBody = new HashMap<>();
+        requestBody.put("model", "claude-3-5-sonnet-20240620");
+        requestBody.put("max_tokens", 1024);
+        requestBody.put("system", prompt);
+        requestBody.put("messages", Arrays.asList(
+                Map.of("role", "user", "content", "안녕하세요. 소개팅 시작하겠습니다.")
+        ));
+
+        HttpEntity<Map<String, Object>> entity = new HttpEntity<>(requestBody, headers);
+
+        logger.debug("Sending initialization request to Claude API");
+        ResponseEntity<String> response = restTemplate.exchange(
+                claudeConfig.getApiUrl(),
+                HttpMethod.POST,
+                entity,
+                String.class
+        );
+
+        logger.info("Received initialization response from Claude API. Status code: {}", response.getStatusCode());
+        logger.debug("Claude API raw initialization response: {}", maskSensitiveInfo(response.getBody()));
+
+        return parseClaudeResponse(response.getBody());
     }
 }
