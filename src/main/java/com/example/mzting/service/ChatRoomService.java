@@ -47,6 +47,9 @@ public class ChatRoomService {
         chatRoom.setName(request.getName());
         chatRoom.setUserId(request.getUserId());
         chatRoom.setProfileId(request.getProfileId());
+        chatRoom.setMissionFlag(0);
+        chatRoom.setIsProcessing(true);
+        chatRoom.setResult(null);
         return chatRoomRepository.save(chatRoom);
     }
 
