@@ -97,14 +97,9 @@ public class ClaudeApiService {
         this.objectMapper.configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true);
     }
 
-    @Cacheable(value = "claudeResponses", key = "#mbti + '-' + #messages.hashCode() + '-' + #context.hashCode()")
-    public ClaudeResponse getClaudeResponseByMbti(String mbti, List<Map<String, String>> messages, Map<String, String> context) {
+    @Cacheable(value = "claudeResponses", key = "#mbti + '-' + #messages.hashCode()")
+    public ClaudeResponse getClaudeResponseByMbti(String mbti, List<Map<String, String>> messages) {
         logger.info("Generating Claude response for MBTI: {}", mbti);
-        Profile profile = profileService.getRandomProfileByMbti(mbti)
-                .orElseThrow(() -> new RuntimeException("No profile found for MBTI: " + mbti));
-
-        String prompt = FIXED_PROMPT + "\n" + profileService.generatePrompt(profile) + "\n컨텍스트: " + context;
-        logger.debug("Generated prompt: {}", maskSensitiveInfo(prompt));
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -114,7 +109,6 @@ public class ClaudeApiService {
         Map<String, Object> requestBody = new HashMap<>();
         requestBody.put("model", "claude-3-5-sonnet-20240620");
         requestBody.put("max_tokens", 1024);
-        requestBody.put("system", prompt);
         requestBody.put("messages", messages);
 
         HttpEntity<Map<String, Object>> entity = new HttpEntity<>(requestBody, headers);
@@ -207,4 +201,43 @@ public class ClaudeApiService {
         return input.replaceAll("(\\w+@\\w+\\.\\w+)", "***@***.***")
                 .replaceAll("\\d{10,}", "**********");
     }
+
+    public ClaudeResponse initializeClaudeChat(String mbti) {
+        logger.info("Initializing Claude chat for MBTI: {}", mbti);
+
+        Profile profile = profileService.getRandomProfileByMbti(mbti)
+                .orElseThrow(() -> new RuntimeException("No profile found for MBTI: " + mbti));
+
+        String prompt = FIXED_PROMPT + "\n" + profileService.generatePrompt(profile);
+        logger.debug("Generated initialization prompt: {}", maskSensitiveInfo(prompt));
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("x-api-key", claudeConfig.getApiKey());
+        headers.set("anthropic-version", "2023-06-01");
+
+        Map<String, Object> requestBody = new HashMap<>();
+        requestBody.put("model", "claude-3-5-sonnet-20240620");
+        requestBody.put("max_tokens", 1024);
+        requestBody.put("system", prompt);
+        requestBody.put("messages", Arrays.asList(
+                Map.of("role", "user", "content", "안녕하세요. 소개팅 시작하겠습니다.")
+        ));
+
+        HttpEntity<Map<String, Object>> entity = new HttpEntity<>(requestBody, headers);
+
+        logger.debug("Sending initialization request to Claude API");
+        ResponseEntity<String> response = restTemplate.exchange(
+                claudeConfig.getApiUrl(),
+                HttpMethod.POST,
+                entity,
+                String.class
+        );
+
+        logger.info("Received initialization response from Claude API. Status code: {}", response.getStatusCode());
+        logger.debug("Claude API raw initialization response: {}", maskSensitiveInfo(response.getBody()));
+
+        return parseClaudeResponse(response.getBody());
+    }
+
 }
