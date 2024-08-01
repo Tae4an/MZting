@@ -194,19 +194,30 @@
     background-color: #ffffff;
     margin-top: 32px;
     padding: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* 그림자 효과를 더 강조 */
     color: #333333;
     width: 100%;
     box-sizing: border-box;
+    text-align: center; /* 텍스트 가운데 정렬 */
+}
+
+.summaryCard h3 {
+    font-size: 1.5rem;
+    color: #ff6b6b; /* 제목 색상을 강조 */
+    margin-bottom: 10px; /* 제목과 내용 사이의 간격 추가 */
+}
+
+.summaryCard p {
+    margin: 10px 0; /* 내용 사이의 간격 추가 */
+    line-height: 1.6; /* 텍스트의 가독성을 높이기 위해 줄 간격 조정 */
 }
 
 .scrollIndicator {
     position: fixed;
+    right: 10px; /* 스크롤 인디케이터를 오른쪽으로 고정 */
     border-radius: 15px;
     background-color: #ff6b6b; /* 강조 색상으로 변경 */
     width: 18px;
     height: 129px;
-    top: 0;
-    align-self: flex-end;
-    margin-top: 20px;
+    top: 20px; /* 윗쪽에서 약간의 여백 추가 */
 }
