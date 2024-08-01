@@ -125,7 +125,7 @@ const RecommendModal = ({ show, onClose }) => {
 const ModalHeader = ({ onClose }) => (
     <div className={styles.modalHeader}>
         <h2>추천</h2>
-        <button className={styles.closeButton} onClick={onClose}>X</button>
+        <button className={styles.closeButton} onClick={onClose}>×</button>
     </div>
 );
 
