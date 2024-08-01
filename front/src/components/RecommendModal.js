@@ -147,20 +147,20 @@ const ModalBody = ({ option, handleMyMBTI, handleSelectChoice, choice, handleCho
 );
 
 const OptionSelection = ({ handleMyMBTI, handleSelectChoice }) => (
-    <>
+    <div className={styles.optionSelection}>
         <div>
-            <button onClick={handleMyMBTI}>내 MBTI 기반 추천</button>
+            <button onClick={handleMyMBTI} className={styles.optionButton}>내 MBTI 기반 추천</button>
             <p>자신의 MBTI를 아는 사람을 위한 선택!</p>
         </div>
         <div>
-            <button onClick={handleSelectChoice}>선택지를 통한 추천</button>
+            <button onClick={handleSelectChoice} className={styles.optionButton}>선택지를 통한 추천</button>
             <p>자신의 MBTI를 모르는 사람을 위한 선택!</p>
         </div>
-    </>
+    </div>
 );
 
 const TempCharacterView = ({ recommend, profileData }) => (
-    <div style={{ flexDirection: "row" }}>
+    <div className={styles.tempCharacterView}>
         {recommend.map((mbti, index) => {
             const profile = profileData.find(p => p.type.toLowerCase() === "#" + mbti.toLowerCase());
             return profile ? (
