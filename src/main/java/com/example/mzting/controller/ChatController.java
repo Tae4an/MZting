@@ -34,7 +34,7 @@ public class ChatController {
         try {
             String userMessage = userMessageObj.getMessage();
             String userMbti = userMessageObj.getMbti();
-            Long chatRoomId = 1L; // 추가: 채팅방 ID를 받아옴
+            Long chatRoomId = userMessageObj.getChatRoomId();
 
             // 사용자 메시지를 DB에 저장
             chatService.saveUserMessage(userMessage, chatRoomId);
@@ -43,18 +43,14 @@ public class ChatController {
 
             ClaudeResponse claudeResponse = claudeApiService.getClaudeResponseByMbti(
                     userMbti,
-                    chatService.getMessagesForClaudeApi(),
-                    chatService.getFullContext()
+                    chatService.getMessagesForClaudeApi()
             );
 
             chatService.addClaudeResponse(claudeResponse.getText());
 
-            // 컨텍스트 업데이트
-            updateContext(userMessage, claudeResponse.getText());
-
-            // Claude의 응답도 DB에 저장 (선택적)
+            // Claude의 응답도 DB에 저장
             chatService.saveUserMessage(claudeResponse, chatRoomId);
-          
+
             Map<String, Object> response = new HashMap<>();
             response.put("claudeResponse", claudeResponse);
 
@@ -64,11 +60,11 @@ public class ChatController {
             logger.error("Error processing request", e);
             Map<String, String> errorResponse = new HashMap<>();
             errorResponse.put("error", "Error processing request: " + e.getMessage());
-            errorResponse.put("stackTrace", Arrays.toString(e.getStackTrace()));
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(errorResponse);
         }
     }
+
     private void updateContext(String userMessage, String aiResponse) {
         // 사용자 메시지와 AI 응답을 분석하여 컨텍스트 업데이트
         // 예: 선호하는 음식, 취미 등을 추출하여 저장
@@ -86,5 +82,44 @@ public class ChatController {
     @GetMapping("/get-conversation")
     public ResponseEntity<List<String>> getConversation() {
         return ResponseEntity.ok(chatService.getConversation());
+    }
+
+    @PostMapping("/initialize-chat")
+    public ResponseEntity<?> initializeChat(@RequestBody UserMessage userMessageObj) {
+        logger.info("Initializing chat for user message: {}", userMessageObj);
+
+        try {
+            String userMbti = userMessageObj.getMbti();
+            Long chatRoomId = userMessageObj.getChatRoomId(); // 채팅방 ID를 UserMessage에서 받아오도록 수정
+
+            if (userMbti == null || userMbti.isEmpty()) {
+                logger.warn("MBTI is null or empty");
+                return ResponseEntity.badRequest().body("MBTI is required");
+            }
+
+            if (chatRoomId == null) {
+                logger.warn("ChatRoomId is null");
+                return ResponseEntity.badRequest().body("ChatRoomId is required");
+            }
+
+            if (!chatService.isInitialized(chatRoomId)) {
+                logger.info("Initializing chat for MBTI: {} and ChatRoomId: {}", userMbti, chatRoomId);
+                ClaudeResponse claudeResponse = claudeApiService.initializeClaudeChat(userMbti);
+                chatService.saveUserMessage(claudeResponse, chatRoomId);
+                chatService.setInitialized(chatRoomId, true);
+
+                Map<String, Object> response = new HashMap<>();
+                response.put("claudeResponse", claudeResponse);
+                logger.info("Chat initialized successfully for ChatRoomId: {}", chatRoomId);
+                return ResponseEntity.ok(response);
+            } else {
+                logger.info("Chat already initialized for ChatRoomId: {}", chatRoomId);
+                return ResponseEntity.ok("Chat already initialized");
+            }
+        } catch (Exception e) {
+            logger.error("Error initializing chat", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error initializing chat: " + e.getMessage());
+        }
     }
 }
