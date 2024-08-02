@@ -2,10 +2,13 @@ package com.example.mzting.controller;
 
 import com.example.mzting.dto.CommentDTO;
 import com.example.mzting.entity.Comment;
+import com.example.mzting.repository.UserRepository;
 import com.example.mzting.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 import org.slf4j.Logger;
@@ -16,14 +19,14 @@ import org.slf4j.LoggerFactory;
  * 댓글 생성 및 조회와 관련된 API 엔드포인트를 정의
  */
 @RestController
-@RequestMapping("/api/posts/{postId}/comments")
+@RequestMapping("/api/posts/{profileId}/comments")
 public class CommentController {
 
     // 로거 객체
     private static final Logger logger = LoggerFactory.getLogger(CommentController.class);
-
     // 댓글 서비스
     private final CommentService commentService;
+    private final UserRepository userRepository;
 
     /**
      * CommentController 생성자
@@ -32,29 +35,38 @@ public class CommentController {
      * @param commentService 댓글 서비스
      */
     @Autowired
-    public CommentController(CommentService commentService) {
+    public CommentController(CommentService commentService, UserRepository userRepository) {
         this.commentService = commentService;
+        this.userRepository = userRepository;
     }
 
     /**
      * 댓글을 생성하는 엔드포인트
      * 주어진 요청 객체를 바탕으로 댓글을 생성하고 결과를 반환
      *
-     * @param postId 게시물 ID
+     * @param profileId 인물 ID
      * @param PostPostsCommentRequest 댓글 생성 요청 객체
      * @return 댓글 생성 결과를 포함한 ResponseEntity 객체
      */
     @PostMapping
     public ResponseEntity<CommentDTO.PostPostsCommentsResponse> createComment(
-            @PathVariable Long postId,
+            @PathVariable Long profileId,
             @RequestBody CommentDTO.PostPostsCommentsRequest PostPostsCommentRequest) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication(); // 이 부분은 유저 정보를 가져오는 반복되는 부분 추후 간소화 필요
+        long uid = 1;
+        if (authentication != null && authentication.isAuthenticated()) {
+            String username = authentication.getName();
+            uid = userRepository.findIdByUsername(username);
+        }
+
         try {
             Comment comment = new Comment();
-            comment.setUserId(PostPostsCommentRequest.getUserId());
-            comment.setPostId(postId);
+            comment.setUserId(uid);
+            comment.setProfileId(profileId);
             comment.setContent(PostPostsCommentRequest.getContent());
             comment.setIsLike(PostPostsCommentRequest.getIsLike());
-            System.out.println("postId : " + postId);
+            comment.setLikeCount(0L);
+            comment.setDislikeCount(0L);
             commentService.saveComment(comment);
 
             CommentDTO.PostPostsCommentsResponse response = new CommentDTO.PostPostsCommentsResponse();
@@ -71,18 +83,18 @@ public class CommentController {
     /**
      * 특정 게시물의 댓글을 조회하는 엔드포인트
      *
-     * @param postId 게시물 ID
+     * @param profileId 인물 ID
      * @param page 페이지 번호 (기본값: 0)
      * @param size 페이지 크기 (기본값: 20)
      * @return 댓글 목록을 포함한 ResponseEntity 객체
      */
     @GetMapping
-    public ResponseEntity<CommentDTO.GetPostsCommentsResponse> getCommentsByPostId(
-            @PathVariable Long postId,
+    public ResponseEntity<CommentDTO.GetPostsCommentsResponse> getCommentsByProfileId(
+            @PathVariable Long profileId,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size) {
 
-        CommentDTO.GetPostsCommentsResponse response = commentService.getCommentInfoByPostId(postId, PageRequest.of(page, size));
+        CommentDTO.GetPostsCommentsResponse response = commentService.getCommentInfoByProfileId(profileId, PageRequest.of(page, size));
         return ResponseEntity.ok(response);
     }
 }

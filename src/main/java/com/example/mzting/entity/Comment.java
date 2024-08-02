@@ -2,6 +2,7 @@ package com.example.mzting.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
@@ -29,7 +30,7 @@ public class Comment {
 
     // 게시물 ID
     @Column(nullable = false)
-    private Long postId;
+    private Long profileId;
 
     // 댓글 내용
     @Column(nullable = false)
@@ -44,4 +45,10 @@ public class Comment {
     @Column(nullable = false, updatable = false)
     @Setter(AccessLevel.NONE)
     private LocalDateTime cwTime;
+
+    @Column(nullable = false, columnDefinition = "BIGINT DEFAULT 0")
+    private Long likeCount;
+
+    @Column(nullable = false, columnDefinition = "BIGINT DEFAULT 0")
+    private Long DislikeCount;
 }

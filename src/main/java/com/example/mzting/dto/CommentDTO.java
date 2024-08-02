@@ -20,7 +20,6 @@ public class CommentDTO {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class PostPostsCommentsRequest {
-        private Long userId;
         private String content;
         private Boolean isLike;
     }

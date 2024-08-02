@@ -47,6 +47,9 @@ public class ChatRoomService {
         chatRoom.setName(request.getName());
         chatRoom.setUserId(request.getUserId());
         chatRoom.setProfileId(request.getProfileId());
+        chatRoom.setMissionFlag(0);
+        chatRoom.setIsProcessing(true);
+        chatRoom.setResult(null);
         return chatRoomRepository.save(chatRoom);
     }
 
@@ -72,5 +75,8 @@ public class ChatRoomService {
      */
     public List<ChatRoom> getChatRoomsByUserId(Long userId) {
         return chatRoomRepository.findByUserId(userId);
+    }
+    public List<ChatRoom> getChatRoomsByUserIdAndProfileId(Long userId, Integer profileId) {
+        return chatRoomRepository.findByUserIdAndProfileId(userId, profileId);
     }
 }
