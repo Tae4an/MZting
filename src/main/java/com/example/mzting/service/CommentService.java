@@ -81,7 +81,7 @@ public class CommentService {
      * @param pageable 페이지네이션 정보
      * @return 댓글 정보를 포함한 응답 객체
      */
-    public CommentDTO.GetPostsCommentsResponse getCommentInfoByPostId(Long postId, Pageable pageable) {
+    public CommentDTO.GetPostsCommentsResponse getCommentInfoByProfileId(Long postId, Pageable pageable) {
         Page<Comment> comments = commentRepository.findByPostId(postId, pageable);
         List<CommentDTO.CommentInfo> commentInfos = comments.getContent().stream()
                 .map(this::convertToCommentInfo)

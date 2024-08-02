@@ -44,7 +44,7 @@ public class ChatRoomController {
      */
     @GetMapping("/chatroom/create/{profileId}")
     public ResponseEntity<ChatRoom> createChatRoom(@PathVariable Integer profileId) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication(); // 이 부분은 유저 정보를 가져오는 반복되는 부분 추후 간소화 필요
         String chatRoomName = "채팅방";
         long uid = 1;
         if (authentication != null && authentication.isAuthenticated()) {
@@ -67,7 +67,7 @@ public class ChatRoomController {
      */
     @GetMapping("/chatroom/list/all")
     public ResponseEntity<List<ChatRoom>> getAllChatRoomList() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication(); // 이 부분은 유저 정보를 가져오는 반복되는 부분 추후 간소화 필요
         long uid = 1;
         if (authentication != null && authentication.isAuthenticated()) {
             String username = authentication.getName();
@@ -80,7 +80,7 @@ public class ChatRoomController {
 
     @GetMapping("/chatroom/list/{profileId}")
     public ResponseEntity<List<ChatRoom>> getChatRoomListByProfileId(@PathVariable Integer profileId) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication(); // 이 부분은 유저 정보를 가져오는 반복되는 부분 추후 간소화 필요
         long uid = 1;
         if (authentication != null && authentication.isAuthenticated()) {
             String username = authentication.getName();
