@@ -19,4 +19,8 @@ public class ClaudeConfig {
     // Claude API의 키
     @Value("${claude.api.key}")
     private String apiKey;
+
+    // Claude API의 고정 프롬프트
+    @Value("${claude.fixed-prompt}")
+    private String fixedPrompt;
 }
