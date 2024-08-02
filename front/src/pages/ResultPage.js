@@ -79,7 +79,7 @@ const ResultPage = () => {
             </div>
             <div className={styles.actionButton}>대화 로그 보기</div>
             <div className={styles.scoreCard}>
-                <div className={styles.compatibilityScore}>궁합 점수 : {result ? result.score : "로딩 중..."}</div>
+                <div className={styles.compatibilityScore}>호감도 : {result ? result.score : "로딩 중..."}</div>
             </div>
             <div className={styles.summaryCard}>
                 <h3 style={{ fontStyle: "italic" }}>감정 요약</h3>
