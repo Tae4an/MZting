@@ -8,22 +8,44 @@ import com.example.mzting.dto.MBTIRecommendDTO;
 
 import java.util.*;
 
-import java.util.Optional;
-
+/**
+ * MBTIRecommendService 클래스
+ * MBTI 유형 간의 호환성을 관리하는 서비스 클래스
+ */
 @Service
 public class MBTIRecommendService {
+
+    // MBTI 호환성 저장소
     private final MBTICompatibilityRepository repository;
 
+    /**
+     * MBTIRecommendService 생성자
+     * 필요한 의존성을 주입받아 초기화
+     *
+     * @param repository MBTI 호환성 저장소
+     */
     @Autowired
     public MBTIRecommendService(MBTICompatibilityRepository repository) {
         this.repository = repository;
     }
 
+    /**
+     * 특정 MBTI 유형의 호환성을 가져오는 메서드
+     *
+     * @param mbti MBTI 유형
+     * @return 호환성 정보를 포함한 Optional 객체
+     */
     public Optional<MBTIRecommendDTO.GetMBTIRecommendResponse> getCompatibilityByMBTI(String mbti) {
         return repository.findById(mbti.toUpperCase())
                 .map(this::convertToGroupDTO);
     }
 
+    /**
+     * MBTI 호환성 엔티티를 DTO로 변환하는 메서드
+     *
+     * @param entity MBTI 호환성 엔티티
+     * @return 변환된 GetMBTIRecommendResponse DTO
+     */
     private MBTIRecommendDTO.GetMBTIRecommendResponse convertToGroupDTO(MBTICompatibility entity) {
         MBTIRecommendDTO.GetMBTIRecommendResponse dto = new MBTIRecommendDTO.GetMBTIRecommendResponse();
         dto.setMbti(entity.getMbti());
@@ -55,6 +77,13 @@ public class MBTIRecommendService {
         return dto;
     }
 
+    /**
+     * 주어진 MBTI 유형을 호환성 그룹에 추가하는 메서드
+     *
+     * @param groups 호환성 그룹 맵
+     * @param mbtiType MBTI 유형
+     * @param value 호환성 값
+     */
     private void addToGroup(Map<String, List<String>> groups, String mbtiType, int value) {
         String group;
         switch (value) {
