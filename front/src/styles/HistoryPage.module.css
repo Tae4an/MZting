@@ -2,7 +2,7 @@
 .page {
     display: flex;
     flex-direction: column;
-    height: 96vh;
+    height: 100%;
     width: 100%;
     background-color: #f0f0f5; /* 배경 색상을 밝게 변경 */
     color: #333333; /* 텍스트 색상을 어둡게 변경 */
@@ -116,11 +116,10 @@
 
 .scrollIndicator {
     position: fixed;
+    right: 10px; /* 스크롤 인디케이터를 오른쪽으로 고정 */
     border-radius: 15px;
     background-color: #ff6b6b; /* 강조 색상으로 변경 */
     width: 18px;
     height: 129px;
-    top: 0;
-    align-self: flex-end;
-    margin-top: 20px;
+    top: 20px; /* 윗쪽에서 약간의 여백 추가 */
 }
