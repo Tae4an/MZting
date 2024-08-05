@@ -43,7 +43,6 @@
 .profileHeader {
     display: flex;
     width: 100%;
-    margin-bottom: 20px;
     flex-direction: column;
     align-items: center;
 }
@@ -81,6 +80,7 @@
 .profileDetail {
     font-size: 1.5rem;
     text-align: center;
+    margin: 20px 0; /* 추가: 요소 간의 간격 */
 }
 
 .profileTags {
