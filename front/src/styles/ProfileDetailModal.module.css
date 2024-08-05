@@ -48,10 +48,9 @@
 }
 
 .profileImage {
-    width: 100%;
-    max-width: 450px;
-    height: auto;
-    border-radius: 15px;
+    width: 450px;
+    height: 560px;
+    border-radius: 15px; /* 모서리 둥글게 변경 */
     object-fit: cover;
 }
 
