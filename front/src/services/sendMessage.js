@@ -2,26 +2,25 @@ import axios from "axios";
 
 const API_URL = 'http://localhost:8080';
 
-const sendMessage = async (message, mbti, chatRoomId) => {
-    console.log("Send Message :" + message + " MBTI:" + mbti + " ChatRoomId:" + chatRoomId)
+const getToken = () => {
+    return localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
+};
+
+const sendMessage = async (message, mbti, context) => {
+    console.log("Send Message :" + message + "MBTI:" + mbti + "context :" + context)
     try {
-        const header = {
-            'Content-Type': 'application/json'
-        }
-
-        const authToken = sessionStorage.getItem('authToken');
-        if(authToken) {
-            header['Authorization'] = `Bearer ${authToken}`;
-        }
-
+        const token = getToken();
         const response = await axios.post(`${API_URL}/api/ask-claude`,
             {
                 "message": message,
                 "mbti": mbti,
-                "chatRoomId": chatRoomId
+                "context": context
             },
             {
-                headers: header
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
             }
         );
         console.log(response.data);
@@ -34,20 +33,14 @@ const sendMessage = async (message, mbti, chatRoomId) => {
 
 const sendGetRequest = async (data, endpoint) => {
     try {
-        const header = {
-            "Accept": "application/json"
-        }
-
-        const authToken = sessionStorage.getItem('authToken');
-        if(authToken) {
-            header['Authorization'] = `Bearer ${authToken}`;
-        }
-
+        const token = getToken();
         const response = await axios.get(endpoint, {
             params: data,
-            headers : header
+            headers: {
+                "Accept": "application/json",
+                'Authorization': `Bearer ${token}`
+            }
         })
-
         console.log(response.data);
         return response.data;
     } catch (error) {
@@ -58,17 +51,12 @@ const sendGetRequest = async (data, endpoint) => {
 
 const sendPostRequest = async (data, endpoint) => {
     try {
-        const header = {
-            'Content-Type': 'application/json'
-        }
-
-        const authToken = sessionStorage.getItem('authToken');
-        if(authToken) {
-            header['Authorization'] = `Bearer ${authToken}`;
-        }
-
+        const token = getToken();
         const response = await axios.post(endpoint, data, {
-            headers: header
+            headers: {
+                "Content-Type": "application/json",
+                'Authorization': `Bearer ${token}`
+            }
         });
         console.log(response.data);
         return response.data;
@@ -78,32 +66,8 @@ const sendPostRequest = async (data, endpoint) => {
     }
 };
 
-const initializeChat = async (mbti, chatRoomId) => {
-    console.log("Initializing chat for MBTI:" + mbti + " ChatRoomId:" + chatRoomId)
-    try {
-        const response = await axios.post(`${API_URL}/api/initialize-chat`,
-            {
-                "mbti": mbti,
-                "chatRoomId": chatRoomId
-            },
-            {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }
-        );
-        console.log(response.data);
-        return response.data;
-    } catch (error) {
-        console.error('Error initializing chat:', error);
-        throw error;
-    }
-};
-
-
 export {
     sendMessage,
     sendGetRequest,
-    sendPostRequest,
-    initializeChat
+    sendPostRequest
 }
