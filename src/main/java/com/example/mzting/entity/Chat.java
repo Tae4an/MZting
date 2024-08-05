@@ -32,7 +32,7 @@ public class Chat {
     private Boolean isBot;
 
     // 메시지 내용
-    @Column(nullable = false, length = 1024)
+    @Column(columnDefinition = "TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci")
     private String content;
 
     // 봇 정보 (JSON 형식)
