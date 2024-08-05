@@ -1,20 +1,37 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from '../styles/ResultPage.module.css'
-import image2 from '../assets/Images/image2.jpg'
-import {sendGetRequest} from "../services";
-
+import styles from '../styles/ResultPage.module.css';
+import image2 from '../assets/Images/image2.jpg';
+import { sendGetRequest } from "../services";
+import { CommentModal } from '../components/CommentModal';
 
 const chatRoomId = 1;
 
 const ResultPage = () => {
     const navigate = useNavigate();
+    const mainContentRef = useRef(null);
     const [result, setResult] = useState(null);
+    const [scrollPosition, setScrollPosition] = useState(0);
+    const [isCommentModalOpen, setCommentModalOpen] = useState(false);
+
+    const handleScroll = () => {
+        const totalScrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const currentScrollPosition = window.scrollY;
+        const maxScrollIndicatorPosition = window.innerHeight - 129;
+
+        let scrollIndicatorPosition = (currentScrollPosition / totalScrollHeight) * maxScrollIndicatorPosition;
+
+        if (scrollIndicatorPosition > maxScrollIndicatorPosition) {
+            scrollIndicatorPosition = maxScrollIndicatorPosition;
+        }
+
+        setScrollPosition(scrollIndicatorPosition);
+    };
 
     useEffect(() => {
         const fetchResult = async () => {
             try {
-                const response = await sendGetRequest({}, `/api/chat/result/${chatRoomId}`)
+                const response = await sendGetRequest({}, `/api/chat/result/${chatRoomId}`);
                 setResult(response);
             } catch (error) {
                 console.error("Error fetching result:", error);
@@ -22,10 +39,26 @@ const ResultPage = () => {
         };
 
         fetchResult();
-    }, [chatRoomId]);
+
+        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('resize', handleScroll);
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            window.removeEventListener('resize', handleScroll);
+        };
+    }, []);
+
+    const openCommentModal = () => {
+        setCommentModalOpen(true);
+    };
+
+    const closeCommentModal = () => {
+        setCommentModalOpen(false);
+    };
 
     return (
-        <div className={styles.page}>
+        <div ref={mainContentRef} className={styles.page}>
             <div className={styles.header}>
                 <button className={styles.backButton} onClick={() => navigate(-1)}>
                     <i className="bi bi-arrow-left"></i>
@@ -46,19 +79,27 @@ const ResultPage = () => {
             </div>
             <div className={styles.actionButton}>대화 로그 보기</div>
             <div className={styles.scoreCard}>
-                <div className={styles.compatibilityScore}>궁합 점수 : {result ? result.score : "로딩 중..."}</div>
+                <div className={styles.compatibilityScore}>호감도 : {result ? result.score : "로딩 중..."}</div>
             </div>
             <div className={styles.summaryCard}>
-                <h3>감정 요약</h3>
+                <h3 style={{ fontStyle: "italic" }}>감정 요약</h3>
                 <p>{result ? result.summaryFeel : "로딩 중..."}</p>
-                <h3>평가 요약</h3>
-                <p>{result ? result.summaryEval: "로딩 중..."}</p>
+                <h3 style={{ fontStyle: "italic" }}>평가 요약</h3>
+                <p>{result ? result.summaryEval : "로딩 중..."}</p>
             </div>
-            <div className={styles.reviewButton}>댓글 보기</div>
+            <div className={styles.reviewButton} onClick={openCommentModal}>댓글 보기</div>
+            <div
+                className={styles.scrollIndicator}
+                style={{
+                    top: `${scrollPosition}px`,
+                    left: `${mainContentRef.current ? mainContentRef.current.getBoundingClientRect().right - 19 : 0}px`
+                }}
+            />
+            <CommentModal show={isCommentModalOpen} onClose={closeCommentModal} mbti="ENFJ" />
         </div>
     );
-}
+};
 
 export {
     ResultPage
-}
+};

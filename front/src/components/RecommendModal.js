@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { sendPostRequest, sendGetRequest } from "../services";
 import styles from '../styles/RecommendModal.module.css';
 import { ProfileCard } from "./ProfileCard";
+import { ProfileDetailModal } from "./ProfileDetailModal";
 
 // Constants
 const QUESTIONS_PER_PAGE = 4;
@@ -37,6 +39,8 @@ const RecommendModal = ({ show, onClose }) => {
     const [choice, setChoice] = useState([]);
     const [recommend, setRecommend] = useState(null);
     const [profileData, setProfileData] = useState([]);
+    const [selectedProfile, setSelectedProfile] = useState(null); // 선택된 프로필 상태 추가
+    const navigate = useNavigate(); // useNavigate 훅 가져오기
 
     const handleChoiceComplete = async (completeAnswers) => {
         try {
@@ -86,6 +90,7 @@ const RecommendModal = ({ show, onClose }) => {
             setChoice([]);
             setRecommend(null);
             setProfileData([]);
+            setSelectedProfile(null); // 모달을 닫을 때 선택된 프로필 초기화
         } else {
             fetchProfileData();
         }
@@ -98,6 +103,18 @@ const RecommendModal = ({ show, onClose }) => {
         } catch (error) {
             console.error("Error fetching profile data:", error);
         }
+    };
+
+    const handleProfileClick = (profile) => {
+        setSelectedProfile(profile);
+    };
+
+    const handleProfileClose = () => {
+        setSelectedProfile(null);
+    };
+
+    const handleChatClick = (profile) => {
+        navigate('/chat', { state: profile });
     };
 
     if (!show) return null;
@@ -115,7 +132,17 @@ const RecommendModal = ({ show, onClose }) => {
                     recommend={recommend}
                     profileData={profileData}
                     isLoading={isLoading}
+                    onProfileClick={handleProfileClick} // 프로필 클릭 핸들러 추가
                 />
+                {selectedProfile && (
+                    <ProfileDetailModal
+                        show={!!selectedProfile}
+                        onClose={handleProfileClose}
+                        profile={selectedProfile}
+                        onClick={() => handleChatClick(selectedProfile)} // 대화하기 클릭 핸들러 추가
+                        showChatButton={true}
+                    />
+                )}
             </div>
         </div>
     );
@@ -129,7 +156,7 @@ const ModalHeader = ({ onClose }) => (
     </div>
 );
 
-const ModalBody = ({ option, handleMyMBTI, handleSelectChoice, choice, handleChoiceComplete, recommend, profileData, isLoading }) => (
+const ModalBody = ({ option, handleMyMBTI, handleSelectChoice, choice, handleChoiceComplete, recommend, profileData, isLoading, onProfileClick }) => (
     <div className={styles.modalBody}>
         {option === null ? (
             <>
@@ -141,26 +168,26 @@ const ModalBody = ({ option, handleMyMBTI, handleSelectChoice, choice, handleCho
         ) : isLoading ? (
             <div>로딩 중...</div>
         ) : recommend && profileData.length !== 0 ? (
-            <TempCharacterView recommend={recommend} profileData={profileData} />
+            <TempCharacterView recommend={recommend} profileData={profileData} onProfileClick={onProfileClick} />
         ) : null}
     </div>
 );
 
 const OptionSelection = ({ handleMyMBTI, handleSelectChoice }) => (
-    <>
+    <div className={styles.optionSelection}>
         <div>
-            <button onClick={handleMyMBTI}>내 MBTI 기반 추천</button>
+            <button onClick={handleMyMBTI} className={styles.optionButton}>내 MBTI 기반 추천</button>
             <p>자신의 MBTI를 아는 사람을 위한 선택!</p>
         </div>
         <div>
-            <button onClick={handleSelectChoice}>선택지를 통한 추천</button>
+            <button onClick={handleSelectChoice} className={styles.optionButton}>선택지를 통한 추천</button>
             <p>자신의 MBTI를 모르는 사람을 위한 선택!</p>
         </div>
-    </>
+    </div>
 );
 
-const TempCharacterView = ({ recommend, profileData }) => (
-    <div style={{ flexDirection: "row" }}>
+const TempCharacterView = ({ recommend, profileData, onProfileClick }) => (
+    <div className={styles.tempCharacterView}>
         {recommend.map((mbti, index) => {
             const profile = profileData.find(p => p.type.toLowerCase() === "#" + mbti.toLowerCase());
             return profile ? (
@@ -168,7 +195,7 @@ const TempCharacterView = ({ recommend, profileData }) => (
                     key={index}
                     image={profile.image}
                     name={profile.name}
-                    onClick={() => console.log("클릭")}
+                    onClick={() => onProfileClick(profile)}
                     tags={profile.tags}
                     type={profile.type}
                 />

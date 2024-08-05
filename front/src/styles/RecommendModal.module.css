@@ -1,4 +1,3 @@
-/* src/styles/RecommendModal.module.css */
 .modalOverlay {
     position: fixed;
     top: 0;
@@ -43,6 +42,9 @@
 
 .modalBody {
     padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .choiceView {

@@ -6,6 +6,7 @@ import { sendMessage } from '../services/sendMessage';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+
 const ChatPage = () => {
     const location = useLocation();
     const { image, name, type, age, height, job, hobbies, tags, description } = location.state || {};
