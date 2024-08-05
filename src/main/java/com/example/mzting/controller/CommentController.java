@@ -2,14 +2,11 @@ package com.example.mzting.controller;
 
 import com.example.mzting.dto.CommentDTO;
 import com.example.mzting.entity.Comment;
-import com.example.mzting.repository.UserRepository;
 import com.example.mzting.service.CommentService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 import org.slf4j.Logger;

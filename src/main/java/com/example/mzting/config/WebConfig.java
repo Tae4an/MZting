@@ -1,7 +1,6 @@
 package com.example.mzting.config;
 
 import com.example.mzting.Interceptor.UserInformationInterceptor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;

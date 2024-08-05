@@ -3,7 +3,6 @@ package com.example.mzting.controller;
 import com.example.mzting.dto.Answer;
 import com.example.mzting.entity.MBTIQuestion;
 import com.example.mzting.repository.MBTIQuestionRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
