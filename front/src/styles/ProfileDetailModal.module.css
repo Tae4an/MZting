@@ -116,6 +116,7 @@
     flex: 1;
     color: #333333;
     margin-top: 20px;
+    max-height: 200px; /* 추가: 모바일 환경에서 설명 영역의 최대 높이 설정 */
 }
 
 .buttonContainer {
@@ -209,6 +210,7 @@
     .profileDescription {
         margin-top: 10px;
         font-size: 1rem;
+        max-height: 200px; /* 추가: 모바일 환경에서 설명 영역의 최대 높이 설정 */
     }
 
     .buttonContainer {
@@ -233,6 +235,10 @@
 
     .profileDetail {
         font-size: 1rem;
+    }
+
+    .profileDescription {
+        max-height: 300px; /* 추가: 모바일 환경에서 설명 영역의 최대 높이 설정 */
     }
 
     .chatButton,
