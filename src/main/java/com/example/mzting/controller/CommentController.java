@@ -4,6 +4,7 @@ import com.example.mzting.dto.CommentDTO;
 import com.example.mzting.entity.Comment;
 import com.example.mzting.repository.UserRepository;
 import com.example.mzting.service.CommentService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,6 @@ public class CommentController {
     private static final Logger logger = LoggerFactory.getLogger(CommentController.class);
     // 댓글 서비스
     private final CommentService commentService;
-    private final UserRepository userRepository;
 
     /**
      * CommentController 생성자
@@ -35,9 +35,8 @@ public class CommentController {
      * @param commentService 댓글 서비스
      */
     @Autowired
-    public CommentController(CommentService commentService, UserRepository userRepository) {
+    public CommentController(CommentService commentService) {
         this.commentService = commentService;
-        this.userRepository = userRepository;
     }
 
     /**
@@ -51,13 +50,8 @@ public class CommentController {
     @PostMapping
     public ResponseEntity<CommentDTO.PostPostsCommentsResponse> createComment(
             @PathVariable Long profileId,
-            @RequestBody CommentDTO.PostPostsCommentsRequest PostPostsCommentRequest) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication(); // 이 부분은 유저 정보를 가져오는 반복되는 부분 추후 간소화 필요
-        long uid = 1;
-        if (authentication != null && authentication.isAuthenticated()) {
-            String username = authentication.getName();
-            uid = userRepository.findIdByUsername(username);
-        }
+            @RequestBody CommentDTO.PostPostsCommentsRequest PostPostsCommentRequest, HttpServletRequest request) {
+        Long uid = (Long) request.getAttribute("uid");
 
         try {
             Comment comment = new Comment();

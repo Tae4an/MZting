@@ -25,10 +25,8 @@ public class CommentService {
 
     // 댓글 저장소
     private final CommentRepository commentRepository;
-
     // 사용자 저장소
     private final UserRepository userRepository;
-
     // MBTI 게시물 저장소
     private final MBTIPostsRepository mbtiPostsRepository;
 
@@ -77,17 +75,17 @@ public class CommentService {
     /**
      * 특정 게시물의 댓글 정보를 페이지네이션하여 반환하는 메서드
      *
-     * @param postId 게시물 ID
+     * @param profileId 게시물 ID
      * @param pageable 페이지네이션 정보
      * @return 댓글 정보를 포함한 응답 객체
      */
-    public CommentDTO.GetPostsCommentsResponse getCommentInfoByProfileId(Long postId, Pageable pageable) {
-        Page<Comment> comments = commentRepository.findByPostId(postId, pageable);
+    public CommentDTO.GetPostsCommentsResponse getCommentInfoByProfileId(Long profileId, Pageable pageable) {
+        Page<Comment> comments = commentRepository.findByProfileId(profileId, pageable);
         List<CommentDTO.CommentInfo> commentInfos = comments.getContent().stream()
                 .map(this::convertToCommentInfo)
                 .collect(Collectors.toList());
 
-        LikeDislikeCountInfo likeDislikeCountInfo = getLikeAndDislikeCount(postId);
+        LikeDislikeCountInfo likeDislikeCountInfo = getLikeAndDislikeCount(profileId);
 
         CommentDTO.PaginationInfo paginationInfo = new CommentDTO.PaginationInfo(
                 comments.getNumber(),

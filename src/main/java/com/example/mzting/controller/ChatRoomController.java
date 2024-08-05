@@ -3,11 +3,9 @@ package com.example.mzting.controller;
 import com.example.mzting.dto.ChatRoomRequest;
 import com.example.mzting.dto.ChatRoomWithHistoryDTO;
 import com.example.mzting.entity.ChatRoom;
-import com.example.mzting.repository.UserRepository;
 import com.example.mzting.service.ChatRoomService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,7 +21,6 @@ public class ChatRoomController {
 
     // 채팅방 서비스
     private final ChatRoomService chatRoomService;
-    private final UserRepository userRepository;
 
     /**
      * ChatRoomController 생성자
@@ -31,9 +28,8 @@ public class ChatRoomController {
      *
      * @param chatRoomService 채팅방 서비스
      */
-    public ChatRoomController(ChatRoomService chatRoomService, UserRepository userRepository) {
+    public ChatRoomController(ChatRoomService chatRoomService) {
         this.chatRoomService = chatRoomService;
-        this.userRepository = userRepository;
     }
 
     /**
@@ -43,20 +39,15 @@ public class ChatRoomController {
      * @return 생성된 채팅방을 포함한 ResponseEntity 객체
      */
     @GetMapping("/chatroom/create/{profileId}")
-    public ResponseEntity<ChatRoom> createChatRoom(@PathVariable Integer profileId) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication(); // 이 부분은 유저 정보를 가져오는 반복되는 부분 추후 간소화 필요
-        String chatRoomName = "채팅방";
-        long uid = 1;
-        if (authentication != null && authentication.isAuthenticated()) {
-            String username = authentication.getName();
-            System.out.println(username);
-            uid = userRepository.findIdByUsername(username);
-            chatRoomName = username + "와 " + profileId + "번 프로필의 채팅방";
-        }
+    public ResponseEntity<?> createChatRoom(@PathVariable Integer profileId, HttpServletRequest request) {
+        Long uid = (Long) request.getAttribute("uid");
+        String username = (String) request.getAttribute("username");
 
-        ChatRoomRequest request = new ChatRoomRequest(chatRoomName, uid, profileId);
+        String chatRoomName = username + "과(와) " + profileId + "번 프로필의 채팅방";
 
-        ChatRoom chatRoom = chatRoomService.createChatRoom(request);
+        ChatRoomRequest chatRoomRequest = new ChatRoomRequest(chatRoomName, uid, profileId);
+
+        ChatRoom chatRoom = chatRoomService.createChatRoom(chatRoomRequest);
         return ResponseEntity.ok(chatRoom);
     }
 
@@ -66,26 +57,16 @@ public class ChatRoomController {
      * @return 채팅방 목록을 포함한 ResponseEntity 객체
      */
     @GetMapping("/chatroom/list/all")
-    public ResponseEntity<List<ChatRoom>> getAllChatRoomList() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication(); // 이 부분은 유저 정보를 가져오는 반복되는 부분 추후 간소화 필요
-        long uid = 1;
-        if (authentication != null && authentication.isAuthenticated()) {
-            String username = authentication.getName();
-            uid = userRepository.findIdByUsername(username);
-        }
+    public ResponseEntity<List<ChatRoom>> getAllChatRoomList(HttpServletRequest request) {
+        Long uid = (Long) request.getAttribute("uid");
 
         List<ChatRoom> chatRooms = chatRoomService.getChatRoomsByUserId(uid);
         return ResponseEntity.ok(chatRooms);
     }
 
     @GetMapping("/chatroom/list/{profileId}")
-    public ResponseEntity<List<ChatRoom>> getChatRoomListByProfileId(@PathVariable Integer profileId) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication(); // 이 부분은 유저 정보를 가져오는 반복되는 부분 추후 간소화 필요
-        long uid = 1;
-        if (authentication != null && authentication.isAuthenticated()) {
-            String username = authentication.getName();
-            uid = userRepository.findIdByUsername(username);
-        }
+    public ResponseEntity<List<ChatRoom>> getChatRoomListByProfileId(@PathVariable Integer profileId, HttpServletRequest request) {
+        Long uid = (Long) request.getAttribute("uid");
 
         List<ChatRoom> chatRooms = chatRoomService.getChatRoomsByUserIdAndProfileId(uid, profileId);
         return ResponseEntity.ok(chatRooms);
@@ -99,9 +80,12 @@ public class ChatRoomController {
      * @return 채팅방과 히스토리를 포함한 ChatRoomWithHistoryDTO 객체를 담은 ResponseEntity 객체
      */
     @GetMapping("/chatroom/{chatRoomId}")
-    public ResponseEntity<ChatRoomWithHistoryDTO> getChatRoomWithHistory(@PathVariable Long chatRoomId) {
-        // 채팅방이 유저의 것인지 검증하는 로직 추가 필요
+    public ResponseEntity<ChatRoomWithHistoryDTO> getChatRoomWithHistory(@PathVariable Long chatRoomId, HttpServletRequest request) {
         ChatRoomWithHistoryDTO chatRoomWithHistory = chatRoomService.getChatRoomWithHistory(chatRoomId);
+
+        Long uid = (Long) request.getAttribute("uid");
+        // 채팅방이 유저의 것인지 검증하는 로직 추가 필요
+
         return ResponseEntity.ok(chatRoomWithHistory);
     }
 }
