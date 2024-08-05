@@ -12,6 +12,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.Optional;
 
 @Service
 public class CustomOAuth2UserServiceImpl extends DefaultOAuth2UserService implements CustomOAuth2UserService {
@@ -27,14 +28,17 @@ public class CustomOAuth2UserServiceImpl extends DefaultOAuth2UserService implem
         String name = oAuth2User.getAttribute("name");
         String provider = userRequest.getClientRegistration().getRegistrationId();
 
-        User user = userRepository.findByEmail(email);
-        if (user == null) {
+        Optional<User> optionalUser = userRepository.findByEmail(email);
+        User user;
+        if (optionalUser.isEmpty()) {
             user = new User();
             user.setEmail(email);
             user.setUsername(name);
             user.setProvider(provider);
             user.setEmailVerified(true);  // 소셜 로그인의 경우 이메일이 이미 인증되었다고 가정
             userRepository.save(user);
+        } else {
+            user = optionalUser.get();
         }
 
         return new DefaultOAuth2User(

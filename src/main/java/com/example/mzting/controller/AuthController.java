@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Optional;
+
 @RestController
 public class AuthController {
 
@@ -25,8 +27,9 @@ public class AuthController {
     @GetMapping("/verify-email")
     public ResponseEntity<String> verifyEmail(@RequestParam String email) {
         logger.info("Verifying email: {}", email);
-        User user = userRepository.findByEmail(email);
-        if (user != null) {
+        Optional<User> optionalUser = userRepository.findByEmail(email);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
             user.setEmailVerified(true);
             userRepository.save(user);
             logger.info("Email verified successfully: {}", email);
@@ -40,12 +43,15 @@ public class AuthController {
     public ResponseEntity<String> sendVerification(@RequestParam String email) {
         logger.info("Sending verification email to: {}", email);
         try {
-            User user = userRepository.findByEmail(email);
-            if (user != null && !user.isEmailVerified()) {
-                String verificationLink = "http://your-domain.com/verify-email?email=" + email;
-                emailService.sendVerificationEmail(email, verificationLink);
-                logger.info("Verification email sent to: {}", email);
-                return ResponseEntity.ok("인증 이메일을 발송했습니다. 이메일을 확인해주세요.");
+            Optional<User> optionalUser = userRepository.findByEmail(email);
+            if (optionalUser.isPresent()) {
+                User user = optionalUser.get();
+                if (!user.isEmailVerified()) {
+                    String verificationLink = "http://your-domain.com/verify-email?email=" + email;
+                    emailService.sendVerificationEmail(email, verificationLink);
+                    logger.info("Verification email sent to: {}", email);
+                    return ResponseEntity.ok("인증 이메일을 발송했습니다. 이메일을 확인해주세요.");
+                }
             }
             logger.warn("Email already verified or not found: {}", email);
             return ResponseEntity.badRequest().body("이미 인증된 이메일이거나 유효하지 않은 이메일입니다.");
