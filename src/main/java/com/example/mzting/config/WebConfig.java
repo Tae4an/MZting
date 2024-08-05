@@ -1,7 +1,9 @@
 package com.example.mzting.config;
 
+import com.example.mzting.Interceptor.UserInformationInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
@@ -10,6 +12,19 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
+
+    private final UserInformationInterceptor userInformationInterceptor;
+
+    public WebConfig (UserInformationInterceptor userInformationInterceptor) {
+        this.userInformationInterceptor = userInformationInterceptor;
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(userInformationInterceptor)
+                .addPathPatterns("/api/**")  // 인증이 필요한 경로 패턴을 지정
+                .excludePathPatterns("/api/auth/**");  // 인증이 필요 없는 경로 패턴을 제외
+    }
 
     /**
      * CORS 매핑 설정 메서드

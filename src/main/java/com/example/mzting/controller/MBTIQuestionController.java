@@ -3,7 +3,6 @@ package com.example.mzting.controller;
 import com.example.mzting.dto.Answer;
 import com.example.mzting.entity.MBTIQuestion;
 import com.example.mzting.repository.MBTIQuestionRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,8 +16,11 @@ import java.util.List;
 public class MBTIQuestionController {
 
     // MBTI 질문 저장소
-    @Autowired
-    private MBTIQuestionRepository questionRepository;
+    private final MBTIQuestionRepository mbtiQuestionRepository;
+
+    public MBTIQuestionController(MBTIQuestionRepository mbtiQuestionRepository) {
+        this.mbtiQuestionRepository = mbtiQuestionRepository;
+    }
 
     /**
      * 모든 MBTI 질문을 조회하는 엔드포인트
@@ -27,7 +29,7 @@ public class MBTIQuestionController {
      */
     @GetMapping
     public List<MBTIQuestion> getQuestions() {
-        return questionRepository.findAll();
+        return mbtiQuestionRepository.findAll();
     }
 
     /**

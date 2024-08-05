@@ -2,7 +2,9 @@ package com.example.mzting.dto;
 
 import com.example.mzting.entity.Chat;
 import com.example.mzting.entity.ChatRoom;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
@@ -13,6 +15,8 @@ import java.util.List;
  */
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class ChatRoomWithHistoryDTO {
 
     // 채팅방 정보
@@ -21,14 +25,4 @@ public class ChatRoomWithHistoryDTO {
     // 채팅 히스토리 목록
     private List<Chat> chatHistory;
 
-    /**
-     * ChatRoomWithHistoryDTO 생성자
-     *
-     * @param chatRoom 채팅방 정보
-     * @param chatHistory 채팅 히스토리 목록
-     */
-    public ChatRoomWithHistoryDTO(ChatRoom chatRoom, List<Chat> chatHistory) {
-        this.chatRoom = chatRoom;
-        this.chatHistory = chatHistory;
-    }
 }

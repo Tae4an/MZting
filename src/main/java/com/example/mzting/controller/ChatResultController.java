@@ -2,6 +2,7 @@ package com.example.mzting.controller;
 
 import com.example.mzting.dto.ChatResultResponse;
 import com.example.mzting.service.ChatResultService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -34,7 +35,9 @@ public class ChatResultController {
      * @return 채팅 요약을 포함한 ChatResultResponse 객체
      */
     @GetMapping("chat/result/{chatRoomId}")
-    public ChatResultResponse getChatSummary(@PathVariable Long chatRoomId) {
+    public ChatResultResponse getChatSummary(@PathVariable Long chatRoomId, HttpServletRequest request) {
+        Long uid = (Long) request.getAttribute("uid");
+        // chatRoom이 자신의 chatRoom인지 검증하는 로직 필요
         return chatResultService.getBotMessagesWithSummary(chatRoomId);
     }
 }

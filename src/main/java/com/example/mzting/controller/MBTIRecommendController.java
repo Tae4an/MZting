@@ -2,7 +2,6 @@ package com.example.mzting.controller;
 
 import com.example.mzting.dto.MBTIRecommendDTO;
 import com.example.mzting.service.MBTIRecommendService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,17 +14,17 @@ import org.springframework.web.bind.annotation.*;
 public class MBTIRecommendController {
 
     // MBTI 추천 서비스
-    private final MBTIRecommendService service;
+    private final MBTIRecommendService mbtiRecommendService;
 
     /**
      * MBTIRecommendController 생성자
      * 필요한 의존성을 주입받아 초기화
      *
-     * @param service MBTI 추천 서비스
+     * @param mbtiRecommendService MBTI 추천 서비스
      */
-    @Autowired
-    public MBTIRecommendController(MBTIRecommendService service) {
-        this.service = service;
+    public MBTIRecommendController(MBTIRecommendService mbtiRecommendService) {
+
+        this.mbtiRecommendService = mbtiRecommendService;
     }
 
     /**
@@ -36,7 +35,7 @@ public class MBTIRecommendController {
      */
     @GetMapping("/compatibility/{mbti}")
     public ResponseEntity<MBTIRecommendDTO.GetMBTIRecommendResponse> getCompatibility(@PathVariable String mbti) {
-        return service.getCompatibilityByMBTI(mbti)
+        return mbtiRecommendService.getCompatibilityByMBTI(mbti)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
