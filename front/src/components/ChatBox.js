@@ -135,16 +135,16 @@ const ChatBox = ({
                 <div ref={messagesEndRef}/>
             </div>
             <form onSubmit={handleSubmit} className={styles.inputArea}>
-            <textarea
-                ref={textareaRef}
-                value={inputMessage}
-                onChange={handleInputChange}
-                onInput={adjustTextareaHeight}
-                onKeyPress={handleKeyPress}
-                placeholder="메시지를 입력하세요"
-                className={styles.inputField}
-                rows={1}
-            />
+                <textarea
+                    ref={textareaRef}
+                    value={inputMessage}
+                    onChange={handleInputChange}
+                    onInput={adjustTextareaHeight}
+                    onKeyPress={handleKeyPress}
+                    placeholder="메시지를 입력하세요"
+                    className={styles.inputField}
+                    rows={1}
+                />
                 <button type="submit" className={styles.sendButton}>전송</button>
             </form>
             {showProfileModal && (
