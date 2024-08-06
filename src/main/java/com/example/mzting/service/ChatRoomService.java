@@ -1,5 +1,6 @@
 package com.example.mzting.service;
 
+import com.example.mzting.dto.ChatRoomEntryResponseDTO;
 import com.example.mzting.dto.ChatRoomRequest;
 import com.example.mzting.dto.ChatRoomWithHistoryDTO;
 import com.example.mzting.entity.Chat;
@@ -9,6 +10,7 @@ import com.example.mzting.repository.ChatRepository;
 import com.example.mzting.repository.ChatRoomRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -65,6 +67,18 @@ public class ChatRoomService {
                 .orElseThrow(() -> new ResourceNotFoundException("ChatRoom not found with id: " + chatRoomId));
         List<Chat> chatHistory = chatRepository.findByChatRoomIdOrderBySendAtAsc(chatRoomId);
         return new ChatRoomWithHistoryDTO(chatRoom, chatHistory);
+    }
+
+    public List<ChatRoomEntryResponseDTO> getChatRoomEntries(Long chatRoomId) {
+        List<Chat> chatHistory = chatRepository.findByChatRoomIdOrderBySendAtAsc(chatRoomId);
+        List<ChatRoomEntryResponseDTO> chatRoomEntryResponseDTOS = new ArrayList<>();
+        for (Chat chat : chatHistory) {
+            String role = (chat.getIsBot()) ? "bot" : "user";
+            String content = chat.getContent();
+            new ChatRoomEntryResponseDTO(role, content);
+        }
+
+        return chatRoomEntryResponseDTOS;
     }
 
     /**
