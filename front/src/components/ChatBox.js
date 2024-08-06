@@ -46,6 +46,29 @@ const ChatBox = ({
         }
     };
 
+    const textareaRef = useRef(null);
+
+    const adjustTextareaHeight = () => {
+        const textarea = textareaRef.current;
+        if (textarea) {
+            textarea.style.height = 'auto';
+            textarea.style.height = `${Math.min(textarea.scrollHeight, 120)}px`;
+        }
+    };
+
+    const handleInputChange = (e) => {
+        setInputMessage(e.target.value);
+        adjustTextareaHeight();
+    };
+
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            handleSubmit(e);
+        }
+    };
+
+
     useEffect(() => {
         const lastMessage = messages[messages.length - 1];
         if (lastMessage && !lastMessage.isSent) {
@@ -68,7 +91,7 @@ const ChatBox = ({
                 <img src={image} alt={name} className={styles.avatar} onClick={handleProfileClick}/>
                 <span className={styles.userName} onClick={handleProfileClick}>{name}</span>
             </header>
-            <SituationBanner stages={stages} isActualMeeting={isActualMeeting} />
+            <SituationBanner stages={stages} isActualMeeting={isActualMeeting}/>
             <div className={styles.messageContainer}>
                 {messages && messages.map((message, index) => {
                     if (!message.isSent && message.content && typeof message.content === 'object') {
@@ -112,13 +135,16 @@ const ChatBox = ({
                 <div ref={messagesEndRef}/>
             </div>
             <form onSubmit={handleSubmit} className={styles.inputArea}>
-                <input
-                    type="text"
-                    value={inputMessage}
-                    onChange={(e) => setInputMessage(e.target.value)}
-                    placeholder="메시지를 입력하세요"
-                    className={styles.inputField}
-                />
+            <textarea
+                ref={textareaRef}
+                value={inputMessage}
+                onChange={handleInputChange}
+                onInput={adjustTextareaHeight}
+                onKeyPress={handleKeyPress}
+                placeholder="메시지를 입력하세요"
+                className={styles.inputField}
+                rows={1}
+            />
                 <button type="submit" className={styles.sendButton}>전송</button>
             </form>
             {showProfileModal && (
