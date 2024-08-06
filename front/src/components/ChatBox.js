@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
-import { ProfileDetailModal, TypingIndicator } from '../components';
+import { ProfileDetailModal, TypingIndicator, FeedbackBanner, SituationBanner } from '../components';
 import styles from '../styles/ChatBox.module.css';
-import FeedbackBanner from "./FeedbackBanner";
-import SituationBanner from "./SituationBanner";
 
 
 const ChatBox = ({
