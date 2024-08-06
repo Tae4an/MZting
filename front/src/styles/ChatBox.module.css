@@ -137,6 +137,12 @@
     border-radius: 20px;
     background-color: #ffffff;
     color: #333333;
+    resize: none;
+    overflow-y: auto;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    min-height: 40px;
+    max-height: 120px;
 }
 
 .sendButton {
