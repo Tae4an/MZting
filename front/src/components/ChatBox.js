@@ -18,7 +18,7 @@ const ChatBox = ({
                  }) => {
     const [showProfileModal, setShowProfileModal] = useState(false);
     const [inputMessage, setInputMessage] = useState('');
-    const [isTyping, setIsTyping] = useState(false);
+    const [isTyping, setIsTyping] = useState(true);  // 초기값을 true로 설정
     const navigate = useNavigate();
     const messagesEndRef = useRef(null);
     const [prevScore, setPrevScore] = useState(0);
@@ -70,9 +70,11 @@ const ChatBox = ({
 
 
     useEffect(() => {
-        const lastMessage = messages[messages.length - 1];
-        if (lastMessage && !lastMessage.isSent) {
-            setIsTyping(false); // AI 응답이 오면 TypingIndicator 중지
+        if (messages.length > 0) {
+            const lastMessage = messages[messages.length - 1];
+            if (!lastMessage.isSent) {
+                setIsTyping(false);
+            }
         }
     }, [messages]);
 
