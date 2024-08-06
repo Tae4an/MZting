@@ -5,8 +5,7 @@ import { ChatBox } from '../components';
 import {sendGetRequest, sendMessage, sendPostRequest} from '../services';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-import TimePassedModal from "../components/TimePassedModal";
+import { TimePassedModal } from "../components/TimePassedModal";
 
 const ChatPage = () => {
     const location = useLocation();
