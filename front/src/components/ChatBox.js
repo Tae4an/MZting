@@ -70,39 +70,23 @@ const ChatBox = ({
             </header>
             <SituationBanner stages={stages} isActualMeeting={isActualMeeting} />
             <div className={styles.messageContainer}>
-                {messages && messages.map((message, index) => {
-                    if (!message.isSent && message.content && typeof message.content === 'object') {
-                        const currentScore = message.content.score || 0;
-
-                        return (
-                            <React.Fragment key={index}>
-                                <ChatBubble
-                                    content={message.content.text}
-                                    isSent={message.isSent}
-                                    avatar={message.isSent ? null : image}
-                                />
-                                <FeedbackBanner
-                                    feel={message.content.feel}
-                                    score={currentScore}
-                                    evaluation={message.content.evaluation}
-                                    prevScore={prevScore}
-                                />
-                            </React.Fragment>
-                        );
-
-                        // 점수 업데이트
-                        setPrevScore(currentScore);
-                    } else {
-                        return (
-                            <ChatBubble
-                                key={index}
-                                content={message.content}
-                                isSent={message.isSent}
-                                avatar={message.isSent ? null : image}
+                {messages.map((message, index) => (
+                    <React.Fragment key={index}>
+                        <ChatBubble
+                            content={typeof message.content === 'string' ? message.content : message.content.text}
+                            isSent={message.isSent}
+                            avatar={message.isSent ? null : image}
+                        />
+                        {!message.isSent && message.isLastInGroup && message.content.feel && (
+                            <FeedbackBanner
+                                feel={message.content.feel}
+                                score={message.content.score}
+                                evaluation={message.content.evaluation}
+                                prevScore={index > 0 ? (messages[index - 1].content.score || 0) : 0}
                             />
-                        );
-                    }
-                })}
+                        )}
+                    </React.Fragment>
+                ))}
                 {isTyping && (
                     <div className={styles.messageWrapper} style={{justifyContent: 'flex-start'}}>
                         <img src={image} alt="Avatar" className={styles.messageAvatar}/>

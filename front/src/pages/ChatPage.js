@@ -151,19 +151,33 @@ const ChatPage = () => {
 
             const response = await sendMessage(content, mbti);
 
-            if (response.claudeResponse && response.claudeResponse.text) {
-                const responseMessage = {
-                    content: {
-                        text: response.claudeResponse.text,
-                        feel: response.claudeResponse.feel,
-                        score: response.claudeResponse.score,
-                        evaluation: response.claudeResponse.evaluation
-                    },
-                    isSent: false,
-                    avatar: image,
-                };
-                setMessages(prevMessages => [...prevMessages, responseMessage]);
-                setClaudeResponse(response.claudeResponse);
+            if (response.claudeResponse && response.claudeResponse.messages) {
+                const totalMessages = response.claudeResponse.messages.length;
+
+                for (let index = 0; index < totalMessages; index++) {
+                    const message = response.claudeResponse.messages[index];
+                    const isLastMessage = index === totalMessages - 1;
+
+                    await new Promise(resolve => setTimeout(resolve, 2000)); // 각 메시지마다 0.5초의 간격
+
+                    const responseMessage = {
+                        content: {
+                            text: message,
+                            feel: isLastMessage ? response.claudeResponse.feel : null,
+                            score: isLastMessage ? response.claudeResponse.score : null,
+                            evaluation: isLastMessage ? response.claudeResponse.evaluation : null
+                        },
+                        isSent: false,
+                        avatar: image,
+                        isLastInGroup: isLastMessage
+                    };
+
+                    setMessages(prevMessages => [...prevMessages, responseMessage]);
+
+                    if (isLastMessage) {
+                        setClaudeResponse(response.claudeResponse);
+                    }
+                }
             }
         } catch (error) {
             console.error('Error sending message:', error);
