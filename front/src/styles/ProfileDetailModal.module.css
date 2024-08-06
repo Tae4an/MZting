@@ -161,7 +161,7 @@
     left: 50%;
     transform: translateX(-50%);
     transition: background 0.3s, transform 0.3s;
-    z-index: 1000; /* 댓글 버튼이 항상 화면 최상위에 위치하도록 z-index 설정 */
+    z-index: 1000;
 }
 
 .commentButton:hover {
