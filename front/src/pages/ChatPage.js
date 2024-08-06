@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import styles from '../styles/ChatPage.module.css';
 import { ChatBox } from '../components';
-import { sendMessage } from '../services/sendMessage';
+import {sendGetRequest, sendMessage, sendPostRequest} from '../services';
 
 const ChatPage = () => {
     const location = useLocation();
-    const { image, name, type, age, height, job, hobbies, tags, description } = location.state || {};
+    const { selectedProfile : { image, name, type, age, height, job, hobbies, tags, description }, chatRoomId, isFirst } = location.state || {};
     const mbti = type.replace('#', '');
 
     const [messages, setMessages] = useState([]);
@@ -14,8 +14,16 @@ const ChatPage = () => {
     const [isActualMeeting, setIsActualMeeting] = useState(false);
 
     useEffect(() => {
-        console.log('ChatPage loaded with state:', location.state);
-        sendInitialMessage();
+        if(isFirst) { // 채팅방 새로 생성 시
+            console.log('ChatPage loaded with state:', location.state);
+            sendInitialMessage();
+        } else { // 기존 채팅방 이어가기
+            const getChatHistory = async () => { // 기존 채팅방 정보 가져오기
+                const response = sendGetRequest({}, `/api/chatroom/entry/${chatRoomId}`)
+                console.log("기존 채팅방 이어가기 : ", response)
+            }
+        }
+
     }, []);
 
     const sendInitialMessage = async () => {
@@ -33,7 +41,13 @@ const ChatPage = () => {
         const initialMessageContent = `안녕하세요. 소개팅 상대방의 정보입니다: ${JSON.stringify(initialContext)}`;
 
         try {
-            const response = await sendMessage(initialMessageContent, mbti);
+            const requestData = {
+                message : initialMessageContent,
+                mbti : mbti,
+                chatRoomId : chatRoomId
+            }
+            console.log(requestData);
+            const response = await sendPostRequest(requestData, "api/ask-claude")
 
             if (response.claudeResponse && response.claudeResponse.text) {
                 const responseMessage = {
