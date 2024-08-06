@@ -194,3 +194,68 @@
         margin-left: 0;
     }
 }
+.chatHeader {
+    /* 기존 스타일 */
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: #fff;
+}
+
+/* SituationBanner를 위한 새로운 스타일 */
+.situationBanner {
+    position: sticky;
+    top: 60px; /* chatHeader의 높이에 따라 조정 */
+    z-index: 9;
+    background-color: #fff;
+}
+.timePassedMessageContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 20px 0;
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    margin: 10px 0;
+}
+
+.timePassedMessage {
+    font-size: 16px;
+    color: #555;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.timePassedDots {
+    display: flex;
+    justify-content: center;
+}
+
+.timePassedDots span {
+    font-size: 24px;
+    line-height: 10px;
+    margin: 0 2px;
+    animation: blink 1.4s infinite both;
+}
+
+.timePassedDots span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.timePassedDots span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes blink {
+    0% {
+        opacity: 0.2;
+    }
+    20% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.2;
+    }
+}
