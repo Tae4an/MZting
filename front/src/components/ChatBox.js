@@ -91,9 +91,6 @@ const ChatBox = ({
                                 />
                             </React.Fragment>
                         );
-
-                        // 점수 업데이트
-                        setPrevScore(currentScore);
                     } else {
                         return (
                             <ChatBubble

@@ -86,7 +86,15 @@ const ChatPage = () => {
             const newMessage = { content, isSent: true };
             setMessages(prevMessages => [...prevMessages, newMessage]);
 
-            const response = await sendMessage(content, mbti);
+            const requestData = {
+                message : content,
+                mbti : mbti,
+                chatRoomId : chatRoomId
+            }
+
+            console.log(requestData)
+
+            const response = await sendPostRequest(requestData, "/api/ask-claude")
 
             if (response.claudeResponse && response.claudeResponse.text) {
                 const responseMessage = {

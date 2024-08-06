@@ -39,9 +39,8 @@ public class ChatController {
             Long chatRoomId = userMessageObj.getChatRoomId();
 
             // 사용자 메시지를 DB에 저장
-            chatService.saveUserMessage(userMessage, chatRoomId);
-
-            chatService.addUserRequest(userMessage);
+            Chat test = chatService.saveUserMessage(userMessage, chatRoomId);
+            System.out.println("test : " + test.getChatRoomId());
 
             ClaudeResponse claudeResponse = claudeApiService.getClaudeResponseByMbti(
                     userMbti,

@@ -100,6 +100,7 @@ public class ChatService {
         for (Chat chat : chatHistory) {
             String role = (chat.getIsBot()) ? "assistant" : "user";
             String content = chat.getContent();
+            System.out.println(role + " : " + content);
             messages.add(Map.of("role", role, "content", content));
         }
 
