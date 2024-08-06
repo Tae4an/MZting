@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import { ProfileDetailModal, TypingIndicator } from '../components';
 import styles from '../styles/ChatBox.module.css';
-import ChoiceModal from './ChoiceModal';
 import FeedbackBanner from "./FeedbackBanner";
+import SituationBanner from "./SituationBanner";
+
 
 const ChatBox = ({
                      image,
@@ -12,6 +13,7 @@ const ChatBox = ({
                      profileDetails,
                      messages,
                      onSendMessage,
+                     stages,
                      isActualMeeting
                  }) => {
     const [showProfileModal, setShowProfileModal] = useState(false);
@@ -66,11 +68,7 @@ const ChatBox = ({
                 <img src={image} alt={name} className={styles.avatar} onClick={handleProfileClick}/>
                 <span className={styles.userName} onClick={handleProfileClick}>{name}</span>
             </header>
-            <div className={styles.situationDescription}>
-                {isActualMeeting
-                    ? "약속 장소에서 만난 상황입니다. 자연스럽게 대화를 이어가세요."
-                    : "상황 설명: 간략한 상황에 대한 설명 또는 미션 부여 (예: 당신은 주선자의 소개를 통해 연락이 닿았습니다.)"}
-            </div>
+            <SituationBanner stages={stages} isActualMeeting={isActualMeeting} />
             <div className={styles.messageContainer}>
                 {messages && messages.map((message, index) => {
                     if (!message.isSent && message.content && typeof message.content === 'object') {
@@ -152,6 +150,12 @@ ChatBox.propTypes = {
     profileDetails: PropTypes.object.isRequired,
     messages: PropTypes.array.isRequired,
     onSendMessage: PropTypes.func.isRequired,
+    stages: PropTypes.shape({
+        stage1Complete: PropTypes.bool.isRequired,
+        stage2Complete: PropTypes.bool.isRequired,
+        stage3Complete: PropTypes.bool.isRequired,
+    }).isRequired,
+    isActualMeeting: PropTypes.bool.isRequired
 };
 
 export {ChatBox};

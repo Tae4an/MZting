@@ -120,35 +120,17 @@ const ChatPage = () => {
     return (
         <main className={styles.mainContainer}>
             <div className={styles.contentWrapper}>
-                {stages.stage1Complete && (
-                    <div className={styles.stageBanner}>
-                        스테이지 1 완료: 첫 인사와 약속 잡기
-                    </div>
-                )}
-                {stages.stage2Complete && (
-                    <div className={styles.stageBanner}>
-                        스테이지 2 완료: 실제 만남에서의 대화
-                    </div>
-                )}
-                {stages.stage3Complete && (
-                    <div className={styles.stageBanner}>
-                        스테이지 3 완료: 만남 후 애프터 여부 결정
-                    </div>
-                )}
-                {isActualMeeting && (
-                    <div className={styles.actualMeetingBanner}>
-                        실제 만남 진행 중
-                    </div>
-                )}
                 <ChatBox
                     image={image}
                     name={name}
                     profileDetails={{ image, name, type, age, height, job, hobbies, tags, description }}
                     messages={messages}
                     onSendMessage={handleSendMessage}
+                    stages={stages}
+                    isActualMeeting={isActualMeeting}
                 />
             </div>
-            <ToastContainer position="top-right" autoClose={3000} />
+            <ToastContainer position="top-right" autoClose={10000} />
         </main>
     );
 };

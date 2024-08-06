@@ -192,3 +192,18 @@
         margin-left: 0;
     }
 }
+.chatHeader {
+    /* 기존 스타일 */
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: #fff;
+}
+
+/* SituationBanner를 위한 새로운 스타일 */
+.situationBanner {
+    position: sticky;
+    top: 60px; /* chatHeader의 높이에 따라 조정 */
+    z-index: 9;
+    background-color: #fff;
+}
