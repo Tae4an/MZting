@@ -50,5 +50,5 @@ public class Comment {
     private Long likeCount;
 
     @Column(nullable = false, columnDefinition = "BIGINT DEFAULT 0")
-    private Long DislikeCount;
+    private Long dislikeCount;
 }

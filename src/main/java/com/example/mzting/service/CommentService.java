@@ -7,6 +7,7 @@ import com.example.mzting.entity.MBTIPosts;
 import com.example.mzting.repository.CommentRepository;
 import com.example.mzting.repository.MBTIPostsRepository;
 import com.example.mzting.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -116,5 +117,15 @@ public class CommentService {
                 comment.getCwTime(),
                 username
         );
+    }
+
+    @Transactional
+    public int plusLikeCountByCommentId(Long commentId) {
+        return commentRepository.incrementLikeCount(commentId);
+    }
+
+    @Transactional
+    public int plusDisLikeCountByCommentId(Long commentId) {
+        return commentRepository.incrementDisLikeCount(commentId);
     }
 }

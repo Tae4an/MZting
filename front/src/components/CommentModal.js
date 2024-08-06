@@ -16,7 +16,8 @@ const CommentModal = ({ show, onClose, mbti }) => {
     }, [show]);
 
     const fetchComments = async () => {
-        const fetchedComments = await sendGetRequest({}, '/api/posts/1/comments');
+        const fetchedComments = await sendGetRequest({}, '/api/posts/0/comments');
+        console.log(fetchedComments.commentInfos)
         const extractedComments = fetchedComments.commentInfos.map(comment => ({
             ...comment,
             likeCount: comment.likeCount || 0,

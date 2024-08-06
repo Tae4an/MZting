@@ -88,4 +88,20 @@ public class CommentController {
         CommentDTO.GetPostsCommentsResponse response = commentService.getCommentInfoByProfileId(profileId, PageRequest.of(page, size));
         return ResponseEntity.ok(response);
     }
+
+    @PostMapping("/{commentId}/like")
+    public int likeComment(
+            @PathVariable Long profileId,
+            @PathVariable Long commentId,
+            HttpServletRequest request) {
+        return commentService.plusLikeCountByCommentId(commentId);
+    }
+
+    @PostMapping("/{commentId}/dislike")
+    public int dislikeComment(
+            @PathVariable Long profileId,
+            @PathVariable Long commentId,
+            HttpServletRequest request) {
+        return commentService.plusDisLikeCountByCommentId(commentId);
+    }
 }
