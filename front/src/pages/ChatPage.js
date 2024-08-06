@@ -79,9 +79,9 @@ const ChatPage = () => {
     const updateStages = (claudeResponse) => {
         setStages(prevStages => {
             const newStages = {
-                stage1Complete: claudeResponse.stage1_complete,
-                stage2Complete: claudeResponse.stage2_complete,
-                stage3Complete: claudeResponse.stage3_complete
+                stage1Complete: claudeResponse.stage1Complete,
+                stage2Complete: claudeResponse.stage2Complete,
+                stage3Complete: claudeResponse.stage3Complete
             };
 
             if (newStages.stage1Complete && !prevStages.stage1Complete) {
