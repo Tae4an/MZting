@@ -1,17 +1,16 @@
 import React from 'react';
 import styles from '../styles/Layout.module.css';
-import { AdColumn } from './';
+import { AdColumnLeft, AdColumnRight } from './AdColumn';
 
 const Layout = ({ children }) => {
     return (
         <div className={styles.layout}>
-            <AdColumn />
+            <AdColumnLeft />
+            <AdColumnRight />
             <main className={styles.main}>{children}</main>
-            <AdColumn />
+
         </div>
     );
 };
 
-export {
-    Layout
-};
+export { Layout };
