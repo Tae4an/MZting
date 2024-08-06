@@ -1,5 +1,5 @@
 import { LoginForm } from "./LoginForm";
-import { AdColumn } from "./AdColumn";
+import { AdColumnLeft, AdColumnRight } from "./AdColumn";
 import { Layout } from "./Layout";
 import { ProfileCard } from "./ProfileCard";
 import { ChatBox } from "./ChatBox";
@@ -14,7 +14,8 @@ import { RecommendModal } from "./RecommendModal";
 
 export {
     LoginForm,
-    AdColumn,
+    AdColumnLeft,
+    AdColumnRight,
     Layout,
     ProfileCard,
     ChatBox,
