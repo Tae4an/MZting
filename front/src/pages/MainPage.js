@@ -86,13 +86,25 @@ const MainPage = () => {
     }, []);
 
     const handleProfileClick = (profile) => {
+        const loadChatRoomData = async () => {
+            const chatRoomData = await sendGetRequest({}, `/api/chatroom/list/${profile.id}`)
+            console.log(chatRoomData);
+        }
+        loadChatRoomData();
         setSelectedProfile(profile);
         setShowModal(true);
     };
 
-    const handleStartChat = () => {
-        setShowModal(false);
-        navigate('/chat', { state: selectedProfile });
+    const handleStartChat = async () => {
+        const chatRoomId = await sendGetRequest({}, `/api/chatroom/create/${selectedProfile.id}`)
+        const isFirst = true
+        console.log(chatRoomId);
+        navigate('/chat', { state: {
+                selectedProfile,
+                chatRoomId,
+                isFirst
+            }
+        });
     };
 
     const handleHistoryClick = () => {

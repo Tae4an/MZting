@@ -1,15 +1,16 @@
-import React, {useEffect, useState} from 'react';
-import {useLocation} from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import styles from '../styles/ChatPage.module.css';
-import {ChatBox} from '../components';
-import {sendMessage} from '../services/sendMessage';
-import {toast, ToastContainer} from 'react-toastify';
+import { ChatBox } from '../components';
+import {sendGetRequest, sendMessage, sendPostRequest} from '../services';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
 import TimePassedModal from "../components/TimePassedModal";
 
 const ChatPage = () => {
     const location = useLocation();
-    const { image, name, type, age, height, job, hobbies, tags, description } = location.state || {};
+    const { selectedProfile : { image, name, type, age, height, job, hobbies, tags, description }, chatRoomId, isFirst } = location.state || {};
     const mbti = type.replace('#', '');
 
     const [messages, setMessages] = useState([]);
@@ -26,8 +27,16 @@ const ChatPage = () => {
 
 
     useEffect(() => {
-        console.log('ChatPage loaded with state:', location.state);
-        sendInitialMessage();
+        if(isFirst) { // 채팅방 새로 생성 시
+            console.log('ChatPage loaded with state:', location.state);
+            sendInitialMessage();
+        } else { // 기존 채팅방 이어가기
+            const getChatHistory = async () => { // 기존 채팅방 정보 가져오기
+                const response = sendGetRequest({}, `/api/chatroom/entry/${chatRoomId}`)
+                console.log("기존 채팅방 이어가기 : ", response)
+            }
+        }
+
     }, []);
 
     useEffect(() => {
@@ -35,6 +44,7 @@ const ChatPage = () => {
             updateStages(claudeResponse);
         }
     }, [claudeResponse]);
+
     useEffect(() => {
         if (stageToComplete !== null) {
             const timer = setTimeout(() => {
@@ -123,7 +133,13 @@ const ChatPage = () => {
         const initialMessageContent = `안녕하세요. 소개팅 상대방의 정보입니다: ${JSON.stringify(initialContext)}`;
 
         try {
-            const response = await sendMessage(initialMessageContent, mbti);
+            const requestData = {
+                message : initialMessageContent,
+                mbti : mbti,
+                chatRoomId : chatRoomId
+            }
+            console.log(requestData);
+            const response = await sendPostRequest(requestData, "api/ask-claude")
 
             if (response.claudeResponse && response.claudeResponse.text) {
                 const responseMessage = {
@@ -149,7 +165,31 @@ const ChatPage = () => {
             const newMessage = { content, isSent: true };
             setMessages(prevMessages => [...prevMessages, newMessage]);
 
-            const response = await sendMessage(content, mbti);
+            const processingData = async () => {
+                const requestData = {
+                    message : content,
+                    mbti : mbti,
+                    chatRoomId : chatRoomId
+                }
+
+                console.log(requestData)
+
+                const response = await sendPostRequest(requestData, "/api/ask-claude")
+
+                // Claude의 응답을 \n을 기준으로 여러 개의 메시지로 나누기
+                const splitMessages = response.claudeResponse.text.split('\n').filter(msg => msg.trim() !== '');
+                console.log(splitMessages)
+
+                return {
+                    ...response,
+                    claudeResponse: {
+                        ...response.claudeResponse,
+                        messages: splitMessages
+                    }
+                };
+            }
+
+            const response = await processingData()
 
             if (response.claudeResponse && response.claudeResponse.messages) {
                 const totalMessages = response.claudeResponse.messages.length;
@@ -218,4 +258,4 @@ const ChatPage = () => {
     );
 };
 
-export {ChatPage};
+export { ChatPage };

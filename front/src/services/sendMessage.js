@@ -14,7 +14,7 @@ const sendMessage = async (message, mbti, context) => {
             {
                 "message": message,
                 "mbti": mbti,
-                "context": context
+                "chatRoomId" : 1,
             },
             {
                 headers: {

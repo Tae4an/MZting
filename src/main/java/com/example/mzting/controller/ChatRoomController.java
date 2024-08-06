@@ -1,5 +1,6 @@
 package com.example.mzting.controller;
 
+import com.example.mzting.dto.ChatRoomEntryResponseDTO;
 import com.example.mzting.dto.ChatRoomRequest;
 import com.example.mzting.dto.ChatRoomWithHistoryDTO;
 import com.example.mzting.entity.ChatRoom;
@@ -39,7 +40,7 @@ public class ChatRoomController {
      * @return 생성된 채팅방을 포함한 ResponseEntity 객체
      */
     @GetMapping("/chatroom/create/{profileId}")
-    public ResponseEntity<?> createChatRoom(@PathVariable Integer profileId, HttpServletRequest request) {
+    public ResponseEntity<Long> createChatRoom(@PathVariable Integer profileId, HttpServletRequest request) {
         Long uid = (Long) request.getAttribute("uid");
         String username = (String) request.getAttribute("username");
 
@@ -48,7 +49,7 @@ public class ChatRoomController {
         ChatRoomRequest chatRoomRequest = new ChatRoomRequest(chatRoomName, uid, profileId);
 
         ChatRoom chatRoom = chatRoomService.createChatRoom(chatRoomRequest);
-        return ResponseEntity.ok(chatRoom);
+        return ResponseEntity.ok(chatRoom.getId());
     }
 
     /**
@@ -87,5 +88,18 @@ public class ChatRoomController {
         // 채팅방이 유저의 것인지 검증하는 로직 추가 필요
 
         return ResponseEntity.ok(chatRoomWithHistory);
+    }
+
+    @GetMapping("/chatroom/entry/{chatRoomId}")
+    public ResponseEntity<List<ChatRoomEntryResponseDTO>> getChatRoomChat(@PathVariable Long chatRoomId, HttpServletRequest request) {
+        ChatRoomWithHistoryDTO chatRoomWithHistory = chatRoomService.getChatRoomWithHistory(chatRoomId);
+
+        Long uid = (Long) request.getAttribute("uid");
+        // 채팅방이 유저의 것인지 검증하는 로직 추가 필요
+
+
+        List<ChatRoomEntryResponseDTO> chatRoomEntryResponseDTOs = chatRoomService.getChatRoomEntries(chatRoomId);
+
+        return ResponseEntity.ok(chatRoomEntryResponseDTOs);
     }
 }

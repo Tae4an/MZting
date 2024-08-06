@@ -43,6 +43,10 @@ const ProfileDetailModal = ({ show, onClose, profile, onClick, showChatButton })
         return null;
     }
 
+    const handleChatRoom = () => {
+
+    }
+
     return (
         <>
             <div className={styles.modalOverlay}>
