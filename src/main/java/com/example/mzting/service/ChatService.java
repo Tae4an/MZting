@@ -84,19 +84,25 @@ public class ChatService {
         return conversation;
     }
 
+    public List<Chat> getChatRoomDetail(Long chatRoomId) {
+        return chatRepository.findByChatRoomIdOrderBySendAtAsc(chatRoomId);
+    }
+
     /**
      * Claude API에 전달할 메시지 형식으로 변환하는 메서드
      *
      * @return 사용자 요청과 Claude 응답을 포함한 메시지 리스트
      */
-    public List<Map<String, String>> getMessagesForClaudeApi() {
+    public List<Map<String, String>> getMessagesForClaudeApi(Long chatRoomId) {
+        List<Chat> chatHistory = chatRepository.findByChatRoomIdOrderBySendAtAsc(chatRoomId);
         List<Map<String, String>> messages = new ArrayList<>();
-        for (int i = 0; i < userRequests.size(); i++) {
-            messages.add(Map.of("role", "user", "content", userRequests.get(i)));
-            if (i < savedResponses.size()) {
-                messages.add(Map.of("role", "assistant", "content", savedResponses.get(i)));
-            }
+
+        for (Chat chat : chatHistory) {
+            String role = (chat.getIsBot()) ? "assistant" : "user";
+            String content = chat.getContent();
+            messages.add(Map.of("role", role, "content", content));
         }
+
         return messages;
     }
 

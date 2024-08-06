@@ -5,6 +5,8 @@ import com.example.mzting.dto.ClaudeResponse;
 import com.example.mzting.entity.Chat;
 import com.example.mzting.service.ClaudeApiService;
 import com.example.mzting.service.ChatService;
+import lombok.Getter;
+import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.*;
@@ -34,7 +36,7 @@ public class ChatController {
         try {
             String userMessage = userMessageObj.getMessage();
             String userMbti = userMessageObj.getMbti();
-            Long chatRoomId = 1L; // 추가: 채팅방 ID를 받아옴
+            Long chatRoomId = userMessageObj.getChatRoomId();
 
             // 사용자 메시지를 DB에 저장
             chatService.saveUserMessage(userMessage, chatRoomId);
@@ -43,7 +45,7 @@ public class ChatController {
 
             ClaudeResponse claudeResponse = claudeApiService.getClaudeResponseByMbti(
                     userMbti,
-                    chatService.getMessagesForClaudeApi(),
+                    chatService.getMessagesForClaudeApi(chatRoomId),
                     chatService.getFullContext()
             );
 
@@ -86,5 +88,16 @@ public class ChatController {
     @GetMapping("/get-conversation")
     public ResponseEntity<List<String>> getConversation() {
         return ResponseEntity.ok(chatService.getConversation());
+    }
+
+    @PostMapping("/test")
+    public ResponseEntity<List<Chat>> getConversation(@RequestBody testRequest testRequest) {
+        return ResponseEntity.ok(chatService.getChatRoomDetail(testRequest.getChatRoomId()));
+    }
+
+    @Getter
+    @Setter
+    public static class testRequest {
+        private Long chatRoomId;
     }
 }
