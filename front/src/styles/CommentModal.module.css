@@ -1,4 +1,4 @@
-.modalOverlay {
+.CommentModalOverlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -8,7 +8,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1002;
+    z-index: 1000;
 }
 
 .modal {
@@ -26,6 +26,10 @@
     justify-content: space-between;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     animation: slide-down 0.3s ease-out forwards;
+}
+
+.modalTitle {
+    font-style: italic;
 }
 
 @keyframes slide-down {

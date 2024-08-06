@@ -1,5 +1,5 @@
 import { LoginForm } from "./LoginForm";
-import { AdColumn } from "./AdColumn";
+import { AdColumnLeft, AdColumnRight } from "./AdColumn";
 import { Layout } from "./Layout";
 import { ProfileCard } from "./ProfileCard";
 import { ChatBox } from "./ChatBox";
@@ -10,11 +10,13 @@ import { LoadingSpinner } from "./LoadingSpinner";
 import { CommentModal } from "./CommentModal";
 import { TypingIndicator } from "./TypingIndicator";
 import { RecommendModal } from "./RecommendModal";
+import { PreviousChatsModal } from "./PreviousChatsModal";
 
 
 export {
     LoginForm,
-    AdColumn,
+    AdColumnLeft,
+    AdColumnRight,
     Layout,
     ProfileCard,
     ChatBox,
@@ -24,5 +26,6 @@ export {
     SignupForm,
     CommentModal,
     TypingIndicator,
-    RecommendModal
+    RecommendModal,
+    PreviousChatsModal
 }

@@ -103,7 +103,7 @@ const CommentModal = ({ show, onClose, mbti }) => {
 
     return (
         show && (
-            <div className={styles.modalOverlay}>
+            <div className={styles.CommentModalOverlay}>
                 <div className={styles.modal}>
                     <button className={styles.closeButton} onClick={onClose}>
                         ×

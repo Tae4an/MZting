@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styles from '../styles/ProfileDetailModal.module.css';
-import { ImageModal, CommentModal } from '../components';
+import { ImageModal, CommentModal, PreviousChatsModal } from '../components';
 
 const ProfileDetailModal = ({ show, onClose, profile, onClick, showChatButton }) => {
     const [showImageModal, setShowImageModal] = useState(false);
     const [showCommentModal, setShowCommentModal] = useState(false);
+    const [showChatsModal, setShowChatsModal] = useState(false);
 
     const handleImageClick = () => {
         setShowImageModal(true);
@@ -21,6 +22,14 @@ const ProfileDetailModal = ({ show, onClose, profile, onClick, showChatButton })
 
     const handleCommentModalClose = () => {
         setShowCommentModal(false);
+    };
+
+    const handleChatsClick = () => {
+        setShowChatsModal(true);
+    };
+
+    const handleChatsModalClose = () => {
+        setShowChatsModal(false);
     };
 
     const handleChatStart = () => {
@@ -77,6 +86,7 @@ const ProfileDetailModal = ({ show, onClose, profile, onClick, showChatButton })
                     {showChatButton && (
                         <div className={styles.buttonContainer}>
                             <button className={styles.chatButton} onClick={handleChatStart}>대화 시작하기</button>
+                            <button className={styles.chatButton} onClick={handleChatsClick}>이전 채팅방</button>
                         </div>
                     )}
                 </div>
@@ -93,6 +103,17 @@ const ProfileDetailModal = ({ show, onClose, profile, onClick, showChatButton })
                     show={showCommentModal}
                     onClose={handleCommentModalClose}
                     mbti={profile.type}
+                />
+            )}
+            {showChatsModal && (
+                <PreviousChatsModal
+                    show={showChatsModal}
+                    onClose={handleChatsModalClose}
+                    mbti={profile.type} // MBTI 정보 전달
+                    chats={[
+                        { name: '채팅방 1', lastMessage: '마지막 메시지 1' },
+                        { name: '채팅방 2', lastMessage: '마지막 메시지 2' },
+                    ]}
                 />
             )}
             <button className={styles.commentButton} onClick={handleCommentClick}>댓글 및 후기</button>
@@ -123,6 +144,4 @@ ProfileDetailModal.defaultProps = {
     showChatButton: true
 };
 
-export {
-    ProfileDetailModal
-};
+export { ProfileDetailModal };

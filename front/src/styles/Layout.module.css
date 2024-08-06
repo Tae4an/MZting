@@ -2,7 +2,8 @@
     display: flex;
     min-height: 100vh;
     background-color: #ffffff; /* 배경 색상을 밝게 변경 */
-    overflow-x: hidden; /* 추가: 양옆 스크롤 제거 */
+    overflow: hidden; /* 수평 스크롤 제거 */
+    position: relative; /* 자식 요소들의 절대 위치를 위해 필요 */
 }
 
 .main {
@@ -10,7 +11,10 @@
     display: flex;
     justify-content: center;
     align-items: flex-start; /* 중앙 정렬 추가 */
-    background-color: #f0f0f5; /* 메인 컨텐츠 배경 색상 밝게 변경 */
+    background-color: #f0f0f5; /* 메인 콘텐츠 배경 색상 */
+    margin-left: 15%; /* 고정 광고 칸을 고려한 좌측 여백 */
+    margin-right: 15%; /* 고정 광고 칸을 고려한 우측 여백 */
+    overflow-y: auto; /* 메인 콘텐츠의 세로 스크롤 */
 }
 
 @media (max-width: 991px) {
@@ -19,11 +23,7 @@
     }
 
     .main {
-        order: 1; /* 모바일에서 메인 컨텐츠를 아래로 */
         margin: 0; /* 모바일에서 여백 제거 */
-    }
-
-    .adColumn {
-        order: -1; /* 모바일에서 광고를 위로 */
+        padding: 10px;
     }
 }
