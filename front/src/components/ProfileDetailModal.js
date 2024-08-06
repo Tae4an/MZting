@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import styles from '../styles/ProfileDetailModal.module.css';
 import { ImageModal, CommentModal, PreviousChatsModal } from '../components';
 
-const ProfileDetailModal = ({ show, onClose, profile, onClick, showChatButton }) => {
+const ProfileDetailModal = ({ show, onClose, profile, onClick, showChatButton, loadChatRoomData }) => {
     const [showImageModal, setShowImageModal] = useState(false);
     const [showCommentModal, setShowCommentModal] = useState(false);
     const [showChatsModal, setShowChatsModal] = useState(false);
+    const [previousChats, setPreviousChats] = useState([]);
 
     const handleImageClick = () => {
         setShowImageModal(true);
@@ -24,7 +25,15 @@ const ProfileDetailModal = ({ show, onClose, profile, onClick, showChatButton })
         setShowCommentModal(false);
     };
 
-    const handleChatsClick = () => {
+    const handleChatsClick = async () => {
+        if (loadChatRoomData) {
+            const chatRoomData = await loadChatRoomData(profile.id);
+            const formattedChats = chatRoomData.map(chat => ({
+                name: `채팅방 ${chat.name}`,
+                lastMessage: chat.lastMessage || "메시지 없음",
+            }));
+            setPreviousChats(formattedChats);
+        }
         setShowChatsModal(true);
     };
 
@@ -110,10 +119,7 @@ const ProfileDetailModal = ({ show, onClose, profile, onClick, showChatButton })
                     show={showChatsModal}
                     onClose={handleChatsModalClose}
                     mbti={profile.type} // MBTI 정보 전달
-                    chats={[
-                        { name: '채팅방 1', lastMessage: '마지막 메시지 1' },
-                        { name: '채팅방 2', lastMessage: '마지막 메시지 2' },
-                    ]}
+                    chats={previousChats}
                 />
             )}
             <button className={styles.commentButton} onClick={handleCommentClick}>댓글 및 후기</button>
@@ -136,12 +142,14 @@ ProfileDetailModal.propTypes = {
         description: PropTypes.string.isRequired,
     }).isRequired,
     onClick: PropTypes.func,
-    showChatButton: PropTypes.bool
+    showChatButton: PropTypes.bool,
+    loadChatRoomData: PropTypes.func
 };
 
 ProfileDetailModal.defaultProps = {
     onClick: null,
-    showChatButton: true
+    showChatButton: true,
+    loadChatRoomData: null
 };
 
 export { ProfileDetailModal };
