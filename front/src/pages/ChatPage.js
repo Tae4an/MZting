@@ -165,15 +165,31 @@ const ChatPage = () => {
             const newMessage = { content, isSent: true };
             setMessages(prevMessages => [...prevMessages, newMessage]);
 
-            const requestData = {
-                message : content,
-                mbti : mbti,
-                chatRoomId : chatRoomId
+            const processingData = async () => {
+                const requestData = {
+                    message : content,
+                    mbti : mbti,
+                    chatRoomId : chatRoomId
+                }
+
+                console.log(requestData)
+
+                const response = await sendPostRequest(requestData, "/api/ask-claude")
+
+                // Claude의 응답을 \n을 기준으로 여러 개의 메시지로 나누기
+                const splitMessages = response.claudeResponse.text.split('\n').filter(msg => msg.trim() !== '');
+                console.log(splitMessages)
+
+                return {
+                    ...response,
+                    claudeResponse: {
+                        ...response.claudeResponse,
+                        messages: splitMessages
+                    }
+                };
             }
 
-            console.log(requestData)
-
-            const response = await sendPostRequest(requestData, "/api/ask-claude")
+            const response = await processingData()
 
             if (response.claudeResponse && response.claudeResponse.messages) {
                 const totalMessages = response.claudeResponse.messages.length;
