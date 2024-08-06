@@ -1,15 +1,15 @@
-/* src/styles/Layout.module.css */
 .layout {
     display: flex;
     min-height: 100vh;
     background-color: #ffffff; /* 배경 색상을 밝게 변경 */
+    overflow-x: hidden; /* 추가: 양옆 스크롤 제거 */
 }
 
 .main {
     flex: 1;
     display: flex;
     justify-content: center;
-    padding: 20px 0;
+    align-items: flex-start; /* 중앙 정렬 추가 */
     background-color: #f0f0f5; /* 메인 컨텐츠 배경 색상 밝게 변경 */
 }
 
@@ -19,6 +19,11 @@
     }
 
     .main {
-        order: -1; /* 모바일에서 메인 컨텐츠를 위로 */
+        order: 1; /* 모바일에서 메인 컨텐츠를 아래로 */
+        margin: 0; /* 모바일에서 여백 제거 */
+    }
+
+    .adColumn {
+        order: -1; /* 모바일에서 광고를 위로 */
     }
 }
