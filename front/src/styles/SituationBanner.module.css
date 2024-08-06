@@ -1,0 +1,35 @@
+.situationBanner {
+    background-color: #f0f8ff; /* 연한 하늘색 배경 */
+    border: 1px solid #4682b4; /* 스틸블루 테두리 */
+    border-radius: 8px;
+    padding: 12px 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.situationBanner p {
+    margin: 0;
+    font-size: 16px;
+    color: #333;
+    line-height: 1.5;
+    text-align: center;
+    font-weight: 500;
+}
+
+/* 호버 효과 */
+.situationBanner:hover {
+    background-color: #e6f3ff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .situationBanner {
+        padding: 10px 15px;
+    }
+
+    .situationBanner p {
+        font-size: 14px;
+    }
+}

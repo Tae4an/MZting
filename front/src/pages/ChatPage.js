@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
+import {useLocation} from 'react-router-dom';
 import styles from '../styles/ChatPage.module.css';
-import { ChatBox } from '../components';
-import { sendMessage } from '../services/sendMessage';
-import { toast, ToastContainer } from 'react-toastify';
+import {ChatBox} from '../components';
+import {sendMessage} from '../services/sendMessage';
+import {toast, ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import TimePassedModal from "../components/TimePassedModal";
 
 const ChatPage = () => {
     const location = useLocation();
@@ -20,6 +20,10 @@ const ChatPage = () => {
     });
     const [isActualMeeting, setIsActualMeeting] = useState(false);
     const [claudeResponse, setClaudeResponse] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [backgroundChanged, setBackgroundChanged] = useState(false);
+    const [stageToComplete, setStageToComplete] = useState(null);
+
 
     useEffect(() => {
         console.log('ChatPage loaded with state:', location.state);
@@ -31,6 +35,78 @@ const ChatPage = () => {
             updateStages(claudeResponse);
         }
     }, [claudeResponse]);
+    useEffect(() => {
+        if (stageToComplete !== null) {
+            const timer = setTimeout(() => {
+                handleModalDisplay(stageToComplete);
+            }, 5000);  // 5초 후에 모달 표시
+
+            return () => clearTimeout(timer);
+        }
+    }, [stageToComplete]);
+
+    const handleModalDisplay = (stage) => {
+        let modalMessage;
+
+        switch(stage) {
+            case 1:
+                modalMessage = "약속 날짜까지 시간이 흘렀습니다...";
+                break;
+            case 2:
+                modalMessage = "대화를 마무리하고 있습니다...";
+                break;
+            case 3:
+                modalMessage = "소개팅이 끝나고 있습니다...";
+                break;
+            default:
+                return;
+        }
+
+        setIsModalOpen(true);
+
+        const timer = setTimeout(() => {
+            setIsModalOpen(false);
+            if (stage === 1) setIsActualMeeting(true);
+
+            setTimeout(() => {
+                setBackgroundChanged(true);
+            }, 500);
+        }, 3000);
+
+        return () => clearTimeout(timer);
+    };
+
+    const updateStages = (claudeResponse) => {
+        setStages(prevStages => {
+            const newStages = {
+                stage1Complete: claudeResponse.stage1Complete,
+                stage2Complete: claudeResponse.stage2Complete,
+                stage3Complete: claudeResponse.stage3Complete
+            };
+
+            if (newStages.stage1Complete && !prevStages.stage1Complete) {
+                toast.success("미션 완료: 성공적으로 약속을 잡았습니다!", {
+                    position: "top-center",
+                    autoClose: 5000,
+                });
+                setStageToComplete(1);
+            } else if (newStages.stage2Complete && !prevStages.stage2Complete) {
+                toast.success("미션 완료: 실제 만남에서 대화를 나눴습니다!", {
+                    position: "top-center",
+                    autoClose: 5000,
+                });
+                setStageToComplete(2);
+            } else if (newStages.stage3Complete && !prevStages.stage3Complete) {
+                toast.success("미션 완료: 만남 후 애프터 여부를 결정했습니다!", {
+                    position: "top-center",
+                    autoClose: 5000,
+                });
+                setStageToComplete(3);
+            }
+
+            return newStages;
+        });
+    };
 
     const sendInitialMessage = async () => {
         const initialContext = {
@@ -75,82 +151,71 @@ const ChatPage = () => {
 
             const response = await sendMessage(content, mbti);
 
-            if (response.claudeResponse && response.claudeResponse.text) {
-                const responseMessage = {
-                    content: {
-                        text: response.claudeResponse.text,
-                        feel: response.claudeResponse.feel,
-                        score: response.claudeResponse.score,
-                        evaluation: response.claudeResponse.evaluation
-                    },
-                    isSent: false,
-                    avatar: image,
-                };
-                setMessages(prevMessages => [...prevMessages, responseMessage]);
-                setClaudeResponse(response.claudeResponse);
+            if (response.claudeResponse && response.claudeResponse.messages) {
+                const totalMessages = response.claudeResponse.messages.length;
+
+                for (let index = 0; index < totalMessages; index++) {
+                    const message = response.claudeResponse.messages[index];
+                    const isLastMessage = index === totalMessages - 1;
+
+                    await new Promise(resolve => setTimeout(resolve, 2000)); // 각 메시지마다 0.5초의 간격
+
+                    const responseMessage = {
+                        content: {
+                            text: message,
+                            feel: isLastMessage ? response.claudeResponse.feel : null,
+                            score: isLastMessage ? response.claudeResponse.score : null,
+                            evaluation: isLastMessage ? response.claudeResponse.evaluation : null
+                        },
+                        isSent: false,
+                        avatar: image,
+                        isLastInGroup: isLastMessage
+                    };
+
+                    setMessages(prevMessages => [...prevMessages, responseMessage]);
+
+                    if (isLastMessage) {
+                        setClaudeResponse(response.claudeResponse);
+                    }
+                }
             }
         } catch (error) {
             console.error('Error sending message:', error);
         }
     };
 
-    const updateStages = (claudeResponse) => {
-        setStages(prevStages => {
-            const newStages = {
-                stage1Complete: claudeResponse.stage1Complete,
-                stage2Complete: claudeResponse.stage2Complete,
-                stage3Complete: claudeResponse.stage3Complete
-            };
-
-            if (newStages.stage1Complete && !prevStages.stage1Complete) {
-                toast.success("스테이지 1 완료: 첫 인사와 약속 잡기!");
-            }
-            if (newStages.stage2Complete && !prevStages.stage2Complete) {
-                toast.success("스테이지 2 완료: 실제 만남에서의 대화!");
-                setIsActualMeeting(true);
-            }
-            if (newStages.stage3Complete && !prevStages.stage3Complete) {
-                toast.success("스테이지 3 완료: 만남 후 애프터 여부 결정!");
-            }
-
-            return newStages;
-        });
-    };
-
     return (
-        <main className={styles.mainContainer}>
+        <main className={`${styles.mainContainer} ${backgroundChanged ? styles.backgroundChanged : ''}`}>
             <div className={styles.contentWrapper}>
-                {stages.stage1Complete && (
-                    <div className={styles.stageBanner}>
-                        스테이지 1 완료: 첫 인사와 약속 잡기
-                    </div>
-                )}
-                {stages.stage2Complete && (
-                    <div className={styles.stageBanner}>
-                        스테이지 2 완료: 실제 만남에서의 대화
-                    </div>
-                )}
-                {stages.stage3Complete && (
-                    <div className={styles.stageBanner}>
-                        스테이지 3 완료: 만남 후 애프터 여부 결정
-                    </div>
-                )}
-                {isActualMeeting && (
-                    <div className={styles.actualMeetingBanner}>
-                        실제 만남 진행 중
-                    </div>
-                )}
                 <ChatBox
                     image={image}
                     name={name}
-                    profileDetails={{ image, name, type, age, height, job, hobbies, tags, description }}
+                    profileDetails={{image, name, type, age, height, job, hobbies, tags, description}}
                     messages={messages}
                     onSendMessage={handleSendMessage}
+                    stages={stages}
+                    isActualMeeting={isActualMeeting}
                 />
             </div>
-            <ToastContainer position="top-right" autoClose={3000} />
+            <TimePassedModal
+                isOpen={isModalOpen}
+                message={stageToComplete === 1 ? "약속 날짜까지 시간이 흐르고.." :
+                    stageToComplete === 2 ? "대화를 마무리하고 있습니다..." :
+                        "소개팅이 끝나고 있습니다..."}
+            />
+            <ToastContainer
+                position="top-center"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
         </main>
     );
 };
 
-export { ChatPage };
+export {ChatPage};

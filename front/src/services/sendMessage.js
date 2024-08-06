@@ -24,7 +24,17 @@ const sendMessage = async (message, mbti, context) => {
             }
         );
         console.log(response.data);
-        return response.data;
+
+        // Claude의 응답을 \n을 기준으로 여러 개의 메시지로 나누기
+        const splitMessages = response.data.claudeResponse.text.split('\n').filter(msg => msg.trim() !== '');
+
+        return {
+            ...response.data,
+            claudeResponse: {
+                ...response.data.claudeResponse,
+                messages: splitMessages
+            }
+        };
     } catch (error) {
         console.error('Error sending message:', error);
         throw error;
