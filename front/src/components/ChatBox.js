@@ -14,7 +14,7 @@ const ChatBox = ({
                      messages,
                      onSendMessage,
                      stages,
-                     isActualMeeting
+                     isActualMeeting,
                  }) => {
     const [showProfileModal, setShowProfileModal] = useState(false);
     const [inputMessage, setInputMessage] = useState('');
