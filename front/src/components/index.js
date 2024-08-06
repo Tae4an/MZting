@@ -10,6 +10,7 @@ import { LoadingSpinner } from "./LoadingSpinner";
 import { CommentModal } from "./CommentModal";
 import { TypingIndicator } from "./TypingIndicator";
 import { RecommendModal } from "./RecommendModal";
+import { PreviousChatsModal } from "./PreviousChatsModal";
 
 
 export {
@@ -25,5 +26,6 @@ export {
     SignupForm,
     CommentModal,
     TypingIndicator,
-    RecommendModal
+    RecommendModal,
+    PreviousChatsModal
 }
