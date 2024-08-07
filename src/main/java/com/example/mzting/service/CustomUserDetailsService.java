@@ -23,12 +23,10 @@ public class CustomUserDetailsService extends DefaultOAuth2UserService implement
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
-        if (user == null) {
-            throw new UsernameNotFoundException("User not found with username: " + username);
-        }
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), new ArrayList<>());
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
+        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), new ArrayList<>());
     }
 
     @Override
@@ -37,14 +35,13 @@ public class CustomUserDetailsService extends DefaultOAuth2UserService implement
 
         String provider = userRequest.getClientRegistration().getRegistrationId();
         String providerId = oAuth2User.getAttribute("sub");
-        String username = provider + "_" + providerId;
         String email = oAuth2User.getAttribute("email");
 
-        User user = userRepository.findByUsername(username);
+        User user = userRepository.findByEmail(email).orElse(null);
 
         if (user == null) {
             user = new User();
-            user.setUsername(username);
+            user.setUsername(email); // Here email is used as username
             user.setEmail(email);
             user.setProvider(provider);
             user.setProviderId(providerId);

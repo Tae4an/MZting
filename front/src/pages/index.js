@@ -4,6 +4,7 @@ import { MainPage } from "./MainPage";
 import { ChatPage } from "./ChatPage"
 import { ResultPage } from "./ResultPage";
 import { SignupPage } from "./SignupPage"
+import { CompleteProfile } from "./CompleteProfile"
 
 export {
     LoginPage,
@@ -11,5 +12,6 @@ export {
     MainPage,
     ChatPage,
     ResultPage,
-    SignupPage
+    SignupPage,
+    CompleteProfile
 }

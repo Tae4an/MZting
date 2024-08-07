@@ -36,10 +36,8 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
-        // JWT 토큰 생성
         String token = jwtTokenProvider.generateToken(authentication);
 
-        // 로그인된 계정의 이메일 주소를 콘솔에 출력 및 DB에 사용자 저장
         if (authentication.getPrincipal() instanceof DefaultOAuth2User) {
             DefaultOAuth2User oAuth2User = (DefaultOAuth2User) authentication.getPrincipal();
             Map<String, Object> attributes = oAuth2User.getAttributes();
@@ -69,19 +67,31 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
                 userRepository.save(user);
             }
 
+            User user = optionalUser.orElseGet(() -> userRepository.findByEmail(email).orElseThrow());
+            if (user.getAge() != null && user.getGender() != null && user.getMbti() != null) {
+                setDefaultTargetUrl("http://localhost:3000/main");
+            } else {
+                setDefaultTargetUrl("http://localhost:3000/complete-profile?token=" + token);
+            }
+
         } else {
             String email = authentication.getName();
             System.out.println("Logged in with local account: " + email);
+
+            Optional<User> optionalUser = userRepository.findByEmail(email);
+            if (optionalUser.isPresent()) {
+                User user = optionalUser.get();
+                if (user.getAge() != null && user.getGender() != null && user.getMbti() != null) {
+                    setDefaultTargetUrl("http://localhost:3000/main");
+                } else {
+                    setDefaultTargetUrl("http://localhost:3000/complete-profile?token=" + token);
+                }
+            } else {
+                setDefaultTargetUrl("http://localhost:3000/complete-profile?token=" + token);
+            }
         }
 
-        // 토큰을 응답 헤더에 추가
         response.addHeader("Authorization", "Bearer " + token);
-
-        // 토큰을 응답 본문에 추가
-        response.getWriter().write("JWT Token: " + token);
-
-        // 로그인 성공 후 리다이렉트할 URL 설정
-        setDefaultTargetUrl("/qqqaaa");
         super.onAuthenticationSuccess(request, response, authentication);
     }
 

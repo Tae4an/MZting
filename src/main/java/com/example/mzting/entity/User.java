@@ -45,6 +45,15 @@ public class User {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    @Column(nullable = true)
+    private Integer age;
+
+    @Column(nullable = true)
+    private String gender;
+
+    @Column(nullable = true)
+    private String mbti;
+
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();
@@ -55,5 +64,4 @@ public class User {
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
     }
-
 }
