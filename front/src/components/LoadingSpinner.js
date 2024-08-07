@@ -1,14 +1,12 @@
 import React from 'react';
-import '../styles/LoadingSpinner.module.css';
+import spinner from '../assets/LoadingSpinner.gif'; // GIF 파일 경로에 맞게 수정
 
 const LoadingSpinner = () => {
     return (
-        <div className="spinner-container">
-            <div className="spinner"></div>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+            <img src={spinner} alt="Loading..." />
         </div>
     );
 };
 
-export {
-    LoadingSpinner
-};
+export { LoadingSpinner };

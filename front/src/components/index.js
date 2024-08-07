@@ -1,7 +1,5 @@
 import { LoginForm } from "./LoginForm";
-import { AdColumn } from "./AdColumn";
-import { HistoryCard } from "./HistoryCard";
-import { HistoryList } from "./HistoryList";
+import { AdColumnLeft, AdColumnRight } from "./AdColumn";
 import { Layout } from "./Layout";
 import { ProfileCard } from "./ProfileCard";
 import { ChatBox } from "./ChatBox";
@@ -10,12 +8,15 @@ import { ImageModal } from "./ImageModal";
 import { SignupForm } from './SignupForm'
 import { LoadingSpinner } from "./LoadingSpinner";
 import { CommentModal } from "./CommentModal";
+import { TypingIndicator } from "./TypingIndicator";
+import { RecommendModal } from "./RecommendModal";
+import { PreviousChatsModal } from "./PreviousChatsModal";
+
 
 export {
     LoginForm,
-    AdColumn,
-    HistoryCard,
-    HistoryList,
+    AdColumnLeft,
+    AdColumnRight,
     Layout,
     ProfileCard,
     ChatBox,
@@ -23,5 +24,8 @@ export {
     LoadingSpinner,
     ImageModal,
     SignupForm,
-    CommentModal
+    CommentModal,
+    TypingIndicator,
+    RecommendModal,
+    PreviousChatsModal
 }

@@ -2,22 +2,39 @@ import axios from "axios";
 
 const API_URL = 'http://localhost:8080';
 
-const sendMessage = async (message,mbti) => {
-    console.log("Send Message :"+message+"MBTI:"+mbti)
+const getToken = () => {
+    return localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
+};
+
+const sendMessage = async (message, mbti, context) => {
+    console.log("Send Message :" + message + "MBTI:" + mbti + "context :" + context)
     try {
+        const token = getToken();
         const response = await axios.post(`${API_URL}/api/ask-claude`,
             {
                 "message": message,
-                "mbti" : mbti
+                "mbti": mbti,
+                "context": context
             },
             {
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                 }
             }
         );
         console.log(response.data);
-        return response.data; // 이미 JSON 객체이므로 파싱할 필요 없음
+
+        // Claude의 응답을 \n을 기준으로 여러 개의 메시지로 나누기
+        const splitMessages = response.data.claudeResponse.text.split('\n').filter(msg => msg.trim() !== '');
+
+        return {
+            ...response.data,
+            claudeResponse: {
+                ...response.data.claudeResponse,
+                messages: splitMessages
+            }
+        };
     } catch (error) {
         console.error('Error sending message:', error);
         throw error;
@@ -26,10 +43,12 @@ const sendMessage = async (message,mbti) => {
 
 const sendGetRequest = async (data, endpoint) => {
     try {
+        const token = getToken();
         const response = await axios.get(endpoint, {
             params: data,
-            headers : {
-                "Accept": "application/json"
+            headers: {
+                "Accept": "application/json",
+                'Authorization': `Bearer ${token}`
             }
         })
         console.log(response.data);
@@ -42,9 +61,11 @@ const sendGetRequest = async (data, endpoint) => {
 
 const sendPostRequest = async (data, endpoint) => {
     try {
+        const token = getToken();
         const response = await axios.post(endpoint, data, {
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                'Authorization': `Bearer ${token}`
             }
         });
         console.log(response.data);
@@ -54,7 +75,6 @@ const sendPostRequest = async (data, endpoint) => {
         throw error;
     }
 };
-
 
 export {
     sendMessage,

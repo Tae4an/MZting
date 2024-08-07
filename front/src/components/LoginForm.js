@@ -5,6 +5,7 @@ import styles from '../styles/LoginPage.module.css';
 import kakaoIcon from '../assets/icons/kakao.png';
 import naverIcon from '../assets/icons/naver.png';
 import googleIcon from '../assets/icons/google.png';
+import {sendPostRequest} from "../services";
 
 const LoginForm = () => {
     const [username, setUsername] = useState('');
@@ -15,11 +16,14 @@ const LoginForm = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const response = await axios.post('/api/auth/login', {
-                username,
-                password
-            });
-            alert(response.data);
+            const response = await sendPostRequest({
+                username : username,
+                password : password
+            }, '/api/auth/login')
+            console.log(response)
+            alert("로그인 성공");
+            sessionStorage.setItem('authToken', response.token);
+
             navigate('/main');
         } catch (error) {
             if (error.response) {

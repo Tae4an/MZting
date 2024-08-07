@@ -42,7 +42,7 @@ const SignupForm = () => {
     return (
         <div className={styles.signupFormContainer}>
             <form className={styles.signupForm} onSubmit={handleSubmit}>
-                <h1 className={styles.title}>mzting</h1>
+                <h1 className={styles.signupTitle}>mzting</h1>
                 {error && <p className={styles.error}>{error}</p>}
                 <div className={styles.inputGroup}>
                     <label htmlFor="userId">ID</label>
@@ -104,7 +104,7 @@ const SignupForm = () => {
                         required
                     />
                 </div>
-                <button type="submit" className={styles.button}>Sign Up</button>
+                <button type="submit" className={styles.signupButton}>Sign Up</button>
             </form>
         </div>
     );

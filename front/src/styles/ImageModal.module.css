@@ -1,24 +1,26 @@
+/* src/styles/ImageModal.module.css */
 .modalOverlay {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.5); /* 배경 투명도 조절 */
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 1000;
+    z-index: 1001;
 }
 
 .modalContent {
-    background: #423F54;
+    background: #ffffff; /* 배경 색상을 밝게 변경 */
     padding: 20px;
     border-radius: 15px;
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
 }
 
 .closeButton {
@@ -28,7 +30,7 @@
     background: none;
     border: none;
     font-size: 1.5rem;
-    color: white;
+    color: #ff6b6b; /* 버튼 색상 밝게 변경 */
     cursor: pointer;
 }
 
@@ -36,4 +38,5 @@
     max-width: 90vw;
     max-height: 90vh;
     border-radius: 10px;
+    object-fit: contain; /* 이미지 비율을 유지하며 컨테이너에 맞춤 */
 }

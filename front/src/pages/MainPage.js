@@ -1,10 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from '../styles/MainPage.module.css';
-import { ProfileCard, ProfileDetailModal } from "../components";
+import { ProfileCard, ProfileDetailModal, LoadingSpinner, RecommendModal } from "../components";
 import { sendGetRequest } from "../services/sendMessage";
-
-import { LoadingSpinner } from "../components";
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 // 이미지 동적 import 함수
 function importAll(r) {
@@ -39,10 +38,11 @@ const images = importAll(require.context('../assets/Images', false, /\.(png|jpe?
 const MainPage = () => {
     const [scrollPosition, setScrollPosition] = useState(0);
     const [showModal, setShowModal] = useState(false);
+    const [showRecommendModal, setShowRecommendModal] = useState(false);
     const [selectedProfile, setSelectedProfile] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [profileData, setProfileData] = useState([]);
-    const mainContentRef = useRef(null); // 가운데 영역을 참조하기 위한 ref
+    const mainContentRef = useRef(null);
     const navigate = useNavigate();
 
     const handleScroll = () => {
@@ -63,12 +63,9 @@ const MainPage = () => {
         window.addEventListener('scroll', handleScroll);
         window.addEventListener('resize', handleScroll);
 
-        const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-
         const extractProfile = async () => {
             try {
                 const data = await sendGetRequest({}, "/api/profiles");
-                console.log(data);
                 const transformedData = transformProfileData(data);
                 transformedData.push({ id: 17, image: images['imageR.jpg'], name: "???", type: "#????", tags: "#모든 것이 랜덤입니다!", age: "???", height: "???", job: "???", hobbies: "???", description: "선택 장애가 온 당신! 모든 것을 랜덤에 맡겨보는 건 어떨까요?" })
                 setProfileData(transformedData);
@@ -98,27 +95,46 @@ const MainPage = () => {
         navigate('/chat', { state: selectedProfile });
     };
 
+    const handleHistoryClick = () => {
+        navigate('/history');
+    };
+
+    const handleSettingsClick = () => {
+        navigate('/settings');
+    };
+
+    const handleRecommendClick = () => {
+        setShowRecommendModal(true);
+    };
+
     return (
         <div ref={mainContentRef} className={styles.mainContent}>
             <header className={styles.header}>
                 <div className={styles.mainTitleContainer}>
                     <h1 className={styles.mainTitle}>mzting</h1>
                     <div className={styles.iconContainer}>
-                        <div className={styles.icon} />
-                        <div className={styles.icon} />
+                        <button className={styles.iconButton} onClick={handleHistoryClick}>
+                            <i className="bi bi-chat-dots-fill"></i>
+                        </button>
+                        <button className={styles.iconButton} onClick={handleSettingsClick}>
+                            <i className="bi bi-gear-fill"></i>
+                        </button>
                     </div>
                 </div>
                 <div className={styles.subTitleContainer}>
-                    <h2 className={styles.subtitle}>추천</h2>
-                    <div className={styles.icon} />
+                    <button className={styles.subtitleButton} onClick={handleRecommendClick}>추천</button>
                 </div>
             </header>
             <hr className={styles.divider} />
-            {!isLoading && (<div className={styles.profileGrid}>
-                {profileData.map((profile) => (
-                    <ProfileCard key={profile.id} {...profile} onClick={() => handleProfileClick(profile)} />
-                ))}
-            </div>)}
+            {isLoading ? (
+                <LoadingSpinner />
+            ) : (
+                <div className={styles.profileGrid}>
+                    {profileData.map((profile) => (
+                        <ProfileCard key={profile.id} {...profile} onClick={() => handleProfileClick(profile)} />
+                    ))}
+                </div>
+            )}
             {showModal && (
                 <ProfileDetailModal
                     show={showModal}
@@ -128,6 +144,10 @@ const MainPage = () => {
                     showChatButton={true}
                 />
             )}
+            <RecommendModal
+                show={showRecommendModal}
+                onClose={() => setShowRecommendModal(false)}
+            />
             <div
                 className={styles.scrollIndicator}
                 style={{
@@ -142,7 +162,7 @@ const MainPage = () => {
 const transformProfileData = (data) => {
     return data.map((profile, index) => ({
         id: profile.profileId,
-        image: images[profile.characterImage] || images[`image${index + 1}.jpg`], // 기본 이미지 처리
+        image: images[profile.characterImage] || images[`image${index + 1}.jpg`],
         name: profile.name,
         type: `#${profile.mbti}`,
         tags: profile.characterKeywords.map(keyword => keyword.keyword.keyword).join(' '),
