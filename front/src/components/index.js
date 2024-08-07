@@ -11,6 +11,9 @@ import { CommentModal } from "./CommentModal";
 import { TypingIndicator } from "./TypingIndicator";
 import { RecommendModal } from "./RecommendModal";
 import { PreviousChatsModal } from "./PreviousChatsModal";
+import { TimePassedModal } from "./TimePassedModal";
+import { SituationBanner } from "./SituationBanner";
+import { FeedbackBanner } from "./FeedbackBanner";
 
 
 export {
@@ -27,5 +30,8 @@ export {
     CommentModal,
     TypingIndicator,
     RecommendModal,
-    PreviousChatsModal
+    PreviousChatsModal,
+    TimePassedModal,
+    SituationBanner,
+    FeedbackBanner
 }

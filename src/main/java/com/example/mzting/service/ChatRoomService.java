@@ -1,5 +1,6 @@
 package com.example.mzting.service;
 
+import com.example.mzting.dto.ChatRoomEntryResponseDTO;
 import com.example.mzting.dto.ChatRoomRequest;
 import com.example.mzting.dto.ChatRoomWithHistoryDTO;
 import com.example.mzting.entity.Chat;
@@ -9,6 +10,7 @@ import com.example.mzting.repository.ChatRepository;
 import com.example.mzting.repository.ChatRoomRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -56,15 +58,27 @@ public class ChatRoomService {
     /**
      * 채팅방 ID로 채팅방과 그 히스토리를 조회하는 메서드
      *
-     * @param id 채팅방 ID
+     * @param chatRoomId 채팅방 ID
      * @return 채팅방과 히스토리를 포함한 ChatRoomWithHistoryDTO 객체
      * @throws ResourceNotFoundException 채팅방을 찾을 수 없는 경우 예외 발생
      */
-    public ChatRoomWithHistoryDTO getChatRoomWithHistory(Long id) {
-        ChatRoom chatRoom = chatRoomRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("ChatRoom not found with id: " + id));
-        List<Chat> chatHistory = chatRepository.findByChatRoomIdOrderBySendAtAsc(id);
+    public ChatRoomWithHistoryDTO getChatRoomWithHistory(Long chatRoomId) {
+        ChatRoom chatRoom = chatRoomRepository.findById(chatRoomId)
+                .orElseThrow(() -> new ResourceNotFoundException("ChatRoom not found with id: " + chatRoomId));
+        List<Chat> chatHistory = chatRepository.findByChatRoomIdOrderBySendAtAsc(chatRoomId);
         return new ChatRoomWithHistoryDTO(chatRoom, chatHistory);
+    }
+
+    public List<ChatRoomEntryResponseDTO> getChatRoomEntries(Long chatRoomId) {
+        List<Chat> chatHistory = chatRepository.findByChatRoomIdOrderBySendAtAsc(chatRoomId);
+        List<ChatRoomEntryResponseDTO> chatRoomEntryResponseDTOS = new ArrayList<>();
+        for (Chat chat : chatHistory) {
+            String role = (chat.getIsBot()) ? "bot" : "user";
+            String content = chat.getContent();
+            new ChatRoomEntryResponseDTO(role, content);
+        }
+
+        return chatRoomEntryResponseDTOS;
     }
 
     /**

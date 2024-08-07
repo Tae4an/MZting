@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * 댓글 생성 및 조회와 관련된 API 엔드포인트를 정의
  */
 @RestController
-@RequestMapping("/api/posts/{profileId}/comments")
+@RequestMapping("/api/comments")
 public class CommentController {
 
     // 로거 객체
@@ -44,7 +44,7 @@ public class CommentController {
      * @param PostPostsCommentRequest 댓글 생성 요청 객체
      * @return 댓글 생성 결과를 포함한 ResponseEntity 객체
      */
-    @PostMapping
+    @PostMapping("/{profileId}/create")
     public ResponseEntity<CommentDTO.PostPostsCommentsResponse> createComment(
             @PathVariable Long profileId,
             @RequestBody CommentDTO.PostPostsCommentsRequest PostPostsCommentRequest, HttpServletRequest request) {
@@ -79,13 +79,39 @@ public class CommentController {
      * @param size 페이지 크기 (기본값: 20)
      * @return 댓글 목록을 포함한 ResponseEntity 객체
      */
-    @GetMapping
+    @GetMapping("/{profileId}/list")
     public ResponseEntity<CommentDTO.GetPostsCommentsResponse> getCommentsByProfileId(
             @PathVariable Long profileId,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "20") int size) {
-
+            @RequestParam(defaultValue = "20") int size,
+            @RequestParam(defaultValue = "All") String filter)
+    {
+        System.out.println("요청 들어옴");
         CommentDTO.GetPostsCommentsResponse response = commentService.getCommentInfoByProfileId(profileId, PageRequest.of(page, size));
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/{commentId}/like")
+    public int likeComment(
+            @PathVariable Long commentId,
+            @RequestBody Boolean isFirst,
+            HttpServletRequest request) {
+        if(isFirst) {
+            return commentService.increaseLikeCountByCommentId(commentId);
+        } else {
+            return commentService.decreaseLikeCountByCommentId(commentId);
+        }
+    }
+
+    @PostMapping("/{commentId}/dislike")
+    public int dislikeComment(
+            @PathVariable Long commentId,
+            @RequestBody Boolean isFirst,
+            HttpServletRequest request) {
+        if(isFirst) {
+            return commentService.increaseDisLikeCountByCommentId(commentId);
+        } else {
+            return commentService.decreaseDisLikeCountByCommentId(commentId);
+        }
     }
 }
