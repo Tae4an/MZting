@@ -11,6 +11,8 @@ const SignupForm = () => {
     const [nickname, setNickname] = useState('');
     const [email, setEmail] = useState('');
     const [mbti, setMbti] = useState('');
+    const [gender, setGender] = useState('');
+    const [age, setAge] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
@@ -29,6 +31,8 @@ const SignupForm = () => {
                 nickname,
                 email,
                 mbti,
+                gender,
+                age,
             });
             alert('Registration successful');
             navigate('/');
@@ -106,6 +110,29 @@ const SignupForm = () => {
                         required
                     />
                 </div>
+                <div className={styles.selectGender}>
+                    <label htmlFor="userGender">Gender</label>
+                    <select
+                        id="userGender"
+                        value={gender}
+                        onChange={(e) => setGender(e.target.value)}
+                        required
+                    >
+                        <option value="" disabled>Gender Selection</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                </div>
+                <div className={styles.inputGroup}>
+                    <label htmlFor="userAge">Age</label>
+                    <input
+                        type="number"
+                        id="userAge"
+                        value={age}
+                        onChange={(e) => setAge(e.target.value)}
+                        required
+                    />
+                </div>
                 <div className={styles.selectMBTI}>
                     <label htmlFor="userMbti">MBTI</label>
                     <select
@@ -139,4 +166,4 @@ const SignupForm = () => {
     );
 };
 
-export { SignupForm };
+export {SignupForm};
