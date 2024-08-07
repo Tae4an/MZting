@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { ProfileDetailModal, TypingIndicator, FeedbackBanner, SituationBanner } from '../components';
 import styles from '../styles/ChatBox.module.css';
 
-
 const ChatBox = ({
                      image,
                      name,
@@ -19,9 +18,6 @@ const ChatBox = ({
     const [isTyping, setIsTyping] = useState(true);  // 초기값을 true로 설정
     const navigate = useNavigate();
     const messagesEndRef = useRef(null);
-    const [prevScore, setPrevScore] = useState(0);
-
-
 
     const handleBackClick = () => {
         navigate(-1);
@@ -66,7 +62,6 @@ const ChatBox = ({
         }
     };
 
-
     useEffect(() => {
         if (messages.length > 0) {
             const lastMessage = messages[messages.length - 1];
@@ -93,23 +88,27 @@ const ChatBox = ({
             </header>
             <SituationBanner stages={stages} isActualMeeting={isActualMeeting}/>
             <div className={styles.messageContainer}>
-                {messages.map((message, index) => (
-                    <React.Fragment key={index}>
-                        <ChatBubble
-                            content={typeof message.content === 'string' ? message.content : message.content.text}
-                            isSent={message.isSent}
-                            avatar={message.isSent ? null : image}
-                        />
-                        {!message.isSent && message.isLastInGroup && message.content.feel && (
-                            <FeedbackBanner
-                                feel={message.content.feel}
-                                score={message.content.score}
-                                evaluation={message.content.evaluation}
-                                prevScore={index > 0 ? (messages[index - 1].content.score || 0) : 0}
+                {messages.map((message, index) => {
+                    const showAvatar = !message.isSent && (index === 0 || messages[index - 1].isSent);
+                    return (
+                        <React.Fragment key={index}>
+                            <ChatBubble
+                                content={typeof message.content === 'string' ? message.content : message.content.text}
+                                isSent={message.isSent}
+                                avatar={image}
+                                showAvatar={showAvatar}
                             />
-                        )}
-                    </React.Fragment>
-                ))}
+                            {!message.isSent && message.isLastInGroup && message.content.feel && (
+                                <FeedbackBanner
+                                    feel={message.content.feel}
+                                    score={message.content.score}
+                                    evaluation={message.content.evaluation}
+                                    prevScore={index > 0 ? (messages[index - 1].content.score || 0) : 0}
+                                />
+                            )}
+                        </React.Fragment>
+                    );
+                })}
                 {isTyping && (
                     <div className={styles.messageWrapper} style={{justifyContent: 'flex-start'}}>
                         <img src={image} alt="Avatar" className={styles.messageAvatar}/>
@@ -143,9 +142,9 @@ const ChatBox = ({
     );
 };
 
-const ChatBubble = ({content, isSent, avatar}) => (
+const ChatBubble = ({content, isSent, avatar, showAvatar}) => (
     <div className={`${styles.messageWrapper} ${isSent ? styles.sentMessage : styles.receivedMessage}`}>
-        {!isSent && <img src={avatar} alt="Avatar" className={styles.messageAvatar}/>}
+        {!isSent && showAvatar && <img src={avatar} alt="Avatar" className={styles.messageAvatar}/>}
         <div className={styles.messageBubble}>
             <div className={styles.messageText}>
                 {typeof content === 'string' ? content : (content.text || '')}
@@ -168,4 +167,4 @@ ChatBox.propTypes = {
     isActualMeeting: PropTypes.bool.isRequired
 };
 
-export {ChatBox};
+export { ChatBox };
