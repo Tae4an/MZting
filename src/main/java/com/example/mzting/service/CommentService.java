@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -112,20 +113,34 @@ public class CommentService {
     private CommentDTO.CommentInfo convertToCommentInfo(Comment comment) {
         String username = userRepository.findUsernameById(comment.getUserId());
         return new CommentDTO.CommentInfo(
+                comment.getCommentId(),
+                username,
                 comment.getContent(),
+                comment.getProfileId(),
                 comment.getIsLike(),
                 comment.getCwTime(),
-                username
+                comment.getLikeCount(),
+                comment.getDislikeCount()
         );
     }
 
     @Transactional
-    public int plusLikeCountByCommentId(Long commentId) {
+    public int increaseLikeCountByCommentId(Long commentId) {
         return commentRepository.incrementLikeCount(commentId);
     }
 
     @Transactional
-    public int plusDisLikeCountByCommentId(Long commentId) {
+    public int decreaseLikeCountByCommentId(Long commentId) {
+        return commentRepository.decrementLikeCount(commentId);
+    }
+
+    @Transactional
+    public int increaseDisLikeCountByCommentId(Long commentId) {
         return commentRepository.incrementDisLikeCount(commentId);
+    }
+
+    @Transactional
+    public int decreaseDisLikeCountByCommentId(Long commentId) {
+        return commentRepository.decrementDisLikeCount(commentId);
     }
 }

@@ -22,7 +22,7 @@ public class Comment {
     // 댓글 ID (기본 키)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long commentId;
+    private Long commentId; // 이거 id로 바꿔야 댐
 
     // 사용자 ID
     @Column(nullable = false)

@@ -212,3 +212,9 @@
 .disliked {
     color: #f44336; /* 싫어요 색상 밝게 변경 */
 }
+
+.commentTime {
+    font-size: 0.8em;
+    color: #666;
+    margin-left: 10px;
+}

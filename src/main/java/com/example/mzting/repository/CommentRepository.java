@@ -16,6 +16,14 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
     int incrementLikeCount(@Param("commentId") Long commentId);
 
     @Modifying
+    @Query("UPDATE Comment c SET c.likeCount = c.likeCount - 1 WHERE c.commentId = :commentId")
+    int decrementLikeCount(@Param("commentId") Long commentId);
+
+    @Modifying
     @Query("UPDATE Comment c SET c.dislikeCount = c.dislikeCount + 1 WHERE c.commentId = :commentId")
     int incrementDisLikeCount(@Param("commentId") Long commentId);
+
+    @Modifying
+    @Query("UPDATE Comment c SET c.dislikeCount = c.dislikeCount - 1 WHERE c.commentId = :commentId")
+    int decrementDisLikeCount(@Param("commentId") Long commentId);
 }

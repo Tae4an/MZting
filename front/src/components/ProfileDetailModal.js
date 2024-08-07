@@ -111,7 +111,7 @@ const ProfileDetailModal = ({ show, onClose, profile, onClick, showChatButton, l
                 <CommentModal
                     show={showCommentModal}
                     onClose={handleCommentModalClose}
-                    mbti={profile.type}
+                    propsData={{profileId : profile.id, type : profile.type}}
                 />
             )}
             {showChatsModal && (
@@ -152,4 +152,6 @@ ProfileDetailModal.defaultProps = {
     loadChatRoomData: null
 };
 
-export { ProfileDetailModal };
+export {
+    ProfileDetailModal
+};
