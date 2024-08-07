@@ -5,7 +5,7 @@ import styles from '../styles/LoginPage.module.css';
 import kakaoIcon from '../assets/icons/kakao.png';
 import naverIcon from '../assets/icons/naver.png';
 import googleIcon from '../assets/icons/google.png';
-import {sendPostRequest} from "../services";
+import { sendPostRequest } from "../services";
 
 const LoginForm = () => {
     const [username, setUsername] = useState('');
@@ -79,7 +79,6 @@ const LoginForm = () => {
                 </div>
                 <button type="submit" className={styles.button}>Login</button>
                 <button type="button" className={styles.button} onClick={handleSignUpClick}>Sign Up</button>
-                <br/>
                 <div className={styles.socialLoginContainer}>
                     <button type="button" className={styles.iconButton} onClick={handleGoogleLogin}>
                         <img src={googleIcon} alt="Google" className={styles.iconImage} />
