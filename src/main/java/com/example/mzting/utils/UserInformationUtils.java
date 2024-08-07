@@ -19,7 +19,7 @@ public class UserInformationUtils {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.isAuthenticated()) {
             String username = authentication.getName();
-            Long uid = userRepository.findIdByUsername(username);
+            Long uid = userRepository.findIdByEmail(username);
             return new UserInformationDTO(uid, username);
         } else {
             throw new UnauthorizedException("User is not authenticated");
