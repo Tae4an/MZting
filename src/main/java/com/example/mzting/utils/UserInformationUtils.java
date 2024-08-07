@@ -22,7 +22,7 @@ public class UserInformationUtils {
             Long uid = userRepository.findIdByEmail(username);
             return new UserInformationDTO(uid, username);
         } else {
-            throw new UnauthorizedException("User is not authenticated");
+            throw new UnauthorizedException("User is not authenticated2");
         }
     }
 
