@@ -8,7 +8,7 @@ function App() {
         <Router>
             <Layout>
                 <Routes>
-                    <Route path="/" element={<LoginPage />} />
+                    <Route path="/login" element={<LoginPage />} />
                     <Route path="/main" element={<MainPage />} />
                     <Route path="/result" element={<ResultPage />} />
                     <Route path="/chat" element={<ChatPage />} />

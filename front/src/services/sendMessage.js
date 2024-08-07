@@ -6,6 +6,10 @@ const getToken = () => {
     return localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
 };
 
+const deleteToken = () => {
+    sessionStorage.removeItem('authToken');
+};
+
 const sendMessage = async (message, mbti, context) => {
     console.log("Send Message :" + message + "MBTI:" + mbti + "context :" + context)
     try {
@@ -80,5 +84,6 @@ export {
     sendMessage,
     sendGetRequest,
     sendPostRequest,
-    getToken
+    getToken,
+    deleteToken
 }
