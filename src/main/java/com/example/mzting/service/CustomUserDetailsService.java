@@ -42,12 +42,10 @@ public class CustomUserDetailsService extends DefaultOAuth2UserService implement
      * @throws UsernameNotFoundException 사용자 이름을 찾을 수 없는 경우 예외 발생
      */
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
-        if (user == null) {
-            throw new UsernameNotFoundException("User not found with username: " + username);
-        }
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), new ArrayList<>());
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
+        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), new ArrayList<>());
     }
 
     /**
@@ -63,14 +61,13 @@ public class CustomUserDetailsService extends DefaultOAuth2UserService implement
 
         String provider = userRequest.getClientRegistration().getRegistrationId();
         String providerId = oAuth2User.getAttribute("sub");
-        String username = provider + "_" + providerId;
         String email = oAuth2User.getAttribute("email");
 
-        User user = userRepository.findByUsername(username);
+        User user = userRepository.findByEmail(email).orElse(null);
 
         if (user == null) {
             user = new User();
-            user.setUsername(username);
+            user.setUsername(email); // Here email is used as username
             user.setEmail(email);
             user.setEmailVerified(true); // OAuth2로 로그인한 사용자는 이메일이 이미 확인되었다고 가정
             user = userRepository.save(user);

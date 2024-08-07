@@ -17,33 +17,21 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-/**
- * 사용자 인증 및 관리와 관련된 요청을 처리하는 컨트롤러 클래스
- * 사용자 등록, 로그인, 현재 사용자 조회와 관련된 API 엔드포인트를 정의
- */
+import java.net.URI;
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/api/auth")
 public class UserController {
-
-    // 사용자 서비스
     @Autowired
     private UserService userService;
 
-    // 인증 관리자
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    // JWT 토큰 제공자
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
 
-    /**
-     * 사용자 등록 엔드포인트
-     * 주어진 사용자 정보를 바탕으로 새로운 사용자를 등록
-     *
-     * @param user 사용자 정보 객체
-     * @return 등록된 사용자 정보 또는 오류 메시지를 포함한 ResponseEntity 객체
-     */
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody User user) {
         if (userService.findByUsername(user.getUsername()) != null) {
@@ -53,13 +41,6 @@ public class UserController {
         return ResponseEntity.ok(registeredUser);
     }
 
-    /**
-     * 사용자 로그인 엔드포인트
-     * 주어진 로그인 요청 정보를 바탕으로 사용자를 인증하고 JWT 토큰을 반환
-     *
-     * @param loginRequest 로그인 요청 정보 객체
-     * @return JWT 토큰 또는 오류 메시지를 포함한 ResponseEntity 객체
-     */
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest) {
         try {
@@ -79,11 +60,6 @@ public class UserController {
         }
     }
 
-    /**
-     * 현재 인증된 사용자 정보를 조회하는 엔드포인트
-     *
-     * @return 현재 사용자 이름 또는 인증되지 않은 상태에 대한 메시지를 포함한 ResponseEntity 객체
-     */
     @GetMapping("/current")
     public ResponseEntity<?> getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -100,11 +76,57 @@ public class UserController {
             return ResponseEntity.ok(principal.toString());
         }
     }
+
+    @PostMapping("/complete-profile")
+    public ResponseEntity<?> completeProfile(@RequestBody UserProfileUpdateRequest profileUpdateRequest) {
+        // 보안 컨텍스트에서 현재 인증 객체를 가져옴
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        // 디버깅 로그 추가
+        System.out.println("Received profile update request: " + profileUpdateRequest);
+
+        // 사용자가 인증되었는지 확인
+        if (authentication == null || !authentication.isAuthenticated() || authentication.getPrincipal().equals("anonymousUser")) {
+            // 인증되지 않은 경우 401 Unauthorized 응답 반환
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User is not authenticated");
+        }
+
+        // 인증된 사용자의 이메일을 가져옴
+        String email = authentication.getName();
+
+        // 디버깅 로그 추가
+        System.out.println("Authenticated user's email: " + email);
+
+        // 이메일로 사용자를 찾음
+        Optional<User> optionalUser = userService.findByEmail(email);
+        if (optionalUser.isPresent()) {
+            // 사용자가 존재하는 경우
+            User user = optionalUser.get();
+
+            // 디버깅 로그 추가
+            System.out.println("Found user: " + user);
+
+            // 사용자 프로필 정보가 이미 입력된 경우 메인 페이지로 리디렉션
+            if (user.getAge() != null && user.getGender() != null && user.getMbti() != null) {
+                return ResponseEntity.status(HttpStatus.FOUND).location(URI.create("/main")).build();
+            }
+
+            // 사용자 프로필 업데이트
+            user.setAge(profileUpdateRequest.getAge());
+            user.setGender(profileUpdateRequest.getGender());
+            user.setMbti(profileUpdateRequest.getMbti());
+            // 변경된 사용자 정보 저장
+            userService.save(user);
+            // 성공적으로 업데이트되었음을 알리는 응답 반환
+            return ResponseEntity.ok("Profile updated successfully.");
+        } else {
+            // 사용자를 찾을 수 없는 경우 400 Bad Request 응답 반환
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User not found.");
+        }
+    }
+
 }
 
-/**
- * 인증 응답을 담는 DTO 클래스
- */
 @Getter
 @Setter
 @AllArgsConstructor
@@ -112,12 +134,17 @@ class AuthResponse {
     private String token;
 }
 
-/**
- * 로그인 요청 정보를 담는 DTO 클래스
- */
 @Getter
 @Setter
 class LoginRequest {
     private String username;
     private String password;
+}
+
+@Getter
+@Setter
+class UserProfileUpdateRequest {
+    private Integer age;
+    private String gender;
+    private String mbti;
 }

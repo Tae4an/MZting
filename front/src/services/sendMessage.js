@@ -79,5 +79,6 @@ const sendPostRequest = async (data, endpoint) => {
 export {
     sendMessage,
     sendGetRequest,
-    sendPostRequest
+    sendPostRequest,
+    getToken
 }
