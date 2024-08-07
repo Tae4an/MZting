@@ -1,9 +1,10 @@
 import './App.css';
 import { Layout } from "./components";
 import { ChatPage, ResultPage, MainPage, HistoryPage, LoginPage, SignupPage, SettingsPage, CompleteProfile } from "./pages";
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 
 function App() {
+
     return (
         <Router>
             <Layout>
@@ -16,6 +17,7 @@ function App() {
                     <Route path="/signup" element={<SignupPage />} />
                     <Route path="/complete-profile" element={<CompleteProfile />} />
                     <Route path="/settings" element={<SettingsPage />} />
+                    <Route path="*" element={<Navigate to="/login" replace />} />
                 </Routes>
             </Layout>
         </Router>

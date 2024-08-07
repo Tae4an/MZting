@@ -86,17 +86,16 @@ public class CommentController {
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "All") String filter)
     {
-        System.out.println("요청 들어옴");
-        CommentDTO.GetPostsCommentsResponse response = commentService.getCommentInfoByProfileId(profileId, PageRequest.of(page, size));
+        CommentDTO.GetPostsCommentsResponse response = commentService.getCommentInfoByProfileId(profileId, filter, PageRequest.of(page, size));
         return ResponseEntity.ok(response);
     }
 
     @PostMapping("/{commentId}/like")
     public int likeComment(
             @PathVariable Long commentId,
-            @RequestBody Boolean isFirst,
+            @RequestBody CommentDTO.CommentLikeIncDecRequest commentLikeIncDecRequest,
             HttpServletRequest request) {
-        if(isFirst) {
+        if(commentLikeIncDecRequest.getIsFirst()) {
             return commentService.increaseLikeCountByCommentId(commentId);
         } else {
             return commentService.decreaseLikeCountByCommentId(commentId);
@@ -106,9 +105,9 @@ public class CommentController {
     @PostMapping("/{commentId}/dislike")
     public int dislikeComment(
             @PathVariable Long commentId,
-            @RequestBody Boolean isFirst,
+            @RequestBody CommentDTO.CommentLikeIncDecRequest commentLikeIncDecRequest,
             HttpServletRequest request) {
-        if(isFirst) {
+        if(commentLikeIncDecRequest.getIsFirst()) {
             return commentService.increaseDisLikeCountByCommentId(commentId);
         } else {
             return commentService.decreaseDisLikeCountByCommentId(commentId);
