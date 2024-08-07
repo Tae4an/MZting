@@ -53,7 +53,7 @@ const RecommendModal = ({ show, onClose }) => {
             console.error("Error in handleChoiceComplete:", error);
         } finally {
             setIsLoading(false);
-        }
+    }
     };
 
     const handleMyMBTI = async () => {
@@ -113,8 +113,15 @@ const RecommendModal = ({ show, onClose }) => {
         setSelectedProfile(null);
     };
 
-    const handleChatClick = (profile) => {
-        navigate('/chat', { state: profile });
+    const handleChatClick = async (profile) => {
+        const chatRoomId = await sendGetRequest({}, `/api/chatroom/create/${profile.id}`);
+        navigate('/chat', {
+            state: {
+                selectedProfile: profile,
+                chatRoomId,
+                isFirst: true
+            }
+        });
     };
 
     if (!show) return null;

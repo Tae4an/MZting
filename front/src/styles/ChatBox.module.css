@@ -29,6 +29,10 @@
     background-color: #ffffff;
     border-bottom: 1px solid #d4d7f6;
     color: #333333;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: #fff;
 }
 
 .backButton {
@@ -67,10 +71,12 @@
 .messageContainer {
     flex-grow: 1;
     overflow-y: auto;
+    padding: 0 10px;
 }
 
 .messageWrapper {
     display: flex;
+    align-items: center; /* Center items vertically */
     margin-bottom: 10px;
 }
 
@@ -86,7 +92,7 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    margin-right: 15px;
+    margin-right: 10px; /* Reduced margin */
     object-fit: cover;
 }
 
@@ -117,7 +123,7 @@
     display: flex;
     padding: 10px;
     border-top: 1px solid #d4d7f6;
-    width: 100%; /* 또는 원하는 최대 너비, 예: max-width: 800px; */
+    width: 100%;
 }
 
 .inputAreaWrapper {
@@ -126,7 +132,7 @@
     left: 0;
     right: 0;
     display: flex;
-    justify-content: center; /* 가로 중앙 정렬 */
+    justify-content: center;
     background-color: #ffffff;
     z-index: 1000;
 }
@@ -162,8 +168,8 @@
     .inputContainer, .inputArea {
         flex-direction: column;
         gap: 5px;
-        left: 0; /* 모바일에서 중앙 정렬 */
-        width: 100%; /* 모바일에서 전체 너비 차지 */
+        left: 0;
+        width: 100%;
     }
 
     .input {
@@ -196,21 +202,14 @@
         margin-left: 0;
     }
 }
-.chatHeader {
-    /* 기존 스타일 */
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    background-color: #fff;
-}
 
-/* SituationBanner를 위한 새로운 스타일 */
 .situationBanner {
     position: sticky;
-    top: 60px; /* chatHeader의 높이에 따라 조정 */
+    top: 60px;
     z-index: 9;
     background-color: #fff;
 }
+
 .timePassedMessageContainer {
     display: flex;
     flex-direction: column;

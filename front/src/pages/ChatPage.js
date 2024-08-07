@@ -9,8 +9,25 @@ import { TimePassedModal } from "../components/TimePassedModal";
 
 const ChatPage = () => {
     const location = useLocation();
-    const { selectedProfile : { image, name, type, age, height, job, hobbies, tags, description }, chatRoomId, isFirst } = location.state || {};
-    const mbti = type.replace('#', '');
+    const state = location.state || {};
+
+    const selectedProfile = state.selectedProfile || state;
+    const {
+        image,
+        name,
+        type,
+        age,
+        height,
+        job,
+        hobbies,
+        tags,
+        description
+    } = selectedProfile;
+
+    const chatRoomId = state.chatRoomId;
+    const isFirst = state.isFirst || false;
+
+    const mbti = type ? type.replace('#', '') : '';
 
     const [messages, setMessages] = useState([]);
     const [stages, setStages] = useState({
