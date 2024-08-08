@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from '../styles/SettingsPage.module.css';
+import { deleteToken } from "../services";
 
 const SettingsPage = () => {
     const navigate = useNavigate();
@@ -8,9 +9,9 @@ const SettingsPage = () => {
     const [scrollPosition, setScrollPosition] = useState(0);
 
     const handleLogout = () => {
-        // 로그아웃 로직을 추가할 곳
+        deleteToken()
         alert('로그아웃 되었습니다.');
-        navigate('/');
+        navigate('/login');
     };
 
     const handleScroll = () => {

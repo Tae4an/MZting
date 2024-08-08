@@ -11,6 +11,14 @@ import org.springframework.data.repository.query.Param;
 public interface CommentRepository extends JpaRepository<Comment, Long> {
     Page<Comment> findByProfileId(Long profileId, Pageable pageable);
 
+    @Query("SELECT c FROM Comment c " +
+            "WHERE c.profileId = :profileId AND c.isLike = :isLike")
+    Page<Comment> findLikedOrDislikedCommentsByProfileId(
+            @Param("profileId") Long profileId,
+            @Param("isLike") Boolean isLike,
+            Pageable pageable
+    );
+
     @Modifying
     @Query("UPDATE Comment c SET c.likeCount = c.likeCount + 1 WHERE c.commentId = :commentId")
     int incrementLikeCount(@Param("commentId") Long commentId);

@@ -35,7 +35,7 @@ const SignupForm = () => {
                 age,
             });
             alert('Registration successful');
-            navigate('/');
+            navigate('/login');
         } catch (error) {
             if (error.response) {
                 setError(error.response.data);

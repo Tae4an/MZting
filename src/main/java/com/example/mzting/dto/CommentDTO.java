@@ -104,4 +104,12 @@ public class CommentDTO {
         private long totalElements;
         private int size;
     }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class CommentLikeIncDecRequest {
+        private Boolean isFirst;
+    }
 }
