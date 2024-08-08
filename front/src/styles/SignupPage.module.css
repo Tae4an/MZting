@@ -2,9 +2,9 @@
     width: 100%;
     max-width: 500px;
     padding: 20px;
-    background-color: #ffffff; /* 배경 색상을 밝게 변경 */
+    background-color: #ffffff;
     border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .container {
@@ -12,7 +12,7 @@
     justify-content: center;
     align-items: stretch;
     height: 100vh;
-    background-color: #f0f0f5; /* 배경 색상을 밝게 변경 */
+    background-color: #f0f0f5;
 }
 
 .adColumn {
@@ -20,7 +20,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #ff6b6b; /* 배경 색상을 밝게 변경 */
+    background-color: #ff6b6b;
 }
 
 .adContent {
@@ -33,7 +33,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #ffffff; /* 배경 색상을 밝게 변경 */
+    background-color: #ffffff;
     padding: 0 20px;
 }
 
@@ -46,7 +46,7 @@
 }
 
 .signupTitle {
-    color: #ff6b6b; /* 강조 색상으로 변경 */
+    color: #ff6b6b;
     font-size: 3rem;
     margin-bottom: 2rem;
     font-style: italic;
@@ -63,7 +63,7 @@
 
 .inputGroup label {
     width: 100%;
-    color: #333333; /* 텍스트 색상을 어둡게 변경 */
+    color: #333333;
     margin-bottom: 0.5rem;
     font-size: 1.2rem;
 }
@@ -71,14 +71,14 @@
 .inputGroup input {
     width: 100%;
     padding: 0.8rem;
-    background-color: #ffffff; /* 배경 색상을 밝게 변경 */
-    border: 1px solid #d4d7f6; /* 테두리 추가 */
+    background-color: #ffffff;
+    border: 1px solid #d4d7f6;
     border-radius: 5px;
-    color: #333333; /* 텍스트 색상을 어둡게 변경 */
+    color: #333333;
     font-size: 1rem;
 }
 
-.selectGender {
+.selectGender, .selectAge, .selectMBTI {
     width: 100%;
     margin-bottom: 1.5rem;
     display: flex;
@@ -87,106 +87,61 @@
     position: relative;
 }
 
-.selectGender label {
+.selectGender label, .selectAge label, .selectMBTI label {
     width: 100%;
-    color: #333333; /* 텍스트 색상을 어둡게 변경 */
+    color: #333333;
     margin-bottom: 0.5rem;
     font-size: 1.2rem;
 }
 
-.selectGender select {
+.selectGender select, .selectAge select, .selectMBTI select {
     width: 100%;
     padding: 0.8rem;
-    background-color: #ffffff; /* 배경 색상을 밝게 변경 */
-    border: 1px solid #d4d7f6; /* 테두리 추가 */
+    background-color: #ffffff;
+    border: 1px solid #d4d7f6;
     border-radius: 5px;
-    color: #333333; /* 텍스트 색상을 어둡게 변경 */
-    font-size: 1rem;
-    appearance: none; /* 기본 드롭다운 화살표 제거 */
-    transition: border-color 0.3s, box-shadow 0.3s; /* 부드러운 전환 효과 추가 */
-}
-
-.selectGender::after {
-    content: '\25BC'; /* 아래쪽 화살표 추가 */
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    pointer-events: none;
     color: #333333;
-    transition: color 0.3s; /* 부드러운 전환 효과 추가 */
+    font-size: 1rem;
+    appearance: none;
+    -webkit-appearance: none; /* 사파리 브라우저 용 */
+    -moz-appearance: none; /* 파이어폭스 브라우저 용 */
+    transition: border-color 0.3s, box-shadow 0.3s;
+    background-image: url("data:image/svg+xml;utf8,<svg fill='%23333' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px 16px;
 }
 
-.selectGender select:focus {
+.selectGender select:focus, .selectAge select:focus, .selectMBTI select:focus {
     border-color: #ff6b6b;
     box-shadow: 0 0 5px rgba(255, 107, 107, 0.5);
+    outline: none;
 }
 
-
-.selectMBTI {
-    width: 100%;
-    margin-bottom: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-}
-
-.selectMBTI label {
-    width: 100%;
-    color: #333333; /* 텍스트 색상을 어둡게 변경 */
-    margin-bottom: 0.5rem;
-    font-size: 1.2rem;
-}
-
-.selectMBTI select {
-    width: 100%;
-    padding: 0.8rem;
-    background-color: #ffffff; /* 배경 색상을 밝게 변경 */
-    border: 1px solid #d4d7f6; /* 테두리 추가 */
-    border-radius: 5px;
-    color: #333333; /* 텍스트 색상을 어둡게 변경 */
-    font-size: 1rem;
-    appearance: none; /* 기본 드롭다운 화살표 제거 */
-    transition: border-color 0.3s, box-shadow 0.3s; /* 부드러운 전환 효과 추가 */
-}
-
-.selectMBTI::after {
-    content: '\25BC'; /* 아래쪽 화살표 추가 */
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    pointer-events: none;
-    color: #333333;
-    transition: color 0.3s; /* 부드러운 전환 효과 추가 */
-}
-
-.selectMBTI select:focus {
+.selectGender select:hover, .selectAge select:hover, .selectMBTI select:hover {
     border-color: #ff6b6b;
-    box-shadow: 0 0 5px rgba(255, 107, 107, 0.5);
 }
 
 .signupButton {
     width: 100%;
     padding: 0.8rem;
     margin-top: 1rem;
-    background-color: #ff6b6b; /* 버튼 배경 색상 밝게 변경 */
+    background-color: #ff6b6b;
     border: none;
     border-radius: 25px;
     cursor: pointer;
     font-size: 1rem;
-    color: #ffffff; /* 텍스트 색상을 밝게 변경 */
-    transition: background 0.3s, transform 0.3s; /* 부드러운 전환 효과 추가 */
+    color: #ffffff;
+    transition: background 0.3s, transform 0.3s;
 }
 
 .signupButton:hover {
-    background-color: #e45b5b; /* 호버 시 색상 변경 */
-    transform: scale(1.05); /* 약간 확대 효과 추가 */
+    background-color: #e45b5b;
+    transform: scale(1.05);
 }
 
 .error {
-    color: #ff6b6b; /* 에러 텍스트 색상을 강조 */
+    color: #ff6b6b;
     font-size: 1rem;
     margin-bottom: 1rem;
     text-align: center;
