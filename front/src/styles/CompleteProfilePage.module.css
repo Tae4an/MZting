@@ -36,7 +36,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    position: relative;
 }
 
 .inputGroup label {
@@ -46,7 +45,33 @@
     font-size: 1.2rem;
 }
 
-.inputGroup select {
+.inputGroup input {
+    width: 100%;
+    padding: 0.8rem;
+    background-color: #ffffff;
+    border: 1px solid #d4d7f6;
+    border-radius: 5px;
+    color: #333333;
+    font-size: 1rem;
+}
+
+.selectGender, .selectAge, .selectMBTI {
+    width: 100%;
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.selectGender label, .selectAge label, .selectMBTI label {
+    width: 100%;
+    color: #333333;
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+}
+
+.selectGender select, .selectAge select, .selectMBTI select {
     width: 100%;
     padding: 0.8rem;
     background-color: #ffffff;
@@ -64,13 +89,13 @@
     background-size: 16px 16px;
 }
 
-.inputGroup select:focus {
+.selectGender select:focus, .selectAge select:focus, .selectMBTI select:focus {
     border-color: #ff6b6b;
     box-shadow: 0 0 5px rgba(255, 107, 107, 0.5);
     outline: none;
 }
 
-.inputGroup select:hover {
+.selectGender select:hover, .selectAge select:hover, .selectMBTI select:hover {
     border-color: #ff6b6b;
 }
 
