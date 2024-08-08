@@ -1,0 +1,107 @@
+.completeProfileContainer {
+    width: 100%;
+    max-width: 500px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f5;
+}
+
+.completeProfileForm {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.completeProfileTitle {
+    color: #ff6b6b;
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    font-style: italic;
+    font-weight: bold;
+}
+
+.inputGroup {
+    width: 100%;
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.inputGroup label {
+    width: 100%;
+    color: #333333;
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+}
+
+.inputGroup select {
+    width: 100%;
+    padding: 0.8rem;
+    background-color: #ffffff;
+    border: 1px solid #d4d7f6;
+    border-radius: 5px;
+    color: #333333;
+    font-size: 1rem;
+    appearance: none;
+    -webkit-appearance: none; /* 사파리 브라우저 용 */
+    -moz-appearance: none; /* 파이어폭스 브라우저 용 */
+    transition: border-color 0.3s, box-shadow 0.3s;
+    background-image: url("data:image/svg+xml;utf8,<svg fill='%23333' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px 16px;
+}
+
+.inputGroup select:focus {
+    border-color: #ff6b6b;
+    box-shadow: 0 0 5px rgba(255, 107, 107, 0.5);
+    outline: none;
+}
+
+.inputGroup select:hover {
+    border-color: #ff6b6b;
+}
+
+.completeProfileButton {
+    width: 100%;
+    padding: 0.8rem;
+    margin-top: 1rem;
+    background-color: #ff6b6b;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1rem;
+    color: #ffffff;
+    transition: background 0.3s, transform 0.3s;
+}
+
+.completeProfileButton:hover {
+    background-color: #e45b5b;
+    transform: scale(1.05);
+}
+
+.error {
+    color: #ff6b6b;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .completeProfileContainer {
+        width: 90%;
+        max-width: none;
+    }
+}
