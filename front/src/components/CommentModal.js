@@ -7,12 +7,16 @@ import { sendPostRequest, sendGetRequest } from "../services";
 const CommentModal = ({ show, onClose, propsData }) => {
     const [comment, setComment] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const [rating, setRating] = useState(null);
+    const [isLike, setIsLike] = useState(null);
     const [comments, setComments] = useState([]);
     const [userReactions, setUserReactions] = useState({});
+    const [likeViewState, setLikeViewState] = useState(false);
+    const [disLikeViewState, setDisLikeViewState] = useState(false);
+    const [totalLikeCount, setTotalLikeCount] = useState(0);
+    const [totalDislikeCount, setTotalDislikeCount] = useState(0);
 
     useEffect(() => {
-        if (show) {
+        if(show && !likeViewState && !disLikeViewState) {
             const filter = "All"
             const page = 0
             const size = 20
@@ -24,10 +28,24 @@ const CommentModal = ({ show, onClose, propsData }) => {
             console.log(propsData)
             fetchComments(requestData);
         }
-    }, [show]);
+        if(!show) {
+            const resetState = () => {
+                setComment('');
+                setIsLoading(false);
+                setIsLike(null);
+                setComments([]);
+                setUserReactions({});
+                setLikeViewState(false);
+                setDisLikeViewState(false);
+                setTotalLikeCount(0);
+                setTotalDislikeCount(0);
+            };
+            resetState()
+        }
+    }, [show, likeViewState, disLikeViewState])
 
     const fetchComments = async (requestData) => {
-        const response = await sendGetRequest({}, `/api/comments/${propsData.profileId}/list`);
+        const response = await sendGetRequest(requestData, `/api/comments/${propsData.profileId}/list`);
         setComments(response.commentInfos);
         // Initialize user reactions
         const initialReactions = {};
@@ -39,13 +57,18 @@ const CommentModal = ({ show, onClose, propsData }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (comment.trim() && rating !== null) {
+        if (comment.trim() && isLike !== null) {
             await handleRequestComment();
         }
     };
 
     const handleLike = async () => {
-        setIsLoading(true)
+        if(likeViewState) {
+            setLikeViewState(false)
+            return
+        }
+        setLikeViewState(true)
+        setDisLikeViewState(false)
         const filter = "Like"
         const page = 0
         const size = 20
@@ -54,14 +77,16 @@ const CommentModal = ({ show, onClose, propsData }) => {
             size : size,
             filter : filter
         }
-        console.log(requestData)
-        const response = await sendGetRequest(requestData, `/api/comments/${propsData.profileId}/list`); // 좋아요 / 싫어요 필터 적용 요청
-        setComments(response.commentInfos);
-        setIsLoading(false)
+        await fetchComments(requestData);
     };
 
     const handleDislike = async () => {
-        setIsLoading(true)
+        if(disLikeViewState) {
+            setDisLikeViewState(false)
+            return
+        }
+        setDisLikeViewState(true)
+        setLikeViewState(false)
         const filter = "Dislike"
         const page = 0
         const size = 20
@@ -70,23 +95,27 @@ const CommentModal = ({ show, onClose, propsData }) => {
             size : size,
             filter : filter
         }
-        console.log(requestData)
-        const response = await sendGetRequest(requestData, `/api/comments/${propsData.profileId}/list`); // 좋아요 / 싫어요 필터 적용 요청
-        setComments(response.commentInfos);
-        setIsLoading(false)
+        await fetchComments(requestData);
     };
 
     const handleRequestComment = async () => {
         const commentData = {
-            userId: 2, // 실제 사용자 ID로 변경 필요
             content: comment,
-            isLike: rating,
+            isLike: isLike,
         };
         try {
             await sendPostRequest(commentData, `/api/comments/${propsData.profileId}/create`);
-            await fetchComments(); // 댓글 목록 새로고침
+            const filter = "All"
+            const page = 0
+            const size = 20
+            const requestData = {
+                page : page,
+                size : size,
+                filter : filter
+            }
+            await fetchComments(requestData); // 댓글 목록 새로고침
             setComment('');
-            setRating(null);
+            setIsLike(null);
         } catch (e) {
             alert('댓글 저장 실패');
         }
@@ -94,10 +123,14 @@ const CommentModal = ({ show, onClose, propsData }) => {
 
     const toggleLike = async (id) => {
         try {
-            await sendPostRequest({}, `/api/comments/${id}/like`);
+            const requestData = {
+                isFirst : !userReactions[id]?.liked
+            };
+            console.log(requestData)
+            await sendPostRequest(requestData, `/api/comments/${id}/like`);
             setUserReactions(prev => ({
                 ...prev,
-                [id]: { liked: !prev[id].liked, disliked: false }
+                [id]: { liked: !prev[id].liked, disliked: prev[id].disliked }
             }));
             setComments(prev =>
                 prev.map(comment =>
@@ -116,10 +149,13 @@ const CommentModal = ({ show, onClose, propsData }) => {
 
     const toggleDislike = async (id) => {
         try {
-            await sendPostRequest({}, `/api/comments/${id}/dislike`);
+            const requestData = {
+                isFirst : !userReactions[id]?.disliked
+            }
+            await sendPostRequest(requestData, `/api/comments/${id}/dislike`);
             setUserReactions(prev => ({
                 ...prev,
-                [id]: { liked: false, disliked: !prev[id].disliked }
+                [id]: { liked: prev[id].liked, disliked: !prev[id].disliked }
             }));
             setComments(prev =>
                 prev.map(comment =>
@@ -157,12 +193,26 @@ const CommentModal = ({ show, onClose, propsData }) => {
                     <h2 className={styles.modalTitle}>{propsData.type}에 대한 댓글 및 후기</h2>
                     <form onSubmit={handleSubmit} className={styles.modalForm}>
                         <div className={styles.textareaAndButtons}>
-                        <textarea
-                            value={comment}
-                            onChange={(e) => setComment(e.target.value)}
-                            placeholder="댓글을 입력하세요"
-                            className={styles.modalTextarea}
-                        />
+                            <button
+                                type="button"
+                                onClick={() => { if(isLike) { setIsLike(null) } else { setIsLike(true)}}}
+                                className={`${styles.ratingButton} ${isLike === true ? styles.ratinglike : ''}`}
+                            >
+                                <i className="bi bi-hand-thumbs-up" style={{color: "black"}}></i>
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => {if(!isLike) { setIsLike(null) } else { setIsLike(false)}}}
+                                className={`${styles.ratingButton} ${isLike === false ? styles.ratingdislike : ''}`}
+                            >
+                                <i className="bi bi-hand-thumbs-down" style={{color: "black"}}></i>
+                            </button>
+                            <textarea
+                                value={comment}
+                                onChange={(e) => setComment(e.target.value)}
+                                placeholder="댓글을 입력하세요"
+                                className={styles.modalTextarea}
+                            />
                             <button type="submit" className={styles.submitButton}>
                                 제출
                             </button>
@@ -170,24 +220,26 @@ const CommentModal = ({ show, onClose, propsData }) => {
                         <div className={styles.modalRating}>
                             <button
                                 type="button"
-                                onClick={() => handleLike}
-                                className={`${styles.ratingButton} ${rating === true ? styles.ratinglike : ''}`}
+                                onClick={handleLike}
+                                className={`${styles.ratingButton} ${likeViewState === true ? styles.ratinglike : ''}`}
                             >
-                                <i className="bi bi-hand-thumbs-up" style={{ color: "black" }}></i>
+                                <i className="bi bi-hand-thumbs-up" style={{color: "black"}}></i>
+                                <span style={{color: "black"}}>{totalLikeCount}</span>
                             </button>
                             <button
                                 type="button"
-                                onClick={() => handleDislike}
-                                className={`${styles.ratingButton} ${rating === false ? styles.ratingdislike : ''}`}
+                                onClick={handleDislike}
+                                className={`${styles.ratingButton} ${disLikeViewState === true ? styles.ratingdislike : ''}`}
                             >
-                                <i className="bi bi-hand-thumbs-down" style={{ color: "black" }}></i>
+                                <i className="bi bi-hand-thumbs-down" style={{color: "black"}}></i>
+                                <span style={{color: "black"}}>{totalDislikeCount}</span>
                             </button>
                         </div>
                     </form>
                     <div className={styles.commentsSection}>
                         <h3 className={styles.commentsTitle}>해당 프로필에 대한 댓글</h3>
                         <div className={styles.commentsContainer}>
-                            {comments.map(({ id, username, content, isLike, likeCount, dislikeCount, cwTime }) => (
+                            {comments.map(({id, username, content, isLike, likeCount, dislikeCount, cwTime}) => (
                                 <div key={id} className={styles.comment}>
                                     <p><strong>{username}</strong> <span
                                         className={styles.commentTime}>{formatDate(cwTime)}</span></p>

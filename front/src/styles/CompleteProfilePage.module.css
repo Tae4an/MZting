@@ -1,4 +1,4 @@
-.signupPage {
+.completeProfileContainer {
     width: 100%;
     max-width: 500px;
     padding: 20px;
@@ -10,42 +10,19 @@
 .container {
     display: flex;
     justify-content: center;
-    align-items: stretch;
+    align-items: center;
     height: 100vh;
     background-color: #f0f0f5;
 }
 
-.adColumn {
-    flex: 0 0 15%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #ff6b6b;
-}
-
-.adContent {
-    color: white;
-    font-size: 24px;
-}
-
-.signupFormContainer {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #ffffff;
-    padding: 0 20px;
-}
-
-.signupForm {
+.completeProfileForm {
     width: 100%;
-    max-width: 500px;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.signupTitle {
+.completeProfileTitle {
     color: #ff6b6b;
     font-size: 3rem;
     margin-bottom: 2rem;
@@ -59,6 +36,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
 }
 
 .inputGroup label {
@@ -68,33 +46,7 @@
     font-size: 1.2rem;
 }
 
-.inputGroup input {
-    width: 100%;
-    padding: 0.8rem;
-    background-color: #ffffff;
-    border: 1px solid #d4d7f6;
-    border-radius: 5px;
-    color: #333333;
-    font-size: 1rem;
-}
-
-.selectGender, .selectAge, .selectMBTI {
-    width: 100%;
-    margin-bottom: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-}
-
-.selectGender label, .selectAge label, .selectMBTI label {
-    width: 100%;
-    color: #333333;
-    margin-bottom: 0.5rem;
-    font-size: 1.2rem;
-}
-
-.selectGender select, .selectAge select, .selectMBTI select {
+.inputGroup select {
     width: 100%;
     padding: 0.8rem;
     background-color: #ffffff;
@@ -112,17 +64,17 @@
     background-size: 16px 16px;
 }
 
-.selectGender select:focus, .selectAge select:focus, .selectMBTI select:focus {
+.inputGroup select:focus {
     border-color: #ff6b6b;
     box-shadow: 0 0 5px rgba(255, 107, 107, 0.5);
     outline: none;
 }
 
-.selectGender select:hover, .selectAge select:hover, .selectMBTI select:hover {
+.inputGroup select:hover {
     border-color: #ff6b6b;
 }
 
-.signupButton {
+.completeProfileButton {
     width: 100%;
     padding: 0.8rem;
     margin-top: 1rem;
@@ -135,7 +87,7 @@
     transition: background 0.3s, transform 0.3s;
 }
 
-.signupButton:hover {
+.completeProfileButton:hover {
     background-color: #e45b5b;
     transform: scale(1.05);
 }
@@ -148,16 +100,8 @@
 }
 
 @media (max-width: 768px) {
-    .container {
-        flex-direction: column;
-    }
-
-    .adColumn {
-        height: 20vh;
-        flex: 0 0 auto;
-    }
-
-    .signupFormContainer {
-        flex: 1;
+    .completeProfileContainer {
+        width: 90%;
+        max-width: none;
     }
 }
