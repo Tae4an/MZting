@@ -10,6 +10,7 @@ const SignupForm = () => {
     const [name, setName] = useState('');
     const [nickname, setNickname] = useState('');
     const [email, setEmail] = useState('');
+    const [mbti, setMbti] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
@@ -26,7 +27,8 @@ const SignupForm = () => {
                 password,
                 name,
                 nickname,
-                email
+                email,
+                mbti,
             });
             alert('Registration successful');
             navigate('/');
@@ -103,6 +105,33 @@ const SignupForm = () => {
                         onChange={(e) => setEmail(e.target.value)}
                         required
                     />
+                </div>
+                <div className={styles.selectMBTI}>
+                    <label htmlFor="userMbti">MBTI</label>
+                    <select
+                        id="userMbti"
+                        value={mbti}
+                        onChange={(e) => setMbti(e.target.value)}
+                        required
+                    >
+                        <option value="" disabled>MBTI 선택</option>
+                        <option value="INTJ">INTJ</option>
+                        <option value="INTP">INTP</option>
+                        <option value="ENTJ">ENTJ</option>
+                        <option value="ENTP">ENTP</option>
+                        <option value="INFJ">INFJ</option>
+                        <option value="INFP">INFP</option>
+                        <option value="ENFJ">ENFJ</option>
+                        <option value="ENFP">ENFP</option>
+                        <option value="ISTJ">ISTJ</option>
+                        <option value="ISFJ">ISFJ</option>
+                        <option value="ESTJ">ESTJ</option>
+                        <option value="ESFJ">ESFJ</option>
+                        <option value="ISTP">ISTP</option>
+                        <option value="ISFP">ISFP</option>
+                        <option value="ESTP">ESTP</option>
+                        <option value="ESFP">ESFP</option>
+                    </select>
                 </div>
                 <button type="submit" className={styles.signupButton}>Sign Up</button>
             </form>

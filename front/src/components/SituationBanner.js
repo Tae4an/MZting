@@ -29,4 +29,4 @@ SituationBanner.propTypes = {
     isActualMeeting: PropTypes.bool.isRequired,
 };
 
-export default SituationBanner;
+export { SituationBanner };

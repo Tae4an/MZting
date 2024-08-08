@@ -18,4 +18,4 @@ const TimePassedModal = ({ isOpen, message }) => {
     );
 };
 
-export default TimePassedModal;
+export { TimePassedModal };

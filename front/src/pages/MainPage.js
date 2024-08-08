@@ -85,14 +85,33 @@ const MainPage = () => {
         };
     }, []);
 
+    const loadChatRoomData = async (profileId) => {
+        try {
+            const chatRoomData = await sendGetRequest({}, `/api/chatroom/list/${profileId}`);
+            console.log(chatRoomData);
+            return chatRoomData;
+        } catch (error) {
+            console.error("채팅방 데이터를 불러오는 데 실패했습니다.", error);
+            return [];
+        }
+    };
+
     const handleProfileClick = (profile) => {
         setSelectedProfile(profile);
         setShowModal(true);
     };
 
-    const handleStartChat = () => {
-        setShowModal(false);
-        navigate('/chat', { state: selectedProfile });
+    const handleStartChat = async () => {
+        const chatRoomId = await sendGetRequest({}, `/api/chatroom/create/${selectedProfile.id}`);
+        const isFirst = true;
+        console.log(chatRoomId);
+        navigate('/chat', {
+            state: {
+                selectedProfile,
+                chatRoomId,
+                isFirst
+            }
+        });
     };
 
     const handleHistoryClick = () => {
@@ -142,6 +161,7 @@ const MainPage = () => {
                     profile={selectedProfile}
                     onClick={handleStartChat}
                     showChatButton={true}
+                    loadChatRoomData={loadChatRoomData}
                 />
             )}
             <RecommendModal

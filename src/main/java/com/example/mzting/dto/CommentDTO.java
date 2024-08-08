@@ -69,10 +69,14 @@ public class CommentDTO {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class CommentInfo {
+        private Long id;
+        private String username;
         private String content;
+        private Long profileId;
         private Boolean isLike;
         private LocalDateTime cwTime;
-        private String username;
+        private Long likeCount;
+        private Long dislikeCount;
     }
 
     /**

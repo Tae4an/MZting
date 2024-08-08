@@ -19,4 +19,4 @@ const FeedbackBanner = ({ feel, score, evaluation, prevScore }) => {
     );
 };
 
-export default FeedbackBanner;
+export { FeedbackBanner };
