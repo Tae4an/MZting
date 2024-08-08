@@ -34,7 +34,8 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody User user) {
-        if (userService.findByUsername(user.getUsername()) != null) {
+        Optional<User> existingUser = userService.findByUsername(user.getUsername());
+        if (existingUser.isPresent()) {
             return ResponseEntity.badRequest().body("Username is already taken");
         }
         User registeredUser = userService.registerUser(user);
