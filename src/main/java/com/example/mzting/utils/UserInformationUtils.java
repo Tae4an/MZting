@@ -27,12 +27,12 @@ public class UserInformationUtils {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null) {
             logger.error("Authentication object is null");
-            throw new UnauthorizedException("User not authenticated");
+            throw new UnauthorizedException("User not authenticated1");
         }
 
         if (!(authentication.getPrincipal() instanceof OAuth2User)) {
             logger.error("Principal is not an instance of OAuth2User");
-            throw new UnauthorizedException("User not authenticated");
+            throw new UnauthorizedException("User not authenticated2");
         }
 
         OAuth2User oauth2User = (OAuth2User) authentication.getPrincipal();

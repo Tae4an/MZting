@@ -26,7 +26,7 @@ public class UserInformationInterceptor implements HandlerInterceptor {
             UserInformationDTO userInfo = userInformationUtils.getCurrentUserInfo();
             if (userInfo == null || userInfo.getUid() == null) {
                 Objects.requireNonNull(response).setStatus(HttpStatus.UNAUTHORIZED.value());
-                response.getWriter().write("User not authenticated1");
+                response.getWriter().write("User not authenticated3");
                 return false;
             }
             Objects.requireNonNull(request).setAttribute("username", userInfo.getUsername());
