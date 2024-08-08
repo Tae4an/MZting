@@ -13,7 +13,8 @@ const CompleteProfilePage = () => {
     const [profile, setProfile] = useState({
         age: '',
         gender: '',
-        mbti: ''
+        mbti: '',
+        nickname: '' // nickname 추가
     });
     const [error, setError] = useState('');
 
@@ -55,6 +56,17 @@ const CompleteProfilePage = () => {
                 <h1 className={styles.completeProfileTitle}>mzting</h1>
                 {error && <p className={styles.error}>{error}</p>}
                 <div className={styles.inputGroup}>
+                    <label htmlFor="nickname">Nickname</label>
+                    <input
+                        type="text"
+                        id="nickname"
+                        name="nickname"
+                        value={profile.nickname}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+                <div className={styles.selectAge}>
                     <label htmlFor="age">Age</label>
                     <select
                         id="age"
@@ -67,7 +79,7 @@ const CompleteProfilePage = () => {
                         {generateAgeOptions()}
                     </select>
                 </div>
-                <div className={styles.inputGroup}>
+                <div className={styles.selectGender}>
                     <label htmlFor="gender">Gender</label>
                     <select
                         id="gender"
@@ -77,11 +89,11 @@ const CompleteProfilePage = () => {
                         required
                     >
                         <option value="" disabled>성별 선택</option>
-                        <option value="man">남성</option>
-                        <option value="woman">여성</option>
+                        <option value="male">남성</option>
+                        <option value="female">여성</option>
                     </select>
                 </div>
-                <div className={styles.inputGroup}>
+                <div className={styles.selectMBTI}>
                     <label htmlFor="mbti">MBTI</label>
                     <select
                         id="mbti"
