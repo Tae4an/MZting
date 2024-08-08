@@ -26,13 +26,11 @@
     display: flex;
     align-items: center;
     padding: 15px;
-    background-color: #ffffff;
     border-bottom: 1px solid #d4d7f6;
     color: #333333;
     position: sticky;
     top: 0;
     z-index: 10;
-    background-color: #fff;
 }
 
 .backButton {
@@ -71,17 +69,20 @@
 .messageContainer {
     flex-grow: 1;
     overflow-y: auto;
-    padding: 0 10px;
+    padding: 10px 10px 20px;
+    display: flex;
+    flex-direction: column;
 }
 
 .messageWrapper {
     display: flex;
-    align-items: center; /* Center items vertically */
     margin-bottom: 10px;
 }
 
 .sentMessage {
     justify-content: flex-end;
+    display: flex;
+    flex-direction: row-reverse; /* 보낸 메시지를 오른쪽 정렬 */
 }
 
 .receivedMessage {
@@ -92,7 +93,7 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    margin-right: 10px; /* Reduced margin */
+    margin-right: 10px;
     object-fit: cover;
 }
 
@@ -103,6 +104,8 @@
     background-color: #ffffff;
     border: 1px solid #d4d7f6;
     color: #333333;
+    display: flex;
+    align-items: center;
 }
 
 .sentMessage .messageBubble {
