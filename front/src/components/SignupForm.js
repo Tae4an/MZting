@@ -45,6 +45,15 @@ const SignupForm = () => {
         }
     };
 
+    const generateAgeOptions = () => {
+        const options = [];
+        for (let i = 1; i <= 100; i++) {
+            options.push(<option key={i} value={i}>{i}</option>);
+        }
+        return options;
+    };
+
+
     return (
         <div className={styles.signupFormContainer}>
             <form className={styles.signupForm} onSubmit={handleSubmit}>
@@ -118,20 +127,22 @@ const SignupForm = () => {
                         onChange={(e) => setGender(e.target.value)}
                         required
                     >
-                        <option value="" disabled>Gender Selection</option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
+                        <option value="" disabled>성별 선택</option>
+                        <option value="Male">남성</option>
+                        <option value="Female">여성</option>
                     </select>
                 </div>
-                <div className={styles.inputGroup}>
+                <div className={styles.selectAge}>
                     <label htmlFor="userAge">Age</label>
-                    <input
-                        type="number"
+                    <select
                         id="userAge"
                         value={age}
                         onChange={(e) => setAge(e.target.value)}
                         required
-                    />
+                    >
+                        <option value="" disabled>나이 선택</option>
+                        {generateAgeOptions()}
+                    </select>
                 </div>
                 <div className={styles.selectMBTI}>
                     <label htmlFor="userMbti">MBTI</label>
@@ -166,4 +177,4 @@ const SignupForm = () => {
     );
 };
 
-export {SignupForm};
+export { SignupForm };
