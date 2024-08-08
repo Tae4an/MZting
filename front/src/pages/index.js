@@ -4,7 +4,7 @@ import { MainPage } from "./MainPage";
 import { ChatPage } from "./ChatPage"
 import { ResultPage } from "./ResultPage";
 import { SignupPage } from "./SignupPage"
-import { CompleteProfile } from "./CompleteProfile"
+import { CompleteProfilePage } from "./CompleteProfilePage"
 import { SettingsPage } from "./SettingsPage"
 
 export {
@@ -14,6 +14,6 @@ export {
     ChatPage,
     ResultPage,
     SignupPage,
-    CompleteProfile,
+    CompleteProfilePage,
     SettingsPage
 }

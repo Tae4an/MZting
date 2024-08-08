@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import styles from '../styles/CompleteProfile.module.css';
+import styles from '../styles/CompleteProfilePage.module.css';
 
 const mbtiOptions = [
     "INTJ", "INTP", "ENTJ", "ENTP",
@@ -9,7 +9,7 @@ const mbtiOptions = [
     "ISTP", "ISFP", "ESTP", "ESFP"
 ];
 
-const CompleteProfile = () => {
+const CompleteProfilePage = () => {
     const [profile, setProfile] = useState({
         age: '',
         gender: '',
@@ -102,4 +102,4 @@ const CompleteProfile = () => {
     );
 };
 
-export { CompleteProfile };
+export { CompleteProfilePage };
