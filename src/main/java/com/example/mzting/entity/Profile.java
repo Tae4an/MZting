@@ -53,6 +53,9 @@ public class Profile {
     @Column(name = "description", nullable = false, columnDefinition = "TEXT")
     private String description;
 
+    @Column(name = "prompt", columnDefinition = "TEXT")
+    private String prompt;
+
     // 캐릭터와 취미의 일대다 관계
     @OneToMany(mappedBy = "profile")
     private Set<CharacterHobby> characterHobbies;
