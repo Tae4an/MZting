@@ -3,6 +3,7 @@ package com.example.mzting.controller;
 import com.example.mzting.security.JwtTokenProvider;
 import com.example.mzting.service.UserService;
 import com.example.mzting.entity.User;
+import com.example.mzting.security.CustomUserDetails;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,7 +15,6 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -70,9 +70,9 @@ public class UserController {
         }
 
         Object principal = authentication.getPrincipal();
-        if (principal instanceof UserDetails) {
-            UserDetails userDetails = (UserDetails) principal;
-            return ResponseEntity.ok(userDetails.getUsername());
+        if (principal instanceof CustomUserDetails) {
+            CustomUserDetails userDetails = (CustomUserDetails) principal;
+            return ResponseEntity.ok(userDetails.getEmail());
         } else {
             return ResponseEntity.ok(principal.toString());
         }
@@ -93,7 +93,12 @@ public class UserController {
         }
 
         // 인증된 사용자의 이메일을 가져옴
-        String email = authentication.getName();
+        String email;
+        if (authentication.getPrincipal() instanceof CustomUserDetails) {
+            email = ((CustomUserDetails) authentication.getPrincipal()).getEmail();
+        } else {
+            email = authentication.getName();
+        }
 
         // 디버깅 로그 추가
         System.out.println("Authenticated user's email: " + email);
@@ -125,7 +130,6 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User not found.");
         }
     }
-
 }
 
 @Getter

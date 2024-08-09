@@ -15,6 +15,7 @@ import { SituationBanner } from "./SituationBanner";
 import { FeedbackBanner } from "./FeedbackBanner";
 import { MBTISelector } from "./MBTISelector";
 import { QuestionnaireRecommendation  } from "./QuestionnaireRecommendation";
+import { GenerateImageModal } from "./GenerateImageModal";
 
 
 export {
@@ -33,6 +34,8 @@ export {
     PreviousChatsModal,
     TimePassedModal,
     SituationBanner,
+    FeedbackBanner,
+    GenerateImageModal,
     FeedbackBanner,
     MBTISelector,
     QuestionnaireRecommendation
