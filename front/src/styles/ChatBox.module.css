@@ -77,16 +77,16 @@
 .messageWrapper {
     display: flex;
     margin-bottom: 10px;
+    width: 100%;
 }
 
 .sentMessage {
     justify-content: flex-end;
-    display: flex;
-    flex-direction: row-reverse; /* 보낸 메시지를 오른쪽 정렬 */
 }
 
 .receivedMessage {
     justify-content: flex-start;
+    position: relative;
 }
 
 .messageAvatar {
@@ -101,16 +101,23 @@
     max-width: 70%;
     padding: 10px;
     border-radius: 10px;
-    background-color: #ffffff;
-    border: 1px solid #d4d7f6;
-    color: #333333;
-    display: flex;
-    align-items: center;
+    word-wrap: break-word;
 }
 
 .sentMessage .messageBubble {
     background-color: #ff6b6b;
     color: #ffffff;
+}
+
+.receivedMessage .messageBubble {
+    background-color: #f0f0f0;
+    color: #333333;
+    margin-left: 60px;
+}
+
+.avatarContainer {
+    position: absolute;
+    left: 10px; /* 좌측 여백 */
 }
 
 .messageText {
