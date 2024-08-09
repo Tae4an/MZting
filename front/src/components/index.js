@@ -14,6 +14,7 @@ import { PreviousChatsModal } from "./PreviousChatsModal";
 import { TimePassedModal } from "./TimePassedModal";
 import { SituationBanner } from "./SituationBanner";
 import { FeedbackBanner } from "./FeedbackBanner";
+import { GenerateImageModal } from "./GenerateImageModal";
 
 
 export {
@@ -33,5 +34,6 @@ export {
     PreviousChatsModal,
     TimePassedModal,
     SituationBanner,
-    FeedbackBanner
+    FeedbackBanner,
+    GenerateImageModal
 }

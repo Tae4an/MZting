@@ -24,11 +24,11 @@ const SignupForm = () => {
         try {
             const response = await axios.post('/api/auth/register', {
                 username: userId,
-                password,
-                name,
-                nickname,
-                email,
-                mbti,
+                password : password,
+                name : name,
+                nickname : nickname,
+                email : email,
+                mbti : mbti,
             });
             alert('Registration successful');
             navigate('/login');
