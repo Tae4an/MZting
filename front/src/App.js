@@ -1,6 +1,6 @@
 import './App.css';
 import { Layout } from "./components";
-import { ChatPage, ResultPage, MainPage, HistoryPage, LoginPage, SignupPage, SettingsPage, CompleteProfile } from "./pages";
+import { ChatPage, ResultPage, MainPage, HistoryPage, LoginPage, SignupPage, SettingsPage, CompleteProfilePage } from "./pages";
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 
 function App() {
@@ -15,7 +15,7 @@ function App() {
                     <Route path="/chat" element={<ChatPage />} />
                     <Route path="/history" element={<HistoryPage />} />
                     <Route path="/signup" element={<SignupPage />} />
-                    <Route path="/complete-profile" element={<CompleteProfile />} />
+                    <Route path="/complete-profile" element={<CompleteProfilePage />} />
                     <Route path="/settings" element={<SettingsPage />} />
                     <Route path="*" element={<Navigate to="/login" replace />} />
                 </Routes>
