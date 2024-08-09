@@ -129,6 +129,10 @@ public class ProfileService {
 
         prompt.append("상세 설명: ").append(profile.getDescription()).append("\n");
 
+        if (profile.getPrompt() != null && !profile.getPrompt().isEmpty()) {
+            prompt.append("상세 프롬포트: ").append(profile.getPrompt()).append("\n");
+        }
+
         // 프롬프트 정보 출력
         logger.info("Generated prompt for character:\n{}", prompt.toString());
 

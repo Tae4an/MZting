@@ -1,0 +1,82 @@
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: background-color 0.5s ease, opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.modalOverlay.visible {
+    background-color: rgba(0, 0, 0, 0.7);
+    opacity: 1;
+    visibility: visible;
+}
+
+.modalContent {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 500px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.modalContent.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.modalOverlay.closing {
+    background-color: rgba(0, 0, 0, 0);
+    opacity: 0;
+}
+
+.modalContent.closing {
+    opacity: 0;
+    transform: scale(0.8);
+}
+
+.messageBox {
+    height: 80%;
+    overflow-y: auto;
+}
+
+.messageItem {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    margin-bottom: 10px;
+}
+
+.messageItem.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.closeButton {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    align-self: center;
+}
+
+.closeButton:hover {
+    background-color: #0056b3;
+}

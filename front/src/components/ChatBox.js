@@ -144,7 +144,11 @@ const ChatBox = ({
 
 const ChatBubble = ({content, isSent, avatar, showAvatar}) => (
     <div className={`${styles.messageWrapper} ${isSent ? styles.sentMessage : styles.receivedMessage}`}>
-        {!isSent && showAvatar && <img src={avatar} alt="Avatar" className={styles.messageAvatar}/>}
+        {!isSent && showAvatar && (
+            <div className={styles.avatarContainer}>
+                <img src={avatar} alt="Avatar" className={styles.messageAvatar}/>
+            </div>
+        )}
         <div className={styles.messageBubble}>
             <div className={styles.messageText}>
                 {typeof content === 'string' ? content : (content.text || '')}
