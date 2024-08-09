@@ -54,6 +54,12 @@ public class CommentService {
      * @return 저장된 댓글 객체
      */
     public Comment saveComment(Comment comment) {
+        if(comment.getIsLike()) {
+            int likeCount = mbtiPostsRepository.incrementTotalLikeCount(comment.getProfileId());
+        } else {
+            int disLikeCount = mbtiPostsRepository.incrementTotalDislikeCount(comment.getProfileId());
+        }
+
         return commentRepository.save(comment);
     }
 
@@ -81,8 +87,16 @@ public class CommentService {
      * @param pageable 페이지네이션 정보
      * @return 댓글 정보를 포함한 응답 객체
      */
-    public CommentDTO.GetPostsCommentsResponse getCommentInfoByProfileId(Long profileId, Pageable pageable) {
-        Page<Comment> comments = commentRepository.findByProfileId(profileId, pageable);
+    public CommentDTO.GetPostsCommentsResponse getCommentInfoByProfileId(Long profileId, String filter, Pageable pageable) {
+        Page<Comment> comments;
+        if(filter.equals("All")) {
+            comments = commentRepository.findByProfileId(profileId, pageable);
+        } else if (filter.equals("Like")) {
+            comments = commentRepository.findLikedOrDislikedCommentsByProfileId(profileId, true, pageable);
+        } else {
+            comments = commentRepository.findLikedOrDislikedCommentsByProfileId(profileId, false, pageable);
+        }
+
         List<CommentDTO.CommentInfo> commentInfos = comments.getContent().stream()
                 .map(this::convertToCommentInfo)
                 .collect(Collectors.toList());

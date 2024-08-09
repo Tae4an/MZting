@@ -5,7 +5,7 @@ import styles from '../styles/LoginPage.module.css';
 import kakaoIcon from '../assets/icons/kakao.png';
 import naverIcon from '../assets/icons/naver.png';
 import googleIcon from '../assets/icons/google.png';
-import {sendPostRequest} from "../services";
+import { sendPostRequest } from "../services";
 
 const LoginForm = () => {
     const [username, setUsername] = useState('');
@@ -43,8 +43,7 @@ const LoginForm = () => {
     };
 
     const handleNaverLogin = () => {
-        // 기능 미구현
-        alert('네이버 로그인 기능은 아직 구현되지 않았습니다.');
+        window.location.href = 'http://localhost:8080/oauth2/authorization/naver';
     };
 
     const handleKakaoLogin = () => {
@@ -79,7 +78,6 @@ const LoginForm = () => {
                 </div>
                 <button type="submit" className={styles.button}>Login</button>
                 <button type="button" className={styles.button} onClick={handleSignUpClick}>Sign Up</button>
-                <br/>
                 <div className={styles.socialLoginContainer}>
                     <button type="button" className={styles.iconButton} onClick={handleGoogleLogin}>
                         <img src={googleIcon} alt="Google" className={styles.iconImage} />

@@ -11,6 +11,8 @@ const SignupForm = () => {
     const [nickname, setNickname] = useState('');
     const [email, setEmail] = useState('');
     const [mbti, setMbti] = useState('');
+    const [gender, setGender] = useState('');
+    const [age, setAge] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
@@ -22,16 +24,18 @@ const SignupForm = () => {
         }
 
         try {
-            const response = await axios.post('/api/auth/register', {
+            await axios.post('/api/auth/register', {
                 username: userId,
                 password,
                 name,
                 nickname,
                 email,
                 mbti,
+                gender,
+                age,
             });
             alert('Registration successful');
-            navigate('/');
+            navigate('/login');
         } catch (error) {
             if (error.response) {
                 setError(error.response.data);
@@ -40,6 +44,15 @@ const SignupForm = () => {
             }
         }
     };
+
+    const generateAgeOptions = () => {
+        const options = [];
+        for (let i = 1; i <= 100; i++) {
+            options.push(<option key={i} value={i}>{i}</option>);
+        }
+        return options;
+    };
+
 
     return (
         <div className={styles.signupFormContainer}>
@@ -105,6 +118,31 @@ const SignupForm = () => {
                         onChange={(e) => setEmail(e.target.value)}
                         required
                     />
+                </div>
+                <div className={styles.selectGender}>
+                    <label htmlFor="userGender">Gender</label>
+                    <select
+                        id="userGender"
+                        value={gender}
+                        onChange={(e) => setGender(e.target.value)}
+                        required
+                    >
+                        <option value="" disabled>성별 선택</option>
+                        <option value="Male">남성</option>
+                        <option value="Female">여성</option>
+                    </select>
+                </div>
+                <div className={styles.selectAge}>
+                    <label htmlFor="userAge">Age</label>
+                    <select
+                        id="userAge"
+                        value={age}
+                        onChange={(e) => setAge(e.target.value)}
+                        required
+                    >
+                        <option value="" disabled>나이 선택</option>
+                        {generateAgeOptions()}
+                    </select>
                 </div>
                 <div className={styles.selectMBTI}>
                     <label htmlFor="userMbti">MBTI</label>

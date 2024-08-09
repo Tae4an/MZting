@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styles from '../styles/ProfileDetailModal.module.css';
-import { ImageModal, CommentModal, PreviousChatsModal } from '../components';
+import {ImageModal, CommentModal, PreviousChatsModal, GenerateImageModal} from '../components';
 
 const ProfileDetailModal = ({ show, onClose, profile, onClick, showChatButton, loadChatRoomData }) => {
     const [showImageModal, setShowImageModal] = useState(false);
     const [showCommentModal, setShowCommentModal] = useState(false);
     const [showChatsModal, setShowChatsModal] = useState(false);
+    const [showGenerateImageModal, setShowGenerateImageModal] = useState(false);
     const [previousChats, setPreviousChats] = useState([]);
 
     const handleImageClick = () => {
@@ -52,6 +53,10 @@ const ProfileDetailModal = ({ show, onClose, profile, onClick, showChatButton, l
         return null;
     }
 
+    const handleGenerateImageModal = () => {
+        setShowGenerateImageModal(!showGenerateImageModal)
+    }
+
     const handleChatRoom = () => {
 
     }
@@ -62,20 +67,27 @@ const ProfileDetailModal = ({ show, onClose, profile, onClick, showChatButton, l
                 <div className={styles.modalContent}>
                     <button className={styles.closeButton} onClick={onClose}>×</button>
                     <div className={styles.profileHeader}>
-                        <button
-                            className={styles.profileImageButton}
-                            onClick={handleImageClick}
-                            onKeyDown={(e) => { if (e.key === 'Enter') handleImageClick(); }}
-                            aria-label="View profile image"
-                        >
-                            <img
-                                src={profile.image}
-                                alt={profile.name}
-                                className={styles.profileImage}
-                            />
-                        </button>
+                        <div style={{display: "flex", flexDirection: "column", gap: "10px"}}>
+                            <button
+                                className={styles.profileImageButton}
+                                onClick={handleImageClick}
+                                onKeyDown={(e) => {
+                                    if (e.key === 'Enter') handleImageClick();
+                                }}
+                                aria-label="View profile image"
+                            >
+                                <img
+                                    src={profile.image}
+                                    alt={profile.name}
+                                    className={styles.profileImage}
+                                />
+                            </button>
+                            <button onClick={handleGenerateImageModal}>
+                                이미지 설정하기
+                            </button>
+                        </div>
                         <div className={styles.profileInfo}>
-                            <h2>{profile.name} <span className={styles.profileType}>{profile.type}</span></h2>
+                        <h2>{profile.name} <span className={styles.profileType}>{profile.type}</span></h2>
                             <p className={styles.profileDetail}>나이 : {profile.age}</p>
                             <p className={styles.profileDetail}>키 : {profile.height}</p>
                             <p className={styles.profileDetail}>직업 : {profile.job}</p>
@@ -87,14 +99,14 @@ const ProfileDetailModal = ({ show, onClose, profile, onClick, showChatButton, l
                                     ))}
                                 </div>
                             )}
+                            <div className={styles.profileDescription}>
+                                <p>{profile.description}</p>
+                            </div>
                         </div>
-                    </div>
-                    <div className={styles.profileDescription}>
-                        <p>{profile.description}</p>
                     </div>
                     {showChatButton && (
                         <div className={styles.buttonContainer}>
-                            <button className={styles.chatButton} onClick={handleChatStart}>대화 시작하기</button>
+                        <button className={styles.chatButton} onClick={handleChatStart}>대화 시작하기</button>
                             <button className={styles.chatButton} onClick={handleChatsClick}>이전 채팅방</button>
                         </div>
                     )}
@@ -120,6 +132,12 @@ const ProfileDetailModal = ({ show, onClose, profile, onClick, showChatButton, l
                     onClose={handleChatsModalClose}
                     mbti={profile.type} // MBTI 정보 전달
                     chats={previousChats}
+                />
+            )}
+            {showGenerateImageModal && (
+                <GenerateImageModal
+                    show={showGenerateImageModal}
+                    onClose={handleGenerateImageModal}
                 />
             )}
             <button className={styles.commentButton} onClick={handleCommentClick}>댓글 및 후기</button>

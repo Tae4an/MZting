@@ -6,6 +6,7 @@ import {sendGetRequest, sendMessage, sendPostRequest} from '../services';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { TimePassedModal } from "../components/TimePassedModal";
+import IntroductionModal from '../components/IntroductionModal';
 
 const ChatPage = () => {
     const location = useLocation();
@@ -40,20 +41,25 @@ const ChatPage = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [backgroundChanged, setBackgroundChanged] = useState(false);
     const [stageToComplete, setStageToComplete] = useState(null);
-
+    const [isIntroModalOpen, setIsIntroModalOpen] = useState(true);
 
     useEffect(() => {
-        if(isFirst) { // 채팅방 새로 생성 시
-            console.log('ChatPage loaded with state:', location.state);
-            sendInitialMessage();
-        } else { // 기존 채팅방 이어가기
-            const getChatHistory = async () => { // 기존 채팅방 정보 가져오기
-                const response = sendGetRequest({}, `/api/chatroom/entry/${chatRoomId}`)
-                console.log("기존 채팅방 이어가기 : ", response)
-            }
+        if(isFirst) {
+            setIsIntroModalOpen(true);
+        } else {
+            getChatHistory();
         }
+    }, [isFirst]);
 
-    }, []);
+    const getChatHistory = async () => {
+        try {
+            const response = await sendGetRequest({}, `/api/chatroom/entry/${chatRoomId}`);
+            console.log("기존 채팅방 이어가기 : ", response);
+            // 여기서 채팅 히스토리를 처리하고 상태를 업데이트합니다.
+        } catch (error) {
+            console.error('Error fetching chat history:', error);
+        }
+    };
 
     useEffect(() => {
         if (claudeResponse) {
@@ -70,6 +76,11 @@ const ChatPage = () => {
             return () => clearTimeout(timer);
         }
     }, [stageToComplete]);
+
+    const handleCloseIntroModal = () => {
+        setIsIntroModalOpen(false);
+        sendInitialMessage();
+    };
 
     const handleModalDisplay = (stage) => {
         let modalMessage;
@@ -253,6 +264,11 @@ const ChatPage = () => {
                     isActualMeeting={isActualMeeting}
                 />
             </div>
+            <IntroductionModal
+                isOpen={isIntroModalOpen}
+                onClose={handleCloseIntroModal}
+                profileDetails={selectedProfile}
+            />
             <TimePassedModal
                 isOpen={isModalOpen}
                 message={stageToComplete === 1 ? "약속 날짜까지 시간이 흐르고.." :

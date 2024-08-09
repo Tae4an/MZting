@@ -1,7 +1,9 @@
-import { sendMessage, sendGetRequest, sendPostRequest } from "./sendMessage";
+import { sendMessage, sendGetRequest, sendPostRequest, getToken, deleteToken } from "./sendMessage";
 
 export {
     sendMessage,
     sendGetRequest,
-    sendPostRequest
+    sendPostRequest,
+    getToken,
+    deleteToken
 }
