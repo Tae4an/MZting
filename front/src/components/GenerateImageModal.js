@@ -155,7 +155,7 @@ const GenerateImageModal = ({ show, onClose }) => {
         <div className={styles.modalOverlay}>
             <div className={styles.modalContent}>
                 <button className={styles.closeButton} onClick={onClose}>×</button>
-                <h2 className={styles.title}>Generated Images</h2>
+                <h2 className={styles.title}>캐릭터 이미지 설정</h2>
                 {togglePart === 0 && <GenerateImagePart />}
                 {togglePart === 1 && <LoadOtherImagePart />}
                 {togglePart === 2 && <ImageLogPart />}
