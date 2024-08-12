@@ -19,6 +19,7 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
     border-radius: 10px 10px 0 0;
     border-bottom: 5px solid #ff6b6b;
+    margin-bottom: 20px;
 }
 
 .mainTitleContainer {
@@ -80,6 +81,7 @@
     cursor: pointer;
     transition: transform 0.3s; /* 부드러운 전환 효과 */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+    margin: 0 10px;
 }
 
 .subtitleButton:hover {
@@ -92,14 +94,47 @@
     gap: 20px;
 }
 
+.profile-enter {
+    opacity: 0;
+    transform: scale(0.9);
+}
+
+.profile-enter-active {
+    opacity: 1;
+    transform: scale(1);
+    transition: opacity 500ms, transform 500ms;
+}
+
+.profile-exit {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.profile-exit-active {
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 500ms, transform 500ms;
+}
+
 .profileCard {
     border-radius: 20px;
-    background-color: #ffffff; /* 프로필 카드 배경 색상 밝게 변경 */
+    background-color: #ffffff;
     padding: 20px;
     display: flex;
     flex-direction: column;
-    color: #333333; /* 프로필 카드 텍스트 색상 어둡게 변경 */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+    color: #333333;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+.animatingCard {
+    opacity: 0;
+    transform: translateY(20px) rotateX(-10deg);
+}
+
+.activeMbtiButton {
+    background-color: #ffffff;
+    color: #ff6b6b;
 }
 
 .profileImage {
@@ -204,4 +239,8 @@ button:hover {
     border-radius: 15px;
     font-size: 12px;
     z-index: 1;
+}
+.activeMbtiButton {
+    background-color: #ffffff;
+    color: #ff6b6b;
 }

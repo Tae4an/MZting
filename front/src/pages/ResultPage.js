@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styles from '../styles/ResultPage.module.css';
 import image2 from '../assets/Images/image2.jpg';
 import { sendGetRequest } from "../services";
-import { CommentModal } from '../components/CommentModal';
+import { CommentModal } from '../components';
 
 const chatRoomId = 1;
 
@@ -95,7 +95,11 @@ const ResultPage = () => {
                     left: `${mainContentRef.current ? mainContentRef.current.getBoundingClientRect().right - 19 : 0}px`
                 }}
             />
-            <CommentModal show={isCommentModalOpen} onClose={closeCommentModal} mbti="ENFJ" />
+            <CommentModal
+                show={isCommentModalOpen}
+                onClose={closeCommentModal}
+                propsData={{ type: "ENFJ", profileId: chatRoomId }}
+            />
         </div>
     );
 };

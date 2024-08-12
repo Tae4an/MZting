@@ -4,6 +4,7 @@ import styles from '../styles/MainPage.module.css';
 import { ProfileCard, ProfileDetailModal, LoadingSpinner, QuestionnaireRecommendation } from "../components";
 import { sendGetRequest } from "../services/sendMessage";
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 // 이미지 동적 import 함수
 function importAll(r) {
@@ -25,6 +26,9 @@ const MainPage = () => {
     const [recommendedMBTIs, setRecommendedMBTIs] = useState([]);
     const mainContentRef = useRef(null);
     const navigate = useNavigate();
+    const [isMbtiSorted, setIsMbtiSorted] = useState(false);
+    const [originalProfileOrder, setOriginalProfileOrder] = useState([]);
+    const [isAnimating, setIsAnimating] = useState(false);
 
     const handleScroll = () => {
         const totalScrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
@@ -41,26 +45,48 @@ const MainPage = () => {
     };
 
     const handleMyMBTIClick = async () => {
-        try {
-            setIsLoading(true);
-            const data = await sendGetRequest({}, "/api/recommend/compatibility/INFJ");  // INFJ로 하드코딩
-            const recommendedMBTIs = data.compatibilityGroups.soulMate;
-            setRecommendedMBTIs(recommendedMBTIs);
+        if (isMbtiSorted) {
+            setIsAnimating(true);
+            setTimeout(() => {
+                setProfileData([...originalProfileOrder]);
+                setIsMbtiSorted(false);
+                setTimeout(() => setIsAnimating(false), 50);
+            }, 500);
+        } else {
+            try {
+                setIsAnimating(true);
 
-            // 프로필 데이터 재정렬
-            const sortedProfiles = [...profileData].sort((a, b) => {
-                const aRecommended = recommendedMBTIs.includes(a.type.replace('#', ''));
-                const bRecommended = recommendedMBTIs.includes(b.type.replace('#', ''));
-                if (aRecommended && !bRecommended) return -1;
-                if (!aRecommended && bRecommended) return 1;
-                return 0;
-            });
+                const data = await sendGetRequest({}, "/api/recommend/compatibility/INFJ");  // INFJ로 하드코딩
+                const { soulMate, good, worst } = data.compatibilityGroups;
 
-            setProfileData(sortedProfiles);
-        } catch (error) {
-            console.error("Error in handleMyMBTI:", error);
-        } finally {
-            setIsLoading(false);
+                setOriginalProfileOrder([...profileData]);
+
+                const sortedProfiles = [...profileData].sort((a, b) => {
+                    const aType = a.type.replace('#', '').toLowerCase();
+                    const bType = b.type.replace('#', '').toLowerCase();
+
+                    const getCompatibilityRank = (mbti) => {
+                        if (soulMate.includes(mbti)) return 0;
+                        if (good.includes(mbti)) return 1;
+                        if (worst.includes(mbti)) return 3;
+                        return 2;
+                    };
+
+                    const aRank = getCompatibilityRank(aType);
+                    const bRank = getCompatibilityRank(bType);
+
+                    return aRank - bRank;
+                });
+
+                setTimeout(() => {
+                    setProfileData(sortedProfiles);
+                    setRecommendedMBTIs([...soulMate, ...good]);
+                    setIsMbtiSorted(true);
+                    setTimeout(() => setIsAnimating(false), 50);
+                }, 500);
+            } catch (error) {
+                console.error("handleMyMBTI에서 오류 발생:", error);
+            }
         }
     };
 
@@ -71,7 +97,6 @@ const MainPage = () => {
     const handleRecommendationComplete = (recommendation) => {
         setRecommendedMBTIs(recommendation);
 
-        // 프로필 데이터 재정렬
         const sortedProfiles = [...profileData].sort((a, b) => {
             const aRecommended = recommendation.includes(a.type.replace('#', ''));
             const bRecommended = recommendation.includes(b.type.replace('#', ''));
@@ -92,7 +117,6 @@ const MainPage = () => {
             try {
                 const data = await sendGetRequest({}, "/api/profiles");
                 const transformedData = transformProfileData(data);
-                transformedData.push({ id: 17, image: images['imageR.jpg'], name: "???", type: "#????", tags: "#모든 것이 랜덤입니다!", age: "???", height: "???", job: "???", hobbies: "???", description: "선택 장애가 온 당신! 모든 것을 랜덤에 맡겨보는 건 어떨까요?" })
                 setProfileData(transformedData);
 
                 setIsLoading(false);
@@ -102,7 +126,7 @@ const MainPage = () => {
             }
         }
 
-        extractProfile()
+        extractProfile();
 
         return () => {
             window.removeEventListener('scroll', handleScroll);
@@ -162,24 +186,34 @@ const MainPage = () => {
                     </div>
                 </div>
                 <div className={styles.subTitleContainer}>
-                    <button className={styles.subtitleButton} onClick={handleMyMBTIClick}>MyMBTI 추천</button>
+                    <button
+                        className={`${styles.subtitleButton} ${isMbtiSorted ? styles.activeMbtiButton : ''}`}
+                        onClick={handleMyMBTIClick}
+                    >
+                        {isMbtiSorted ? '자동추천' : '자동추천'}
+                    </button>
                     <button className={styles.subtitleButton} onClick={handleQuestionnaireClick}>선택지 MBTI 추천</button>
                 </div>
             </header>
-            <hr className={styles.divider}/>
             {isLoading ? (
                 <LoadingSpinner />
             ) : (
-                <div className={styles.profileGrid}>
+                <TransitionGroup className={styles.profileGrid}>
                     {profileData.map((profile) => (
-                        <ProfileCard
+                        <CSSTransition
                             key={profile.id}
-                            {...profile}
-                            onClick={() => handleProfileClick(profile)}
-                            isRecommended={recommendedMBTIs.includes(profile.type.replace('#', ''))}
-                        />
+                            timeout={500}
+                            classNames="profile"
+                        >
+                            <ProfileCard
+                                {...profile}
+                                onClick={() => handleProfileClick(profile)}
+                                isRecommended={recommendedMBTIs.includes(profile.type.replace('#', ''))}
+                                className={`${styles.profileCard} ${isAnimating ? styles.animatingCard : ''}`}
+                            />
+                        </CSSTransition>
                     ))}
-                </div>
+                </TransitionGroup>
             )}
             {showModal && (
                 <ProfileDetailModal

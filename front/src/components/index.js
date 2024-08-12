@@ -36,7 +36,6 @@ export {
     SituationBanner,
     FeedbackBanner,
     GenerateImageModal,
-    FeedbackBanner,
     MBTISelector,
     QuestionnaireRecommendation
 }

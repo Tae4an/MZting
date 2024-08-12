@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from 'prop-types';
 import styles from "../styles/GenerateImageModal.module.css";
+import {sendGetRequest} from "../services";
 
 const GenerateImageModal = ({ show, onClose }) => {
     const [imageList, setImageList] = useState([]);
@@ -17,7 +18,14 @@ const GenerateImageModal = ({ show, onClose }) => {
 
         const tempTagList = ['tag1', 'tag2', 'tag3', 'tag4', 'tag5', 'tag6', 'tag7', 'tag8'];
         setTagList(tempTagList);
+
+        fetchTag()
     }, []);
+
+    const fetchTag = async () => {
+        const response = await sendGetRequest({}, "api/gnimage/tag")
+        console.log(response)
+    }
 
     const handleTagSelect = (tag) => {
         setSelectedTags(prev =>
@@ -88,10 +96,12 @@ const GenerateImageModal = ({ show, onClose }) => {
                              className={styles.defaultImage}/>
                     )}
                     <div className={styles.selectedTags}>
-                        <h4>Selected Tags:</h4>
+                        <h4 style={{ marginBottom: "20px" }}>Selected Tags:</h4>
+                        <div className={styles.tagContainer}>
                         {selectedTags.map((tag, index) => (
                             <span key={index} className={styles.selectedTag}>{tag}</span>
                         ))}
+                    </div>
                     </div>
                     <button onClick={generateImage} disabled={isLoading || selectedTags.length === 0}>
                         Generate Image
@@ -131,20 +141,20 @@ const GenerateImageModal = ({ show, onClose }) => {
             <div>
                 {togglePart === 0 && (
                     <div>
-                        <button onClick={() => setTogglePart(1)}>다른 이미지 보기</button>
-                        <button onClick={() => setTogglePart(2)}>생성 로그 보기</button>
+                        <button onClick={() => setTogglePart(1)} style={{ marginRight: "10px" }}>다른 이미지 보기</button>
+                        <button onClick={() => setTogglePart(2)} style={{ marginLeft: "10px"}}>생성 로그 보기</button>
                     </div>
                 )}
                 {togglePart === 1 && (
                     <div>
-                        <button onClick={() => setTogglePart(0)}>이미지 생성하기</button>
-                        <button onClick={() => console.log("으에에")}>이미지 적용하기</button>
+                        <button onClick={() => setTogglePart(0)} style={{ marginRight: "10px" }}>이미지 생성하기</button>
+                        <button onClick={() => console.log("으에에")} style={{ marginLeft: "10px"}}>이미지 적용하기</button>
                     </div>
                 )}
                 {togglePart === 2 && (
                     <div>
-                        <button onClick={() => setTogglePart(0)}>이미지 생성하기</button>
-                        <button onClick={() => setTogglePart(1)}>이미지 적용하기</button>
+                        <button onClick={() => setTogglePart(0)} style={{ marginRight: "10px" }}>이미지 생성하기</button>
+                        <button onClick={() => setTogglePart(1)} style={{ marginLeft: "10px"}}>이미지 적용하기</button>
                     </div>
                 )}
             </div>
