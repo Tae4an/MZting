@@ -92,18 +92,39 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
-    perspective: 1000px;
+}
+
+.profile-enter {
+    opacity: 0;
+    transform: scale(0.9);
+}
+
+.profile-enter-active {
+    opacity: 1;
+    transform: scale(1);
+    transition: opacity 500ms, transform 500ms;
+}
+
+.profile-exit {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.profile-exit-active {
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 500ms, transform 500ms;
 }
 
 .profileCard {
     border-radius: 20px;
-    background-color: #ffffff; /* 프로필 카드 배경 색상 밝게 변경 */
+    background-color: #ffffff;
     padding: 20px;
     display: flex;
     flex-direction: column;
-    color: #333333; /* 프로필 카드 텍스트 색상 어둡게 변경 */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
-    transition: all 0.5s ease-in-out;
+    color: #333333;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
 }
 
 .animatingCard {
