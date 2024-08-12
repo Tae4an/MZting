@@ -25,6 +25,8 @@ const MainPage = () => {
     const [recommendedMBTIs, setRecommendedMBTIs] = useState([]);
     const mainContentRef = useRef(null);
     const navigate = useNavigate();
+    const [isMbtiSorted, setIsMbtiSorted] = useState(false);
+    const [originalProfileOrder, setOriginalProfileOrder] = useState([]);
 
     const handleScroll = () => {
         const totalScrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
@@ -41,26 +43,46 @@ const MainPage = () => {
     };
 
     const handleMyMBTIClick = async () => {
-        try {
-            setIsLoading(true);
-            const data = await sendGetRequest({}, "/api/recommend/compatibility/INFJ");  // INFJ로 하드코딩
-            const recommendedMBTIs = data.compatibilityGroups.soulMate;
-            setRecommendedMBTIs(recommendedMBTIs);
+        if (isMbtiSorted) {
+            // 원래 정렬 상태로 돌아가기
+            setProfileData([...originalProfileOrder]);
+            setIsMbtiSorted(false);
+        } else {
+            try {
+                setIsLoading(true);
+                const data = await sendGetRequest({}, "/api/recommend/compatibility/INFJ");  // INFJ로 하드코딩
+                const { soulMate, good, worst } = data.compatibilityGroups;
 
-            // 프로필 데이터 재정렬
-            const sortedProfiles = [...profileData].sort((a, b) => {
-                const aRecommended = recommendedMBTIs.includes(a.type.replace('#', ''));
-                const bRecommended = recommendedMBTIs.includes(b.type.replace('#', ''));
-                if (aRecommended && !bRecommended) return -1;
-                if (!aRecommended && bRecommended) return 1;
-                return 0;
-            });
+                // 현재 프로필 순서 저장
+                setOriginalProfileOrder([...profileData]);
 
-            setProfileData(sortedProfiles);
-        } catch (error) {
-            console.error("Error in handleMyMBTI:", error);
-        } finally {
-            setIsLoading(false);
+                // 프로필 데이터 재정렬
+                const sortedProfiles = [...profileData].sort((a, b) => {
+                    const aType = a.type.replace('#', '').toLowerCase();
+                    const bType = b.type.replace('#', '').toLowerCase();
+
+                    // 호환성 순위를 가져오는 도우미 함수
+                    const getCompatibilityRank = (mbti) => {
+                        if (soulMate.includes(mbti)) return 0;
+                        if (good.includes(mbti)) return 1;
+                        if (worst.includes(mbti)) return 3;
+                        return 2; // 어느 목록에도 없는 유형의 경우
+                    };
+
+                    const aRank = getCompatibilityRank(aType);
+                    const bRank = getCompatibilityRank(bType);
+
+                    return aRank - bRank;
+                });
+
+                setProfileData(sortedProfiles);
+                setRecommendedMBTIs([...soulMate, ...good]); // 추천 MBTI 업데이트
+                setIsMbtiSorted(true);
+            } catch (error) {
+                console.error("handleMyMBTI에서 오류 발생:", error);
+            } finally {
+                setIsLoading(false);
+            }
         }
     };
 
@@ -92,7 +114,6 @@ const MainPage = () => {
             try {
                 const data = await sendGetRequest({}, "/api/profiles");
                 const transformedData = transformProfileData(data);
-                transformedData.push({ id: 17, image: images['imageR.jpg'], name: "???", type: "#????", tags: "#모든 것이 랜덤입니다!", age: "???", height: "???", job: "???", hobbies: "???", description: "선택 장애가 온 당신! 모든 것을 랜덤에 맡겨보는 건 어떨까요?" })
                 setProfileData(transformedData);
 
                 setIsLoading(false);
@@ -162,7 +183,12 @@ const MainPage = () => {
                     </div>
                 </div>
                 <div className={styles.subTitleContainer}>
-                    <button className={styles.subtitleButton} onClick={handleMyMBTIClick}>My MBTI 추천</button>
+                    <button
+                        className={`${styles.subtitleButton} ${isMbtiSorted ? styles.activeMbtiButton : ''}`}
+                        onClick={handleMyMBTIClick}
+                    >
+                        {isMbtiSorted ? '자동추천' : '자동추천'}
+                    </button>
                     <button className={styles.subtitleButton} onClick={handleQuestionnaireClick}>선택지 MBTI 추천</button>
                 </div>
             </header>

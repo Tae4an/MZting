@@ -205,3 +205,7 @@ button:hover {
     font-size: 12px;
     z-index: 1;
 }
+.activeMbtiButton {
+    background-color: #ffffff;
+    color: #ff6b6b;
+}
