@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from 'prop-types';
 import styles from "../styles/GenerateImageModal.module.css";
+import {sendGetRequest} from "../services";
 
 const GenerateImageModal = ({ show, onClose }) => {
     const [imageList, setImageList] = useState([]);
@@ -17,7 +18,14 @@ const GenerateImageModal = ({ show, onClose }) => {
 
         const tempTagList = ['tag1', 'tag2', 'tag3', 'tag4', 'tag5', 'tag6', 'tag7', 'tag8'];
         setTagList(tempTagList);
+
+        fetchTag()
     }, []);
+
+    const fetchTag = async () => {
+        const response = await sendGetRequest({}, "api/gnimage/tag")
+        console.log(response)
+    }
 
     const handleTagSelect = (tag) => {
         setSelectedTags(prev =>
