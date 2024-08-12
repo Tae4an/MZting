@@ -53,7 +53,6 @@ const MainPage = () => {
             }, 500);
         } else {
             try {
-                setIsLoading(true);
                 setIsAnimating(true);
                 const data = await sendGetRequest({}, "/api/recommend/compatibility/INFJ");  // INFJ로 하드코딩
                 const { soulMate, good, worst } = data.compatibilityGroups;
@@ -85,11 +84,10 @@ const MainPage = () => {
                 }, 500);
             } catch (error) {
                 console.error("handleMyMBTI에서 오류 발생:", error);
-            } finally {
-                setIsLoading(false);
             }
         }
     };
+
 
     const handleQuestionnaireClick = () => {
         setShowQuestionnaireModal(true);
