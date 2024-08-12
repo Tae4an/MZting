@@ -166,7 +166,6 @@ const MainPage = () => {
                     <button className={styles.subtitleButton} onClick={handleQuestionnaireClick}>선택지 MBTI 추천</button>
                 </div>
             </header>
-            <hr className={styles.divider}/>
             {isLoading ? (
                 <LoadingSpinner />
             ) : (
