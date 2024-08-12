@@ -92,6 +92,7 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
+    perspective: 1000px;
 }
 
 .profileCard {
@@ -102,6 +103,17 @@
     flex-direction: column;
     color: #333333; /* 프로필 카드 텍스트 색상 어둡게 변경 */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+    transition: all 0.5s ease-in-out;
+}
+
+.animatingCard {
+    opacity: 0;
+    transform: translateY(20px) rotateX(-10deg);
+}
+
+.activeMbtiButton {
+    background-color: #ffffff;
+    color: #ff6b6b;
 }
 
 .profileImage {
