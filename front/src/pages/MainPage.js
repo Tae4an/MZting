@@ -4,6 +4,7 @@ import styles from '../styles/MainPage.module.css';
 import { ProfileCard, ProfileDetailModal, LoadingSpinner, QuestionnaireRecommendation } from "../components";
 import { sendGetRequest } from "../services/sendMessage";
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 // 이미지 동적 import 함수
 function importAll(r) {
@@ -54,6 +55,7 @@ const MainPage = () => {
         } else {
             try {
                 setIsAnimating(true);
+
                 const data = await sendGetRequest({}, "/api/recommend/compatibility/INFJ");  // INFJ로 하드코딩
                 const { soulMate, good, worst } = data.compatibilityGroups;
 
@@ -87,7 +89,6 @@ const MainPage = () => {
             }
         }
     };
-
 
     const handleQuestionnaireClick = () => {
         setShowQuestionnaireModal(true);
@@ -125,7 +126,7 @@ const MainPage = () => {
             }
         }
 
-        extractProfile()
+        extractProfile();
 
         return () => {
             window.removeEventListener('scroll', handleScroll);
@@ -197,17 +198,22 @@ const MainPage = () => {
             {isLoading ? (
                 <LoadingSpinner />
             ) : (
-                <div className={styles.profileGrid}>
+                <TransitionGroup className={styles.profileGrid}>
                     {profileData.map((profile) => (
-                        <ProfileCard
+                        <CSSTransition
                             key={profile.id}
-                            {...profile}
-                            onClick={() => handleProfileClick(profile)}
-                            isRecommended={recommendedMBTIs.includes(profile.type.replace('#', ''))}
-                            className={`${styles.profileCard} ${isAnimating ? styles.animatingCard : ''}`}
-                        />
+                            timeout={500}
+                            classNames="profile"
+                        >
+                            <ProfileCard
+                                {...profile}
+                                onClick={() => handleProfileClick(profile)}
+                                isRecommended={recommendedMBTIs.includes(profile.type.replace('#', ''))}
+                                className={`${styles.profileCard} ${isAnimating ? styles.animatingCard : ''}`}
+                            />
+                        </CSSTransition>
                     ))}
-                </div>
+                </TransitionGroup>
             )}
             {showModal && (
                 <ProfileDetailModal
