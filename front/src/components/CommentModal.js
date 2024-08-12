@@ -45,14 +45,16 @@ const CommentModal = ({ show, onClose, propsData }) => {
     }, [show, likeViewState, disLikeViewState])
 
     const fetchComments = async (requestData) => {
-        const response = await sendGetRequest(requestData, `/api/comments/${propsData.profileId}/list`);
-        setComments(response.commentInfos);
-        // Initialize user reactions
-        const initialReactions = {};
-        response.commentInfos.forEach(comment => {
-            initialReactions[comment.id] = { liked: false, disliked: false };
-        });
-        setUserReactions(initialReactions);
+        if (propsData?.profileId) {
+            const response = await sendGetRequest(requestData, `/api/comments/${propsData.profileId}/list`);
+            setComments(response.commentInfos);
+            // Initialize user reactions
+            const initialReactions = {};
+            response.commentInfos.forEach(comment => {
+                initialReactions[comment.id] = { liked: false, disliked: false };
+            });
+            setUserReactions(initialReactions);
+        }
     };
 
     const handleSubmit = async (e) => {
@@ -190,7 +192,7 @@ const CommentModal = ({ show, onClose, propsData }) => {
                     <button className={styles.closeButton} onClick={onClose}>
                         ×
                     </button>
-                    <h2 className={styles.modalTitle}>{propsData.type}에 대한 댓글 및 후기</h2>
+                    <h2 className={styles.modalTitle}>{propsData?.type || ""}에 대한 댓글 및 후기</h2>
                     <form onSubmit={handleSubmit} className={styles.modalForm}>
                         <div className={styles.textareaAndButtons}>
                             <button
@@ -277,7 +279,17 @@ const CommentModal = ({ show, onClose, propsData }) => {
 CommentModal.propTypes = {
     show: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,
-    propsData: PropTypes.object.isRequired,
+    propsData: PropTypes.shape({
+        type: PropTypes.string,
+        profileId: PropTypes.number
+    })
+};
+
+CommentModal.defaultProps = {
+    propsData: {
+        type: "",
+        profileId: null
+    }
 };
 
 export { CommentModal };
