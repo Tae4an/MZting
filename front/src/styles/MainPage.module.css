@@ -19,6 +19,7 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
     border-radius: 10px 10px 0 0;
     border-bottom: 5px solid #ff6b6b;
+    margin-bottom: 20px;
 }
 
 .mainTitleContainer {
