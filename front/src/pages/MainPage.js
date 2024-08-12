@@ -162,7 +162,7 @@ const MainPage = () => {
                     </div>
                 </div>
                 <div className={styles.subTitleContainer}>
-                    <button className={styles.subtitleButton} onClick={handleMyMBTIClick}>MyMBTI 추천</button>
+                    <button className={styles.subtitleButton} onClick={handleMyMBTIClick}>My MBTI 추천</button>
                     <button className={styles.subtitleButton} onClick={handleQuestionnaireClick}>선택지 MBTI 추천</button>
                 </div>
             </header>
