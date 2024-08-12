@@ -27,6 +27,7 @@ const MainPage = () => {
     const navigate = useNavigate();
     const [isMbtiSorted, setIsMbtiSorted] = useState(false);
     const [originalProfileOrder, setOriginalProfileOrder] = useState([]);
+    const [isAnimating, setIsAnimating] = useState(false);
 
     const handleScroll = () => {
         const totalScrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
@@ -44,29 +45,30 @@ const MainPage = () => {
 
     const handleMyMBTIClick = async () => {
         if (isMbtiSorted) {
-            // 원래 정렬 상태로 돌아가기
-            setProfileData([...originalProfileOrder]);
-            setIsMbtiSorted(false);
+            setIsAnimating(true);
+            setTimeout(() => {
+                setProfileData([...originalProfileOrder]);
+                setIsMbtiSorted(false);
+                setTimeout(() => setIsAnimating(false), 50);
+            }, 500);
         } else {
             try {
                 setIsLoading(true);
+                setIsAnimating(true);
                 const data = await sendGetRequest({}, "/api/recommend/compatibility/INFJ");  // INFJ로 하드코딩
                 const { soulMate, good, worst } = data.compatibilityGroups;
 
-                // 현재 프로필 순서 저장
                 setOriginalProfileOrder([...profileData]);
 
-                // 프로필 데이터 재정렬
                 const sortedProfiles = [...profileData].sort((a, b) => {
                     const aType = a.type.replace('#', '').toLowerCase();
                     const bType = b.type.replace('#', '').toLowerCase();
 
-                    // 호환성 순위를 가져오는 도우미 함수
                     const getCompatibilityRank = (mbti) => {
                         if (soulMate.includes(mbti)) return 0;
                         if (good.includes(mbti)) return 1;
                         if (worst.includes(mbti)) return 3;
-                        return 2; // 어느 목록에도 없는 유형의 경우
+                        return 2;
                     };
 
                     const aRank = getCompatibilityRank(aType);
@@ -75,9 +77,12 @@ const MainPage = () => {
                     return aRank - bRank;
                 });
 
-                setProfileData(sortedProfiles);
-                setRecommendedMBTIs([...soulMate, ...good]); // 추천 MBTI 업데이트
-                setIsMbtiSorted(true);
+                setTimeout(() => {
+                    setProfileData(sortedProfiles);
+                    setRecommendedMBTIs([...soulMate, ...good]);
+                    setIsMbtiSorted(true);
+                    setTimeout(() => setIsAnimating(false), 50);
+                }, 500);
             } catch (error) {
                 console.error("handleMyMBTI에서 오류 발생:", error);
             } finally {
@@ -93,7 +98,6 @@ const MainPage = () => {
     const handleRecommendationComplete = (recommendation) => {
         setRecommendedMBTIs(recommendation);
 
-        // 프로필 데이터 재정렬
         const sortedProfiles = [...profileData].sort((a, b) => {
             const aRecommended = recommendation.includes(a.type.replace('#', ''));
             const bRecommended = recommendation.includes(b.type.replace('#', ''));
@@ -202,6 +206,7 @@ const MainPage = () => {
                             {...profile}
                             onClick={() => handleProfileClick(profile)}
                             isRecommended={recommendedMBTIs.includes(profile.type.replace('#', ''))}
+                            className={`${styles.profileCard} ${isAnimating ? styles.animatingCard : ''}`}
                         />
                     ))}
                 </div>
