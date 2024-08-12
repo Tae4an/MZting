@@ -18,7 +18,10 @@ public class ImageTag {
     private Long id;
 
     @Column(nullable = false)
-    private String tagName;
+    private String korName;
+
+    @Column(nullable = false)
+    private String engName;
 
     @Column(nullable = false)
     private String category;
