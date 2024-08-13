@@ -5,6 +5,7 @@ import styles from '../styles/LoginPage.module.css';
 import kakaoIcon from '../assets/icons/kakao.png';
 import naverIcon from '../assets/icons/naver.png';
 import googleIcon from '../assets/icons/google.png';
+import Loginlogo from '../assets/Images/Loginlogo.png';
 import { sendPostRequest } from "../services";
 
 const LoginForm = () => {
@@ -54,12 +55,12 @@ const LoginForm = () => {
     return (
         <div className={styles.loginFormContainer}>
             <form className={styles.loginForm} onSubmit={handleSubmit}>
-                <h1 className={styles.title}>mzting</h1>
+                <img src={Loginlogo} className={styles.loginLogo} alt="Login Logo"/>
                 {error && <p className={styles.error}>{error}</p>}
                 <div className={styles.inputGroup}>
                     <label htmlFor="userId">ID</label>
                     <input
-                        type="text"
+                        type="email"
                         id="userId"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
@@ -80,13 +81,13 @@ const LoginForm = () => {
                 <button type="button" className={styles.button} onClick={handleSignUpClick}>Sign Up</button>
                 <div className={styles.socialLoginContainer}>
                     <button type="button" className={styles.iconButton} onClick={handleGoogleLogin}>
-                        <img src={googleIcon} alt="Google" className={styles.iconImage} />
+                        <img src={googleIcon} alt="Google" className={styles.iconImage}/>
                     </button>
                     <button type="button" className={styles.iconButton} onClick={handleNaverLogin}>
-                        <img src={naverIcon} alt="Naver" className={styles.iconImage} />
+                        <img src={naverIcon} alt="Naver" className={styles.iconImage}/>
                     </button>
                     <button type="button" className={styles.iconButton} onClick={handleKakaoLogin}>
-                        <img src={kakaoIcon} alt="Kakao" className={styles.iconImage} />
+                        <img src={kakaoIcon} alt="Kakao" className={styles.iconImage}/>
                     </button>
                 </div>
             </form>
@@ -94,4 +95,4 @@ const LoginForm = () => {
     );
 };
 
-export { LoginForm };
+export {LoginForm};
