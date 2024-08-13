@@ -88,13 +88,6 @@ const ResultPage = () => {
                 <p>{result ? result.summaryEval : "로딩 중..."}</p>
             </div>
             <div className={styles.reviewButton} onClick={openCommentModal}>댓글 보기</div>
-            <div
-                className={styles.scrollIndicator}
-                style={{
-                    top: `${scrollPosition}px`,
-                    left: `${mainContentRef.current ? mainContentRef.current.getBoundingClientRect().right - 19 : 0}px`
-                }}
-            />
             <CommentModal
                 show={isCommentModalOpen}
                 onClose={closeCommentModal}
