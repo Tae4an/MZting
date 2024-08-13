@@ -55,10 +55,10 @@
 .tagList {
     display: flex;
     flex-wrap: wrap;
-    gap: 15px;
+    gap: 10px;
     margin-bottom: 20px;
     overflow-y: auto;
-    max-height: calc(100% - 50px);
+    max-height: calc(100%);
 }
 
 .tag, .selectedTag {
