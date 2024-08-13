@@ -14,14 +14,12 @@
     width: 100%;
     overflow-x: hidden; /* 추가: 양옆 스크롤 제거 */
     margin: 0; /* 추가: 상하좌우 여백 제거 */
-    padding: 0; /* 추가: 상하좌우 패딩 제거 */
+    padding: 0 20px; /* 추가: 상하좌우 패딩 제거 */
     box-sizing: border-box; /* 추가: 패딩과 테두리 포함한 너비 및 높이 계산 */
 }
 
 .contentWrapper {
     width: 100%;
-    min-width: 800px; /* 최소 너비를 800px로 설정 */
-    max-width: 1400px; /* 최대 너비를 1400px로 설정 */
     height: 100vh;
     background-color: #ffffff;
     overflow: hidden;
