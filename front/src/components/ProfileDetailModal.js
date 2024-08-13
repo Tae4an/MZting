@@ -87,7 +87,7 @@ const ProfileDetailModal = ({ show, onClose, profile, onClick, showChatButton, l
                             </button>
                         </div>
                         <div className={styles.profileInfo}>
-                        <h2>{profile.name} <span className={styles.profileType}>{profile.type}</span></h2>
+                            <h2>{profile.name} <span className={styles.profileType}>{profile.type}</span></h2>
                             <p className={styles.profileDetail}>나이 : {profile.age}</p>
                             <p className={styles.profileDetail}>키 : {profile.height}</p>
                             <p className={styles.profileDetail}>직업 : {profile.job}</p>
@@ -99,14 +99,14 @@ const ProfileDetailModal = ({ show, onClose, profile, onClick, showChatButton, l
                                     ))}
                                 </div>
                             )}
-                            <div className={styles.profileDescription}>
-                                <p>{profile.description}</p>
-                            </div>
                         </div>
+                    </div>
+                    <div className={styles.profileDescription}>
+                        <p>{profile.description}</p>
                     </div>
                     {showChatButton && (
                         <div className={styles.buttonContainer}>
-                        <button className={styles.chatButton} onClick={handleChatStart}>대화 시작하기</button>
+                            <button className={styles.chatButton} onClick={handleChatStart}>대화 시작하기</button>
                             <button className={styles.chatButton} onClick={handleChatsClick}>이전 채팅방</button>
                         </div>
                     )}

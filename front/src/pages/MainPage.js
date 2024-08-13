@@ -4,7 +4,7 @@ import styles from '../styles/MainPage.module.css';
 import { ProfileCard, ProfileDetailModal, LoadingSpinner, QuestionnaireRecommendation } from "../components";
 import { sendGetRequest } from "../services/sendMessage";
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import { AnimatePresence, motion } from 'framer-motion'; // 추가
 
 // 이미지 동적 import 함수
 function importAll(r) {
@@ -198,22 +198,31 @@ const MainPage = () => {
             {isLoading ? (
                 <LoadingSpinner />
             ) : (
-                <TransitionGroup className={styles.profileGrid}>
-                    {profileData.map((profile) => (
-                        <CSSTransition
-                            key={profile.id}
-                            timeout={500}
-                            classNames="profile"
-                        >
-                            <ProfileCard
-                                {...profile}
-                                onClick={() => handleProfileClick(profile)}
-                                isRecommended={recommendedMBTIs.includes(profile.type.replace('#', ''))}
-                                className={`${styles.profileCard} ${isAnimating ? styles.animatingCard : ''}`}
-                            />
-                        </CSSTransition>
-                    ))}
-                </TransitionGroup>
+                <motion.div layout className={styles.profileGrid}>  {/* 변경된 부분 */}
+                    <AnimatePresence>
+                        {profileData.map((profile) => (
+                            <motion.div
+                                key={profile.id}
+                                layout
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: 20 }}
+
+
+
+
+                                transition={{ duration: 0.45 }}
+                            >
+                                <ProfileCard
+                                    {...profile}
+                                    onClick={() => handleProfileClick(profile)}
+                                    isRecommended={recommendedMBTIs.includes(profile.type.replace('#', ''))}
+                                    className={`${styles.profileCard} ${isAnimating ? styles.animatingCard : ''}`}
+                                />
+                            </motion.div>
+                        ))}
+                    </AnimatePresence>
+                </motion.div>
             )}
             {showModal && (
                 <ProfileDetailModal
@@ -229,13 +238,6 @@ const MainPage = () => {
                 show={showQuestionnaireModal}
                 onClose={() => setShowQuestionnaireModal(false)}
                 onRecommendationComplete={handleRecommendationComplete}
-            />
-            <div
-                className={styles.scrollIndicator}
-                style={{
-                    top: `${scrollPosition}px`,
-                    left: `${mainContentRef.current ? mainContentRef.current.getBoundingClientRect().right - 19 : 0}px`
-                }}
             />
         </div>
     );

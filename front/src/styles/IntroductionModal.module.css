@@ -66,9 +66,15 @@
     transform: translateY(0);
 }
 
+.highlight {
+    color: #FF6347; /* 모든 텍스트에 적용할 색상 */
+    font-weight: bold; /* 모든 텍스트에 적용할 굵기 */
+    font-size: 1.2rem; /* 폰트 크기도 통일 */
+}
+
 .closeButton {
     padding: 10px 20px;
-    background-color: #007bff;
+    background-color: #ff6b6b;
     color: white;
     border: none;
     border-radius: 5px;
@@ -78,5 +84,22 @@
 }
 
 .closeButton:hover {
-    background-color: #0056b3;
+    background-color: #ff6b6b;
 }
+
+@keyframes blinkCursor {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+.messageItem {
+    font-family: 'Arial', sans-serif; /* 타이핑 효과에 어울리는 글꼴 */
+    font-size: 1.2rem;
+    white-space: pre-wrap; /* 줄바꿈을 위해 추가 */
+    display: inline-block;
+    opacity: 1;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    line-height: 1.7;
+}
+

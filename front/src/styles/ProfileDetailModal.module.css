@@ -15,10 +15,8 @@
     background: #ffffff;
     padding: 20px;
     border-radius: 15px;
-    max-width: 1000px;
-    width: 90%;
-    max-height: 800px;
-    height: 80%;
+    width: 40%;
+    height: 70%;
     position: relative;
     color: #333333;
     text-align: center;
@@ -48,8 +46,8 @@
 }
 
 .profileImage {
-    width: 450px;
-    height: 560px;
+    width: 250px;
+    height: 360px;
     border-radius: 15px; /* 모서리 둥글게 변경 */
     object-fit: cover;
 }
@@ -78,6 +76,8 @@
 
 .profileDetail {
     font-size: 1.5rem;
+    font-style: italic;
+    font-weight: bold;
     text-align: center;
     margin: 20px 0; /* 추가: 요소 간의 간격 */
 }
@@ -115,7 +115,7 @@
     overflow-y: auto;
     flex: 1;
     color: #333333;
-    margin-top: 20px;
+    margin-top: 15px;
     max-height: 200px; /* 추가: 모바일 환경에서 설명 영역의 최대 높이 설정 */
 }
 

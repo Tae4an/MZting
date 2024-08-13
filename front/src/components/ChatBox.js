@@ -80,7 +80,7 @@ const ChatBox = ({
     }, [messages, isTyping]);
 
     return (
-        <section className={styles.chatContainer}>
+        <div className={styles.chatContainer}>
             <header className={styles.chatHeader}>
                 <button className={styles.backButton} onClick={handleBackClick}>&lt;</button>
                 <img src={image} alt={name} className={styles.avatar} onClick={handleProfileClick}/>
@@ -138,7 +138,7 @@ const ChatBox = ({
                     showChatButton={false}
                 />
             )}
-        </section>
+        </div>
     );
 };
 
