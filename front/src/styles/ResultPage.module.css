@@ -33,13 +33,14 @@
     aspect-ratio: 0.96;
     object-fit: cover;
     object-position: center;
-    width: 123.19px;
+    width: 100px;
     max-width: 100%;
     border-radius: 50%;
+    margin-top: 10px;
 }
 
 .title {
-    font-size: 3rem;
+    font-size: 2.5rem;
     color: #ff6b6b; /* 강조 색상으로 변경 */
     font-style: italic;
     font-weight: bold;
