@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styles from '../styles/ProfileDetailModal.module.css';
-import {ImageModal, CommentModal, PreviousChatsModal, GenerateImageModal} from '../components';
+import { ImageModal, CommentModal, PreviousChatsModal, GenerateImageModal } from '../components';
 
 const ProfileDetailModal = ({ show, onClose, profile, onClick, showChatButton, loadChatRoomData }) => {
     const [showImageModal, setShowImageModal] = useState(false);
@@ -9,6 +9,21 @@ const ProfileDetailModal = ({ show, onClose, profile, onClick, showChatButton, l
     const [showChatsModal, setShowChatsModal] = useState(false);
     const [showGenerateImageModal, setShowGenerateImageModal] = useState(false);
     const [previousChats, setPreviousChats] = useState([]);
+
+    useEffect(() => {
+        const fetchPreviousChats = async () => {
+            if (show && loadChatRoomData) {
+                const chatRoomData = await loadChatRoomData(profile.id);
+                const formattedChats = chatRoomData.map(chat => ({
+                    name: `채팅방 ${chat.name}`,
+                    lastMessage: chat.lastMessage || "메시지 없음",
+                }));
+                setPreviousChats(formattedChats);
+            }
+        };
+
+        fetchPreviousChats();
+    }, [show, loadChatRoomData, profile.id]);
 
     const handleImageClick = () => {
         setShowImageModal(true);
@@ -26,15 +41,7 @@ const ProfileDetailModal = ({ show, onClose, profile, onClick, showChatButton, l
         setShowCommentModal(false);
     };
 
-    const handleChatsClick = async () => {
-        if (loadChatRoomData) {
-            const chatRoomData = await loadChatRoomData(profile.id);
-            const formattedChats = chatRoomData.map(chat => ({
-                name: `채팅방 ${chat.name}`,
-                lastMessage: chat.lastMessage || "메시지 없음",
-            }));
-            setPreviousChats(formattedChats);
-        }
+    const handleChatsClick = () => {
         setShowChatsModal(true);
     };
 
@@ -54,12 +61,12 @@ const ProfileDetailModal = ({ show, onClose, profile, onClick, showChatButton, l
     }
 
     const handleGenerateImageModal = () => {
-        setShowGenerateImageModal(!showGenerateImageModal)
-    }
+        setShowGenerateImageModal(!showGenerateImageModal);
+    };
 
     const handleChatRoom = () => {
 
-    }
+    };
 
     return (
         <>
@@ -67,7 +74,7 @@ const ProfileDetailModal = ({ show, onClose, profile, onClick, showChatButton, l
                 <div className={styles.modalContent}>
                     <button className={styles.closeButton} onClick={onClose}>×</button>
                     <div className={styles.profileHeader}>
-                        <div style={{display: "flex", flexDirection: "column", gap: "10px"}}>
+                        <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
                             <button
                                 className={styles.profileImageButton}
                                 onClick={handleImageClick}
@@ -107,7 +114,9 @@ const ProfileDetailModal = ({ show, onClose, profile, onClick, showChatButton, l
                     {showChatButton && (
                         <div className={styles.buttonContainer}>
                             <button className={styles.chatButton} onClick={handleChatStart}>대화 시작하기</button>
-                            <button className={styles.chatButton} onClick={handleChatsClick}>이전 채팅방</button>
+                            {previousChats.length > 0 && (
+                                <button className={styles.chatButton} onClick={handleChatsClick}>이전 채팅방</button>
+                            )}
                         </div>
                     )}
                 </div>
@@ -123,7 +132,7 @@ const ProfileDetailModal = ({ show, onClose, profile, onClick, showChatButton, l
                 <CommentModal
                     show={showCommentModal}
                     onClose={handleCommentModalClose}
-                    propsData={{profileId : profile.id, type : profile.type}}
+                    propsData={{ profileId: profile.id, type: profile.type }}
                 />
             )}
             {showChatsModal && (
@@ -161,13 +170,13 @@ ProfileDetailModal.propTypes = {
     }).isRequired,
     onClick: PropTypes.func,
     showChatButton: PropTypes.bool,
-    loadChatRoomData: PropTypes.func
+    loadChatRoomData: PropTypes.func,
 };
 
 ProfileDetailModal.defaultProps = {
     onClick: null,
     showChatButton: true,
-    loadChatRoomData: null
+    loadChatRoomData: null,
 };
 
 export {
