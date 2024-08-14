@@ -7,9 +7,9 @@
     padding: 20px;
     border-right: 1px solid #d4d7f6; /* 오른쪽 테두리 추가 */
     height: 90vh; /* 광고 열의 높이를 전체 화면 높이에 맞춤 */
-    width: 15%;
+    width: 10%;
     margin-top: 3%;
-    margin-left: 7.5%;
+    margin-left: 15%;
     position: fixed;
     top: 0;
     left: 0;
@@ -25,9 +25,9 @@
     padding: 20px;
     border-left: 1px solid #d4d7f6; /* 왼쪽 테두리 추가 */
     height: 90vh; /* 광고 열의 높이를 전체 화면 높이에 맞춤 */
-    width: 15%;
+    width: 10%;
     margin-top: 3%;
-    margin-right: 7.5%;
+    margin-right: 15%;
     position: fixed;
     top: 0;
     right: 0;
