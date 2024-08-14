@@ -157,7 +157,7 @@
     font-size: 1.2rem;
     width: 200px;
     position: fixed;
-    bottom: 10px;
+    bottom: 5%;
     left: 50%;
     transform: translateX(-50%);
     transition: background 0.3s, transform 0.3s;
