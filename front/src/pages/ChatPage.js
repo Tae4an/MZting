@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 import styles from '../styles/ChatPage.module.css';
 import { ChatBox } from '../components';
 import {sendGetRequest, sendMessage, sendPostRequest} from '../services';
@@ -11,6 +11,8 @@ import IntroductionModal from '../components/IntroductionModal';
 const ChatPage = () => {
     const location = useLocation();
     const state = location.state || {};
+    const navigate = useNavigate();
+
 
     const selectedProfile = state.selectedProfile || state;
     const {
@@ -71,11 +73,26 @@ const ChatPage = () => {
         if (stageToComplete !== null) {
             const timer = setTimeout(() => {
                 handleModalDisplay(stageToComplete);
-            }, 5000);  // 5초 후에 모달 표시
+            }, 5000);
 
             return () => clearTimeout(timer);
         }
     }, [stageToComplete]);
+
+    useEffect(() => {
+        if (stages.stage3Complete) {
+            const timer = setTimeout(() => {
+                navigate('/result', {
+                    state: {
+                        chatRoomId: chatRoomId,
+                        profileDetails: selectedProfile
+                    }
+                });
+            }, 3000);
+
+            return () => clearTimeout(timer);
+        }
+    }, [stages.stage3Complete]);
 
     const handleCloseIntroModal = () => {
         setIsIntroModalOpen(false);
