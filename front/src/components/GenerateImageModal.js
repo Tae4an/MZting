@@ -5,21 +5,25 @@ import {sendGetRequest} from "../services";
 
 const GenerateImageModal = ({ show, onClose }) => {
     const [imageList, setImageList] = useState([]);
-    const [tagList, setTagList] = useState([]);
     const [selectedTags, setSelectedTags] = useState([]);
     const [generatedImage, setGeneratedImage] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [togglePart, setTogglePart] = useState(0); // 0이 이미지 생성, 1이 다른 이미지 리스트, 2가 이미지 생성 로그
+
+    const tagCategories = {
+        hair: ['단발','장발','웨이브','포니테일','묶음'],
+        camera: ['정면','측면','뒤쪽','상단 측면','셀카'],
+        cloth: ['캐주얼','정장','겨울 옷'],
+        background: ['도시','자연','실내'],
+        accessory: ['안경']
+    }
 
     useEffect(() => {
         // 임시 데이터로 이미지 리스트와 태그 리스트 초기화
         const tempImageList = Array(12).fill().map((_, i) => `https://via.placeholder.com/150?text=Image${i+1}`);
         setImageList(tempImageList);
 
-        const tempTagList = ['tag1', 'tag2', 'tag3', 'tag4', 'tag5', 'tag6', 'tag7', 'tag8'];
-        setTagList(tempTagList);
-
-        fetchTag()
+        fetchTag();
     }, []);
 
     const fetchTag = async () => {
@@ -27,9 +31,11 @@ const GenerateImageModal = ({ show, onClose }) => {
         console.log(response)
     }
 
-    const handleTagSelect = (tag) => {
+    const handleTagSelect = (category, tag) => {
         setSelectedTags(prev =>
-            prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]
+            prev.some(t => t.category === category && t.tag === tag)
+                ? prev.filter(t => !(t.category === category && t.tag === tag))
+                : [...prev.filter(t => t.category !== category), { category, tag }]
         );
     };
 
@@ -47,43 +53,23 @@ const GenerateImageModal = ({ show, onClose }) => {
         return (
             <div className={styles.generateImageContainer}>
                 <div className={styles.tagSelection}>
-                    <h2>태그선택</h2>
-                    <h3>설정 태그</h3>
-                    <div className={styles.tagList}>
-                        {tagList.map((tag, index) => (
-                            <button
-                                key={index}
-                                onClick={() => handleTagSelect(tag)}
-                                className={selectedTags.includes(tag) ? styles.selectedTag : styles.tag}
-                            >
-                                {tag}
-                            </button>
-                        ))}
-                    </div>
-                    <h3>외모 태그</h3>
-                    <div className={styles.tagList}>
-                        {tagList.map((tag, index) => (
-                            <button
-                                key={index}
-                                onClick={() => handleTagSelect(tag)}
-                                className={selectedTags.includes(tag) ? styles.selectedTag : styles.tag}
-                            >
-                                {tag}
-                            </button>
-                        ))}
-                    </div>
-                    <h3>악세서리 태그</h3>
-                    <div className={styles.tagList}>
-                        {tagList.map((tag, index) => (
-                            <button
-                                key={index}
-                                onClick={() => handleTagSelect(tag)}
-                                className={selectedTags.includes(tag) ? styles.selectedTag : styles.tag}
-                            >
-                                {tag}
-                            </button>
-                        ))}
-                    </div>
+                    <h2>태그 선택</h2>
+                    {Object.keys(tagCategories).map((category, index) => (
+                        <div key={index}>
+                            <h3>{category}</h3>
+                            <div className={styles.tagList}>
+                                {tagCategories[category].map((tag, i) => (
+                                    <button
+                                        key={i}
+                                        onClick={() => handleTagSelect(category, tag)}
+                                        className={selectedTags.some(t => t.category === category && t.tag === tag) ? styles.selectedTag : styles.tag}
+                                    >
+                                        {tag}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                    ))}
                 </div>
                 <div className={styles.imagePreview}>
                     <h3>Generated Image</h3>
@@ -98,10 +84,10 @@ const GenerateImageModal = ({ show, onClose }) => {
                     <div className={styles.selectedTags}>
                         <h4 style={{ marginBottom: "20px" }}>Selected Tags:</h4>
                         <div className={styles.tagContainer}>
-                        {selectedTags.map((tag, index) => (
-                            <span key={index} className={styles.selectedTag}>{tag}</span>
-                        ))}
-                    </div>
+                            {selectedTags.map((tag, index) => (
+                                <span key={index} className={styles.selectedTag}>{tag.category}: {tag.tag}</span>
+                            ))}
+                        </div>
                     </div>
                     <button onClick={generateImage} disabled={isLoading || selectedTags.length === 0}>
                         Generate Image

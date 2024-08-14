@@ -62,7 +62,7 @@ const SignupForm = () => {
                 <div className={styles.inputGroup}>
                     <label htmlFor="userId">ID</label>
                     <input
-                        type="text"
+                        type="email"
                         id="userId"
                         value={userId}
                         onChange={(e) => setUserId(e.target.value)}
