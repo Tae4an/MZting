@@ -52,4 +52,20 @@ public interface GenerateImageDTO {
     class FlaskGenerateImageResponse {
         private String imageUrl;
     }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    class ApplyImageRequest {
+        private String imageUrl;
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    class ApplyImageResponse {
+        private String imageUrl;
+    }
 }
