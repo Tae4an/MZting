@@ -38,11 +38,11 @@ public class ProfileService {
      * 프로필 ID로 프로필을 조회하는 메서드
      *
      * @param profileId 프로필 ID
-     * @return 프로필 객체의 Optional
+     * @return 프로필 객체, 없을 경우 null
      */
     @Cacheable(value = "profiles", key = "#profileId")
-    public Optional<Profile> getProfileById(Integer profileId) {
-        return profileRepository.findById(profileId);
+    public Profile getProfileById(Integer profileId) {
+        return profileRepository.findById(profileId).orElse(null);
     }
 
     /**
