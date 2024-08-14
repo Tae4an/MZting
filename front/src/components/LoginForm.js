@@ -5,7 +5,7 @@ import styles from '../styles/LoginPage.module.css';
 import kakaoIcon from '../assets/icons/kakao.png';
 import naverIcon from '../assets/icons/naver.png';
 import googleIcon from '../assets/icons/google.png';
-import Loginlogo from '../assets/Images/Loginlogo.png';
+import MZting_logo from '../assets/Images/MZting_logo.png';
 import { sendPostRequest } from "../services";
 
 const LoginForm = () => {
@@ -55,7 +55,7 @@ const LoginForm = () => {
     return (
         <div className={styles.loginFormContainer}>
             <form className={styles.loginForm} onSubmit={handleSubmit}>
-                <img src={Loginlogo} className={styles.loginLogo} alt="Login Logo"/>
+                <img src={MZting_logo} className={styles.loginLogo} alt="Login Logo"/>
                 {error && <p className={styles.error}>{error}</p>}
                 <div className={styles.inputGroup}>
                     <label htmlFor="userId">ID</label>
