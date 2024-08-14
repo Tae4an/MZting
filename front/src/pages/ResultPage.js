@@ -59,7 +59,7 @@ const ResultPage = () => {
     return (
         <div ref={mainContentRef} className={styles.page}>
             <div className={styles.header}>
-                <button className={styles.backButton} onClick={() => navigate(-1)}>
+                <button className={styles.backButton} onClick={() => navigate('/main')}>
                     <i className="bi bi-arrow-left"></i>
                 </button>
                 <img src={profileDetails.image} className={styles.profileImage} alt="Profile" />
