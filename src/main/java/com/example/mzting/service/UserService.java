@@ -1,6 +1,8 @@
 package com.example.mzting.service;
 
 import com.example.mzting.entity.User;
+import com.example.mzting.entity.UserCustomImage;
+import com.example.mzting.repository.UserCustomImageRepository;
 import com.example.mzting.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,7 +20,11 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
+    private UserCustomImageRepository userCustomImageRepository;
+
+    @Autowired
     private EmailService emailService;
+
 
     public User registerUser(User user) {
         if (userRepository.existsByUsername(user.getUsername())) {
@@ -28,6 +34,9 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setEmailVerified(false); // 이메일 인증 전
         User savedUser = userRepository.save(user);
+        UserCustomImage userCustomImage = new UserCustomImage();
+        userCustomImage.setId(savedUser.getId());
+        userCustomImageRepository.save(userCustomImage);
 
         // 이메일 인증 발송
         sendVerificationEmail(savedUser);
