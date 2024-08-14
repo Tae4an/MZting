@@ -4,7 +4,8 @@ import styles from '../styles/MainPage.module.css';
 import { ProfileCard, ProfileDetailModal, LoadingSpinner, QuestionnaireRecommendation } from "../components";
 import { sendGetRequest } from "../services/sendMessage";
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import { AnimatePresence, motion } from 'framer-motion'; // 추가
+import { AnimatePresence, motion } from 'framer-motion';
+import MZting_logo from '../assets/Images/MZting_logo.png';
 
 // 이미지 동적 import 함수
 function importAll(r) {
@@ -175,7 +176,7 @@ const MainPage = () => {
         <div ref={mainContentRef} className={styles.mainContent}>
             <header className={styles.header}>
                 <div className={styles.mainTitleContainer}>
-                    <h1 className={styles.mainTitle}>mzting</h1>
+                    <img src={MZting_logo} className={styles.mainLogo} alt="Main Logo"/>
                     <div className={styles.iconContainer}>
                         <button className={styles.iconButton} onClick={handleHistoryClick}>
                             <i className="bi bi-chat-dots-fill"></i>
