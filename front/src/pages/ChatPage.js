@@ -13,7 +13,6 @@ const ChatPage = () => {
     const state = location.state || {};
     const navigate = useNavigate();
 
-
     const selectedProfile = state.selectedProfile || state;
     const {
         image,
@@ -43,7 +42,7 @@ const ChatPage = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [backgroundChanged, setBackgroundChanged] = useState(false);
     const [stageToComplete, setStageToComplete] = useState(null);
-    const [isIntroModalOpen, setIsIntroModalOpen] = useState(true);
+    const [isIntroModalOpen, setIsIntroModalOpen] = useState(isFirst);
 
     useEffect(() => {
         if(isFirst) {
@@ -57,7 +56,30 @@ const ChatPage = () => {
         try {
             const response = await sendGetRequest({}, `/api/chatroom/entry/${chatRoomId}`);
             console.log("기존 채팅방 이어가기 : ", response);
-            // 여기서 채팅 히스토리를 처리하고 상태를 업데이트합니다.
+            if (response && Array.isArray(response)) {
+                const formattedMessages = response.map(msg => ({
+                    content: {
+                        text: msg.content,
+                        feel: msg.feel,
+                        score: msg.score,
+                        evaluation: msg.evaluation
+                    },
+                    isSent: msg.role === 'user',
+                    avatar: msg.role === 'assistant' ? image : null,
+                    isLastInGroup: true  // 히스토리에서는 모든 메시지를 개별 그룹으로 처리
+                }));
+                setMessages(formattedMessages);
+
+                // 마지막 메시지의 stage 정보로 stages 상태 업데이트
+                const lastMessage = response[response.length - 1];
+                if (lastMessage && lastMessage.stage) {
+                    setStages({
+                        stage1Complete: lastMessage.stage >= 1,
+                        stage2Complete: lastMessage.stage >= 2,
+                        stage3Complete: lastMessage.stage >= 3
+                    });
+                }
+            }
         } catch (error) {
             console.error('Error fetching chat history:', error);
         }
@@ -196,7 +218,7 @@ const ChatPage = () => {
                     isSent: false,
                     avatar: image,
                 };
-                setMessages([responseMessage]);
+                setMessages(prevMessages => [...prevMessages, responseMessage]);
                 setClaudeResponse(response.claudeResponse);
             }
         } catch (error) {
@@ -242,7 +264,7 @@ const ChatPage = () => {
                     const message = response.claudeResponse.messages[index];
                     const isLastMessage = index === totalMessages - 1;
 
-                    await new Promise(resolve => setTimeout(resolve, 2000)); // 각 메시지마다 0.5초의 간격
+                    await new Promise(resolve => setTimeout(resolve, 2000)); // 각 메시지마다 2초의 간격
 
                     const responseMessage = {
                         content: {
@@ -281,11 +303,13 @@ const ChatPage = () => {
                     isActualMeeting={isActualMeeting}
                 />
             </div>
-            <IntroductionModal
-                isOpen={isIntroModalOpen}
-                onClose={handleCloseIntroModal}
-                profileDetails={selectedProfile}
-            />
+            {isIntroModalOpen && (
+                <IntroductionModal
+                    isOpen={isIntroModalOpen}
+                    onClose={handleCloseIntroModal}
+                    profileDetails={selectedProfile}
+                />
+            )}
             <TimePassedModal
                 isOpen={isModalOpen}
                 message={stageToComplete === 1 ? "약속 날짜까지 시간이 흐르고.." :
