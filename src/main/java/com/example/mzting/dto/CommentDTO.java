@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * 댓글 관련 DTO 클래스들을 정의
  */
-public class CommentDTO {
+public interface CommentDTO {
 
     /**
      * 게시물 댓글 작성 요청 DTO 클래스
@@ -19,7 +19,7 @@ public class CommentDTO {
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class PostPostsCommentsRequest {
+    public class PostPostsCommentsRequest {
         private String content;
         private Boolean isLike;
     }
@@ -31,7 +31,7 @@ public class CommentDTO {
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class PostPostsCommentsResponse {
+    class PostPostsCommentsResponse {
         private Boolean success;
     }
 
@@ -42,7 +42,7 @@ public class CommentDTO {
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class GetPostsCommentsRequest {
+    class GetPostsCommentsRequest {
         private int page;
         private int size;
     }
@@ -54,7 +54,7 @@ public class CommentDTO {
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class GetPostsCommentsResponse {
+    class GetPostsCommentsResponse {
         private long totalLikeCount;
         private long totalDislikeCount;
         private List<CommentInfo> commentInfos;
@@ -68,7 +68,7 @@ public class CommentDTO {
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class CommentInfo {
+    class CommentInfo {
         private Long id;
         private String username;
         private String content;
@@ -86,7 +86,7 @@ public class CommentDTO {
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class LikeDisLikeCountInfo {
+    class LikeDisLikeCountInfo {
         private long totalLikeCount;
         private long totalDislikeCount;
     }
@@ -98,7 +98,7 @@ public class CommentDTO {
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class PaginationInfo {
+    class PaginationInfo {
         private int currentPage;
         private int totalPages;
         private long totalElements;
@@ -109,7 +109,7 @@ public class CommentDTO {
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class CommentLikeIncDecRequest {
+    class CommentLikeIncDecRequest {
         private Boolean isFirst;
     }
 }

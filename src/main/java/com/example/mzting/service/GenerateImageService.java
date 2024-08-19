@@ -10,6 +10,9 @@ import com.example.mzting.repository.UserCustomImageRepository;
 import com.example.mzting.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.http.HttpEntity;
@@ -39,20 +42,18 @@ public class GenerateImageService {
         this.userCustomImageRepository = userCustomImageRepository;
     }
 
-    public List<GenerateImageDTO.ImageTagResponse> getImageTags() {
-        return imageTagRepository.findAll().stream()
-                .map(this::convertToDto)
-                .collect(Collectors.toList());
+    public List<ImageTag> getImageTags() {
+        return imageTagRepository.findAll();
     }
 
-    private GenerateImageDTO.ImageTagResponse convertToDto(ImageTag imageTag) {
-        GenerateImageDTO.ImageTagResponse dto = new GenerateImageDTO.ImageTagResponse();
-        dto.setId(imageTag.getId());
-        dto.setKorName(imageTag.getKorName());
-        dto.setCategory(imageTag.getCategory());
-
-        return dto;
-    }
+//    private GenerateImageDTO.ImageTagResponse convertToDto(ImageTag imageTag) {
+//        GenerateImageDTO.ImageTagResponse dto = new GenerateImageDTO.ImageTagResponse();
+//        dto.setId(imageTag.getId());
+//        dto.setKorName(imageTag.getKorName());
+//        dto.setCategory(imageTag.getCategory());
+//
+//        return dto;
+//    }
 
     public GenerateImageDTO.GenerateImageResponse sendingGenerateImageRequest(GenerateImageDTO.GenerateImageRequest generateImageRequest, Long uid) {
         String prompt = String.join(",", generateImageRequest.getTags());
@@ -116,7 +117,7 @@ public class GenerateImageService {
         return userCustomImageRepository.save(userCustomImage);
     }
 
-    public List<ImageLog> getImageLogsByUserId(Long uid) {
-        return imageLogRepository.findAllByUserId(uid);
+    public Page<ImageLog> getImageLogsByUserId(Long uid, Pageable pageable) {
+        return imageLogRepository.findAllByUserId(uid, pageable);
     }
 }
