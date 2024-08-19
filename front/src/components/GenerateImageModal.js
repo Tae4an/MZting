@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styles from "../styles/GenerateImageModal.module.css";
 import {sendGetRequest, sendPostRequest} from "../services";
 import {LoadingSpinner} from "./LoadingSpinner";
+import {ImageModal} from "./ImageModal";
 
 const GenerateImageModal = ({ show, onClose, profileId }) => {
     console.log(profileId)
@@ -13,9 +14,9 @@ const GenerateImageModal = ({ show, onClose, profileId }) => {
     const [logData, setLogData] = useState(null);
     const [currentPage, setCurrentPage] = useState(0);
     const [togglePart, setTogglePart] = useState(0); // 0이 이미지 생성, 1이 생성 로그 확인
+    const [selectedImage, setSelectedImage] = useState(null);
 
     useEffect(() => {
-        // 임시 데이터로 이미지 리스트와 태그 리스트 초기화
         fetchTags();
     }, []);
 
@@ -24,6 +25,10 @@ const GenerateImageModal = ({ show, onClose, profileId }) => {
             fetchImageLogs(currentPage);
         }
     }, [togglePart, currentPage]);
+
+    const handleImageClick = (imageUrl) => {
+        setSelectedImage(imageUrl);
+    };
 
     const fetchImageLogs = async (page) => {
         try {
@@ -36,25 +41,16 @@ const GenerateImageModal = ({ show, onClose, profileId }) => {
 
     const handlePageChange = (newPage) => {
         setCurrentPage(newPage);
-        fetchImageLogs(newPage);  // Immediately fetch new data when page changes
+        fetchImageLogs(newPage);
     };
 
     const requestGenerateImage = async () => {
         setIsLoading(true)
-        const requestTags = []
-        for (let tag of selectedTags) {
-            requestTags.push(tag.engName)
-        }
-
-        const requestData = {
-            tags : requestTags
-        }
-
+        const requestTags = selectedTags.map(tag => tag.engName);
+        const requestData = { tags: requestTags }
         const response = await sendPostRequest(requestData, "api/gnimage/generate")
-        console.log(response.imageUrl)
         setCurrentImage(response.imageUrl)
         setIsLoading(false)
-
     }
 
     const fetchTags = async () => {
@@ -66,7 +62,6 @@ const GenerateImageModal = ({ show, onClose, profileId }) => {
             acc[item.category].push(item);
             return acc;
         }, {});
-        console.log(processedTags)
         setTagList(processedTags)
     }
 
@@ -76,7 +71,6 @@ const GenerateImageModal = ({ show, onClose, profileId }) => {
                 ? prev.filter(t => !(t.category === category && t.korName === tag.korName))
                 : [...prev.filter(t => t.category !== category), { ...tag, category }]
         );
-        console.log(selectedTags)
     };
 
     const handleApplyImage = async () => {
@@ -84,7 +78,6 @@ const GenerateImageModal = ({ show, onClose, profileId }) => {
             const requestData = {
                 imageUrl: currentImage
             }
-
             const applyResponse = await sendPostRequest(requestData, `api/gnimage/apply/${profileId}`)
             console.log(applyResponse)
             console.log("적용 완료")
@@ -117,7 +110,6 @@ const GenerateImageModal = ({ show, onClose, profileId }) => {
         );
     }
 
-// ImagePreviewPart 컴포넌트 추가
     const ImagePreviewPart = ({ isLoading, currentImage, selectedTags, requestGenerateImage, handleApplyImage }) => {
         return (
             <div className={styles.imagePreview}>
@@ -128,17 +120,22 @@ const GenerateImageModal = ({ show, onClose, profileId }) => {
                             <LoadingSpinner/>
                         </div>
                     ) : currentImage ? (
-                        <img src={currentImage} alt="Generated" className={styles.generatedImage}/>
+                        <img
+                            src={currentImage}
+                            alt="Generated"
+                            className={styles.generatedImage}
+                            onClick={() => handleImageClick(currentImage)}
+                        />
                     ) : (
                         <img
                             src="https://firebasestorage.googleapis.com/v0/b/mzting.appspot.com/o/default%2FgenerateDefault.png?alt=media&token=1ba0e005-49d3-43bc-84d3-43574eeccef9"
-                            alt="Default" className={styles.defaultImage}/>
+                            alt="Default"
+                            className={styles.defaultImage}
+                        />
                     )}
                 </div>
                 <div className={styles.selectedTags}>
-                    <h4 style={{
-                        marginBottom: "20px"
-                    }}>Selected Tags:</h4>
+                    <h4 style={{marginBottom: "20px"}}>Selected Tags:</h4>
                     <div className={styles.tagContainer}>
                         {selectedTags.map((tag, index) => (
                             <span key={index} className={styles.selectedTag}>{tag.category}: {tag.korName}</span>
@@ -156,29 +153,11 @@ const GenerateImageModal = ({ show, onClose, profileId }) => {
             </div>
         );
     };
-// GenerateImagePart 컴포넌트 수정
+
     const GenerateImagePart = () => {
         return (
             <div className={styles.generateImageContainer}>
-                <div className={styles.tagSelection}>
-                    <h2>태그 선택</h2>
-                    {Object.keys(tagList).map((category, index) => (
-                        <div key={index}>
-                            <h3>{category}</h3>
-                            <div className={styles.tagList}>
-                                {tagList[category].map((tag, i) => (
-                                    <button
-                                        key={i}
-                                        onClick={() => handleTagSelect(category, tag)}
-                                        className={selectedTags.some(t => t.category === category && t.korName === tag.korName) ? styles.selectedTag : styles.tag}
-                                    >
-                                        {tag.korName}
-                                    </button>
-                                ))}
-                            </div>
-                        </div>
-                    ))}
-                </div>
+                <TagSelectionPart />
                 <ImagePreviewPart
                     isLoading={isLoading}
                     currentImage={currentImage}
@@ -201,7 +180,12 @@ const GenerateImageModal = ({ show, onClose, profileId }) => {
                 <div className={styles.imageGrid}>
                     {logData.contents.map((log) => (
                         <div key={log.id} className={styles.imageItem}>
-                            <img src={log.imageUrl} alt={`Generated at ${log.gnTime}`} className={styles.image} />
+                            <img
+                                src={log.imageUrl}
+                                alt={`Generated at ${log.gnTime}`}
+                                className={styles.image}
+                                onClick={() => handleImageClick(log.imageUrl)}
+                            />
                             <p>{new Date(log.gnTime).toLocaleString()}</p>
                         </div>
                     ))}
@@ -250,6 +234,11 @@ const GenerateImageModal = ({ show, onClose, profileId }) => {
                 {togglePart === 0 && <GenerateImagePart />}
                 {togglePart === 1 && <ImageLogPart />}
                 <ButtonArea />
+                <ImageModal
+                    show={selectedImage !== null}
+                    onClose={() => setSelectedImage(null)}
+                    image={selectedImage}
+                />
             </div>
         </div>
     );
@@ -258,8 +247,7 @@ const GenerateImageModal = ({ show, onClose, profileId }) => {
 GenerateImageModal.propTypes = {
     show: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,
+    profileId: PropTypes.string.isRequired,
 };
 
-export {
-    GenerateImageModal
-};
+export { GenerateImageModal };
