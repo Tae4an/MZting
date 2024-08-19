@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from '../styles/MainPage.module.css';
-import { ProfileCard, ProfileDetailModal, LoadingSpinner, QuestionnaireRecommendation } from "../components";
+import { ProfileCard, ProfileDetailModal, LoadingSpinner } from "../components";
+import { QuestionnaireRecommendation } from "../components/QuestionnaireRecommendation";
 import { sendGetRequest } from "../services/sendMessage";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { AnimatePresence, motion } from 'framer-motion';
