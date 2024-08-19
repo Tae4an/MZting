@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -57,21 +58,30 @@ public class ProfileService {
      *
      * @return 프로필 목록
      */
-    @Cacheable(value = "profiles", key = "'all'")
-    public List<Profile> getAllProfiles() {
+    @Cacheable(value = "profiles", key = "#uid")
+    public List<Profile> getAllProfiles(long uid) {
         List<Profile> profiles = profileRepository.findAll();
-        Map<Long, UserCustomImage> userCustomImages = getUserCustomImages(profiles);
+        Optional<UserCustomImage> userCustomImageOpt = userCustomImageRepository.findById(uid);
 
-        for (int i = 0; i < profiles.size(); i++) {
-            Profile profile = profiles.get(i);
-            UserCustomImage customImage = userCustomImages.get(profile.getProfileId().longValue());
-            if (customImage != null) {
-                String customImageField = getCustomImageField(customImage, i + 1);
+        if (userCustomImageOpt.isPresent()) {
+            UserCustomImage userCustomImage = userCustomImageOpt.get();
+            for (int i = 0; i < profiles.size() && i < 16; i++) {
+                Profile profile = profiles.get(i);
+                String customImageField = getCustomImageField(userCustomImage, i + 1);
                 profile.setCharacterImage(customImageField);
             }
         }
 
         return profiles;
+    }
+
+    public Profile getProfile(long uid, int profileId) {
+        Profile profile = profileRepository.findById(profileId).orElse(null);
+        UserCustomImage userCustomImage = userCustomImageRepository.findById(uid).orElse(null);
+        String imageUrl = getCustomImageField(userCustomImage, profileId);
+        Objects.requireNonNull(profile).setCharacterImage(imageUrl);
+
+        return profile;
     }
 
     private Map<Long, UserCustomImage> getUserCustomImages(List<Profile> profiles) {
