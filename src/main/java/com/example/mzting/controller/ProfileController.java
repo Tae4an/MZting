@@ -42,4 +42,5 @@ public class ProfileController {
     public List<Profile> getProfilesByMbti(@PathVariable String type) {
         return profileService.getProfilesByMbti(type);
     }
+
 }

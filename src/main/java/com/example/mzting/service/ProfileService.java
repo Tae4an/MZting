@@ -1,7 +1,10 @@
 package com.example.mzting.service;
 
 import com.example.mzting.entity.Profile;
+import com.example.mzting.entity.User;
+import com.example.mzting.entity.UserCustomImage;
 import com.example.mzting.repository.ProfileRepository;
+import com.example.mzting.repository.UserCustomImageRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
@@ -10,7 +13,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -23,6 +28,7 @@ public class ProfileService {
 
     // 프로필 저장소
     private final ProfileRepository profileRepository;
+    private final UserCustomImageRepository userCustomImageRepository;
 
     /**
      * ProfileService 생성자
@@ -30,8 +36,9 @@ public class ProfileService {
      *
      * @param profileRepository 프로필 저장소
      */
-    public ProfileService(ProfileRepository profileRepository) {
+    public ProfileService(ProfileRepository profileRepository, UserCustomImageRepository userCustomImageRepository) {
         this.profileRepository = profileRepository;
+        this.userCustomImageRepository = userCustomImageRepository;
     }
 
     /**
@@ -52,7 +59,52 @@ public class ProfileService {
      */
     @Cacheable(value = "profiles", key = "'all'")
     public List<Profile> getAllProfiles() {
-        return profileRepository.findAll();
+        List<Profile> profiles = profileRepository.findAll();
+        Map<Long, UserCustomImage> userCustomImages = getUserCustomImages(profiles);
+
+        for (int i = 0; i < profiles.size(); i++) {
+            Profile profile = profiles.get(i);
+            UserCustomImage customImage = userCustomImages.get(profile.getProfileId().longValue());
+            if (customImage != null) {
+                String customImageField = getCustomImageField(customImage, i + 1);
+                profile.setCharacterImage(customImageField);
+            }
+        }
+
+        return profiles;
+    }
+
+    private Map<Long, UserCustomImage> getUserCustomImages(List<Profile> profiles) {
+        List<Long> profileIds = profiles.stream()
+                .map(profile -> profile.getProfileId().longValue())
+                .collect(Collectors.toList());
+
+        List<UserCustomImage> customImages = userCustomImageRepository.findAllById(profileIds);
+
+        return customImages.stream()
+                .collect(Collectors.toMap(UserCustomImage::getId, Function.identity()));
+    }
+
+    private String getCustomImageField(UserCustomImage customImage, int index) {
+        switch (index) {
+            case 1: return customImage.getProfileImage1();
+            case 2: return customImage.getProfileImage2();
+            case 3: return customImage.getProfileImage3();
+            case 4: return customImage.getProfileImage4();
+            case 5: return customImage.getProfileImage5();
+            case 6: return customImage.getProfileImage6();
+            case 7: return customImage.getProfileImage7();
+            case 8: return customImage.getProfileImage8();
+            case 9: return customImage.getProfileImage9();
+            case 10: return customImage.getProfileImage10();
+            case 11: return customImage.getProfileImage11();
+            case 12: return customImage.getProfileImage12();
+            case 13: return customImage.getProfileImage13();
+            case 14: return customImage.getProfileImage14();
+            case 15: return customImage.getProfileImage15();
+            case 16: return customImage.getProfileImage16();
+            default: throw new IllegalArgumentException("Invalid profile image index: " + index);
+        }
     }
 
     /**
@@ -137,5 +189,14 @@ public class ProfileService {
         logger.info("Generated prompt for character:\n{}", prompt.toString());
 
         return prompt.toString();
+    }
+
+    public UserCustomImage getUserCustomImage(Long uid) {
+        return userCustomImageRepository.findById(uid)
+                .orElseGet(this::createDefaultUserCustomImage);
+    }
+
+    private UserCustomImage createDefaultUserCustomImage() {
+        return new UserCustomImage();
     }
 }
