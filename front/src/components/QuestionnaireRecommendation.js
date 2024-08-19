@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { sendPostRequest, sendGetRequest } from "../services";
-import styles from '../styles/RecommendModal.module.css';
+import styles from '../styles/QuestionnaireRecommendation.module.css';
 import { ProfileCard } from "./ProfileCard";
 import { ProfileDetailModal } from "./ProfileDetailModal";
 
-// Constants
 const QUESTIONS_PER_PAGE = 4;
 
-// Utility functions
 function importAll(r) {
     let images = {};
     r.keys().forEach((item) => { images[item.replace('./', '')] = r(item); });
@@ -32,50 +30,31 @@ const transformProfileData = (data) => {
     }));
 };
 
-// Main component
-const RecommendModal = ({ show, onClose }) => {
-    const [option, setOption] = useState(null);
+const QuestionnaireRecommendation = ({ show, onClose }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [choice, setChoice] = useState([]);
     const [recommend, setRecommend] = useState(null);
     const [profileData, setProfileData] = useState([]);
-    const [selectedProfile, setSelectedProfile] = useState(null); // 선택된 프로필 상태 추가
-    const navigate = useNavigate(); // useNavigate 훅 가져오기
+    const [selectedProfile, setSelectedProfile] = useState(null);
+    const navigate = useNavigate();
 
-    const handleChoiceComplete = async (completeAnswers) => {
-        try {
-            setIsLoading(true);
-            const mbti = await sendPostRequest(completeAnswers, "/api/question/submit");
-            const data = await sendGetRequest({}, `/api/recommend/compatibility/${mbti}`);
-            setRecommend(data.compatibilityGroups.soulMate);
-            setOption(false);
-        } catch (error) {
-            console.error("Error in handleChoiceComplete:", error);
-        } finally {
-            setIsLoading(false);
-    }
-    };
-
-    const handleMyMBTI = async () => {
-        try {
-            setIsLoading(true);
-            const data = await sendGetRequest({}, "/api/recommend/compatibility/INFP");
-            setRecommend(data.compatibilityGroups.soulMate);
-            setOption(false); // true 대신 false로 변경
-        } catch (error) {
-            console.error("Error in handleMyMBTI:", error);
-        } finally {
-            setIsLoading(false);
+    useEffect(() => {
+        if (show) {
+            handleSelectChoice();
+            fetchProfileData();
+        } else {
+            setChoice([]);
+            setRecommend(null);
+            setProfileData([]);
+            setSelectedProfile(null);
         }
-    };
+    }, [show]);
 
     const handleSelectChoice = async () => {
         try {
             setIsLoading(true);
             const data = await sendGetRequest({}, "/api/question");
-            console.log(data)
             setChoice(data);
-            setOption(true);
         } catch (error) {
             console.error("Error in handleSelectChoice:", error);
         } finally {
@@ -83,18 +62,18 @@ const RecommendModal = ({ show, onClose }) => {
         }
     };
 
-    useEffect(() => {
-        if (!show) {
-            setOption(null);
+    const handleChoiceComplete = async (completeAnswers) => {
+        try {
+            setIsLoading(true);
+            const mbti = await sendPostRequest(completeAnswers, "/api/question/submit");
+            const data = await sendGetRequest({}, `/api/recommend/compatibility/${mbti}`);
+            setRecommend(data.compatibilityGroups.soulMate);
+        } catch (error) {
+            console.error("Error in handleChoiceComplete:", error);
+        } finally {
             setIsLoading(false);
-            setChoice([]);
-            setRecommend(null);
-            setProfileData([]);
-            setSelectedProfile(null); // 모달을 닫을 때 선택된 프로필 초기화
-        } else {
-            fetchProfileData();
         }
-    }, [show]);
+    };
 
     const fetchProfileData = async () => {
         try {
@@ -131,22 +110,19 @@ const RecommendModal = ({ show, onClose }) => {
             <div className={styles.modal}>
                 <ModalHeader onClose={onClose} />
                 <ModalBody
-                    option={option}
-                    handleMyMBTI={handleMyMBTI}
-                    handleSelectChoice={handleSelectChoice}
                     choice={choice}
                     handleChoiceComplete={handleChoiceComplete}
                     recommend={recommend}
                     profileData={profileData}
                     isLoading={isLoading}
-                    onProfileClick={handleProfileClick} // 프로필 클릭 핸들러 추가
+                    onProfileClick={handleProfileClick}
                 />
                 {selectedProfile && (
                     <ProfileDetailModal
                         show={!!selectedProfile}
                         onClose={handleProfileClose}
                         profile={selectedProfile}
-                        onClick={() => handleChatClick(selectedProfile)} // 대화하기 클릭 핸들러 추가
+                        onClick={() => handleChatClick(selectedProfile)}
                         showChatButton={true}
                     />
                 )}
@@ -155,41 +131,22 @@ const RecommendModal = ({ show, onClose }) => {
     );
 };
 
-// Sub-components
 const ModalHeader = ({ onClose }) => (
     <div className={styles.modalHeader}>
-        <h2>추천</h2>
+        <h2>선택지 MBTI 추천</h2>
         <button className={styles.closeButton} onClick={onClose}>×</button>
     </div>
 );
 
-const ModalBody = ({ option, handleMyMBTI, handleSelectChoice, choice, handleChoiceComplete, recommend, profileData, isLoading, onProfileClick }) => (
+const ModalBody = ({ choice, handleChoiceComplete, recommend, profileData, isLoading, onProfileClick }) => (
     <div className={styles.modalBody}>
-        {option === null ? (
-            <>
-                <p>옵션 선택</p>
-                <OptionSelection handleMyMBTI={handleMyMBTI} handleSelectChoice={handleSelectChoice} />
-            </>
-        ) : option === true ? (
-            <TempChoiceView choice={choice} onComplete={handleChoiceComplete} />
-        ) : isLoading ? (
+        {isLoading ? (
             <div>로딩 중...</div>
-        ) : recommend && profileData.length !== 0 ? (
+        ) : recommend ? (
             <TempCharacterView recommend={recommend} profileData={profileData} onProfileClick={onProfileClick} />
-        ) : null}
-    </div>
-);
-
-const OptionSelection = ({ handleMyMBTI, handleSelectChoice }) => (
-    <div className={styles.optionSelection}>
-        <div>
-            <button onClick={handleMyMBTI} className={styles.optionButton}>내 MBTI 기반 추천</button>
-            <p>자신의 MBTI를 아는 사람을 위한 선택!</p>
-        </div>
-        <div>
-            <button onClick={handleSelectChoice} className={styles.optionButton}>선택지를 통한 추천</button>
-            <p>자신의 MBTI를 모르는 사람을 위한 선택!</p>
-        </div>
+        ) : (
+            <TempChoiceView choice={choice} onComplete={handleChoiceComplete} />
+        )}
     </div>
 );
 
@@ -287,4 +244,4 @@ const QuestionBlock = ({ question, handleAnswer, selectedOption }) => (
     </div>
 );
 
-export { RecommendModal };
+export { QuestionnaireRecommendation };

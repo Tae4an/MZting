@@ -9,11 +9,12 @@ import { SignupForm } from './SignupForm'
 import { LoadingSpinner } from "./LoadingSpinner";
 import { CommentModal } from "./CommentModal";
 import { TypingIndicator } from "./TypingIndicator";
-import { RecommendModal } from "./RecommendModal";
 import { PreviousChatsModal } from "./PreviousChatsModal";
 import { TimePassedModal } from "./TimePassedModal";
 import { SituationBanner } from "./SituationBanner";
 import { FeedbackBanner } from "./FeedbackBanner";
+import { MBTISelector } from "./MBTISelector";
+import { QuestionnaireRecommendation  } from "./QuestionnaireRecommendation";
 import { GenerateImageModal } from "./GenerateImageModal";
 
 
@@ -30,10 +31,11 @@ export {
     SignupForm,
     CommentModal,
     TypingIndicator,
-    RecommendModal,
     PreviousChatsModal,
     TimePassedModal,
     SituationBanner,
     FeedbackBanner,
-    GenerateImageModal
+    GenerateImageModal,
+    MBTISelector,
+    QuestionnaireRecommendation
 }

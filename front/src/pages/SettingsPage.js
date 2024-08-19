@@ -51,13 +51,6 @@ const SettingsPage = () => {
                     로그아웃
                 </button>
             </div>
-            <div
-                className={styles.scrollIndicator}
-                style={{
-                    top: `${scrollPosition}px`,
-                    left: `${mainContentRef.current ? mainContentRef.current.getBoundingClientRect().right - 19 : 0}px`
-                }}
-            />
         </div>
     );
 };

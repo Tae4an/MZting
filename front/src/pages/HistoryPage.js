@@ -55,7 +55,7 @@ const HistoryPage = () => {
 
     return (
         <div ref={mainContentRef} className={styles.page}>
-            <header className={styles.header}>
+            <header className={styles.Historyheader}>
                 <button className={styles.backButton} onClick={() => navigate(-1)}>
                     <i className="bi bi-arrow-left"></i>
                 </button>
@@ -86,13 +86,6 @@ const HistoryPage = () => {
                     </div>
                 ))}
             </div>
-            <div
-                className={styles.scrollIndicator}
-                style={{
-                    top: `${scrollPosition}px`,
-                    left: `${mainContentRef.current ? mainContentRef.current.getBoundingClientRect().right - 19 : 0}px`
-                }}
-            />
         </div>
     );
 };

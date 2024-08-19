@@ -1,0 +1,99 @@
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 500px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.modalHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.closeButton {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #ff6b6b;
+}
+
+.modalBody {
+    margin-bottom: 20px;
+}
+
+.choiceView {
+    margin-top: 20px;
+}
+
+.questionBlock {
+    margin-bottom: 20px;
+}
+
+.questionBlock p {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.optionButtons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.optionButton {
+    width: 48%;
+    padding: 10px;
+    border: none;
+    background-color: rgba(103, 102, 102, 0.73);
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.optionButton:hover {
+    background-color: #4CAF50;
+}
+
+.optionButton.selected {
+    background-color: #4CAF50;
+    color: black;
+}
+
+.nextButton {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: black;
+    border: none;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.nextButton:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.tempCharacterView {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 20px;
+}

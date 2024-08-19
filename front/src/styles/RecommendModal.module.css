@@ -1,9 +1,9 @@
-.modalOverlay {
+.modal {
     position: fixed;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
+    width: 100%;
+    height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
@@ -11,107 +11,130 @@
     z-index: 1000;
 }
 
-.modal {
-    background: #ffffff;
+.modalContent {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    width: 80%;
+    max-width: 500px;
+}
+
+.optionButton {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.closeButton {
+    background-color: #f44336;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+
+.modalContent {
+    background-color: white;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 80%;
     max-width: 500px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    max-height: 80vh; /* 모달의 최대 높이를 설정하여 화면에 맞게 조절 */
-    overflow-y: auto; /* 모달 내에서 스크롤 가능하게 설정 */
+    max-height: 80vh;
+    overflow-y: auto;
 }
 
 .modalHeader {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 .closeButton {
     background: none;
     border: none;
-    font-size: 1.5rem;
+    font-size: 24px;
     cursor: pointer;
-    color: #ff6b6b;
 }
 
-.modalBody {
-    padding: 20px 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.optionButton {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.optionButton:hover {
+    background-color: #45a049;
+}
+
+.optionButton.selected {
+    background-color: #008CBA;
+}
+
+.nextButton {
+    background-color: #008CBA;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    font-size: 16px;
+    margin: 20px auto 0;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.nextButton:hover {
+    background-color: #007B9A;
+}
+
+.nextButton:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
 }
 
 .choiceView {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    margin-top: 20px;
 }
 
 .questionBlock {
     margin-bottom: 20px;
 }
 
+.questionBlock p {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
 .optionButtons {
     display: flex;
-    gap: 10px;
+    justify-content: space-between;
 }
 
-.optionButton {
-    background-color: #f0f0f5; /* 버튼 배경 색상 밝게 변경 */
-    color: #333333; /* 버튼 텍스트 색상 어둡게 변경 */
-    border: 2px solid #ccc; /* 기본 테두리 색상 */
-    border-radius: 8px;
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: background 0.3s, transform 0.3s, border 0.3s; /* 테두리 전환 효과 추가 */
-}
-
-.optionButton:hover {
-    background: #e0e0e0; /* 호버 시 색상 변경 */
-    transform: scale(1.05); /* 약간 확대 효과 */
-}
-
-.selected {
-    background-color: #4cae50; /* 배경 색상 밝게 변경 */
-    color: #ffffff; /* 텍스트 색상 밝게 변경 */
-    border: 2px solid #3a8e40; /* 테두리 색상 변경 */
-}
-
-.nextButton {
-    background-color: #ff6b6b; /* 버튼 배경 색상 밝게 변경 */
-    color: #ffffff; /* 버튼 텍스트 색상 밝게 변경 */
-    border: none;
-    border-radius: 8px;
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: background 0.3s, transform 0.3s;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
-}
-
-.nextButton:disabled {
-    background-color: #ddd; /* 비활성화 상태 색상 */
-    cursor: not-allowed;
-}
-
-.nextButton:hover:not(:disabled) {
-    background: #e45b5b; /* 호버 시 색상 변경 */
-    transform: scale(1.05); /* 약간 확대 효과 */
-}
-
-.profileCard {
-    width: 100%; /* 카드의 너비를 100%로 설정 */
-    max-width: 300px; /* 카드의 최대 너비를 300px로 설정 */
-    margin: 10px; /* 카드 사이에 간격 추가 */
-}
-
-.tempCharacterView {
-    display: flex;
-    flex-wrap: wrap; /* 여러 줄로 카드가 배치되도록 설정 */
-    justify-content: center; /* 중앙 정렬 */
+.optionButtons button {
+    width: 48%;
 }
