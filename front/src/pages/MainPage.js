@@ -247,7 +247,7 @@ const MainPage = () => {
 const transformProfileData = (data) => {
     return data.map((profile, index) => ({
         id: profile.profileId,
-        image: images[profile.characterImage] || images[`image${index + 1}.jpg`],
+        image: profile.characterImage,
         name: profile.name,
         type: `#${profile.mbti}`,
         tags: profile.characterKeywords.map(keyword => keyword.keyword.keyword).join(' '),
