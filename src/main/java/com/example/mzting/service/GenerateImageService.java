@@ -117,4 +117,7 @@ public class GenerateImageService {
         return userCustomImageRepository.save(userCustomImage);
     }
 
+    public List<ImageLog> getImageLogsByUserId(Long uid) {
+        return imageLogRepository.findAllByUserId(uid);
+    }
 }

@@ -34,9 +34,10 @@ public class GenerateImageController {
 
     // 생성된 이미지를 캐릭터에 반영하는 엔드포인트
     @PostMapping("/apply/{profileId}")
-    public ResponseEntity<?> applyImage(@PathVariable long profileId, @RequestBody GenerateImageDTO.ApplyImageRequest applyImageRequest, HttpServletRequest request) {
+    public ResponseEntity<?> applyImage(@PathVariable int profileId, @RequestBody GenerateImageDTO.ApplyImageRequest applyImageRequest, HttpServletRequest request) {
         Long uid = (Long) request.getAttribute("uid");
 
+        generateImageService.setProfileImage(uid, profileId, applyImageRequest.getImageUrl());
 
         return ResponseEntity.ok("으에에");
     }
@@ -45,7 +46,7 @@ public class GenerateImageController {
     public ResponseEntity<?> logAll(HttpServletRequest request) {
         Long uid = (Long) request.getAttribute("uid");
 
-        return ResponseEntity.ok("으에에");
+        return ResponseEntity.ok(generateImageService.getImageLogsByUserId(uid));
     }
     
     @GetMapping("/set")
