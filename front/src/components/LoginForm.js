@@ -65,6 +65,7 @@ const LoginForm = () => {
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                         required
+                        placeholder="이메일 형식으로 작성해주세요!"
                     />
                 </div>
                 <div className={styles.inputGroup}>
