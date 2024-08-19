@@ -147,6 +147,7 @@ const ProfileDetailModal = ({ show, onClose, profile, onClick, showChatButton, l
                 <GenerateImageModal
                     show={showGenerateImageModal}
                     onClose={handleGenerateImageModal}
+                    profileId={profile.id}
                 />
             )}
             <button className={styles.commentButton} onClick={handleCommentClick}>댓글 및 후기</button>

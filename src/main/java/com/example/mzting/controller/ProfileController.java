@@ -2,6 +2,7 @@ package com.example.mzting.controller;
 
 import com.example.mzting.entity.Profile;
 import com.example.mzting.service.ProfileService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,8 +30,16 @@ public class ProfileController {
      * @return 모든 프로필 목록
      */
     @GetMapping
-    public List<Profile> getProfiles() {
-        return profileService.getAllProfiles();
+    public ResponseEntity<?> getProfiles(HttpServletRequest request) {
+
+        long uid = (long) request.getAttribute("uid");
+        return ResponseEntity.ok(profileService.getAllProfiles(uid));
+    }
+
+    @GetMapping("/{profileId}")
+    public ResponseEntity<?> getProfile(@PathVariable int profileId, HttpServletRequest request) {
+        long uid = (long) request.getAttribute("uid");
+        return ResponseEntity.ok(profileService.getProfile(uid, profileId));
     }
 
     /**
