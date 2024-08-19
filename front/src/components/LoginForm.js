@@ -47,11 +47,6 @@ const LoginForm = () => {
         window.location.href = 'http://localhost:8080/oauth2/authorization/naver';
     };
 
-    const handleKakaoLogin = () => {
-        // 기능 미구현
-        alert('카카오 로그인 기능은 아직 구현되지 않았습니다.');
-    };
-
     return (
         <div className={styles.loginFormContainer}>
             <form className={styles.loginForm} onSubmit={handleSubmit}>
@@ -65,6 +60,7 @@ const LoginForm = () => {
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                         required
+                        placeholder="이메일 형식으로 작성해주세요!"
                     />
                 </div>
                 <div className={styles.inputGroup}>
@@ -85,9 +81,6 @@ const LoginForm = () => {
                     </button>
                     <button type="button" className={styles.iconButton} onClick={handleNaverLogin}>
                         <img src={naverIcon} alt="Naver" className={styles.iconImage}/>
-                    </button>
-                    <button type="button" className={styles.iconButton} onClick={handleKakaoLogin}>
-                        <img src={kakaoIcon} alt="Kakao" className={styles.iconImage}/>
                     </button>
                 </div>
             </form>

@@ -13,7 +13,7 @@
 
 .modalContent {
     background-color: white;
-    padding: 30px;
+    padding: 20px;
     border-radius: 10px;
     width: 90%;
     max-width: 1200px;
@@ -36,7 +36,7 @@
 
 .title {
     font-size: 28px;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 .generateImageContainer {
@@ -74,13 +74,35 @@
     color: white;
 }
 
-.generatedImage, .defaultImage {
+.imageContainer {
     width: 100%;
     max-width: 500px;
-    height: auto;
-    max-height: 60%;
-    object-fit: contain;
+    height: 0;
+    padding-bottom: 75%; /* 4:3 비율 유지 */
+    position: relative;
     margin-bottom: 20px;
+    box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.4);
+}
+
+.generatedImage, .defaultImage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.spinnerContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0; /* 배경색 추가 */
 }
 
 .selectedTags {
@@ -115,11 +137,48 @@ button:disabled {
     cursor: not-allowed;
 }
 
+.imageLogContainer {
+    width: 100%;
+    height: calc(100% - 60px);
+    margin-top: 20px;
+    overflow-y: auto;
+}
+
+.imageItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.image, .generatedImage {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    object-position: center 20%;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0;
+}
+
+.pagination button {
+    margin: 0 10px;
+}
+
+.pagination span {
+    margin: 0 10px;
+}
+
 .imageGrid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 20px;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
 
 .image {
@@ -127,4 +186,19 @@ button:disabled {
     height: 200px;
     object-fit: cover;
     border-radius: 5px;
+}
+
+.applyButton {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.applyButton:hover {
+    background-color: #45a049;
 }

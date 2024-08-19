@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styles from '../styles/SignupPage.module.css';
+import MZting_logo from '../assets/Images/MZting_logo.png';
+
 
 const SignupForm = () => {
     const [userId, setUserId] = useState('');
@@ -57,7 +59,7 @@ const SignupForm = () => {
     return (
         <div className={styles.signupFormContainer}>
             <form className={styles.signupForm} onSubmit={handleSubmit}>
-                <h1 className={styles.signupTitle}>mzting</h1>
+                <img src={MZting_logo} className={styles.signupLogo} alt="Signup Logo"/>
                 {error && <p className={styles.error}>{error}</p>}
                 <div className={styles.inputGroup}>
                     <label htmlFor="userId">ID</label>
@@ -67,6 +69,7 @@ const SignupForm = () => {
                         value={userId}
                         onChange={(e) => setUserId(e.target.value)}
                         required
+                        placeholder="이메일과 동일"
                     />
                 </div>
                 <div className={styles.inputGroup}>
@@ -117,6 +120,7 @@ const SignupForm = () => {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
+                        placeholder="아이디와 동일"
                     />
                 </div>
                 <div className={styles.selectGender}>
@@ -177,4 +181,4 @@ const SignupForm = () => {
     );
 };
 
-export { SignupForm };
+export {SignupForm};

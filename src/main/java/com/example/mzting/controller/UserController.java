@@ -119,6 +119,7 @@ public class UserController {
 
             // 사용자 프로필 업데이트
             user.setAge(profileUpdateRequest.getAge());
+            user.setNickname(profileUpdateRequest.getNickname());
             user.setGender(profileUpdateRequest.getGender());
             user.setMbti(profileUpdateRequest.getMbti());
             // 변경된 사용자 정보 저장
@@ -151,5 +152,6 @@ class LoginRequest {
 class UserProfileUpdateRequest {
     private Integer age;
     private String gender;
+    private String nickname;
     private String mbti;
 }

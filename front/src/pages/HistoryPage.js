@@ -1,45 +1,19 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from "react-router-dom";
+import axios from 'axios';
 import styles from '../styles/HistoryPage.module.css';
-import image2 from '../assets/Images/image2.jpg';
 
 const HistoryPage = () => {
     const navigate = useNavigate();
     const mainContentRef = useRef(null);
     const [scrollPosition, setScrollPosition] = useState(0);
-
-    const conversations = [
-        {
-            avatarSrc: "https://cdn.builder.io/api/v1/image/assets/TEMP/f312af922c0a98448cf4a4b68cf50ce014690f6158cf485c528a8307c494fe5f?apiKey=49c1e3d53b81482bb61cc4f10fd5a261&",
-            title: "#INFJ 와의 대화",
-            status: "진행중",
-            actionText: "이어서 대화 하기",
-            route: "/continue-conversation" // 이어서 대화 하기 페이지 경로
-        },
-        {
-            avatarSrc: image2,
-            title: "#ENFJ 와의 대화",
-            status: "완료",
-            actionText: "대화 결과 보기",
-            route: "/result" // ResultPage 경로
-        }
-    ];
-
-    const handleScroll = () => {
-        const totalScrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        const currentScrollPosition = window.scrollY;
-        const maxScrollIndicatorPosition = window.innerHeight - 129;
-
-        let scrollIndicatorPosition = (currentScrollPosition / totalScrollHeight) * maxScrollIndicatorPosition;
-
-        if (scrollIndicatorPosition > maxScrollIndicatorPosition) {
-            scrollIndicatorPosition = maxScrollIndicatorPosition;
-        }
-
-        setScrollPosition(scrollIndicatorPosition);
-    };
+    const [chatRooms, setChatRooms] = useState([]);
+    const [profiles, setProfiles] = useState({});
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
+        fetchData();
         window.addEventListener('scroll', handleScroll);
         window.addEventListener('resize', handleScroll);
 
@@ -49,9 +23,76 @@ const HistoryPage = () => {
         };
     }, []);
 
-    const handleActionClick = (route) => {
-        navigate(route);
+    const fetchData = async () => {
+        setLoading(true);
+        setError(null);
+        try {
+            const chatRoomsResponse = await axios.get('/api/chatroom/list/all', {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            });
+            setChatRooms(chatRoomsResponse.data);
+
+            const uniqueProfileIds = [...new Set(chatRoomsResponse.data.map(room => room.profileId))];
+            const profilesData = {};
+
+            await Promise.all(uniqueProfileIds.map(async (id) => {
+                try {
+                    const profileResponse = await axios.get(`/api/profiles/${id}`, {
+                        headers: {
+                            'Authorization': `Bearer ${localStorage.getItem('token')}`
+                        }
+                    });
+                    profilesData[id] = profileResponse.data;
+                } catch (profileError) {
+                    console.error(`프로필 ID ${id}를 가져오는 데 실패했습니다:`, profileError);
+                }
+            }));
+
+            setProfiles(profilesData);
+        } catch (error) {
+            console.error('데이터를 불러오는 데 실패했습니다:', error);
+            setError('데이터를 불러오는 데 실패했습니다. 다시 시도해 주세요.');
+        } finally {
+            setLoading(false);
+        }
     };
+
+    const handleScroll = () => {
+        // ... (기존 코드 유지)
+    };
+
+    const handleActionClick = (chatRoom) => {
+        const profileDetails = profiles[chatRoom.profileId];
+        console.log('Profile details:', profileDetails);  // 디버깅을 위한 로그
+        if (profileDetails) {
+            navigate(`/result`, {
+                state: {
+                    chatRoomId: chatRoom.id,
+                    profileDetails: {
+                        ...profileDetails,
+                        image: "https://firebasestorage.googleapis.com/v0/b/mzting.appspot.com/o/default%2Fprofile1.jpg?alt=media&token=d9a25fd3-78d0-480b-8f94-249287cd80ad",
+                    }
+                }
+            });
+        } else {
+            console.error(`프로필 ID ${chatRoom.profileId}에 대한 정보를 찾을 수 없습니다.`);
+            // 사용자에게 오류 메시지 표시
+            alert('프로필 정보를 가져오는 데 실패했습니다. 잠시 후 다시 시도해 주세요.');
+        }
+    };
+
+    const getStatus = (chatRoom) => {
+        return chatRoom.result === null ? "진행중" : "완료";
+    };
+
+    const getActionText = (chatRoom) => {
+        return chatRoom.result === null ? "이어서 대화하기" : "대화 결과 보기";
+    };
+
+    if (loading) return <div>로딩 중...</div>;
+    if (error) return <div>{error}</div>;
 
     return (
         <div ref={mainContentRef} className={styles.page}>
@@ -62,26 +103,26 @@ const HistoryPage = () => {
                 <h1 className={styles.title}>History</h1>
             </header>
             <div className={styles.content}>
-                {conversations.map((conversation, index) => (
-                    <div key={index} className={styles.card}>
+                {chatRooms.map((chatRoom) => (
+                    <div key={chatRoom.id} className={styles.card}>
                         <div className={styles.cardContent}>
                             <div className={styles.conversationInfo}>
                                 <div className={styles.avatarWrapper}>
-                                    <img loading="lazy" src={conversation.avatarSrc} alt="" className={styles.avatar} />
+                                    <img loading="lazy" src="https://firebasestorage.googleapis.com/v0/b/mzting.appspot.com/o/default%2Fprofile1.jpg?alt=media&token=d9a25fd3-78d0-480b-8f94-249287cd80ad" alt="" className={styles.avatar} />
                                 </div>
                                 <div className={styles.titleWrapper}>
-                                    <h2 className={styles.conversationTitle}>{conversation.title}</h2>
+                                    <h2 className={styles.conversationTitle}>{chatRoom.name}</h2>
                                 </div>
                             </div>
                             <div className={styles.statusWrapper}>
-                                <div className={styles.status}>{conversation.status}</div>
+                                <div className={styles.status}>{getStatus(chatRoom)}</div>
                             </div>
                         </div>
                         <button
                             className={styles.actionButton}
-                            onClick={() => handleActionClick(conversation.route)}
+                            onClick={() => handleActionClick(chatRoom)}
                         >
-                            {conversation.actionText}
+                            {getActionText(chatRoom)}
                         </button>
                     </div>
                 ))}
