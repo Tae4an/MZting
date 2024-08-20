@@ -48,14 +48,12 @@ public class ClaudeApiService {
         this.objectMapper.configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true);
     }
 
-    @Cacheable(value = "claudeResponses", key = "#mbti + '-' + #messages.hashCode() + '-' + #context.hashCode()")
-    public ClaudeResponse getClaudeResponseByMbti(String mbti, List<Map<String, String>> messages, Map<String, String> context) {
-        logger.info("Generating Claude response for MBTI: {}", mbti);
-        Profile profile = profileService.getRandomProfileByMbti(mbti)
-                .orElseThrow(() -> new RuntimeException("No profile found for MBTI: " + mbti));
+    @Cacheable(value = "claudeResponses", key = "#messages.hashCode() + '-' + #context.hashCode()")
+    public ClaudeResponse getClaudeResponse(List<Map<String, String>> messages, Map<String, String> context) {
+        logger.info("Generating Claude response");
 
         String fixedPrompt = claudeConfig.getFixedPrompt();
-        String prompt = fixedPrompt + "\n" + profileService.generatePrompt(profile) + "\n컨텍스트: " + context;
+        String prompt = fixedPrompt + "\n컨텍스트: " + context;
         logger.debug("Generated prompt: {}", maskSensitiveInfo(prompt));
 
         HttpHeaders headers = new HttpHeaders();
