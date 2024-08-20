@@ -52,20 +52,4 @@ public class ProfileController {
     public List<Profile> getProfilesByMbti(@PathVariable String type) {
         return profileService.getProfilesByMbti(type);
     }
-
-    /**
-     * 특정 ID에 해당하는 프로필을 조회하는 엔드포인트
-     *
-     * @param id 프로필 ID
-     * @return 해당 ID의 프로필 정보
-     */
-    @GetMapping("/{id}")
-    public ResponseEntity<Profile> getProfileById(@PathVariable Long id) {
-        Profile profile = profileService.getProfileById(Math.toIntExact(id));
-        if (profile != null) {
-            return ResponseEntity.ok(profile);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
 }
