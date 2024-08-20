@@ -6,7 +6,7 @@ import {LoadingSpinner} from "./LoadingSpinner";
 import {ImageModal} from "./ImageModal";
 
 const GenerateImageModal = ({ show, onClose, profileId }) => {
-    console.log(profileId)
+    // console.log(profileId)
     const [tagList, setTagList] = useState([]);
     const [selectedTags, setSelectedTags] = useState([]);
     const [currentImage, setCurrentImage] = useState(null);
