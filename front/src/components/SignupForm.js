@@ -11,7 +11,6 @@ const SignupForm = () => {
     const [passwordCheck, setPasswordCheck] = useState('');
     const [name, setName] = useState('');
     const [nickname, setNickname] = useState('');
-    const [email, setEmail] = useState('');
     const [mbti, setMbti] = useState('');
     const [gender, setGender] = useState('');
     const [age, setAge] = useState('');
@@ -31,7 +30,6 @@ const SignupForm = () => {
                 password,
                 name,
                 nickname,
-                email,
                 mbti,
                 gender,
                 age,
@@ -110,17 +108,6 @@ const SignupForm = () => {
                         value={nickname}
                         onChange={(e) => setNickname(e.target.value)}
                         required
-                    />
-                </div>
-                <div className={styles.inputGroup}>
-                    <label htmlFor="userEmail">Email</label>
-                    <input
-                        type="email"
-                        id="userEmail"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                        placeholder="아이디와 동일"
                     />
                 </div>
                 <div className={styles.selectGender}>
