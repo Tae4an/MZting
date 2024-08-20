@@ -5,6 +5,10 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+#flask
+flask/venv
+flask/mzting-firebase-adminsdk-l1rjm-57eb0e0c97.json
+
 ### STS ###
 .apt_generated
 .classpath
