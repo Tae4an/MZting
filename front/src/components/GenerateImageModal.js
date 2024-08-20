@@ -89,10 +89,26 @@ const GenerateImageModal = ({ show, onClose, profileId }) => {
     const TagSelectionPart = () => {
         return (
             <div className={styles.tagSelection}>
-                <h2>태그 선택</h2>
+                <h2
+                    style={{
+                        fontWeight: "bolder",
+                        fontStyle: "normal",
+                        fontFamily: "Noto Sans KR, sans-serif",
+                    }}
+                >
+                    태그 선택
+                </h2>
                 {Object.keys(tagList).map((category, index) => (
                     <div key={index}>
-                        <h3>{category}</h3>
+                        <h3
+                            style={{
+                                fontWeight: "bolder",
+                                fontStyle: "normal",
+                                fontFamily: "Noto Sans KR, sans-serif",
+                            }}
+                        >
+                            {category}
+                        </h3>
                         <div className={styles.tagList}>
                             {tagList[category].map((tag, i) => (
                                 <button
@@ -113,7 +129,15 @@ const GenerateImageModal = ({ show, onClose, profileId }) => {
     const ImagePreviewPart = ({ isLoading, currentImage, selectedTags, requestGenerateImage, handleApplyImage }) => {
         return (
             <div className={styles.imagePreview}>
-                <h3>Generated Image</h3>
+                <h3
+                    style={{
+                        fontWeight: "bolder",
+                        fontStyle: "normal",
+                        fontFamily: "Noto Sans KR, sans-serif",
+                    }}
+                >
+                    Generated Image
+                </h3>
                 <div className={styles.imageContainer}>
                     {isLoading ? (
                         <div className={styles.spinnerContainer}>
@@ -135,14 +159,31 @@ const GenerateImageModal = ({ show, onClose, profileId }) => {
                     )}
                 </div>
                 <div className={styles.selectedTags}>
-                    <h4 style={{marginBottom: "20px"}}>Selected Tags:</h4>
+                    <h4
+                        style={{
+                            marginBottom: "20px",
+                            fontWeight: "bolder",
+                            fontStyle: "normal",
+                            fontFamily: "Noto Sans KR, sans-serif",
+                        }}
+                    >
+                        Selected Tags:
+                    </h4>
                     <div className={styles.tagContainer}>
                         {selectedTags.map((tag, index) => (
                             <span key={index} className={styles.selectedTag}>{tag.category}: {tag.korName}</span>
                         ))}
                     </div>
                 </div>
-                <button onClick={requestGenerateImage} disabled={isLoading || selectedTags.length === 0}>
+                <button
+                    onClick={requestGenerateImage}
+                    disabled={isLoading || selectedTags.length === 0}
+                    style={{
+                        fontWeight: "bolder",
+                        fontStyle: "normal",
+                        fontFamily: "Noto Sans KR, sans-serif",
+                    }}
+                >
                     Generate Image
                 </button>
                 {currentImage && (
@@ -176,7 +217,13 @@ const GenerateImageModal = ({ show, onClose, profileId }) => {
 
         return (
             <div className={styles.imageLogContainer}>
-                <h2>생성된 이미지 로그</h2>
+                <h2
+                    style={{
+                        fontWeight: "bolder",
+                        fontStyle: "normal",
+                        fontFamily: "Noto Sans KR, sans-serif",
+                    }}
+                >생성된 이미지 로그</h2>
                 <div className={styles.imageGrid}>
                     {logData.contents.map((log) => (
                         <div key={log.id} className={styles.imageItem}>
@@ -194,6 +241,11 @@ const GenerateImageModal = ({ show, onClose, profileId }) => {
                     <button
                         onClick={() => handlePageChange(currentPage - 1)}
                         disabled={currentPage === 0}
+                        style={{
+                            fontWeight: "bolder",
+                            fontStyle: "normal",
+                            fontFamily: "Noto Sans KR, sans-serif",
+                        }}
                     >
                         이전
                     </button>
@@ -201,6 +253,11 @@ const GenerateImageModal = ({ show, onClose, profileId }) => {
                     <button
                         onClick={() => handlePageChange(currentPage + 1)}
                         disabled={currentPage === logData.paginationInfo.totalPages - 1}
+                        style={{
+                            fontWeight: "bolder",
+                            fontStyle: "normal",
+                            fontFamily: "Noto Sans KR, sans-serif",
+                        }}
                     >
                         다음
                     </button>
@@ -214,12 +271,32 @@ const GenerateImageModal = ({ show, onClose, profileId }) => {
             <div>
                 {togglePart === 0 && (
                     <div>
-                        <button onClick={() => setTogglePart(1)} style={{marginLeft: "10px"}}>생성 로그 보기</button>
+                        <button
+                            onClick={() => setTogglePart(1)}
+                            style={{
+                                marginLeft: "10px",
+                                fontWeight: "bolder",
+                                fontStyle: "normal",
+                                fontFamily: "Noto Sans KR, sans-serif",
+                            }}
+                        >
+                            생성 로그 보기
+                        </button>
                     </div>
                 )}
                 {togglePart === 1 && (
                     <div>
-                        <button onClick={() => setTogglePart(0)} style={{marginRight: "10px"}}>이미지 생성하기</button>
+                        <button
+                            onClick={() => setTogglePart(0)}
+                            style={{
+                                marginLeft: "10px",
+                                fontWeight: "bolder",
+                                fontStyle: "normal",
+                                fontFamily: "Noto Sans KR, sans-serif",
+                            }}
+                        >
+                            이미지 생성하기
+                        </button>
                     </div>
                 )}
             </div>

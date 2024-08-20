@@ -31,7 +31,7 @@
     position: absolute;
     top: 10px;
     right: 10px;
-    background: none;
+    background: white;
     border: none;
     font-size: 1.5rem;
     color: #ff6b6b;
@@ -41,8 +41,13 @@
 .profileHeader {
     display: flex;
     width: 100%;
-    flex-direction: column;
     align-items: center;
+    flex-direction: row;
+}
+
+.profileTitle {
+    text-align: left;
+    margin: 0 0 10px 20px;
 }
 
 .profileImage {
@@ -54,15 +59,27 @@
 
 .profileInfo {
     text-align: left;
-    margin-top: 20px;
-    width: 100%;
+    border-radius: 20px;
+    background-color: #F0E4D7;
+    width: 90%;
+    margin: 0 0 0 20px;
+    padding: 10px 0 ;
 }
 
 .profileInfo h2 {
-    margin-bottom: 10px;
     font-size: 2rem;
     color: #ff6b6b;
     text-align: center;
+}
+
+.profileName {
+    text-align: left;
+    color: #ff6b6b;
+    font-family: Noto Sans KR, sans-serif;
+    font-weight: bolder;
+    font-style: normal;
+    font-size: 2.3rem;
+    margin-bottom: 10px;
 }
 
 .profileType {
@@ -70,21 +87,28 @@
     background-color: #ff6b6b;
     padding: 2px 8px;
     border-radius: 8px;
-    margin-left: 5px;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
+    font-family: Noto Sans KR, sans-serif;
+    font-style: normal;
+    font-weight: bolder;
 }
 
 .profileDetail {
-    font-size: 1.5rem;
-    font-style: italic;
-    font-weight: bold;
+    font-size: 1.3rem;
+    font-family: Noto Sans KR, sans-serif;
+    font-weight: bolder;
+    font-style: normal;
     text-align: center;
-    margin: 20px 0; /* 추가: 요소 간의 간격 */
+    margin: 20px 10px;
 }
 
 .profileTags {
     margin: 10px 0;
     display: flex;
+    font-family: Noto Sans KR, sans-serif;
+    font-weight: bolder;
+    font-style: normal;
+    text-align: center;
     flex-wrap: wrap;
     justify-content: center;
 }
@@ -110,13 +134,19 @@
 
 .profileDescription {
     line-height: 1.5;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
+    font-family: Noto Sans KR, sans-serif;
+    font-weight: bolder;
+    font-style: normal;
     text-align: left;
     overflow-y: auto;
     flex: 1;
     color: #333333;
     margin-top: 15px;
-    max-height: 200px; /* 추가: 모바일 환경에서 설명 영역의 최대 높이 설정 */
+    max-height: 200px;
+    background-color: #F0E4D7;
+    border-radius: 20px;
+    padding: 10px;
 }
 
 .buttonContainer {
@@ -137,9 +167,25 @@
     border-radius: 8px;
     cursor: pointer;
     font-size: 1.2rem;
+    font-family: Noto Sans KR, sans-serif;
+    font-weight: bolder;
+    font-style: normal;
     width: 200px;
     transition: background 0.3s, transform 0.3s;
-    z-index: 999; /* 버튼이 댓글 버튼 위로 오도록 z-index 설정 */
+    z-index: 999;
+}
+
+.generateImageButton {
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: #ff6b6b;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    font-family: Noto Sans KR, sans-serif;
+    font-weight: bolder;
+    font-style: normal;
 }
 
 .chatButton:hover {
@@ -155,6 +201,9 @@
     border-radius: 8px;
     cursor: pointer;
     font-size: 1.2rem;
+    font-family: Noto Sans KR, sans-serif;
+    font-weight: bolder;
+    font-style: normal;
     width: 200px;
     position: fixed;
     bottom: 5%;
@@ -171,15 +220,7 @@
 
 /* Media Queries for Responsiveness */
 @media (min-width: 768px) {
-    .profileHeader {
-        flex-direction: row;
-    }
 
-    .profileInfo {
-        margin-left: 20px;
-        margin-top: 0;
-        flex: 1;
-    }
 
     .profileInfo h2 {
         text-align: left;

@@ -131,6 +131,9 @@
     border-radius: 25px;
     cursor: pointer;
     font-size: 1rem;
+    font-family: Noto Sans KR, sans-serif;
+    font-style: normal;
+    font-weight: bolder;
     color: #ffffff;
     transition: background 0.3s, transform 0.3s;
 }
@@ -145,6 +148,12 @@
     font-size: 1rem;
     margin-bottom: 1rem;
     text-align: center;
+}
+
+.label, .textInput {
+    font-family: Noto Sans KR, sans-serif;
+    font-weight: bolder;
+    font-style: normal;
 }
 
 @media (max-width: 768px) {

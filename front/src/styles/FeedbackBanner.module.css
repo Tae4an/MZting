@@ -13,15 +13,21 @@
 
 .evaluation {
     color: rgb(74, 74, 74);
-    font-weight: bold;
+    font-weight: bolder;
+    font-family: Noto Sans KR, sans-serif;
+    font-style: normal;
 }
 
 .feel {
     color: #7c7c7c;
     font-style: italic;
+    font-family: Noto Sans KR, sans-serif;
+    font-weight: lighter;
 }
 
 .sentiment {
     color: #ff0000;
-    font-weight: bold;
+    font-weight: bolder;
+    font-family: Noto Sans KR, sans-serif;
+    font-style: normal;
 }

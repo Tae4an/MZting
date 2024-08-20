@@ -53,7 +53,16 @@ const LoginForm = () => {
                 <img src={MZting_logo} className={styles.loginLogo} alt="Login Logo"/>
                 {error && <p className={styles.error}>{error}</p>}
                 <div className={styles.inputGroup}>
-                    <label htmlFor="userId">ID</label>
+                    <label
+                        htmlFor="userId"
+                        style={{
+                            fontWeight: "bolder",
+                            fontStyle: "normal",
+                            fontFamily: "Noto Sans KR, sans-serif",
+                        }}
+                    >
+                        ID
+                    </label>
                     <input
                         type="email"
                         id="userId"
@@ -61,10 +70,20 @@ const LoginForm = () => {
                         onChange={(e) => setUsername(e.target.value)}
                         required
                         placeholder="이메일 형식으로 작성해주세요!"
+                        className={styles.IDInput}
                     />
                 </div>
                 <div className={styles.inputGroup}>
-                    <label htmlFor="userPassword">Password</label>
+                    <label
+                        htmlFor="userPassword"
+                        style={{
+                            fontWeight: "bolder",
+                            fontStyle: "normal",
+                            fontFamily: "Noto Sans KR, sans-serif",
+                        }}
+                    >
+                        Password
+                    </label>
                     <input
                         type="password"
                         id="userPassword"

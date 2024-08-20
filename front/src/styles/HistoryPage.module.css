@@ -24,7 +24,7 @@
 .backButton {
     background: none;
     border: none;
-    color: #ff6b6b; /* 버튼 색상 밝게 변경 */
+    color: #ff6b6b;
     font-size: 24px;
     cursor: pointer;
     margin-left: 10px;
@@ -32,9 +32,10 @@
 
 .title {
     font-size: 3rem;
-    color: #ff6b6b; /* 강조 색상으로 변경 */
-    font-style: italic;
-    font-weight: bold;
+    color: #ff6b6b;
+    font-style: normal;
+    font-weight: bolder;
+    font-family: Noto Sans KR, sans-serif;
     flex: 1;
 }
 

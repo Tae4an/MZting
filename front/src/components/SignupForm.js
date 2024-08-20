@@ -60,7 +60,7 @@ const SignupForm = () => {
                 <img src={MZting_logo} className={styles.signupLogo} alt="Signup Logo"/>
                 {error && <p className={styles.error}>{error}</p>}
                 <div className={styles.inputGroup}>
-                    <label htmlFor="userId">ID</label>
+                    <label htmlFor="userId" className={styles.label} >ID</label>
                     <input
                         type="email"
                         id="userId"
@@ -68,10 +68,11 @@ const SignupForm = () => {
                         onChange={(e) => setUserId(e.target.value)}
                         required
                         placeholder="이메일과 동일"
+                        className={styles.textInput}
                     />
                 </div>
                 <div className={styles.inputGroup}>
-                    <label htmlFor="userPassword">Password</label>
+                    <label htmlFor="userPassword" className={styles.label} >Password</label>
                     <input
                         type="password"
                         id="userPassword"
@@ -81,7 +82,7 @@ const SignupForm = () => {
                     />
                 </div>
                 <div className={styles.inputGroup}>
-                    <label htmlFor="userPasswordCheck">Password Check</label>
+                    <label htmlFor="userPasswordCheck" className={styles.label} >Password Check</label>
                     <input
                         type="password"
                         id="userPasswordCheck"
@@ -91,32 +92,35 @@ const SignupForm = () => {
                     />
                 </div>
                 <div className={styles.inputGroup}>
-                    <label htmlFor="userName">Name</label>
+                    <label htmlFor="userName" className={styles.label} >Name</label>
                     <input
                         type="text"
                         id="userName"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         required
+                        className={styles.textInput}
                     />
                 </div>
                 <div className={styles.inputGroup}>
-                    <label htmlFor="userNickName">Nick Name</label>
+                    <label htmlFor="userNickName" className={styles.label} >Nick Name</label>
                     <input
                         type="text"
                         id="userNickName"
                         value={nickname}
                         onChange={(e) => setNickname(e.target.value)}
                         required
+                        className={styles.textInput}
                     />
                 </div>
                 <div className={styles.selectGender}>
-                    <label htmlFor="userGender">Gender</label>
+                    <label htmlFor="userGender" className={styles.label} >Gender</label>
                     <select
                         id="userGender"
                         value={gender}
                         onChange={(e) => setGender(e.target.value)}
                         required
+                        className={styles.textInput}
                     >
                         <option value="" disabled>성별 선택</option>
                         <option value="Male">남성</option>
@@ -124,24 +128,26 @@ const SignupForm = () => {
                     </select>
                 </div>
                 <div className={styles.selectAge}>
-                    <label htmlFor="userAge">Age</label>
+                    <label htmlFor="userAge" className={styles.label} >Age</label>
                     <select
                         id="userAge"
                         value={age}
                         onChange={(e) => setAge(e.target.value)}
                         required
+                        className={styles.textInput}
                     >
                         <option value="" disabled>나이 선택</option>
                         {generateAgeOptions()}
                     </select>
                 </div>
                 <div className={styles.selectMBTI}>
-                    <label htmlFor="userMbti">MBTI</label>
+                    <label htmlFor="userMbti" className={styles.label} >MBTI</label>
                     <select
                         id="userMbti"
                         value={mbti}
                         onChange={(e) => setMbti(e.target.value)}
                         required
+                        className={styles.textInput}
                     >
                         <option value="" disabled>MBTI 선택</option>
                         <option value="INTJ">INTJ</option>
