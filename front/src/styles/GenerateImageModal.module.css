@@ -17,7 +17,6 @@
     border-radius: 10px;
     width: 90%;
     max-width: 1200px;
-    height: 90vh;
     overflow-y: auto;
     position: relative;
 }
@@ -141,7 +140,6 @@ button:disabled {
     width: 100%;
     height: calc(100% - 60px);
     margin-top: 20px;
-    overflow-y: auto;
 }
 
 .imageItem {
