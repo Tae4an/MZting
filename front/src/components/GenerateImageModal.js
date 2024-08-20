@@ -3,10 +3,9 @@ import PropTypes from 'prop-types';
 import styles from "../styles/GenerateImageModal.module.css";
 import {sendGetRequest, sendPostRequest} from "../services";
 import {LoadingSpinner} from "./LoadingSpinner";
-import {ImageModal} from "./ImageModal";
+import {ImageLogModal} from "./ImageLogModal";
 
 const GenerateImageModal = ({ show, onClose, profileId }) => {
-    // console.log(profileId)
     const [tagList, setTagList] = useState([]);
     const [selectedTags, setSelectedTags] = useState([]);
     const [currentImage, setCurrentImage] = useState(null);
@@ -73,14 +72,15 @@ const GenerateImageModal = ({ show, onClose, profileId }) => {
         );
     };
 
-    const handleApplyImage = async () => {
-        if(currentImage != null) {
+    const handleApplyImage = async (imageUrl) => {
+        if(imageUrl != null) {
             const requestData = {
-                imageUrl: currentImage
+                imageUrl: imageUrl
             }
             const applyResponse = await sendPostRequest(requestData, `api/gnimage/apply/${profileId}`)
             console.log(applyResponse)
             console.log("적용 완료")
+            setSelectedImage(null); // 모달 닫기
         } else {
             console.log("안댐, 로직 추가 필요")
         }
@@ -146,7 +146,7 @@ const GenerateImageModal = ({ show, onClose, profileId }) => {
                     Generate Image
                 </button>
                 {currentImage && (
-                    <button onClick={handleApplyImage} className={styles.applyButton}>
+                    <button onClick={() => handleApplyImage(currentImage)} className={styles.applyButton}>
                         이미지 적용하기
                     </button>
                 )}
@@ -234,10 +234,11 @@ const GenerateImageModal = ({ show, onClose, profileId }) => {
                 {togglePart === 0 && <GenerateImagePart />}
                 {togglePart === 1 && <ImageLogPart />}
                 <ButtonArea />
-                <ImageModal
+                <ImageLogModal
                     show={selectedImage !== null}
                     onClose={() => setSelectedImage(null)}
                     image={selectedImage}
+                    onApply={handleApplyImage}
                 />
             </div>
         </div>
