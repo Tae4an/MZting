@@ -16,6 +16,7 @@ import { FeedbackBanner } from "./FeedbackBanner";
 // import { MBTISelector } from "./MBTISelector";
 // import { QuestionnaireRecommendation  } from "./QuestionnaireRecommendation";
 import { GenerateImageModal } from "./GenerateImageModal";
+import { ImageLogModal } from "./ImageLogModal";
 
 
 export {
@@ -36,6 +37,7 @@ export {
     SituationBanner,
     FeedbackBanner,
     GenerateImageModal,
+    ImageLogModal,
     // MBTISelector,
     // QuestionnaireRecommendation
 }
