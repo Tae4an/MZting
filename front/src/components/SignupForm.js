@@ -4,9 +4,8 @@ import axios from 'axios';
 import styles from '../styles/SignupPage.module.css';
 import MZting_logo from '../assets/Images/MZting_logo.png';
 
-
 const SignupForm = () => {
-    const [userId, setUserId] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [passwordCheck, setPasswordCheck] = useState('');
     const [name, setName] = useState('');
@@ -26,10 +25,11 @@ const SignupForm = () => {
 
         try {
             await axios.post('/api/auth/register', {
-                username: userId,
+                username: email, // Use email as the username/userId
                 password,
                 name,
                 nickname,
+                email,
                 mbti,
                 gender,
                 age,
@@ -53,46 +53,47 @@ const SignupForm = () => {
         return options;
     };
 
-
     return (
         <div className={styles.signupFormContainer}>
             <form className={styles.signupForm} onSubmit={handleSubmit}>
                 <img src={MZting_logo} className={styles.signupLogo} alt="Signup Logo"/>
                 {error && <p className={styles.error}>{error}</p>}
                 <div className={styles.inputGroup}>
-                    <label htmlFor="userId" className={styles.label} >ID</label>
+                    <label htmlFor="userEmail" className={styles.label}>Email (ID)</label>
                     <input
                         type="email"
-                        id="userId"
-                        value={userId}
-                        onChange={(e) => setUserId(e.target.value)}
+                        id="userEmail"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         required
-                        placeholder="이메일과 동일"
+                        placeholder="이메일 입력 (ID로 사용됨)"
                         className={styles.textInput}
                     />
                 </div>
                 <div className={styles.inputGroup}>
-                    <label htmlFor="userPassword" className={styles.label} >Password</label>
+                    <label htmlFor="userPassword" className={styles.label}>Password</label>
                     <input
                         type="password"
                         id="userPassword"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
+                        className={styles.textInput}
                     />
                 </div>
                 <div className={styles.inputGroup}>
-                    <label htmlFor="userPasswordCheck" className={styles.label} >Password Check</label>
+                    <label htmlFor="userPasswordCheck" className={styles.label}>Password Check</label>
                     <input
                         type="password"
                         id="userPasswordCheck"
                         value={passwordCheck}
                         onChange={(e) => setPasswordCheck(e.target.value)}
                         required
+                        className={styles.textInput}
                     />
                 </div>
                 <div className={styles.inputGroup}>
-                    <label htmlFor="userName" className={styles.label} >Name</label>
+                    <label htmlFor="userName" className={styles.label}>Name</label>
                     <input
                         type="text"
                         id="userName"
@@ -103,7 +104,7 @@ const SignupForm = () => {
                     />
                 </div>
                 <div className={styles.inputGroup}>
-                    <label htmlFor="userNickName" className={styles.label} >Nick Name</label>
+                    <label htmlFor="userNickName" className={styles.label}>Nick Name</label>
                     <input
                         type="text"
                         id="userNickName"
@@ -114,7 +115,7 @@ const SignupForm = () => {
                     />
                 </div>
                 <div className={styles.selectGender}>
-                    <label htmlFor="userGender" className={styles.label} >Gender</label>
+                    <label htmlFor="userGender" className={styles.label}>Gender</label>
                     <select
                         id="userGender"
                         value={gender}
@@ -128,7 +129,7 @@ const SignupForm = () => {
                     </select>
                 </div>
                 <div className={styles.selectAge}>
-                    <label htmlFor="userAge" className={styles.label} >Age</label>
+                    <label htmlFor="userAge" className={styles.label}>Age</label>
                     <select
                         id="userAge"
                         value={age}
@@ -141,7 +142,7 @@ const SignupForm = () => {
                     </select>
                 </div>
                 <div className={styles.selectMBTI}>
-                    <label htmlFor="userMbti" className={styles.label} >MBTI</label>
+                    <label htmlFor="userMbti" className={styles.label}>MBTI</label>
                     <select
                         id="userMbti"
                         value={mbti}
@@ -174,4 +175,4 @@ const SignupForm = () => {
     );
 };
 
-export {SignupForm};
+export { SignupForm };
