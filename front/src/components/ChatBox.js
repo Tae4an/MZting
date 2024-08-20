@@ -98,12 +98,12 @@ const ChatBox = ({
                                 avatar={image}
                                 showAvatar={showAvatar}
                             />
-                            {!message.isSent && message.isLastInGroup && message.content.feel && (
+                            {!message.isSent && message.botInfo && (
                                 <FeedbackBanner
-                                    feel={message.content.feel}
-                                    score={message.content.score}
-                                    evaluation={message.content.evaluation}
-                                    prevScore={index > 0 ? (messages[index - 1].content.score || 0) : 0}
+                                    feel={message.botInfo.feel}
+                                    score={message.botInfo.score}
+                                    evaluation={message.botInfo.evaluation}
+                                    prevScore={index > 0 && messages[index - 1].botInfo ? messages[index - 1].botInfo.score : 0}
                                 />
                             )}
                         </React.Fragment>
