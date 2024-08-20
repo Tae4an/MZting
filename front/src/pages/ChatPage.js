@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import {useLocation, useNavigate} from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styles from '../styles/ChatPage.module.css';
 import { ChatBox } from '../components';
-import {sendGetRequest, sendMessage, sendPostRequest} from '../services';
+import { sendGetRequest, sendMessage, sendPostRequest } from '../services';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { TimePassedModal } from "../components/TimePassedModal";
@@ -12,7 +12,6 @@ const ChatPage = () => {
     const location = useLocation();
     const state = location.state || {};
     const navigate = useNavigate();
-
 
     const selectedProfile = state.selectedProfile || state;
     const {
@@ -43,7 +42,7 @@ const ChatPage = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [backgroundChanged, setBackgroundChanged] = useState(false);
     const [stageToComplete, setStageToComplete] = useState(null);
-    const [isIntroModalOpen, setIsIntroModalOpen] = useState(true);
+    const [isIntroModalOpen, setIsIntroModalOpen] = useState(isFirst);
 
     useEffect(() => {
         if(isFirst) {
@@ -57,7 +56,29 @@ const ChatPage = () => {
         try {
             const response = await sendGetRequest({}, `/api/chatroom/entry/${chatRoomId}`);
             console.log("기존 채팅방 이어가기 : ", response);
-            // 여기서 채팅 히스토리를 처리하고 상태를 업데이트합니다.
+            if (response && Array.isArray(response)) {
+                // 사용자의 첫 메시지를 제외한 나머지 메시지들만 필터링
+                const filteredMessages = response.filter((msg, index) => !(index === 0 && msg.role === 'user'));
+
+                const formattedMessages = filteredMessages.map(msg => ({
+                    content: msg.content,
+                    isSent: msg.role === 'user',
+                    avatar: msg.role === 'assistant' ? image : null,
+                    isLastInGroup: true,  // 히스토리에서는 모든 메시지를 개별 그룹으로 처리
+                    botInfo: msg.role === 'assistant' ? JSON.parse(msg.botInfo) : null
+                }));
+                setMessages(formattedMessages);
+
+                // 마지막 메시지의 stage 정보로 stages 상태 업데이트
+                const lastMessage = filteredMessages[filteredMessages.length - 1];
+                if (lastMessage && lastMessage.stage) {
+                    setStages({
+                        stage1Complete: lastMessage.stage >= 1,
+                        stage2Complete: lastMessage.stage >= 2,
+                        stage3Complete: lastMessage.stage >= 3
+                    });
+                }
+            }
         } catch (error) {
             console.error('Error fetching chat history:', error);
         }
@@ -96,7 +117,9 @@ const ChatPage = () => {
 
     const handleCloseIntroModal = () => {
         setIsIntroModalOpen(false);
-        sendInitialMessage();
+        if (isFirst) {
+            sendInitialMessage();
+        }
     };
 
     const handleModalDisplay = (stage) => {
@@ -187,16 +210,16 @@ const ChatPage = () => {
 
             if (response.claudeResponse && response.claudeResponse.text) {
                 const responseMessage = {
-                    content: {
-                        text: response.claudeResponse.text,
+                    content: response.claudeResponse.text,
+                    isSent: false,
+                    avatar: image,
+                    botInfo: {
                         feel: response.claudeResponse.feel,
                         score: response.claudeResponse.score,
                         evaluation: response.claudeResponse.evaluation
-                    },
-                    isSent: false,
-                    avatar: image,
+                    }
                 };
-                setMessages([responseMessage]);
+                setMessages(prevMessages => [...prevMessages, responseMessage]);
                 setClaudeResponse(response.claudeResponse);
             }
         } catch (error) {
@@ -242,18 +265,18 @@ const ChatPage = () => {
                     const message = response.claudeResponse.messages[index];
                     const isLastMessage = index === totalMessages - 1;
 
-                    await new Promise(resolve => setTimeout(resolve, 2000)); // 각 메시지마다 0.5초의 간격
+                    await new Promise(resolve => setTimeout(resolve, 2000)); // 각 메시지마다 2초의 간격
 
                     const responseMessage = {
-                        content: {
-                            text: message,
-                            feel: isLastMessage ? response.claudeResponse.feel : null,
-                            score: isLastMessage ? response.claudeResponse.score : null,
-                            evaluation: isLastMessage ? response.claudeResponse.evaluation : null
-                        },
+                        content: message,
                         isSent: false,
                         avatar: image,
-                        isLastInGroup: isLastMessage
+                        isLastInGroup: isLastMessage,
+                        botInfo: isLastMessage ? {
+                            feel: response.claudeResponse.feel,
+                            score: response.claudeResponse.score,
+                            evaluation: response.claudeResponse.evaluation
+                        } : null
                     };
 
                     setMessages(prevMessages => [...prevMessages, responseMessage]);
@@ -281,11 +304,13 @@ const ChatPage = () => {
                     isActualMeeting={isActualMeeting}
                 />
             </div>
-            <IntroductionModal
-                isOpen={isIntroModalOpen}
-                onClose={handleCloseIntroModal}
-                profileDetails={selectedProfile}
-            />
+            {isIntroModalOpen && (
+                <IntroductionModal
+                    isOpen={isIntroModalOpen}
+                    onClose={handleCloseIntroModal}
+                    profileDetails={selectedProfile}
+                />
+            )}
             <TimePassedModal
                 isOpen={isModalOpen}
                 message={stageToComplete === 1 ? "약속 날짜까지 시간이 흐르고.." :
