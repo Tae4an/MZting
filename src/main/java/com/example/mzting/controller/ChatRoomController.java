@@ -1,5 +1,6 @@
 package com.example.mzting.controller;
 
+import com.example.mzting.dto.ChatRoomDTO;
 import com.example.mzting.dto.ChatRoomEntryResponseDTO;
 import com.example.mzting.dto.ChatRoomRequest;
 import com.example.mzting.dto.ChatRoomWithHistoryDTO;
@@ -59,11 +60,11 @@ public class ChatRoomController {
      * @return 채팅방 목록을 포함한 ResponseEntity 객체
      */
     @GetMapping("/chatroom/list/all")
-    public ResponseEntity<List<ChatRoom>> getAllChatRoomList(HttpServletRequest request) {
+    public ResponseEntity<List<?>> getAllChatRoomList(HttpServletRequest request) {
         Long uid = (Long) request.getAttribute("uid");
 
-        List<ChatRoom> chatRooms = chatRoomService.getChatRoomsByUserId(uid);
-        return ResponseEntity.ok(chatRooms);
+        List<ChatRoomDTO.ChatRoomListDTO> chatRoomList = chatRoomService.getChatRoomsByUserId(uid);
+        return ResponseEntity.ok(chatRoomList);
     }
 
     @GetMapping("/chatroom/list/{profileId}")

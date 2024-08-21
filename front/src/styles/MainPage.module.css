@@ -215,12 +215,15 @@ button:hover {
 
 .profileHeader {
     display: flex;
+    justify-content: space-between;
     align-items: center;
+    margin-top: 10px;
     margin-bottom: 10px;
+    width: 100%;
 }
 
 .profileName {
-    font-size: 18px;
+    font-size: 22px;
     font-weight: bolder;
     font-family: Noto Sans KR, sans-serif;
     margin-right: 8px;
@@ -231,9 +234,19 @@ button:hover {
     color: #ff6b6b;
     padding: 3px 8px;
     border-radius: 12px;
-    font-size: 15px;
+    font-size: 22px;
     font-weight: bolder;
     font-family: Noto Sans KR, sans-serif;
+}
+
+.profileTags {
+    margin-top: 10px;
+    font-family: Noto Sans KR, sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
 }
 
 .tag {
@@ -241,8 +254,10 @@ button:hover {
     color: #ff6b6b;
     padding: 3px 8px;
     border-radius: 12px;
-    font-size: 12px;
+    font-size: 16px;
     font-weight: 500;
+    white-space: nowrap;
+    display: inline-block;
 }
 .recommendedCard {
     border: 2px solid #4CAF50;

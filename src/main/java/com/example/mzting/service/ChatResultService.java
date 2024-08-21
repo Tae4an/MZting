@@ -58,11 +58,14 @@ public class ChatResultService {
         if (chatRoom.getResult() != null) {
             try {
                 JsonNode resultNode = objectMapper.readTree(chatRoom.getResult());
+                List<Chat> botChats = chatRepository.findByChatRoomIdAndIsBotTrueOrderBySendAtAsc(chatRoomId);
+
+                List<Integer> scoreList = extractScores(botChats);
                 // 각 필드가 존재하는지 확인하고, 없으면 기본값을 사용
-                int averageScore = resultNode.has("score") ? resultNode.get("score").asInt() : 0;
+                int finalScore = scoreList.getLast();
                 String summarizedEvaluation = resultNode.has("summaryEval") ? resultNode.get("summaryEval").asText() : "";
                 String summarizedFeel = resultNode.has("summaryFeel") ? resultNode.get("summaryFeel").asText() : "";
-                return new ChatResultResponse(averageScore, summarizedEvaluation, summarizedFeel);
+                return new ChatResultResponse(scoreList, finalScore, summarizedEvaluation, summarizedFeel);
             } catch (JsonProcessingException e) {
                 logger.error("Error parsing stored result", e);
             }
@@ -71,7 +74,8 @@ public class ChatResultService {
         // 기존 코드는 그대로 유지
         List<Chat> botChats = chatRepository.findByChatRoomIdAndIsBotTrueOrderBySendAtAsc(chatRoomId);
 
-        int averageScore = (int) Math.round(calculateAverageScore(botChats));
+        List<Integer> scoreList = extractScores(botChats);
+        int finalScore = scoreList.getLast();
         String combinedFeel = combineFeel(botChats);
         String combinedEvaluation = combineEvaluation(botChats);
 
@@ -80,12 +84,12 @@ public class ChatResultService {
         String summarizedFeel = summary.get("summaryFeel");
         String summarizedEvaluation = summary.get("summaryEval");
 
-        ChatResultResponse response = new ChatResultResponse(averageScore, summarizedEvaluation, summarizedFeel);
+        ChatResultResponse response = new ChatResultResponse(scoreList, finalScore, summarizedEvaluation, summarizedFeel);
 
         // 결과를 ChatRoom에 저장할 때 구조 변경
         try {
             Map<String, Object> resultMap = new HashMap<>();
-            resultMap.put("score", averageScore);
+            resultMap.put("score", finalScore);
             resultMap.put("summaryEval", summarizedEvaluation);
             resultMap.put("summaryFeel", summarizedFeel);
             String resultJson = objectMapper.writeValueAsString(resultMap);
@@ -96,6 +100,21 @@ public class ChatResultService {
         }
 
         return response;
+    }
+
+    private List<Integer> extractScores(List<Chat> chats) {
+        List<Integer> scoreList = new ArrayList<>();
+        for (Chat chat : chats) {
+            try {
+                JsonNode jsonNode = objectMapper.readTree(chat.getBotInfo());
+                if (jsonNode.has("score")) {
+                    scoreList.add(jsonNode.get("score").asInt());
+                }
+            } catch (JsonProcessingException e) {
+                logger.error("Error parsing bot info JSON", e);
+            }
+        }
+        return scoreList;
     }
 
     private double calculateAverageScore(List<Chat> chats) {
