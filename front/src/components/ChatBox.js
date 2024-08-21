@@ -90,6 +90,7 @@ const ChatBox = ({
             <div className={styles.messageContainer}>
                 {messages.map((message, index) => {
                     const showAvatar = !message.isSent && (index === 0 || messages[index - 1].isSent);
+                    const prevScore = index > 0 && messages[index - 1].botInfo ? messages[index - 1].botInfo.score : 0;
                     return (
                         <React.Fragment key={index}>
                             <ChatBubble
@@ -101,9 +102,8 @@ const ChatBox = ({
                             {!message.isSent && message.botInfo && (
                                 <FeedbackBanner
                                     feel={message.botInfo.feel}
-                                    score={message.botInfo.score}
                                     evaluation={message.botInfo.evaluation}
-                                    prevScore={index > 0 && messages[index - 1].botInfo ? messages[index - 1].botInfo.score : 0}
+                                    chatDiff = {message.scoreDiff}
                                 />
                             )}
                         </React.Fragment>
