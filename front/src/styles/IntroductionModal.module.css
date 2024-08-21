@@ -59,6 +59,9 @@
     transform: translateY(20px);
     transition: opacity 0.5s ease, transform 0.5s ease;
     margin-bottom: 10px;
+    font-family: Noto Sans KR, sans-serif;
+    font-style: normal;
+    font-weight: bolder;
 }
 
 .messageItem.visible {
@@ -68,7 +71,9 @@
 
 .highlight {
     color: #FF6347; /* 모든 텍스트에 적용할 색상 */
-    font-weight: bold; /* 모든 텍스트에 적용할 굵기 */
+    font-weight: bolder; /* 모든 텍스트에 적용할 굵기 */
+    font-family: Noto Sans KR, sans-serif;
+    font-style: normal;
     font-size: 1.2rem; /* 폰트 크기도 통일 */
 }
 
@@ -81,6 +86,9 @@
     cursor: pointer;
     transition: background-color 0.3s;
     align-self: center;
+    font-family: Noto Sans KR, sans-serif;
+    font-style: normal;
+    font-weight: bolder;
 }
 
 .closeButton:hover {

@@ -1,224 +1,113 @@
 .page {
     display: flex;
     flex-direction: column;
-    height: 100%;
-    width: 100%;
-    background-color: #f0f0f5; /* 배경 색상을 밝게 변경 */
-    color: #333333; /* 텍스트 색상을 어둡게 변경 */
+    min-height: 100vh;
+    background-color: #f7f7f7;
     padding: 20px;
+    font-family: 'Inter', sans-serif;
 }
 
 .header {
     display: flex;
     align-items: center;
-    width: 100%;
-    border-bottom: 10px solid #ff6b6b; /* 강조 색상으로 변경 */
-    padding-bottom: 10px;
-    background-color: #ffffff; /* 배경 색상을 밝게 변경 */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+    background-color: #ffffff;
+    padding: 15px;
     border-radius: 10px;
-    gap: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
 }
 
 .backButton {
     background: none;
     border: none;
-    color: #ff6b6b; /* 버튼 색상 밝게 변경 */
+    color: #ff6b6b;
     font-size: 24px;
     cursor: pointer;
-    margin-left: 10px;
-}
-
-.profileImage {
-    aspect-ratio: 0.96;
-    object-fit: cover;
-    object-position: center;
-    width: 100px;
-    max-width: 100%;
-    border-radius: 50%;
-    margin-top: 10px;
+    margin-right: 15px;
 }
 
 .title {
-    font-size: 2.5rem;
-    color: #ff6b6b; /* 강조 색상으로 변경 */
-    font-style: italic;
-    font-weight: bold;
-    flex: 1;
+    font-size: 1.8rem;
+    color: #333;
+    margin: 0;
 }
 
 .profileCard {
-    border-radius: 10px; /* 모서리 둥글게 변경 */
-    background-color: #ffffff; /* 배경 색상을 밝게 변경 */
-    display: flex;
-    margin-top: 20px;
-    flex-direction: column;
-    font-weight: 800;
+    background-color: #ffffff;
+    border-radius: 10px;
     padding: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
-    color: #333333; /* 텍스트 색상을 어둡게 변경 */
-    box-sizing: border-box; /* 패딩과 보더를 너비에 포함 */
-    width: 100%;
+    display: flex;
     align-items: center;
-    justify-content: center;
-    text-align: center;
-    max-width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
 }
 
-.profileHeader {
-    display: flex;
-    gap: 20px;
-    font-size: 30px;
-    line-height: 140%;
-    color: #333333; /* 텍스트 색상을 어둡게 변경 */
-    width: 100%;
-    box-sizing: border-box; /* 패딩과 보더를 너비에 포함 */
+.profileImage {
+    width: 200px;
+    height: 300px;
+    border-radius: 20px;
+    object-fit: cover;
+    margin-right: 20px;
+}
+
+.profileInfo {
+    flex: 1;
 }
 
 .profileName {
-    font-family: Inter, sans-serif;
-    font-style: italic;
-    flex-grow: 1;
-    flex-basis: auto;
+    font-size: 1.5rem;
+    margin: 0 0 5px 0;
+    color: #333;
 }
 
 .personalityType {
-    text-align: center;
-    font-family: Inter, sans-serif;
-    font-style: italic;
-    flex-grow: 1;
-    flex-basis: auto;
-    margin: auto 0;
-    color: #ff6b6b; /* 강조 색상으로 변경 */
+    font-size: 1.2rem;
+    color: #ff6b6b;
+    margin: 0 0 10px 0;
 }
 
-.profileDetails {
-    align-self: start;
-    margin: 24px 0 0 0;
-    font: italic 30px/42px Inter, -apple-system, Roboto, Helvetica, sans-serif;
-    color: #333333; /* 텍스트 색상을 어둡게 변경 */
-    width: 100%;
-    box-sizing: border-box; /* 패딩과 보더를 너비에 포함 */
-}
-
-.actionButton {
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 1;
-    text-overflow: ellipsis;
-    justify-content: center;
-    align-items: center;
-    border-radius: 25px; /* 모서리 둥글게 변경 */
+.actionButton, .reviewButton {
+    background-color: #ff6b6b;
+    color: white;
     border: none;
-    background-color: #ff6b6b; /* 버튼 배경 색상 밝게 변경 */
-    margin-top: 24px;
-    color: #ffffff; /* 텍스트 색상을 밝게 변경 */
-    text-align: center;
-    padding: 12px;
-    font: 400 20px/100% Inter, -apple-system, Roboto, Helvetica, sans-serif;
+    padding: 10px 20px;
+    border-radius: 5px;
     cursor: pointer;
-    transition: background 0.3s, transform 0.3s; /* 부드러운 전환 효과 추가 */
-    width: auto;
-    max-width: 100%;
-    box-sizing: border-box; /* 패딩과 보더를 너비에 포함 */
+    font-size: 1rem;
+    margin-bottom: 20px;
+    transition: background-color 0.3s;
 }
 
-.actionButton:hover {
-    background-color: #e45b5b; /* 호버 시 색상 변경 */
-    transform: scale(1.05); /* 약간 확대 효과 추가 */
+.actionButton:hover, .reviewButton:hover {
+    background-color: #ff5252;
 }
 
-.scoreCard {
-    border-radius: 10px; /* 모서리 둥글게 변경 */
-    background-color: #ffffff; /* 배경 색상을 밝게 변경 */
-    display: flex;
-    margin-top: 32px;
-    flex-direction: column;
-    font-size: 30px;
-    font-weight: 800;
-    line-height: 140%;
-    padding: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
-    color: #333333; /* 텍스트 색상을 어둡게 변경 */
-    width: 100%;
-    box-sizing: border-box; /* 패딩과 보더를 너비에 포함 */
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    max-width: 100%;
-}
-
-.compatibilityScore {
-    font-family: Inter, sans-serif;
-    font-style: italic;
-    color: #333333; /* 텍스트 색상을 어둡게 변경 */
-    width: 100%;
-    box-sizing: border-box; /* 패딩과 보더를 너비에 포함 */
-}
-
-.finalScore {
-    font-family: Inter, sans-serif;
-    font-style: italic;
-    margin: 20px 0 40px;
-    color: #333333; /* 텍스트 색상을 어둡게 변경 */
-    width: 100%;
-    box-sizing: border-box; /* 패딩과 보더를 너비에 포함 */
-}
-
-.reviewButton {
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 1;
-    text-overflow: ellipsis;
-    justify-content: center;
-    align-items: center;
-    border-radius: 25px; /* 모서리 둥글게 변경 */
-    border: none;
-    background-color: #ff6b6b; /* 버튼 배경 색상 밝게 변경 */
-    margin-top: 20px;
-    color: #ffffff; /* 텍스트 색상을 밝게 변경 */
-    text-align: center;
-    padding: 12px;
-    font: 400 20px/100% Inter, -apple-system, Roboto, Helvetica, sans-serif;
-    cursor: pointer;
-    transition: background 0.3s, transform 0.3s; /* 부드러운 전환 효과 추가 */
-    width: auto;
-    max-width: 100%;
-    box-sizing: border-box; /* 패딩과 보더를 너비에 포함 */
-}
-
-.reviewButton:hover {
-    background-color: #e45b5b; /* 호버 시 색상 변경 */
-    transform: scale(1.05); /* 약간 확대 효과 추가 */
-}
-
-.summaryCard {
-    border-radius: 10px;
+.scoreCard, .summaryCard {
     background-color: #ffffff;
-    margin-top: 32px;
+    border-radius: 10px;
     padding: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* 그림자 효과를 더 강조 */
-    color: #333333;
-    width: 100%;
-    box-sizing: border-box;
-    text-align: center; /* 텍스트 가운데 정렬 */
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.summaryCard h3 {
-    font-size: 1.5rem;
-    color: #ff6b6b; /* 제목 색상을 강조 */
-    margin-bottom: 10px; /* 제목과 내용 사이의 간격 추가 */
+.chartContainer {
+    height: 300px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
-.summaryCard p {
-    margin: 10px 0; /* 내용 사이의 간격 추가 */
-    line-height: 1.6; /* 텍스트의 가독성을 높이기 위해 줄 간격 조정 */
+.scoreCard h3, .summaryCard h3 {
+    color: #333;
+    margin-top: 0;
 }
 
-.scrollIndicator {
-    position: fixed;
-    right: 10px; /* 스크롤 인디케이터를 오른쪽으로 고정 */
-    border-radius: 15px;
-    background-color: #ff6b6b; /* 강조 색상으로 변경 */
-    width: 18px;
-    height: 129px;
-    top: 20px; /* 윗쪽에서 약간의 여백 추가 */
+.scoreCard p, .summaryCard p {
+    color: #666;
+    line-height: 1.6;
+}
+
+.font {
+    font-family: Noto Sans KR, sans-serif;
+    font-style: normal;
+    font-weight: bolder;
 }

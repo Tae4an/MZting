@@ -53,24 +53,45 @@ const LoginForm = () => {
                 <img src={MZting_logo} className={styles.loginLogo} alt="Login Logo"/>
                 {error && <p className={styles.error}>{error}</p>}
                 <div className={styles.inputGroup}>
-                    <label htmlFor="userId">ID</label>
+                    <label
+                        htmlFor="userId"
+                        style={{
+                            fontWeight: "bolder",
+                            fontStyle: "normal",
+                            fontFamily: "Noto Sans KR, sans-serif",
+                        }}
+                    >
+                        Email (ID)
+                    </label>
                     <input
                         type="email"
                         id="userId"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                         required
-                        placeholder="이메일 형식으로 작성해주세요!"
+                        placeholder="Email"
+                        className={styles.font}
                     />
                 </div>
                 <div className={styles.inputGroup}>
-                    <label htmlFor="userPassword">Password</label>
+                    <label
+                        htmlFor="userPassword"
+                        style={{
+                            fontWeight: "bolder",
+                            fontStyle: "normal",
+                            fontFamily: "Noto Sans KR, sans-serif",
+                        }}
+                    >
+                        Password
+                    </label>
                     <input
                         type="password"
                         id="userPassword"
                         value={password}
+                        placeholder="Password"
                         onChange={(e) => setPassword(e.target.value)}
                         required
+                        className={styles.font}
                     />
                 </div>
                 <button type="submit" className={styles.button}>Login</button>

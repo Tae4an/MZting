@@ -1,13 +1,16 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, PureComponent } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import styles from '../styles/ResultPage.module.css';
 import { sendGetRequest } from "../services";
 import { CommentModal } from '../components';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+
 
 const ResultPage = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const { chatRoomId, profileDetails } = location.state || {};
+    const [isLoading, setIsLoading] = useState(true)
     const mainContentRef = useRef(null);
     const [result, setResult] = useState(null);
     const [scrollPosition, setScrollPosition] = useState(0);
@@ -27,13 +30,23 @@ const ResultPage = () => {
         setScrollPosition(scrollIndicatorPosition);
     };
 
+    const transformScores = (scores) => {
+        return scores.map((score, index) => ({
+            name: index + 1,  // 인덱스는 0부터 시작하므로 1을 더해줍니다
+            likeability: score
+        }));
+    };
+
     useEffect(() => {
         const fetchResult = async () => {
+            setIsLoading(true)
             try {
                 const response = await sendGetRequest({}, `/api/chat/result/${chatRoomId}`);
                 setResult(response);
+                setIsLoading(false)
             } catch (error) {
                 console.error("Error fetching result:", error);
+                setIsLoading(false)
             }
         };
 
@@ -57,44 +70,58 @@ const ResultPage = () => {
     };
 
     return (
-        <div ref={mainContentRef} className={styles.page}>
+        <div className={styles.page}>
             <div className={styles.header}>
                 <button className={styles.backButton} onClick={() => navigate('/main')}>
                     <i className="bi bi-arrow-left"></i>
                 </button>
-                <img src={profileDetails.image} className={styles.profileImage} alt="Profile" />
-                <div className={styles.title}>#{profileDetails.type} 와의 대화 결과</div>
+                <h1 className={`${styles.title} ${styles.font}`}>#{profileDetails.mbti} 프로필 대화 결과</h1>
             </div>
+
             <div className={styles.profileCard}>
-                <div className={styles.profileHeader}>
-                    <div className={styles.profileName}>이름 : {profileDetails.name}</div>
-                    <div className={styles.personalityType}>#{profileDetails.type}</div>
-                </div>
-                <div className={styles.profileDetails}>
-                    나이 : {profileDetails.age}<br />
-                    키 : {profileDetails.height}<br />
-                    직업 : {profileDetails.job}<br />
-                    취미 : {Array.isArray(profileDetails.hobbies) ? profileDetails.hobbies.join(', ') : profileDetails.hobbies}
+                <img src={profileDetails.image} className={styles.profileImage} alt="Profile"/>
+                <div className={styles.profileInfo}>
+                    <h2 className={`${styles.profileName} ${styles.font}`}>{profileDetails.name}</h2>
+                    <p className={`${styles.personalityType} ${styles.font}`}>#{profileDetails.mbti}</p>
+                    <p className={styles.font}>나이: {profileDetails.age}</p>
+                    <p className={styles.font}>키: {profileDetails.height}</p>
+                    <p className={styles.font}>직업: {profileDetails.job}</p>
+                    <p className={styles.font}>취미: {Array.isArray(profileDetails.characterHobbies) ? profileDetails.characterHobbies.map(item => item.hobby.hobby).join(', ') : profileDetails.characterHobbies}</p>
                 </div>
             </div>
-            <div className={styles.actionButton}>대화 로그 보기</div>
-            <div className={styles.scoreCard}>
-                <div className={styles.compatibilityScore}>호감도 : {result ? result.score : "로딩 중..."}</div>
-            </div>
+
+            <button className={`${styles.actionButton} ${styles.font}`}>대화 로그 보기</button>
+
+            {!isLoading && <div className={styles.scoreCard}>
+                <h3 className={styles.font}>최종 호감도: {result ? result.finalScore : "로딩 중..."}</h3>
+                <div className={styles.chartContainer}>
+                    <h4 className={styles.font}>대화 중 호감도 변화</h4>
+                    <ResponsiveContainer width="100%" height={300}>
+                        <LineChart data={transformScores(result.scores)}>
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <Tooltip />
+                            <Line type="monotone" dataKey="likeability" stroke="#ff6b6b" strokeWidth={3} />
+                        </LineChart>
+                    </ResponsiveContainer>
+                </div>
+            </div>}
+
             <div className={styles.summaryCard}>
-                <h3 style={{ fontStyle: "italic" }}>감정 요약</h3>
-                <p>{result ? result.summaryFeel : "로딩 중..."}</p>
-                <h3 style={{ fontStyle: "italic" }}>평가 요약</h3>
-                <p>{result ? result.summaryEval : "로딩 중..."}</p>
+                <h3 className={styles.font}>감정 요약</h3>
+                <p className={styles.font}>{result ? result.summaryFeel : "로딩 중..."}</p>
+                <h3 className={styles.font}>평가 요약</h3>
+                <p className={styles.font}>{result ? result.summaryEval : "로딩 중..."}</p>
             </div>
-            <div className={styles.reviewButton} onClick={openCommentModal}>댓글 보기</div>
+
+            <button className={`${styles.reviewButton} ${styles.font}`} onClick={openCommentModal}>댓글 보기</button>
+
             <CommentModal
                 show={isCommentModalOpen}
                 onClose={closeCommentModal}
-                propsData={{ type: profileDetails.type, profileId: chatRoomId }}
+                propsData={{type: profileDetails.type, profileId: profileDetails.profileId}}
             />
         </div>
     );
 };
 
-export { ResultPage };
+export {ResultPage};

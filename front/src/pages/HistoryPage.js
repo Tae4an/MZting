@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import styles from '../styles/HistoryPage.module.css';
+import { sendGetRequest } from "../services";
 
 const HistoryPage = () => {
     const navigate = useNavigate();
@@ -27,14 +28,10 @@ const HistoryPage = () => {
         setLoading(true);
         setError(null);
         try {
-            const chatRoomsResponse = await axios.get('/api/chatroom/list/all', {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
-                }
-            });
-            setChatRooms(chatRoomsResponse.data);
+            const chatRoomsResponse = await sendGetRequest({}, "/api/chatroom/list/all")
+            setChatRooms(chatRoomsResponse);
 
-            const uniqueProfileIds = [...new Set(chatRoomsResponse.data.map(room => room.profileId))];
+            const uniqueProfileIds = [...new Set(chatRoomsResponse.map(room => room.profileId))];
             const profilesData = {};
 
             await Promise.all(uniqueProfileIds.map(async (id) => {
@@ -60,25 +57,55 @@ const HistoryPage = () => {
     };
 
     const handleScroll = () => {
-        // ... (기존 코드 유지)
+        if (mainContentRef.current) {
+            const position = window.pageYOffset;
+            setScrollPosition(position);
+        }
     };
 
-    const handleActionClick = (chatRoom) => {
+    const handleActionClick = async (chatRoom) => {
         const profileDetails = profiles[chatRoom.profileId];
-        console.log('Profile details:', profileDetails);  // 디버깅을 위한 로그
+        console.log('Profile details:', profileDetails);  // Debugging log
+
         if (profileDetails) {
-            navigate(`/result`, {
-                state: {
-                    chatRoomId: chatRoom.id,
-                    profileDetails: {
-                        ...profileDetails,
-                        image: "https://firebasestorage.googleapis.com/v0/b/mzting.appspot.com/o/default%2Fprofile1.jpg?alt=media&token=d9a25fd3-78d0-480b-8f94-249287cd80ad",
-                    }
+            if (chatRoom.result === null) {
+                // For "이어서 대화하기" (Continue Conversation)
+                try {
+                    const response = await axios.get(`/api/chatroom/entry/${chatRoom.id}`, {
+                        headers: {
+                            'Authorization': `Bearer ${localStorage.getItem('token')}`
+                        }
+                    });
+
+                    navigate(`/chat`, {
+                        state: {
+                            chatRoomId: chatRoom.id,
+                            selectedProfile: {
+                                ...profileDetails,
+                                image: chatRoom.profileImage,
+                            },
+                            chatHistory: response.data,
+                            isFirst: false
+                        }
+                    });
+                } catch (error) {
+                    console.error('채팅 내역을 불러오는 데 실패했습니다:', error);
+                    alert('채팅 내역을 불러오는 데 실패했습니다. 잠시 후 다시 시도해 주세요.');
                 }
-            });
+            } else {
+                // For "대화 결과 보기" (View Conversation Results)
+                navigate(`/result`, {
+                    state: {
+                        chatRoomId: chatRoom.id,
+                        profileDetails: {
+                            ...profileDetails,
+                            image: chatRoom.profileImage,
+                        }
+                    }
+                });
+            }
         } else {
             console.error(`프로필 ID ${chatRoom.profileId}에 대한 정보를 찾을 수 없습니다.`);
-            // 사용자에게 오류 메시지 표시
             alert('프로필 정보를 가져오는 데 실패했습니다. 잠시 후 다시 시도해 주세요.');
         }
     };
@@ -108,7 +135,7 @@ const HistoryPage = () => {
                         <div className={styles.cardContent}>
                             <div className={styles.conversationInfo}>
                                 <div className={styles.avatarWrapper}>
-                                    <img loading="lazy" src="https://firebasestorage.googleapis.com/v0/b/mzting.appspot.com/o/default%2Fprofile1.jpg?alt=media&token=d9a25fd3-78d0-480b-8f94-249287cd80ad" alt="" className={styles.avatar} />
+                                    <img loading="lazy" src={chatRoom.profileImage} alt="" className={styles.avatar} />
                                 </div>
                                 <div className={styles.titleWrapper}>
                                     <h2 className={styles.conversationTitle}>{chatRoom.name}</h2>

@@ -33,8 +33,9 @@
 .settingsTitle {
     font-size: 3rem;
     color: #ff6b6b; /* 강조 색상으로 변경 */
-    font-style: italic;
-    font-weight: bold;
+    font-style: normal;
+    font-weight: bolder;
+    font-family: Noto Sans KR, sans-serif;
     flex: 1;
 }
 
@@ -47,8 +48,9 @@
 }
 
 .logoutButton {
-    font-style: italic;
-    font-weight: bold;
+    font-style: normal;
+    font-weight: bolder;
+    font-family: Noto Sans KR, sans-serif;
     background-color: #ff6b6b; /* 버튼 배경 색상 밝게 변경 */
     color: white;
     border: none;

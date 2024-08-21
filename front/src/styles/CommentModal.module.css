@@ -29,7 +29,9 @@
 }
 
 .modalTitle {
-    font-style: italic;
+    font-style: normal;
+    font-family: Noto Sans KR, sans-serif;
+    font-weight: bolder;
 }
 
 @keyframes slide-down {
@@ -94,12 +96,15 @@
 .modalTextarea {
     resize: none;
     padding: 10px;
-    border: 1px solid #d4d7f6; /* 테두리 추가 */
+    border: 1px solid #d4d7f6;
     border-radius: 4px;
     font-size: 16px;
+    font-family: Noto Sans KR, sans-serif;
+    font-style: normal;
+    font-weight: normal;
     height: 40px;
-    background-color: #ffffff; /* 배경 색상 밝게 변경 */
-    color: #333333; /* 텍스트 색상 어둡게 변경 */
+    background-color: #ffffff;
+    color: #333333;
     flex: 1;
     margin-right: 10px;
 }
@@ -147,6 +152,9 @@
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
+    font-style: normal;
+    font-family: Noto Sans KR, sans-serif;
+    font-weight: normal;
     background-color: #ff3b3b; /* 버튼 배경 색상 밝게 변경 */
     color: white;
 }
@@ -157,6 +165,9 @@
 
 .commentsTitle {
     font-size: 20px;
+    font-family: Noto Sans KR, sans-serif;
+    font-style: normal;
+    font-weight: bolder;
     margin-bottom: 10px;
     color: #ff6b6b; /* 강조 색상으로 변경 */
 }
@@ -171,12 +182,14 @@
 }
 
 .comment {
-    background-color: #ffffff; /* 배경 색상 밝게 변경 */
+    background-color: #ffffff;
     padding: 10px;
     border-radius: 4px;
     margin-bottom: 10px;
-    color: #333333; /* 텍스트 색상 어둡게 변경 */
-    border: 1px solid #d4d7f6; /* 테두리 추가 */
+    color: #333333;
+    font-family: Noto Sans KR, sans-serif;
+    font-style: normal;
+    font-weight: bolder;
 }
 
 .comment p {

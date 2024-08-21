@@ -8,18 +8,8 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import { AnimatePresence, motion } from 'framer-motion';
 import MZting_logo from '../assets/Images/MZting_logo.png';
 
-// 이미지 동적 import 함수
-function importAll(r) {
-    let images = {};
-    r.keys().forEach((item) => { images[item.replace('./','')] = r(item); });
-    return images;
-}
-
-// 이미지를 동적으로 import
-const images = importAll(require.context('../assets/Images', false, /\.(png|jpe?g|svg)$/));
 
 const MainPage = () => {
-    const [scrollPosition, setScrollPosition] = useState(0);
     const [showModal, setShowModal] = useState(false);
     const [selectedProfile, setSelectedProfile] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
@@ -32,19 +22,6 @@ const MainPage = () => {
     const [originalProfileOrder, setOriginalProfileOrder] = useState([]);
     const [isAnimating, setIsAnimating] = useState(false);
 
-    const handleScroll = () => {
-        const totalScrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        const currentScrollPosition = window.scrollY;
-        const maxScrollIndicatorPosition = window.innerHeight - 129;
-
-        let scrollIndicatorPosition = (currentScrollPosition / totalScrollHeight) * maxScrollIndicatorPosition;
-
-        if (scrollIndicatorPosition > maxScrollIndicatorPosition) {
-            scrollIndicatorPosition = maxScrollIndicatorPosition;
-        }
-
-        setScrollPosition(scrollIndicatorPosition);
-    };
 
     const handleMyMBTIClick = async () => {
         if (isMbtiSorted) {
@@ -112,15 +89,11 @@ const MainPage = () => {
     };
 
     useEffect(() => {
-        window.addEventListener('scroll', handleScroll);
-        window.addEventListener('resize', handleScroll);
-
         const extractProfile = async () => {
             try {
                 const data = await sendGetRequest({}, "/api/profiles");
                 const transformedData = transformProfileData(data);
                 setProfileData(transformedData);
-
                 setIsLoading(false);
             } catch (error) {
                 console.error("Failed to fetch profiles", error);
@@ -129,17 +102,23 @@ const MainPage = () => {
         }
 
         extractProfile();
+    }, []);
+
+    useEffect(() => {
+        if (showModal) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'visible';
+        }
 
         return () => {
-            window.removeEventListener('scroll', handleScroll);
-            window.removeEventListener('resize', handleScroll);
+            document.body.style.overflow = 'visible';
         };
-    }, []);
+    }, [showModal]);
 
     const loadChatRoomData = async (profileId) => {
         try {
             const chatRoomData = await sendGetRequest({}, `/api/chatroom/list/${profileId}`);
-            console.log(chatRoomData);
             return chatRoomData;
         } catch (error) {
             console.error("채팅방 데이터를 불러오는 데 실패했습니다.", error);
@@ -152,10 +131,13 @@ const MainPage = () => {
         setShowModal(true);
     };
 
+    const handleCloseModal = () => {
+        setShowModal(false);
+    };
+
     const handleStartChat = async () => {
         const chatRoomId = await sendGetRequest({}, `/api/chatroom/create/${selectedProfile.id}`);
         const isFirst = true;
-        console.log(chatRoomId);
         navigate('/chat', {
             state: {
                 selectedProfile,
@@ -200,7 +182,7 @@ const MainPage = () => {
             {isLoading ? (
                 <LoadingSpinner />
             ) : (
-                <motion.div layout className={styles.profileGrid}>  {/* 변경된 부분 */}
+                <motion.div layout className={styles.profileGrid}>
                     <AnimatePresence>
                         {profileData.map((profile) => (
                             <motion.div
@@ -209,10 +191,6 @@ const MainPage = () => {
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: 20 }}
-
-
-
-
                                 transition={{ duration: 0.45 }}
                             >
                                 <ProfileCard
@@ -229,7 +207,7 @@ const MainPage = () => {
             {showModal && (
                 <ProfileDetailModal
                     show={showModal}
-                    onClose={() => setShowModal(false)}
+                    onClose={handleCloseModal}
                     profile={selectedProfile}
                     onClick={handleStartChat}
                     showChatButton={true}

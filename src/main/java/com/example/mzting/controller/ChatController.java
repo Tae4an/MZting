@@ -35,15 +35,13 @@ public class ChatController {
     public ResponseEntity<?> askClaude(@RequestBody UserMessage userMessageObj) {
         try {
             String userMessage = userMessageObj.getMessage();
-            String userMbti = userMessageObj.getMbti();
             Long chatRoomId = userMessageObj.getChatRoomId();
 
             // 사용자 메시지를 DB에 저장
             Chat test = chatService.saveUserMessage(userMessage, chatRoomId);
             System.out.println("test : " + test.getChatRoomId());
 
-            ClaudeResponse claudeResponse = claudeApiService.getClaudeResponseByMbti(
-                    userMbti,
+            ClaudeResponse claudeResponse = claudeApiService.getClaudeResponse(
                     chatService.getMessagesForClaudeApi(chatRoomId),
                     chatService.getFullContext()
             );
@@ -70,6 +68,7 @@ public class ChatController {
                     .body(errorResponse);
         }
     }
+
     private void updateContext(String userMessage, String aiResponse) {
         // 사용자 메시지와 AI 응답을 분석하여 컨텍스트 업데이트
         // 예: 선호하는 음식, 취미 등을 추출하여 저장

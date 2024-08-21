@@ -65,6 +65,9 @@
     background-color: rgba(103, 102, 102, 0.73);
     cursor: pointer;
     transition: background-color 0.3s;
+    font-family: Noto Sans KR, sans-serif;
+    font-style: normal;
+    font-weight: bolder;
 }
 
 .optionButton:hover {
@@ -96,4 +99,10 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     gap: 20px;
+}
+
+.font {
+    font-family: Noto Sans KR, sans-serif;
+    font-style: normal;
+    font-weight: bolder;
 }

@@ -1,11 +1,13 @@
 package com.example.mzting.controller;
 
+import com.example.mzting.dto.ChatRoomDTO;
 import com.example.mzting.dto.ChatRoomEntryResponseDTO;
 import com.example.mzting.dto.ChatRoomRequest;
 import com.example.mzting.dto.ChatRoomWithHistoryDTO;
 import com.example.mzting.entity.ChatRoom;
 import com.example.mzting.service.ChatRoomService;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -58,11 +60,11 @@ public class ChatRoomController {
      * @return 채팅방 목록을 포함한 ResponseEntity 객체
      */
     @GetMapping("/chatroom/list/all")
-    public ResponseEntity<List<ChatRoom>> getAllChatRoomList(HttpServletRequest request) {
+    public ResponseEntity<List<?>> getAllChatRoomList(HttpServletRequest request) {
         Long uid = (Long) request.getAttribute("uid");
 
-        List<ChatRoom> chatRooms = chatRoomService.getChatRoomsByUserId(uid);
-        return ResponseEntity.ok(chatRooms);
+        List<ChatRoomDTO.ChatRoomListDTO> chatRoomList = chatRoomService.getChatRoomsByUserId(uid);
+        return ResponseEntity.ok(chatRoomList);
     }
 
     @GetMapping("/chatroom/list/{profileId}")
@@ -73,7 +75,6 @@ public class ChatRoomController {
         return ResponseEntity.ok(chatRooms);
     }
 
-
     /**
      * 특정 채팅방의 히스토리를 조회하는 엔드포인트
      *
@@ -81,25 +82,28 @@ public class ChatRoomController {
      * @return 채팅방과 히스토리를 포함한 ChatRoomWithHistoryDTO 객체를 담은 ResponseEntity 객체
      */
     @GetMapping("/chatroom/{chatRoomId}")
-    public ResponseEntity<ChatRoomWithHistoryDTO> getChatRoomWithHistory(@PathVariable Long chatRoomId, HttpServletRequest request) {
-        ChatRoomWithHistoryDTO chatRoomWithHistory = chatRoomService.getChatRoomWithHistory(chatRoomId);
-
+    public ResponseEntity<?> getChatRoomWithHistory(@PathVariable Long chatRoomId, HttpServletRequest request) {
         Long uid = (Long) request.getAttribute("uid");
-        // 채팅방이 유저의 것인지 검증하는 로직 추가 필요
 
+        // 채팅방이 유저의 것인지 검증
+        if (!chatRoomService.isUserAuthorized(uid, chatRoomId)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied: You are not authorized to view this chat room.");
+        }
+
+        ChatRoomWithHistoryDTO chatRoomWithHistory = chatRoomService.getChatRoomWithHistory(chatRoomId);
         return ResponseEntity.ok(chatRoomWithHistory);
     }
 
     @GetMapping("/chatroom/entry/{chatRoomId}")
-    public ResponseEntity<List<ChatRoomEntryResponseDTO>> getChatRoomChat(@PathVariable Long chatRoomId, HttpServletRequest request) {
-        ChatRoomWithHistoryDTO chatRoomWithHistory = chatRoomService.getChatRoomWithHistory(chatRoomId);
-
+    public ResponseEntity<?> getChatRoomChat(@PathVariable Long chatRoomId, HttpServletRequest request) {
         Long uid = (Long) request.getAttribute("uid");
-        // 채팅방이 유저의 것인지 검증하는 로직 추가 필요
 
+        // 채팅방이 유저의 것인지 검증
+        if (!chatRoomService.isUserAuthorized(uid, chatRoomId)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied: You are not authorized to view this chat room.");
+        }
 
         List<ChatRoomEntryResponseDTO> chatRoomEntryResponseDTOs = chatRoomService.getChatRoomEntries(chatRoomId);
-
         return ResponseEntity.ok(chatRoomEntryResponseDTOs);
     }
 }
