@@ -98,7 +98,7 @@
     transform: scale(1.05); /* 약간 확대 효과 추가 */
 }
 
-.IDInput {
+.font {
     font-family: Noto Sans KR, sans-serif;
     font-weight: bolder;
     font-style: normal;
