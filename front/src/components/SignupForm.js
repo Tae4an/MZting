@@ -53,10 +53,20 @@ const SignupForm = () => {
         return options;
     };
 
+    const handleLogoClick = () => {
+        navigate('/login');
+    };
+
     return (
         <div className={styles.signupFormContainer}>
             <form className={styles.signupForm} onSubmit={handleSubmit}>
-                <img src={MZting_logo} className={styles.signupLogo} alt="Signup Logo"/>
+                <img
+                    src={MZting_logo}
+                    className={styles.signupLogo}
+                    alt="Signup Logo"
+                    onClick={handleLogoClick}
+                    style={{ cursor: 'pointer'}}
+                />
                 {error && <p className={styles.error}>{error}</p>}
                 <div className={styles.inputGroup}>
                     <label htmlFor="userEmail" className={styles.label}>Email (ID)</label>
