@@ -60,13 +60,23 @@ const ChatPage = () => {
                 // 사용자의 첫 메시지를 제외한 나머지 메시지들만 필터링
                 const filteredMessages = response.filter((msg, index) => !(index === 0 && msg.role === 'user'));
 
-                const formattedMessages = filteredMessages.map(msg => ({
-                    content: msg.content,
-                    isSent: msg.role === 'user',
-                    avatar: msg.role === 'assistant' ? image : null,
-                    isLastInGroup: true,  // 히스토리에서는 모든 메시지를 개별 그룹으로 처리
-                    botInfo: msg.role === 'assistant' ? JSON.parse(msg.botInfo) : null
-                }));
+                const formattedMessages = [];
+                filteredMessages.forEach(msg => {
+                    // 메시지 내용을 '\n'을 기준으로 나눕니다.
+                    const splitContent = msg.content.split('\n').filter(content => content.trim() !== '');
+
+                    splitContent.forEach((content, index) => {
+                        formattedMessages.push({
+                            content: content,
+                            isSent: msg.role === 'user',
+                            avatar: msg.role === 'assistant' ? image : null,
+                            isLastInGroup: index === splitContent.length - 1,
+                            botInfo: msg.role === 'assistant' && index === splitContent.length - 1 ?
+                                JSON.parse(msg.botInfo) : null
+                        });
+                    });
+                });
+
                 setMessages(formattedMessages);
 
                 // 마지막 메시지의 stage 정보로 stages 상태 업데이트
