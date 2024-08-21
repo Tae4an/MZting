@@ -61,7 +61,7 @@ const LoginForm = () => {
                             fontFamily: "Noto Sans KR, sans-serif",
                         }}
                     >
-                        ID
+                        Email (ID)
                     </label>
                     <input
                         type="email"
@@ -69,8 +69,8 @@ const LoginForm = () => {
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                         required
-                        placeholder="이메일 형식으로 작성해주세요!"
-                        className={styles.IDInput}
+                        placeholder="Email"
+                        className={styles.font}
                     />
                 </div>
                 <div className={styles.inputGroup}>
@@ -88,8 +88,10 @@ const LoginForm = () => {
                         type="password"
                         id="userPassword"
                         value={password}
+                        placeholder="Password"
                         onChange={(e) => setPassword(e.target.value)}
                         required
+                        className={styles.font}
                     />
                 </div>
                 <button type="submit" className={styles.button}>Login</button>
