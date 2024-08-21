@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import styles from '../styles/HistoryPage.module.css';
+import { sendGetRequest } from "../services";
 
 const HistoryPage = () => {
     const navigate = useNavigate();
@@ -27,14 +28,10 @@ const HistoryPage = () => {
         setLoading(true);
         setError(null);
         try {
-            const chatRoomsResponse = await axios.get('/api/chatroom/list/all', {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
-                }
-            });
-            setChatRooms(chatRoomsResponse.data);
+            const chatRoomsResponse = await sendGetRequest({}, "/api/chatroom/list/all")
+            setChatRooms(chatRoomsResponse);
 
-            const uniqueProfileIds = [...new Set(chatRoomsResponse.data.map(room => room.profileId))];
+            const uniqueProfileIds = [...new Set(chatRoomsResponse.map(room => room.profileId))];
             const profilesData = {};
 
             await Promise.all(uniqueProfileIds.map(async (id) => {
@@ -85,7 +82,7 @@ const HistoryPage = () => {
                             chatRoomId: chatRoom.id,
                             selectedProfile: {
                                 ...profileDetails,
-                                image: "https://firebasestorage.googleapis.com/v0/b/mzting.appspot.com/o/default%2Fprofile1.jpg?alt=media&token=d9a25fd3-78d0-480b-8f94-249287cd80ad",
+                                image: chatRoom.profileImage,
                             },
                             chatHistory: response.data,
                             isFirst: false
@@ -102,7 +99,7 @@ const HistoryPage = () => {
                         chatRoomId: chatRoom.id,
                         profileDetails: {
                             ...profileDetails,
-                            image: "https://firebasestorage.googleapis.com/v0/b/mzting.appspot.com/o/default%2Fprofile1.jpg?alt=media&token=d9a25fd3-78d0-480b-8f94-249287cd80ad",
+                            image: chatRoom.profileImage,
                         }
                     }
                 });
@@ -138,7 +135,7 @@ const HistoryPage = () => {
                         <div className={styles.cardContent}>
                             <div className={styles.conversationInfo}>
                                 <div className={styles.avatarWrapper}>
-                                    <img loading="lazy" src="https://firebasestorage.googleapis.com/v0/b/mzting.appspot.com/o/default%2Fprofile1.jpg?alt=media&token=d9a25fd3-78d0-480b-8f94-249287cd80ad" alt="" className={styles.avatar} />
+                                    <img loading="lazy" src={chatRoom.profileImage} alt="" className={styles.avatar} />
                                 </div>
                                 <div className={styles.titleWrapper}>
                                     <h2 className={styles.conversationTitle}>{chatRoom.name}</h2>
