@@ -82,12 +82,15 @@
 }
 
 .subtitleButton {
-    background-color: #ff6b6b; /* 버튼 배경 색상 밝게 변경 */
-    color: #ffffff; /* 버튼 텍스트 색상 밝게 변경 */
-    border: 2px solid #ff6b6b; /* 테두리 강조 색상으로 변경 */
-    border-radius: 8px; /* 둥근 모서리 */
-    padding: 5px 10px; /* 내부 여백 추가 */
-    font: italic 800 23px/140% Roboto, sans-serif;
+    background-color: #ff6b6b;
+    color: #ffffff;
+    border: 2px solid #ff6b6b;
+    border-radius: 8px;
+    padding: 5px 10px;
+    font-family: Noto Sans KR, sans-serif;
+    font-weight: bolder;
+    font-style: normal;
+    font-size: 23px;
     display: flex;
     align-items: center;
     cursor: pointer;
@@ -164,14 +167,17 @@
     font-weight: 800;
 }
 
-.profileName, .profileType {
-    font-family: Inter, sans-serif;
-    font-style: italic;
+.profileName {
+    font-family: Noto Sans KR, sans-serif;
+    font-style: normal;
+    font-weight: normal;
 }
 
 .profileTags {
     margin-top: 10px;
-    font: 600 16px Inter, sans-serif;
+    font-family: Noto Sans KR, sans-serif;
+    font-weight: 600;
+    font-size: 16px;
 }
 
 .scrollIndicator {
@@ -215,7 +221,8 @@ button:hover {
 
 .profileName {
     font-size: 18px;
-    font-weight: 600;
+    font-weight: bolder;
+    font-family: Noto Sans KR, sans-serif;
     margin-right: 8px;
 }
 
@@ -225,7 +232,8 @@ button:hover {
     padding: 3px 8px;
     border-radius: 12px;
     font-size: 15px;
-    font-weight: 500;
+    font-weight: bolder;
+    font-family: Noto Sans KR, sans-serif;
 }
 
 .tag {
@@ -250,6 +258,9 @@ button:hover {
     padding: 5px 10px;
     border-radius: 15px;
     font-size: 12px;
+    font-family: Noto Sans KR, sans-serif;
+    font-weight: bolder;
+    font-style: normal;
     z-index: 1;
 }
 .activeMbtiButton {

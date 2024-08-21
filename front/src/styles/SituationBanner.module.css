@@ -1,11 +1,14 @@
 .situationBanner {
-    background-color: #f0f8ff; /* 연한 하늘색 배경 */
-    border: 1px solid #4682b4; /* 스틸블루 테두리 */
+    background-color: #f0f8ff;
+    border: 1px solid #4682b4;
     border-radius: 8px;
     padding: 12px 20px;
     margin-bottom: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
+    font-style: normal;
+    font-family: Noto Sans KR, sans-serif;
+    font-weight: bolder;
 }
 
 .situationBanner p {

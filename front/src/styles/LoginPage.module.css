@@ -81,11 +81,14 @@
     width: 100%;
     padding: 0.8rem;
     margin-top: 1rem;
-    background-color: #ff6b6b; /* 버튼 배경 색상 밝게 변경 */
+    background-color: #ff6b6b;
     border: none;
     border-radius: 25px;
     cursor: pointer;
     font-size: 1rem;
+    font-family: Noto Sans KR, sans-serif;
+    font-weight: bolder;
+    font-style: normal;
     color: #ffffff; /* 텍스트 색상을 밝게 변경 */
     transition: background 0.3s, transform 0.3s; /* 부드러운 전환 효과 추가 */
 }
@@ -93,6 +96,12 @@
 .button:hover {
     background-color: #e45b5b; /* 호버 시 색상 변경 */
     transform: scale(1.05); /* 약간 확대 효과 추가 */
+}
+
+.font {
+    font-family: Noto Sans KR, sans-serif;
+    font-weight: bolder;
+    font-style: normal;
 }
 
 @media (max-width: 768px) {
