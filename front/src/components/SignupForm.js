@@ -66,7 +66,7 @@ const SignupForm = () => {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
-                        placeholder="이메일 입력 (ID로 사용됨)"
+                        placeholder="이메일 입력"
                         className={styles.textInput}
                     />
                 </div>
@@ -78,6 +78,7 @@ const SignupForm = () => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
+                        placeholder="비밀번호 입력"
                         className={styles.textInput}
                     />
                 </div>
@@ -89,6 +90,7 @@ const SignupForm = () => {
                         value={passwordCheck}
                         onChange={(e) => setPasswordCheck(e.target.value)}
                         required
+                        placeholder="비밀번호 확인"
                         className={styles.textInput}
                     />
                 </div>
@@ -100,6 +102,7 @@ const SignupForm = () => {
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         required
+                        placeholder="이름 입력"
                         className={styles.textInput}
                     />
                 </div>
@@ -111,6 +114,7 @@ const SignupForm = () => {
                         value={nickname}
                         onChange={(e) => setNickname(e.target.value)}
                         required
+                        placeholder="닉네임 입력"
                         className={styles.textInput}
                     />
                 </div>
