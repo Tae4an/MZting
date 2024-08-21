@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styles from '../styles/ChatPage.module.css';
-import { ChatBox } from '../components';
-import { sendGetRequest, sendMessage, sendPostRequest } from '../services';
+import { ChatBox, TimePassedModal, IntroductionModal, ChatHistory } from '../components';
+import { sendMessage, sendPostRequest } from '../services';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { TimePassedModal } from "../components/TimePassedModal";
-import IntroductionModal from '../components/IntroductionModal';
 
 const ChatPage = () => {
     const location = useLocation();
@@ -47,50 +45,13 @@ const ChatPage = () => {
     useEffect(() => {
         if(isFirst) {
             setIsIntroModalOpen(true);
-        } else {
-            getChatHistory();
         }
     }, [isFirst]);
 
-    const getChatHistory = async () => {
-        try {
-            const response = await sendGetRequest({}, `/api/chatroom/entry/${chatRoomId}`);
-            console.log("기존 채팅방 이어가기 : ", response);
-            if (response && Array.isArray(response)) {
-                // 사용자의 첫 메시지를 제외한 나머지 메시지들만 필터링
-                const filteredMessages = response.filter((msg, index) => !(index === 0 && msg.role === 'user'));
-
-                const formattedMessages = [];
-                filteredMessages.forEach(msg => {
-                    // 메시지 내용을 '\n'을 기준으로 나눕니다.
-                    const splitContent = msg.content.split('\n').filter(content => content.trim() !== '');
-
-                    splitContent.forEach((content, index) => {
-                        formattedMessages.push({
-                            content: content,
-                            isSent: msg.role === 'user',
-                            avatar: msg.role === 'assistant' ? image : null,
-                            isLastInGroup: index === splitContent.length - 1,
-                            botInfo: msg.role === 'assistant' && index === splitContent.length - 1 ?
-                                JSON.parse(msg.botInfo) : null
-                        });
-                    });
-                });
-
-                setMessages(formattedMessages);
-
-                // 마지막 메시지의 stage 정보로 stages 상태 업데이트
-                const lastMessage = filteredMessages[filteredMessages.length - 1];
-                if (lastMessage && lastMessage.stage) {
-                    setStages({
-                        stage1Complete: lastMessage.stage >= 1,
-                        stage2Complete: lastMessage.stage >= 2,
-                        stage3Complete: lastMessage.stage >= 3
-                    });
-                }
-            }
-        } catch (error) {
-            console.error('Error fetching chat history:', error);
+    const handleHistoryLoaded = (formattedMessages, loadedStages) => {
+        setMessages(formattedMessages);
+        if (loadedStages) {
+            setStages(loadedStages);
         }
     };
 
@@ -123,7 +84,7 @@ const ChatPage = () => {
 
             return () => clearTimeout(timer);
         }
-    }, [stages.stage3Complete]);
+    }, [stages.stage3Complete, navigate, chatRoomId, selectedProfile]);
 
     const handleCloseIntroModal = () => {
         setIsIntroModalOpen(false);
@@ -304,6 +265,13 @@ const ChatPage = () => {
     return (
         <main className={`${styles.mainContainer} ${backgroundChanged ? styles.backgroundChanged : ''}`}>
             <div className={styles.contentWrapper}>
+                {!isFirst && (
+                    <ChatHistory
+                        chatRoomId={chatRoomId}
+                        image={image}
+                        onHistoryLoaded={handleHistoryLoaded}
+                    />
+                )}
                 <ChatBox
                     image={image}
                     name={name}

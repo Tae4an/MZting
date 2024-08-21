@@ -13,10 +13,10 @@ import { PreviousChatsModal } from "./PreviousChatsModal";
 import { TimePassedModal } from "./TimePassedModal";
 import { SituationBanner } from "./SituationBanner";
 import { FeedbackBanner } from "./FeedbackBanner";
-// import { MBTISelector } from "./MBTISelector";
-// import { QuestionnaireRecommendation  } from "./QuestionnaireRecommendation";
 import { GenerateImageModal } from "./GenerateImageModal";
 import { ImageLogModal } from "./ImageLogModal";
+import {IntroductionModal} from "./IntroductionModal";
+import {ChatHistory} from "./ChatHistory";
 
 
 export {
@@ -38,6 +38,6 @@ export {
     FeedbackBanner,
     GenerateImageModal,
     ImageLogModal,
-    // MBTISelector,
-    // QuestionnaireRecommendation
+    IntroductionModal,
+    ChatHistory
 }
