@@ -59,15 +59,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap:10px;
 }
 
 .conversationInfo {
     display: flex;
     align-items: center;
-}
-
-.avatarWrapper {
-    margin-right: 10px;
+    gap: 10px;
 }
 
 .avatar {
@@ -83,7 +81,10 @@
 
 .conversationTitle {
     font-size: 1.5rem;
-    color: #333333; /* 텍스트 색상을 어둡게 변경 */
+    font-family: Noto Sans KR, sans-serif;
+    font-weight: bolder;
+    font-style: normal;
+    color: #333333;
 }
 
 .statusWrapper {
@@ -93,21 +94,26 @@
 
 .status {
     font-size: 1rem;
-    color: #666666; /* 텍스트 색상 어둡게 변경 */
-    margin-right: 10px;
+    font-family: Noto Sans KR, sans-serif;
+    font-weight: bolder;
+    font-style: normal;
+    color: #666666;
 }
 
 .actionButton {
-    background-color: #ff6b6b; /* 버튼 배경 색상 밝게 변경 */
-    color: #ffffff; /* 텍스트 색상 밝게 변경 */
+    background-color: #ff6b6b;
+    color: #ffffff;
     border: none;
     border-radius: 25px;
     padding: 10px 20px;
     cursor: pointer;
     font-size: 1rem;
+    font-family: Noto Sans KR, sans-serif;
+    font-weight: bolder;
+    font-style: normal;
     margin-top: 10px;
     align-self: flex-start;
-    transition: background 0.3s, transform 0.3s; /* 부드러운 전환 효과 추가 */
+    transition: background 0.3s, transform 0.3s;
 }
 
 .actionButton:hover {
@@ -123,4 +129,10 @@
     width: 18px;
     height: 129px;
     top: 20px; /* 윗쪽에서 약간의 여백 추가 */
+}
+
+.font {
+    font-family: Noto Sans KR, sans-serif;
+    font-weight: bolder;
+    font-style: normal;
 }
