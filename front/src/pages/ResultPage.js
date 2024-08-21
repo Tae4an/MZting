@@ -75,27 +75,27 @@ const ResultPage = () => {
                 <button className={styles.backButton} onClick={() => navigate('/main')}>
                     <i className="bi bi-arrow-left"></i>
                 </button>
-                <h1 className={styles.title}>#{profileDetails.mbti} 프로필 대화 결과</h1>
+                <h1 className={`${styles.title} ${styles.font}`}>#{profileDetails.mbti} 프로필 대화 결과</h1>
             </div>
 
             <div className={styles.profileCard}>
                 <img src={profileDetails.image} className={styles.profileImage} alt="Profile"/>
                 <div className={styles.profileInfo}>
-                    <h2 className={styles.profileName}>{profileDetails.name}</h2>
-                    <p className={styles.personalityType}>#{profileDetails.mbti}</p>
-                    <p>나이: {profileDetails.age}</p>
-                    <p>키: {profileDetails.height}</p>
-                    <p>직업: {profileDetails.job}</p>
-                    <p>취미: {Array.isArray(profileDetails.characterHobbies) ? profileDetails.characterHobbies.map(item => item.hobby.hobby).join(', ') : profileDetails.characterHobbies}</p>
+                    <h2 className={`${styles.profileName} ${styles.font}`}>{profileDetails.name}</h2>
+                    <p className={`${styles.personalityType} ${styles.font}`}>#{profileDetails.mbti}</p>
+                    <p className={styles.font}>나이: {profileDetails.age}</p>
+                    <p className={styles.font}>키: {profileDetails.height}</p>
+                    <p className={styles.font}>직업: {profileDetails.job}</p>
+                    <p className={styles.font}>취미: {Array.isArray(profileDetails.characterHobbies) ? profileDetails.characterHobbies.map(item => item.hobby.hobby).join(', ') : profileDetails.characterHobbies}</p>
                 </div>
             </div>
 
-            <button className={styles.actionButton}>대화 로그 보기</button>
+            <button className={`${styles.actionButton} ${styles.font}`}>대화 로그 보기</button>
 
             {!isLoading && <div className={styles.scoreCard}>
-                <h3>최종 호감도: {result ? result.score : "로딩 중..."}</h3>
+                <h3 className={styles.font}>최종 호감도: {result ? result.finalScore : "로딩 중..."}</h3>
                 <div className={styles.chartContainer}>
-                    <h4>대화 중 호감도 변화</h4>
+                    <h4 className={styles.font}>대화 중 호감도 변화</h4>
                     <ResponsiveContainer width="100%" height={300}>
                         <LineChart data={transformScores(result.scores)}>
                             <CartesianGrid strokeDasharray="3 3" />
@@ -107,13 +107,13 @@ const ResultPage = () => {
             </div>}
 
             <div className={styles.summaryCard}>
-                <h3>감정 요약</h3>
-                <p>{result ? result.summaryFeel : "로딩 중..."}</p>
-                <h3>평가 요약</h3>
-                <p>{result ? result.summaryEval : "로딩 중..."}</p>
+                <h3 className={styles.font}>감정 요약</h3>
+                <p className={styles.font}>{result ? result.summaryFeel : "로딩 중..."}</p>
+                <h3 className={styles.font}>평가 요약</h3>
+                <p className={styles.font}>{result ? result.summaryEval : "로딩 중..."}</p>
             </div>
 
-            <button className={styles.reviewButton} onClick={openCommentModal}>댓글 보기</button>
+            <button className={`${styles.reviewButton} ${styles.font}`} onClick={openCommentModal}>댓글 보기</button>
 
             <CommentModal
                 show={isCommentModalOpen}
