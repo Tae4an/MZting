@@ -202,4 +202,9 @@ public class ChatService {
     public void setInitialized(Long chatRoomId, boolean initialized) {
         initializedChats.put(chatRoomId, initialized);
     }
+
+    public Chat getPreviousBotMessage(Long chatRoomId) {
+        List<Chat> botChats = chatRepository.findByChatRoomIdAndIsBotTrueOrderBySendAtDesc(chatRoomId);
+        return botChats.size() > 1 ? botChats.get(1) : null;
+    }
 }
