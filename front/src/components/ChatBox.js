@@ -12,6 +12,7 @@ const ChatBox = ({
                      onSendMessage,
                      stages,
                      isActualMeeting,
+                     openShowMissionModal
                  }) => {
     const [showProfileModal, setShowProfileModal] = useState(false);
     const [inputMessage, setInputMessage] = useState('');
@@ -86,6 +87,7 @@ const ChatBox = ({
                 <img src={image} alt={name} className={styles.avatar} onClick={handleProfileClick}/>
                 <span className={styles.userName} onClick={handleProfileClick}>{name}</span>
             </header>
+            <button className={styles.missionModal} onClick={openShowMissionModal}>미션 목록</button>
             <SituationBanner stages={stages} isActualMeeting={isActualMeeting}/>
             <div className={styles.messageContainer}>
                 {messages.map((message, index) => {

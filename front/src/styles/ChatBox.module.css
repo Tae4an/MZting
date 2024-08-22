@@ -27,12 +27,24 @@
 .chatHeader {
     display: flex;
     align-items: center;
+    width: 400px;
     padding: 15px;
     border-bottom: 1px solid #d4d7f6;
     color: #333333;
     position: sticky;
     top: 0;
     z-index: 10;
+}
+
+.missionModal {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .backButton {
@@ -55,6 +67,7 @@
 .userName {
     flex-grow: 1;
     font-size: 20px;
+    width: 50px;
     cursor: pointer;
     color: #ff6b6b;
     font-family: Noto Sans KR, sans-serif;
