@@ -41,6 +41,8 @@ const ChatPage = () => {
     const [backgroundChanged, setBackgroundChanged] = useState(false);
     const [stageToComplete, setStageToComplete] = useState(null);
     const [isIntroModalOpen, setIsIntroModalOpen] = useState(isFirst);
+    const [previousChat, setPreviousChat] = useState(50);
+    const [chatDiff, setChatDiff] = useState(0);
 
     useEffect(() => {
         if(isFirst) {
@@ -182,6 +184,7 @@ const ChatPage = () => {
             if (response.claudeResponse && response.claudeResponse.text) {
                 const responseMessage = {
                     content: response.claudeResponse.text,
+                    scoreDiff: response.claudeResponse.score - previousChat,
                     isSent: false,
                     avatar: image,
                     botInfo: {
@@ -193,6 +196,8 @@ const ChatPage = () => {
                 setMessages(prevMessages => [...prevMessages, responseMessage]);
                 setClaudeResponse(response.claudeResponse);
             }
+
+            setPreviousChat(response.claudeResponse.score)
         } catch (error) {
             console.error('Error sending initial message:', error);
         }
@@ -213,6 +218,11 @@ const ChatPage = () => {
                 console.log(requestData)
 
                 const response = await sendPostRequest(requestData, "/api/ask-claude")
+
+                setChatDiff(response.claudeResponse.score - previousChat)
+                setPreviousChat(response.claudeResponse.score)
+
+                console.log("chatDiff: ", chatDiff)
 
                 // Claude의 응답을 \n을 기준으로 여러 개의 메시지로 나누기
                 const splitMessages = response.claudeResponse.text.split('\n').filter(msg => msg.trim() !== '');
@@ -241,6 +251,7 @@ const ChatPage = () => {
                     const responseMessage = {
                         content: message,
                         isSent: false,
+                        scoreDiff: response.claudeResponse.score - previousChat,
                         avatar: image,
                         isLastInGroup: isLastMessage,
                         botInfo: isLastMessage ? {
@@ -257,6 +268,8 @@ const ChatPage = () => {
                     }
                 }
             }
+
+            setPreviousChat(response.claudeResponse.score)
         } catch (error) {
             console.error('Error sending message:', error);
         }
