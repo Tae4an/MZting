@@ -15,6 +15,10 @@ const GenerateImageModal = ({ show, onClose, profileId }) => {
     const [togglePart, setTogglePart] = useState(0); // 0이 이미지 생성, 1이 생성 로그 확인
     const [selectedImage, setSelectedImage] = useState(null);
 
+    const categoryMapping = [
+        "머리", "시점", "의상", "배경", "액세서리"
+    ]
+
     useEffect(() => {
         fetchTags();
     }, []);
@@ -31,7 +35,7 @@ const GenerateImageModal = ({ show, onClose, profileId }) => {
 
     const fetchImageLogs = async (page) => {
         try {
-            const response = await sendPostRequest({ page, size: 12 }, "api/gnimage/log/all");
+            const response = await sendPostRequest({ page, size: 10 }, "api/gnimage/log/all");
             setLogData(response);
         } catch (error) {
             console.error("Failed to fetch image logs:", error);
@@ -107,7 +111,7 @@ const GenerateImageModal = ({ show, onClose, profileId }) => {
                                 fontFamily: "Noto Sans KR, sans-serif",
                             }}
                         >
-                            {category}
+                            {categoryMapping[index]}
                         </h3>
                         <div className={styles.tagList}>
                             {tagList[category].map((tag, i) => (
@@ -136,7 +140,7 @@ const GenerateImageModal = ({ show, onClose, profileId }) => {
                         fontFamily: "Noto Sans KR, sans-serif",
                     }}
                 >
-                    Generated Image
+                    생성된 이미지
                 </h3>
                 <div className={styles.imageContainer}>
                     {isLoading ? (
@@ -167,11 +171,11 @@ const GenerateImageModal = ({ show, onClose, profileId }) => {
                             fontFamily: "Noto Sans KR, sans-serif",
                         }}
                     >
-                        Selected Tags:
+                        선택된 태그 :
                     </h4>
                     <div className={styles.tagContainer}>
                         {selectedTags.map((tag, index) => (
-                            <span key={index} className={styles.selectedTag}>{tag.category}: {tag.korName}</span>
+                            <span key={index} className={styles.selectedTag}>{tag.korName}</span>
                         ))}
                     </div>
                 </div>
@@ -184,7 +188,7 @@ const GenerateImageModal = ({ show, onClose, profileId }) => {
                         fontFamily: "Noto Sans KR, sans-serif",
                     }}
                 >
-                    Generate Image
+                    이미지 생성
                 </button>
                 {currentImage && (
                     <button onClick={() => handleApplyImage(currentImage)} className={styles.applyButton}>
@@ -308,9 +312,37 @@ const GenerateImageModal = ({ show, onClose, profileId }) => {
             <div className={styles.modalContent}>
                 <button className={styles.closeButton} onClick={onClose}>×</button>
                 <h2 className={styles.title}>캐릭터 이미지 설정</h2>
-                {togglePart === 0 && <GenerateImagePart />}
-                {togglePart === 1 && <ImageLogPart />}
-                <ButtonArea />
+                {togglePart === 0 ? (
+                    <div className={styles.generateImageContainer}>
+                        <TagSelectionPart
+                            tagList={tagList}
+                            selectedTags={selectedTags}
+                            handleTagSelect={handleTagSelect}
+                        />
+                        <ImagePreviewPart
+                            isLoading={isLoading}
+                            currentImage={currentImage}
+                            selectedTags={selectedTags}
+                            requestGenerateImage={requestGenerateImage}
+                            handleApplyImage={handleApplyImage}
+                        />
+                    </div>
+                ) : (
+                    <ImageLogPart
+                        logData={logData}
+                        currentPage={currentPage}
+                        handlePageChange={handlePageChange}
+                        handleImageClick={handleImageClick}
+                    />
+                )}
+                <div className={styles.buttonArea}>
+                    <button
+                        onClick={() => setTogglePart(togglePart === 0 ? 1 : 0)}
+                        className={styles.toggleButton}
+                    >
+                        {togglePart === 0 ? "생성 로그 보기" : "이미지 생성하기"}
+                    </button>
+                </div>
                 <ImageLogModal
                     show={selectedImage !== null}
                     onClose={() => setSelectedImage(null)}

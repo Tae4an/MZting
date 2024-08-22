@@ -11,6 +11,20 @@
     z-index: 1000;
 }
 
+.modalTitle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 0 20px 0;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.titleIcon {
+    margin-right: 10px;
+    color: #FFA500; /* 아이콘 색상을 미션 번호 색상과 맞춤 */
+}
+
 .modalContent {
     background-color: white;
     padding: 20px;

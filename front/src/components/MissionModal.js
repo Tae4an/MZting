@@ -11,7 +11,13 @@ const MissionModal = ({ chatCount, onClose }) => {
     return (
         <div className={styles.modalOverlay}>
             <div className={styles.modalContent}>
-                <h2 className={styles.modalTitle}>미션 리스트</h2>
+                <h2 className={styles.modalTitle}>
+                    <svg className={styles.titleIcon} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path>
+                        <line x1="4" y1="22" x2="4" y2="15"></line>
+                    </svg>
+                    미션 리스트
+                </h2>
                 <div className={styles.missionList}>
                     {missions.map((mission, index) => {
                         const isCompleted = chatCount >= mission.requiredCount;
