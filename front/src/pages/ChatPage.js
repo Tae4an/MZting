@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styles from '../styles/ChatPage.module.css';
-import { ChatBox, TimePassedModal, IntroductionModal, ChatHistory } from '../components';
-import { sendMessage, sendPostRequest } from '../services';
+import { ChatBox, TimePassedModal, IntroductionModal, ChatHistory, MissionModal } from '../components';
+import { sendPostRequest } from '../services';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -43,6 +43,16 @@ const ChatPage = () => {
     const [isIntroModalOpen, setIsIntroModalOpen] = useState(isFirst);
     const [previousChat, setPreviousChat] = useState(50);
     const [chatDiff, setChatDiff] = useState(0);
+    const [chatCount, setChatCount] = useState(0);
+    const [showMissionModal, setShowMissionModal] = useState(false);
+
+    const openShowMissionModal = () => {
+        setShowMissionModal(true)
+    }
+
+    const closeShowMissionModal = () => {
+        setShowMissionModal(false)
+    }
 
     useEffect(() => {
         if(isFirst) {
@@ -184,7 +194,6 @@ const ChatPage = () => {
             if (response.claudeResponse && response.claudeResponse.text) {
                 const responseMessage = {
                     content: response.claudeResponse.text,
-                    scoreDiff: response.claudeResponse.score - previousChat,
                     isSent: false,
                     avatar: image,
                     botInfo: {
@@ -204,6 +213,7 @@ const ChatPage = () => {
     };
 
     const handleSendMessage = async (content) => {
+        setChatCount(chatCount + 1)
         try {
             const newMessage = { content, isSent: true };
             setMessages(prevMessages => [...prevMessages, newMessage]);
@@ -293,6 +303,7 @@ const ChatPage = () => {
                     onSendMessage={handleSendMessage}
                     stages={stages}
                     isActualMeeting={isActualMeeting}
+                    openShowMissionModal={openShowMissionModal}
                 />
             </div>
             {isIntroModalOpen && (
@@ -319,6 +330,11 @@ const ChatPage = () => {
                 draggable
                 pauseOnHover
             />
+
+            {showMissionModal && <MissionModal
+                chatCount={chatCount}
+                onClose={closeShowMissionModal}
+            />}
         </main>
     );
 };

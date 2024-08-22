@@ -25,13 +25,14 @@
     padding: 20px;
     border-radius: 10px;
     width: 500px;
-    height: 400px;
+    height: auto;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     opacity: 0;
     transform: scale(0.8);
     transition: opacity 0.5s ease, transform 0.5s ease;
+    gap: 15px;
 }
 
 .modalContent.visible {
@@ -49,14 +50,9 @@
     transform: scale(0.8);
 }
 
-.messageBox {
-    height: 80%;
-    overflow-y: auto;
-}
-
 .messageItem {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(10px);
     transition: opacity 0.5s ease, transform 0.5s ease;
     margin-bottom: 10px;
     font-family: Noto Sans KR, sans-serif;
@@ -93,6 +89,25 @@
 
 .closeButton:hover {
     background-color: #ff6b6b;
+}
+
+.lightbulb {
+    width: 40px;
+    height: auto;
+}
+
+.messageHeader {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.font {
+    font-family: Noto Sans KR, sans-serif;
+    font-weight: bolder;
+    font-style: normal;
+    font-size: 35px;
 }
 
 @keyframes blinkCursor {

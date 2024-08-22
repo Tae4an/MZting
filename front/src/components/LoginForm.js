@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styles from '../styles/LoginPage.module.css';
-import kakaoIcon from '../assets/icons/kakao.png';
 import naverIcon from '../assets/icons/naver.png';
 import googleIcon from '../assets/icons/google.png';
 import MZting_logo from '../assets/Images/MZting_logo.png';
