@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styles from '../styles/ProfileDetailModal.module.css';
-import { ImageModal, CommentModal, PreviousChatsModal, GenerateImageModal } from '../components';
+import { ImageModal, PreviousChatsModal, GenerateImageModal, CommentModal } from '../components';
 
 const ProfileDetailModal = ({ show, onClose, profile, onClick, showChatButton, loadChatRoomData }) => {
     const [showImageModal, setShowImageModal] = useState(false);
     const [showChatsModal, setShowChatsModal] = useState(false);
     const [showGenerateImageModal, setShowGenerateImageModal] = useState(false);
     const [previousChats, setPreviousChats] = useState([]);
+    const [showCommentModal, setShowCommentModal] = useState(false);
 
     useEffect(() => {
         const fetchPreviousChats = async () => {
@@ -55,9 +56,13 @@ const ProfileDetailModal = ({ show, onClose, profile, onClick, showChatButton, l
         setShowGenerateImageModal(!showGenerateImageModal);
     };
 
-    const handleChatRoom = () => {
+    const openCommentModal = () => {
+        setShowCommentModal(true)
+    }
 
-    };
+    const closeCommentModal = () => {
+        setShowCommentModal(false)
+    }
 
     return (
         <>
@@ -113,6 +118,7 @@ const ProfileDetailModal = ({ show, onClose, profile, onClick, showChatButton, l
                             {previousChats.length > 0 && (
                                 <button className={styles.chatButton} onClick={handleChatsClick}>이전 채팅방</button>
                             )}
+                            <button className={styles.chatButton} onClick={openCommentModal}>해당 댓글 보기</button>
                         </div>
                     )}
                 </div>
@@ -139,6 +145,12 @@ const ProfileDetailModal = ({ show, onClose, profile, onClick, showChatButton, l
                     profileId={profile.id}
                 />
             )}
+            {showCommentModal && (<CommentModal
+                show={showCommentModal}
+                onClose={closeCommentModal}
+                propsData={{type: profile.type, profileId: profile.id}}
+                isResult = {false}
+            />)}
         </>
     );
 };
