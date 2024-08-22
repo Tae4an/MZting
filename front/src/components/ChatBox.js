@@ -12,6 +12,7 @@ const ChatBox = ({
                      onSendMessage,
                      stages,
                      isActualMeeting,
+                     openShowMissionModal
                  }) => {
     const [showProfileModal, setShowProfileModal] = useState(false);
     const [inputMessage, setInputMessage] = useState('');
@@ -86,10 +87,12 @@ const ChatBox = ({
                 <img src={image} alt={name} className={styles.avatar} onClick={handleProfileClick}/>
                 <span className={styles.userName} onClick={handleProfileClick}>{name}</span>
             </header>
+            <button className={styles.missionModal} onClick={openShowMissionModal}>미션 목록</button>
             <SituationBanner stages={stages} isActualMeeting={isActualMeeting}/>
             <div className={styles.messageContainer}>
                 {messages.map((message, index) => {
                     const showAvatar = !message.isSent && (index === 0 || messages[index - 1].isSent);
+                    const prevScore = index > 0 && messages[index - 1].botInfo ? messages[index - 1].botInfo.score : 0;
                     return (
                         <React.Fragment key={index}>
                             <ChatBubble
@@ -101,9 +104,8 @@ const ChatBox = ({
                             {!message.isSent && message.botInfo && (
                                 <FeedbackBanner
                                     feel={message.botInfo.feel}
-                                    score={message.botInfo.score}
                                     evaluation={message.botInfo.evaluation}
-                                    prevScore={index > 0 && messages[index - 1].botInfo ? messages[index - 1].botInfo.score : 0}
+                                    chatDiff = {message.scoreDiff}
                                 />
                             )}
                         </React.Fragment>

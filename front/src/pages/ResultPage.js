@@ -118,7 +118,8 @@ const ResultPage = () => {
             <CommentModal
                 show={isCommentModalOpen}
                 onClose={closeCommentModal}
-                propsData={{type: profileDetails.type, profileId: profileDetails.profileId}}
+                propsData={{type: profileDetails.mbti, profileId: profileDetails.profileId}}
+                isResult = {true}
             />
         </div>
     );

@@ -5,6 +5,8 @@ import com.example.mzting.dto.ClaudeResponse;
 import com.example.mzting.entity.Chat;
 import com.example.mzting.service.ClaudeApiService;
 import com.example.mzting.service.ChatService;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import lombok.Setter;
 import org.slf4j.Logger;
@@ -25,10 +27,13 @@ public class ChatController {
 
     private final ClaudeApiService claudeApiService;
     private final ChatService chatService;
+    private final ObjectMapper objectMapper;
 
-    public ChatController(ClaudeApiService claudeApiService, ChatService chatService) {
+
+    public ChatController(ClaudeApiService claudeApiService, ChatService chatService, ObjectMapper objectMapper) {
         this.claudeApiService = claudeApiService;
         this.chatService = chatService;
+        this.objectMapper = objectMapper;
     }
 
     @PostMapping(value = "/ask-claude", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -38,8 +43,7 @@ public class ChatController {
             Long chatRoomId = userMessageObj.getChatRoomId();
 
             // 사용자 메시지를 DB에 저장
-            Chat test = chatService.saveUserMessage(userMessage, chatRoomId);
-            System.out.println("test : " + test.getChatRoomId());
+            Chat userChat = chatService.saveUserMessage(userMessage, chatRoomId);
 
             ClaudeResponse claudeResponse = claudeApiService.getClaudeResponse(
                     chatService.getMessagesForClaudeApi(chatRoomId),
@@ -51,11 +55,25 @@ public class ChatController {
             // 컨텍스트 업데이트
             updateContext(userMessage, claudeResponse.getText());
 
-            // Claude의 응답도 DB에 저장 (선택적)
-            chatService.saveUserMessage(claudeResponse, chatRoomId);
+            // Claude의 응답을 DB에 저장
+            Chat botChat = chatService.saveUserMessage(claudeResponse, chatRoomId);
+
+            // 이전 봇 메시지 가져오기
+            Chat previousBotChat = chatService.getPreviousBotMessage(chatRoomId);
+            int previousScore = 0;
+            if (previousBotChat != null) {
+                JsonNode previousBotInfo = objectMapper.readTree(previousBotChat.getBotInfo());
+                previousScore = previousBotInfo.get("score").asInt();
+            }
+
+            // 현재 봇 메시지의 score 가져오기
+            JsonNode currentBotInfo = objectMapper.readTree(botChat.getBotInfo());
+            int currentScore = currentBotInfo.get("score").asInt();
 
             Map<String, Object> response = new HashMap<>();
             response.put("claudeResponse", claudeResponse);
+            response.put("currentScore", currentScore);
+            response.put("previousScore", previousScore);
 
             return ResponseEntity.ok(response);
 

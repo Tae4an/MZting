@@ -15,8 +15,9 @@ import { SituationBanner } from "./SituationBanner";
 import { FeedbackBanner } from "./FeedbackBanner";
 import { GenerateImageModal } from "./GenerateImageModal";
 import { ImageLogModal } from "./ImageLogModal";
-import {IntroductionModal} from "./IntroductionModal";
-import {ChatHistory} from "./ChatHistory";
+import { IntroductionModal } from "./IntroductionModal";
+import { ChatHistory } from "./ChatHistory";
+import { MissionModal } from "./MissionModal";
 
 
 export {
@@ -39,5 +40,6 @@ export {
     GenerateImageModal,
     ImageLogModal,
     IntroductionModal,
-    ChatHistory
+    ChatHistory,
+    MissionModal
 }

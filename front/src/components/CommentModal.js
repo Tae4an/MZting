@@ -4,7 +4,7 @@ import styles from '../styles/CommentModal.module.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { sendPostRequest, sendGetRequest } from "../services";
 
-const CommentModal = ({ show, onClose, propsData }) => {
+const CommentModal = ({ show, onClose, propsData, isResult }) => {
     const [comment, setComment] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [isLike, setIsLike] = useState(null);
@@ -192,9 +192,9 @@ const CommentModal = ({ show, onClose, propsData }) => {
                     <button className={styles.closeButton} onClick={onClose}>
                         ×
                     </button>
-                    <h2 className={styles.modalTitle}>{propsData?.type || ""}에 대한 댓글 및 후기</h2>
+                    <h2 className={styles.modalTitle}>#{propsData?.type || ""} 에 대한 댓글 및 후기</h2>
                     <form onSubmit={handleSubmit} className={styles.modalForm}>
-                        <div className={styles.textareaAndButtons}>
+                        {isResult && <div className={styles.textareaAndButtons}>
                             <button
                                 type="button"
                                 onClick={() => { if(isLike) { setIsLike(null) } else { setIsLike(true)}}}
@@ -218,7 +218,7 @@ const CommentModal = ({ show, onClose, propsData }) => {
                             <button type="submit" className={styles.submitButton}>
                                 제출
                             </button>
-                        </div>
+                        </div>}
                         <div className={styles.modalRating}>
                             <button
                                 type="button"
@@ -226,7 +226,7 @@ const CommentModal = ({ show, onClose, propsData }) => {
                                 className={`${styles.ratingButton} ${likeViewState === true ? styles.ratinglike : ''}`}
                             >
                                 <i className="bi bi-hand-thumbs-up" style={{color: "black"}}></i>
-                                <span style={{color: "black"}}>{totalLikeCount}</span>
+                                <span style={{color: "black"}}>12</span>
                             </button>
                             <button
                                 type="button"
@@ -234,7 +234,7 @@ const CommentModal = ({ show, onClose, propsData }) => {
                                 className={`${styles.ratingButton} ${disLikeViewState === true ? styles.ratingdislike : ''}`}
                             >
                                 <i className="bi bi-hand-thumbs-down" style={{color: "black"}}></i>
-                                <span style={{color: "black"}}>{totalDislikeCount}</span>
+                                <span style={{color: "black"}}>3</span>
                             </button>
                         </div>
                     </form>
@@ -282,7 +282,8 @@ CommentModal.propTypes = {
     propsData: PropTypes.shape({
         type: PropTypes.string,
         profileId: PropTypes.number
-    })
+    }),
+    isResult : PropTypes.bool
 };
 
 CommentModal.defaultProps = {
