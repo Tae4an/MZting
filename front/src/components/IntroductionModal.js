@@ -88,4 +88,4 @@ const IntroductionModal = ({ isOpen, onClose, profileDetails }) => {
     );
 };
 
-export default IntroductionModal;
+export {IntroductionModal};

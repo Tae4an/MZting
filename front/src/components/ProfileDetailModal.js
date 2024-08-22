@@ -5,7 +5,6 @@ import { ImageModal, CommentModal, PreviousChatsModal, GenerateImageModal } from
 
 const ProfileDetailModal = ({ show, onClose, profile, onClick, showChatButton, loadChatRoomData }) => {
     const [showImageModal, setShowImageModal] = useState(false);
-    const [showCommentModal, setShowCommentModal] = useState(false);
     const [showChatsModal, setShowChatsModal] = useState(false);
     const [showGenerateImageModal, setShowGenerateImageModal] = useState(false);
     const [previousChats, setPreviousChats] = useState([]);
@@ -31,14 +30,6 @@ const ProfileDetailModal = ({ show, onClose, profile, onClick, showChatButton, l
 
     const handleImageModalClose = () => {
         setShowImageModal(false);
-    };
-
-    const handleCommentClick = () => {
-        setShowCommentModal(true);
-    };
-
-    const handleCommentModalClose = () => {
-        setShowCommentModal(false);
     };
 
     const handleChatsClick = () => {
@@ -133,13 +124,6 @@ const ProfileDetailModal = ({ show, onClose, profile, onClick, showChatButton, l
                     image={profile.image}
                 />
             )}
-            {showCommentModal && (
-                <CommentModal
-                    show={showCommentModal}
-                    onClose={handleCommentModalClose}
-                    propsData={{ profileId: profile.id, type: profile.type }}
-                />
-            )}
             {showChatsModal && (
                 <PreviousChatsModal
                     show={showChatsModal}
@@ -155,7 +139,6 @@ const ProfileDetailModal = ({ show, onClose, profile, onClick, showChatButton, l
                     profileId={profile.id}
                 />
             )}
-            <button className={styles.commentButton} onClick={handleCommentClick}>댓글 및 후기</button>
         </>
     );
 };
