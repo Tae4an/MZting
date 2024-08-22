@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import styles from '../styles/HistoryPage.module.css';
 import { sendGetRequest } from "../services";
+import {LoadingSpinner} from "../components";
 
 const HistoryPage = () => {
     const navigate = useNavigate();
@@ -63,6 +64,13 @@ const HistoryPage = () => {
         }
     };
 
+    const convertChatRoomName = (chatRoomName) => {
+        const old_value = "kp141@naver.com과(와)"
+        const new_value = "최태산님과"
+
+        return chatRoomName.replace(old_value,new_value)
+    }
+
     const handleActionClick = async (chatRoom) => {
         const profileDetails = profiles[chatRoom.profileId];
         console.log('Profile details:', profileDetails);  // Debugging log
@@ -118,8 +126,6 @@ const HistoryPage = () => {
         return chatRoom.result === null ? "이어서 대화하기" : "대화 결과 보기";
     };
 
-    if (loading) return <div>로딩 중...</div>;
-    if (error) return <div>{error}</div>;
 
     return (
         <div ref={mainContentRef} className={styles.page}>
@@ -129,7 +135,8 @@ const HistoryPage = () => {
                 </button>
                 <h1 className={styles.title}>History</h1>
             </header>
-            <div className={styles.content}>
+            {loading && <LoadingSpinner />}
+            {!loading && <div className={styles.content}>
                 {chatRooms.map((chatRoom) => (
                     <div key={chatRoom.id} className={styles.card}>
                         <div className={styles.cardContent}>
@@ -138,7 +145,7 @@ const HistoryPage = () => {
                                     <img loading="lazy" src={chatRoom.profileImage} alt="" className={styles.avatar} />
                                 </div>
                                 <div className={styles.titleWrapper}>
-                                    <h2 className={styles.conversationTitle}>{chatRoom.name}</h2>
+                                    <h2 className={styles.conversationTitle}>{convertChatRoomName(chatRoom.name)}</h2>
                                 </div>
                             </div>
                             <div className={styles.statusWrapper}>
@@ -153,7 +160,7 @@ const HistoryPage = () => {
                         </button>
                     </div>
                 ))}
-            </div>
+            </div>}
         </div>
     );
 };
