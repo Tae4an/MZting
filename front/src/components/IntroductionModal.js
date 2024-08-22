@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from '../styles/IntroductionModal.module.css';
+import light_bulb from '../assets/Images/light_bulb.png'
 
 const IntroductionModal = ({ isOpen, onClose, profileDetails }) => {
     const [displayedText, setDisplayedText] = useState([]);
@@ -70,10 +71,12 @@ const IntroductionModal = ({ isOpen, onClose, profileDetails }) => {
     return (
         <div className={`${styles.modalOverlay} ${isOpen ? styles.visible : ''} ${isClosing ? styles.closing : ''}`}>
             <div className={`${styles.modalContent} ${isOpen ? styles.visible : ''} ${isClosing ? styles.closing : ''}`}>
-                <div className={styles.messageBox}>
-                    <div className={styles.messageItem}>
-                        {displayedText}
-                    </div>
+                <div className={styles.messageItem}>
+                     <h1 className={styles.messageHeader}>
+                        <img src={light_bulb} className={styles.lightbulb} alt="Light Bulb"/>
+                        <p className={styles.font}>prol.인물소개</p>
+                    </h1>
+                    {displayedText}
                 </div>
                 {stepIndex === introSteps.length - 1 && charIndex === introSteps[stepIndex].length && (
                     <button onClick={handleClose} className={styles.closeButton}>
