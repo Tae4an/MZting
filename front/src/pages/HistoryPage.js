@@ -114,6 +114,7 @@ const HistoryPage = () => {
             }
         } else {
             console.error(`프로필 ID ${chatRoom.profileId}에 대한 정보를 찾을 수 없습니다.`);
+            // 사용자에게 오류 메시지 표시
             alert('프로필 정보를 가져오는 데 실패했습니다. 잠시 후 다시 시도해 주세요.');
         }
     };
