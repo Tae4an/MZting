@@ -19,52 +19,52 @@ public class UserCustomImage {
     private Long id;
 
     @Column(nullable = false)
-    private String profileImage1 = "https://firebasestorage.googleapis.com/v0/b/mzting.appspot.com/o/default%2Fprofile1.jpg?alt=media&token=d9a25fd3-78d0-480b-8f94-249287cd80ad";
+    private String profileImage1 = "https://firebasestorage.googleapis.com/v0/b/mzting.appspot.com/o/default%2Fprofile1.png?alt=media&token=6e14d9d5-8977-408a-a4b4-f9bbd38dafcd";
 
     @Column(nullable = false)
-    private String profileImage2 = "https://firebasestorage.googleapis.com/v0/b/mzting.appspot.com/o/default%2Fprofile2.jpg?alt=media&token=8d49e074-32c2-4f10-b160-42ad1dc40dc2";
+    private String profileImage2 = "https://firebasestorage.googleapis.com/v0/b/mzting.appspot.com/o/default%2Fprofile2.png?alt=media&token=9b355fa8-1153-4e2f-8917-b54b1aa315f3";
 
     @Column(nullable = false)
-    private String profileImage3 = "https://firebasestorage.googleapis.com/v0/b/mzting.appspot.com/o/default%2Fprofile3.jpg?alt=media&token=4a33319e-4640-48cb-a60f-a08cffed8b5e";
+    private String profileImage3 = "https://firebasestorage.googleapis.com/v0/b/mzting.appspot.com/o/default%2Fprofile3.png?alt=media&token=70c153f2-6102-4430-81e5-d67653fab994";
 
     @Column(nullable = false)
-    private String profileImage4 = "https://firebasestorage.googleapis.com/v0/b/mzting.appspot.com/o/default%2Fprofile4.jpg?alt=media&token=1a3bb87c-41fb-4da7-9a68-fe84e21f9c01";
+    private String profileImage4 = "https://firebasestorage.googleapis.com/v0/b/mzting.appspot.com/o/default%2Fprofile4.png?alt=media&token=c4cd72af-3d63-429a-b820-5ec1811f2f28";
 
     @Column(nullable = false)
-    private String profileImage5 = "https://firebasestorage.googleapis.com/v0/b/mzting.appspot.com/o/default%2Fprofile5.jpg?alt=media&token=f13f685e-8b49-4895-b994-6960c52f07c0";
+    private String profileImage5 = "https://firebasestorage.googleapis.com/v0/b/mzting.appspot.com/o/default%2Fprofile5.png?alt=media&token=77ddc879-5e2f-4035-863b-060991a418e8";
 
     @Column(nullable = false)
-    private String profileImage6 = "https://firebasestorage.googleapis.com/v0/b/mzting.appspot.com/o/default%2Fprofile6.jpg?alt=media&token=afb51646-ef08-45f8-a18c-a0d87ec9e063";
+    private String profileImage6 = "https://firebasestorage.googleapis.com/v0/b/mzting.appspot.com/o/default%2Fprofile6.png?alt=media&token=380ea951-4cf2-4f32-808c-b8b445656ceb";
 
     @Column(nullable = false)
-    private String profileImage7 = "https://firebasestorage.googleapis.com/v0/b/mzting.appspot.com/o/default%2Fprofile7.jpg?alt=media&token=0fe9496b-2c84-477e-aea3-a849094cd1b1";
+    private String profileImage7 = "https://firebasestorage.googleapis.com/v0/b/mzting.appspot.com/o/default%2Fprofile7.png?alt=media&token=7493ca40-88bc-44b3-8a1f-8daac6118bc9";
 
     @Column(nullable = false)
-    private String profileImage8 = "https://firebasestorage.googleapis.com/v0/b/mzting.appspot.com/o/default%2Fprofile8.jpg?alt=media&token=c9332766-e707-473d-b5ad-76cf2e962034";
+    private String profileImage8 = "https://firebasestorage.googleapis.com/v0/b/mzting.appspot.com/o/default%2Fprofile8.png?alt=media&token=8ae609e6-7e23-49e6-8ae0-afa4471c337e";
 
     @Column(nullable = false)
-    private String profileImage9 = "https://firebasestorage.googleapis.com/v0/b/mzting.appspot.com/o/default%2Fprofile9.jpg?alt=media&token=3a46c193-47d1-4403-a160-9484cf7cce2f";
+    private String profileImage9 = "https://firebasestorage.googleapis.com/v0/b/mzting.appspot.com/o/default%2Fprofile9.png?alt=media&token=3c7ffc6c-80ae-473c-80ae-e8c6352f3851";
 
     @Column(nullable = false)
-    private String profileImage10 = "https://firebasestorage.googleapis.com/v0/b/mzting.appspot.com/o/default%2Fprofile10.jpg?alt=media&token=caa1510e-b8d1-478b-8658-1332f75dbb72";
+    private String profileImage10 = "https://firebasestorage.googleapis.com/v0/b/mzting.appspot.com/o/default%2Fprofile10.png?alt=media&token=d11e2aa8-69d3-4bbc-9f59-14e1eb111e4e";
 
     @Column(nullable = false)
-    private String profileImage11 = "https://firebasestorage.googleapis.com/v0/b/mzting.appspot.com/o/default%2Fprofile11.jpg?alt=media&token=13c8bf70-5dd2-494c-80cf-ea9705f38f54";
+    private String profileImage11 = "https://firebasestorage.googleapis.com/v0/b/mzting.appspot.com/o/default%2Fprofile11.png?alt=media&token=6c45f4f4-d3d0-46cc-8521-9e12fc903f63";
 
     @Column(nullable = false)
-    private String profileImage12 = "https://firebasestorage.googleapis.com/v0/b/mzting.appspot.com/o/default%2Fprofile12.jpg?alt=media&token=87852df7-e4ae-4d73-9c9e-ea07064fe3b5";
+    private String profileImage12 = "https://firebasestorage.googleapis.com/v0/b/mzting.appspot.com/o/default%2Fprofile12.png?alt=media&token=5e584807-4c4f-4f58-a8da-7a8e5d4a33b2";
 
     @Column(nullable = false)
-    private String profileImage13 = "https://firebasestorage.googleapis.com/v0/b/mzting.appspot.com/o/default%2Fprofile13.jpg?alt=media&token=27c31f66-2bd9-4576-b7e2-b03903829144";
+    private String profileImage13 = "https://firebasestorage.googleapis.com/v0/b/mzting.appspot.com/o/default%2Fprofile13.png?alt=media&token=ea194f33-f4ea-41aa-b4bd-319092bb5ffd";
 
     @Column(nullable = false)
-    private String profileImage14 = "https://firebasestorage.googleapis.com/v0/b/mzting.appspot.com/o/default%2Fprofile14.jpg?alt=media&token=84805377-fbcd-411d-9ed4-dc62235a3d91";
+    private String profileImage14 = "https://firebasestorage.googleapis.com/v0/b/mzting.appspot.com/o/default%2Fprofile14.png?alt=media&token=b9eb678c-119a-497f-9288-50f7284a705c";
 
     @Column(nullable = false)
-    private String profileImage15 = "https://firebasestorage.googleapis.com/v0/b/mzting.appspot.com/o/default%2Fprofile15.jpg?alt=media&token=67c1004e-034c-4f1b-b2ab-e66af484c99d";
+    private String profileImage15 = "https://firebasestorage.googleapis.com/v0/b/mzting.appspot.com/o/default%2Fprofile15.png?alt=media&token=383cf414-f87b-46de-bbc4-eca6ec8b5bac";
 
     @Column(nullable = false)
-    private String profileImage16 = "https://firebasestorage.googleapis.com/v0/b/mzting.appspot.com/o/default%2Fprofile16.jpg?alt=media&token=31c2bc08-91fa-45fe-8f43-da6cfd9b2067";
+    private String profileImage16 = "https://firebasestorage.googleapis.com/v0/b/mzting.appspot.com/o/default%2Fprofile16.png?alt=media&token=91a4388f-7b6b-47f6-85a3-4d148cc225f1";
 
     public void setProfileImage(int index, String value) {
         switch (index) {
@@ -84,6 +84,28 @@ public class UserCustomImage {
             case 14: profileImage14 = value; break;
             case 15: profileImage15 = value; break;
             case 16: profileImage16 = value; break;
+            default: throw new IllegalArgumentException("Invalid profile image index: " + index);
+        }
+    }
+
+    public String getProfileImage(int index) {
+        switch (index) {
+            case 1: return profileImage1;
+            case 2: return profileImage2;
+            case 3: return profileImage3;
+            case 4: return profileImage4;
+            case 5: return profileImage5;
+            case 6: return profileImage6;
+            case 7: return profileImage7;
+            case 8: return profileImage8;
+            case 9: return profileImage9;
+            case 10: return profileImage10;
+            case 11: return profileImage11;
+            case 12: return profileImage12;
+            case 13: return profileImage13;
+            case 14: return profileImage14;
+            case 15: return profileImage15;
+            case 16: return profileImage16;
             default: throw new IllegalArgumentException("Invalid profile image index: " + index);
         }
     }

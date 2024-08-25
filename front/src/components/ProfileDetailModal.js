@@ -89,12 +89,16 @@ const ProfileDetailModal = ({ show, onClose, profile, onClick, showChatButton, l
                                     className={styles.profileImage}
                                 />
                             </button>
-                            <button onClick={handleGenerateImageModal}>
+                            <button onClick={handleGenerateImageModal} className={styles.generateImageButton}>
                                 이미지 설정하기
                             </button>
                         </div>
-                        <div className={styles.profileInfo}>
-                            <h2>{profile.name} <span className={styles.profileType}>{profile.type}</span></h2>
+                        <div>
+                            <h2 className={styles.profileTitle}>
+                                <span className={styles.profileName}>{profile.name}</span>
+                                <span className={styles.profileType}>{profile.type}</span>
+                            </h2>
+                            <div className={styles.profileInfo}>
                             <p className={styles.profileDetail}>나이 : {profile.age}</p>
                             <p className={styles.profileDetail}>키 : {profile.height}</p>
                             <p className={styles.profileDetail}>직업 : {profile.job}</p>
@@ -106,6 +110,7 @@ const ProfileDetailModal = ({ show, onClose, profile, onClick, showChatButton, l
                                     ))}
                                 </div>
                             )}
+                            </div>
                         </div>
                     </div>
                     <div className={styles.profileDescription}>
@@ -147,6 +152,7 @@ const ProfileDetailModal = ({ show, onClose, profile, onClick, showChatButton, l
                 <GenerateImageModal
                     show={showGenerateImageModal}
                     onClose={handleGenerateImageModal}
+                    profileId={profile.id}
                 />
             )}
             <button className={styles.commentButton} onClick={handleCommentClick}>댓글 및 후기</button>

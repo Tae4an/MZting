@@ -57,6 +57,9 @@
     font-size: 20px;
     cursor: pointer;
     color: #ff6b6b;
+    font-family: Noto Sans KR, sans-serif;
+    font-style: normal;
+    font-weight: bolder;
 }
 
 .situationDescription {
@@ -124,6 +127,9 @@
 
 .messageText {
     margin-bottom: 5px;
+    font-weight: normal;
+    font-family: Noto Sans KR, sans-serif;
+    font-style: normal;
 }
 
 .messageInfo {
@@ -158,6 +164,9 @@
     border-radius: 20px;
     resize: none;
     overflow-y: auto;
+    font-family: Noto Sans KR, sans-serif;
+    font-style: normal;
+    font-weight: bolder;
 }
 
 .sendButton {
@@ -168,6 +177,9 @@
     border: none;
     border-radius: 20px;
     cursor: pointer;
+    font-family: Noto Sans KR, sans-serif;
+    font-style: normal;
+    font-weight: bolder;
 }
 
 .sendButton:hover {

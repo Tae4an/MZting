@@ -47,34 +47,51 @@ const LoginForm = () => {
         window.location.href = 'http://localhost:8080/oauth2/authorization/naver';
     };
 
-    const handleKakaoLogin = () => {
-        // 기능 미구현
-        alert('카카오 로그인 기능은 아직 구현되지 않았습니다.');
-    };
-
     return (
         <div className={styles.loginFormContainer}>
             <form className={styles.loginForm} onSubmit={handleSubmit}>
                 <img src={MZting_logo} className={styles.loginLogo} alt="Login Logo"/>
                 {error && <p className={styles.error}>{error}</p>}
                 <div className={styles.inputGroup}>
-                    <label htmlFor="userId">ID</label>
+                    <label
+                        htmlFor="userId"
+                        style={{
+                            fontWeight: "bolder",
+                            fontStyle: "normal",
+                            fontFamily: "Noto Sans KR, sans-serif",
+                        }}
+                    >
+                        Email (ID)
+                    </label>
                     <input
                         type="email"
                         id="userId"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                         required
+                        placeholder="Email"
+                        className={styles.font}
                     />
                 </div>
                 <div className={styles.inputGroup}>
-                    <label htmlFor="userPassword">Password</label>
+                    <label
+                        htmlFor="userPassword"
+                        style={{
+                            fontWeight: "bolder",
+                            fontStyle: "normal",
+                            fontFamily: "Noto Sans KR, sans-serif",
+                        }}
+                    >
+                        Password
+                    </label>
                     <input
                         type="password"
                         id="userPassword"
                         value={password}
+                        placeholder="Password"
                         onChange={(e) => setPassword(e.target.value)}
                         required
+                        className={styles.font}
                     />
                 </div>
                 <button type="submit" className={styles.button}>Login</button>
@@ -85,9 +102,6 @@ const LoginForm = () => {
                     </button>
                     <button type="button" className={styles.iconButton} onClick={handleNaverLogin}>
                         <img src={naverIcon} alt="Naver" className={styles.iconImage}/>
-                    </button>
-                    <button type="button" className={styles.iconButton} onClick={handleKakaoLogin}>
-                        <img src={kakaoIcon} alt="Kakao" className={styles.iconImage}/>
                     </button>
                 </div>
             </form>

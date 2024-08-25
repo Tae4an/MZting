@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 /**
  * 채팅 결과 응답을 나타내는 DTO 클래스
  * 채팅 점수, 평가 요약, 느낌 요약을 포함
@@ -15,8 +17,9 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ChatResultResponse {
 
+    private List<Integer> scores;
     // 채팅 점수
-    private Integer score;
+    private Integer finalScore;
 
     // 평가 요약
     private String summaryEval;

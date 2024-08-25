@@ -133,7 +133,7 @@ const QuestionnaireRecommendation = ({ show, onClose }) => {
 
 const ModalHeader = ({ onClose }) => (
     <div className={styles.modalHeader}>
-        <h2>선택지 MBTI 추천</h2>
+        <h2 className={styles.font}>선택지 MBTI 추천</h2>
         <button className={styles.closeButton} onClick={onClose}>×</button>
     </div>
 );
@@ -141,7 +141,7 @@ const ModalHeader = ({ onClose }) => (
 const ModalBody = ({ choice, handleChoiceComplete, recommend, profileData, isLoading, onProfileClick }) => (
     <div className={styles.modalBody}>
         {isLoading ? (
-            <div>로딩 중...</div>
+            <div className={styles.font}>로딩 중...</div>
         ) : recommend ? (
             <TempCharacterView recommend={recommend} profileData={profileData} onProfileClick={onProfileClick} />
         ) : (
@@ -175,7 +175,7 @@ const TempChoiceView = ({ choice, onComplete }) => {
     const totalPages = Math.ceil(choice.length / QUESTIONS_PER_PAGE);
 
     if (!choice || choice.length === 0) {
-        return <div>질문을 불러오는 중입니다...</div>;
+        return <div className={styles.font}>질문을 불러오는 중입니다...</div>;
     }
 
     const handleAnswer = (questionId, option) => {
@@ -204,7 +204,7 @@ const TempChoiceView = ({ choice, onComplete }) => {
 
     return (
         <div className={styles.choiceView}>
-            <h3>페이지 {currentPage + 1} / {totalPages}</h3>
+            <h3 className={styles.font}>페이지 {currentPage + 1} / {totalPages}</h3>
             {currentQuestions.map((question) => (
                 <QuestionBlock
                     key={question.id}
@@ -216,7 +216,7 @@ const TempChoiceView = ({ choice, onComplete }) => {
             <button
                 onClick={handleNextPage}
                 disabled={!isPageComplete}
-                className={styles.nextButton}
+                className={`${styles.nextButton} ${styles.font}`}
             >
                 {currentPage === totalPages - 1 ? '완료' : '다음'}
             </button>
@@ -226,7 +226,7 @@ const TempChoiceView = ({ choice, onComplete }) => {
 
 const QuestionBlock = ({ question, handleAnswer, selectedOption }) => (
     <div className={styles.questionBlock}>
-        <p>{question.question}</p>
+        <p className={styles.font}>{question.question}</p>
         <div className={styles.optionButtons}>
             <button
                 onClick={() => handleAnswer(question.id, 'A')}

@@ -2,8 +2,12 @@ package com.example.mzting.controller;
 
 
 import com.example.mzting.dto.GenerateImageDTO;
+import com.example.mzting.entity.ImageLog;
 import com.example.mzting.service.GenerateImageService;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,18 +38,34 @@ public class GenerateImageController {
 
     // 생성된 이미지를 캐릭터에 반영하는 엔드포인트
     @PostMapping("/apply/{profileId}")
-    public ResponseEntity<?> applyImage(@PathVariable long profileId, @RequestBody GenerateImageDTO.ApplyImageRequest applyImageRequest, HttpServletRequest request) {
+    public ResponseEntity<?> applyImage(@PathVariable int profileId, @RequestBody GenerateImageDTO.ApplyImageRequest applyImageRequest, HttpServletRequest request) {
         Long uid = (Long) request.getAttribute("uid");
 
+        generateImageService.setProfileImage(uid, profileId, applyImageRequest.getImageUrl());
 
         return ResponseEntity.ok("으에에");
     }
 
     @PostMapping("/log/all")
-    public ResponseEntity<?> logAll(HttpServletRequest request) {
+    public ResponseEntity<GenerateImageDTO.GenerateLogResponse> logAll(
+            @RequestBody GenerateImageDTO.ImageLogRequest imageLogRequest,
+            HttpServletRequest request
+            ) {
         Long uid = (Long) request.getAttribute("uid");
 
-        return ResponseEntity.ok("으에에");
+        Pageable pageable = PageRequest.of(imageLogRequest.getPage(), imageLogRequest.getSize());
+        Page<ImageLog> imageLogsPage = generateImageService.getImageLogsByUserId(uid, pageable);
+
+        List<ImageLog> contents = imageLogsPage.getContent();
+        GenerateImageDTO.PaginationInfo paginationInfo = new GenerateImageDTO.PaginationInfo(
+                imageLogsPage.getNumber(),
+                imageLogsPage.getTotalPages(),
+                imageLogsPage.getTotalElements(),
+                imageLogsPage.getSize()
+        );
+
+        GenerateImageDTO.GenerateLogResponse response = new GenerateImageDTO.GenerateLogResponse(contents, paginationInfo);
+        return ResponseEntity.ok(response);
     }
     
     @GetMapping("/set")

@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styles from '../styles/SignupPage.module.css';
+import MZting_logo from '../assets/Images/MZting_logo.png';
 
 const SignupForm = () => {
-    const [userId, setUserId] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [passwordCheck, setPasswordCheck] = useState('');
     const [name, setName] = useState('');
     const [nickname, setNickname] = useState('');
-    const [email, setEmail] = useState('');
     const [mbti, setMbti] = useState('');
     const [gender, setGender] = useState('');
     const [age, setAge] = useState('');
@@ -25,7 +25,7 @@ const SignupForm = () => {
 
         try {
             await axios.post('/api/auth/register', {
-                username: userId,
+                username: email, // Use email as the username/userId
                 password,
                 name,
                 nickname,
@@ -53,79 +53,89 @@ const SignupForm = () => {
         return options;
     };
 
+    const handleLogoClick = () => {
+        navigate('/login');
+    };
 
     return (
         <div className={styles.signupFormContainer}>
             <form className={styles.signupForm} onSubmit={handleSubmit}>
-                <h1 className={styles.signupTitle}>mzting</h1>
+                <img
+                    src={MZting_logo}
+                    className={styles.signupLogo}
+                    alt="Signup Logo"
+                    onClick={handleLogoClick}
+                    style={{ cursor: 'pointer'}}
+                />
                 {error && <p className={styles.error}>{error}</p>}
                 <div className={styles.inputGroup}>
-                    <label htmlFor="userId">ID</label>
-                    <input
-                        type="email"
-                        id="userId"
-                        value={userId}
-                        onChange={(e) => setUserId(e.target.value)}
-                        required
-                    />
-                </div>
-                <div className={styles.inputGroup}>
-                    <label htmlFor="userPassword">Password</label>
-                    <input
-                        type="password"
-                        id="userPassword"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
-                </div>
-                <div className={styles.inputGroup}>
-                    <label htmlFor="userPasswordCheck">Password Check</label>
-                    <input
-                        type="password"
-                        id="userPasswordCheck"
-                        value={passwordCheck}
-                        onChange={(e) => setPasswordCheck(e.target.value)}
-                        required
-                    />
-                </div>
-                <div className={styles.inputGroup}>
-                    <label htmlFor="userName">Name</label>
-                    <input
-                        type="text"
-                        id="userName"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        required
-                    />
-                </div>
-                <div className={styles.inputGroup}>
-                    <label htmlFor="userNickName">Nick Name</label>
-                    <input
-                        type="text"
-                        id="userNickName"
-                        value={nickname}
-                        onChange={(e) => setNickname(e.target.value)}
-                        required
-                    />
-                </div>
-                <div className={styles.inputGroup}>
-                    <label htmlFor="userEmail">Email</label>
+                    <label htmlFor="userEmail" className={styles.label}>Email (ID)</label>
                     <input
                         type="email"
                         id="userEmail"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
+                        placeholder="이메일 입력"
+                        className={styles.textInput}
+                    />
+                </div>
+                <div className={styles.inputGroup}>
+                    <label htmlFor="userPassword" className={styles.label}>Password</label>
+                    <input
+                        type="password"
+                        id="userPassword"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                        placeholder="비밀번호 입력"
+                        className={styles.textInput}
+                    />
+                </div>
+                <div className={styles.inputGroup}>
+                    <label htmlFor="userPasswordCheck" className={styles.label}>Password Check</label>
+                    <input
+                        type="password"
+                        id="userPasswordCheck"
+                        value={passwordCheck}
+                        onChange={(e) => setPasswordCheck(e.target.value)}
+                        required
+                        placeholder="비밀번호 확인"
+                        className={styles.textInput}
+                    />
+                </div>
+                <div className={styles.inputGroup}>
+                    <label htmlFor="userName" className={styles.label}>Name</label>
+                    <input
+                        type="text"
+                        id="userName"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        required
+                        placeholder="이름 입력"
+                        className={styles.textInput}
+                    />
+                </div>
+                <div className={styles.inputGroup}>
+                    <label htmlFor="userNickName" className={styles.label}>Nick Name</label>
+                    <input
+                        type="text"
+                        id="userNickName"
+                        value={nickname}
+                        onChange={(e) => setNickname(e.target.value)}
+                        required
+                        placeholder="닉네임 입력"
+                        className={styles.textInput}
                     />
                 </div>
                 <div className={styles.selectGender}>
-                    <label htmlFor="userGender">Gender</label>
+                    <label htmlFor="userGender" className={styles.label}>Gender</label>
                     <select
                         id="userGender"
                         value={gender}
                         onChange={(e) => setGender(e.target.value)}
                         required
+                        className={styles.textInput}
                     >
                         <option value="" disabled>성별 선택</option>
                         <option value="Male">남성</option>
@@ -133,24 +143,26 @@ const SignupForm = () => {
                     </select>
                 </div>
                 <div className={styles.selectAge}>
-                    <label htmlFor="userAge">Age</label>
+                    <label htmlFor="userAge" className={styles.label}>Age</label>
                     <select
                         id="userAge"
                         value={age}
                         onChange={(e) => setAge(e.target.value)}
                         required
+                        className={styles.textInput}
                     >
                         <option value="" disabled>나이 선택</option>
                         {generateAgeOptions()}
                     </select>
                 </div>
                 <div className={styles.selectMBTI}>
-                    <label htmlFor="userMbti">MBTI</label>
+                    <label htmlFor="userMbti" className={styles.label}>MBTI</label>
                     <select
                         id="userMbti"
                         value={mbti}
                         onChange={(e) => setMbti(e.target.value)}
                         required
+                        className={styles.textInput}
                     >
                         <option value="" disabled>MBTI 선택</option>
                         <option value="INTJ">INTJ</option>

@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import {useLocation, useNavigate} from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styles from '../styles/ChatPage.module.css';
-import { ChatBox } from '../components';
-import {sendGetRequest, sendMessage, sendPostRequest} from '../services';
+import { ChatBox, TimePassedModal, IntroductionModal, ChatHistory } from '../components';
+import { sendMessage, sendPostRequest } from '../services';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { TimePassedModal } from "../components/TimePassedModal";
-import IntroductionModal from '../components/IntroductionModal';
 
 const ChatPage = () => {
     const location = useLocation();
@@ -47,41 +45,13 @@ const ChatPage = () => {
     useEffect(() => {
         if(isFirst) {
             setIsIntroModalOpen(true);
-        } else {
-            getChatHistory();
         }
     }, [isFirst]);
 
-    const getChatHistory = async () => {
-        try {
-            const response = await sendGetRequest({}, `/api/chatroom/entry/${chatRoomId}`);
-            console.log("기존 채팅방 이어가기 : ", response);
-            if (response && Array.isArray(response)) {
-                const formattedMessages = response.map(msg => ({
-                    content: {
-                        text: msg.content,
-                        feel: msg.feel,
-                        score: msg.score,
-                        evaluation: msg.evaluation
-                    },
-                    isSent: msg.role === 'user',
-                    avatar: msg.role === 'assistant' ? image : null,
-                    isLastInGroup: true  // 히스토리에서는 모든 메시지를 개별 그룹으로 처리
-                }));
-                setMessages(formattedMessages);
-
-                // 마지막 메시지의 stage 정보로 stages 상태 업데이트
-                const lastMessage = response[response.length - 1];
-                if (lastMessage && lastMessage.stage) {
-                    setStages({
-                        stage1Complete: lastMessage.stage >= 1,
-                        stage2Complete: lastMessage.stage >= 2,
-                        stage3Complete: lastMessage.stage >= 3
-                    });
-                }
-            }
-        } catch (error) {
-            console.error('Error fetching chat history:', error);
+    const handleHistoryLoaded = (formattedMessages, loadedStages) => {
+        setMessages(formattedMessages);
+        if (loadedStages) {
+            setStages(loadedStages);
         }
     };
 
@@ -114,11 +84,13 @@ const ChatPage = () => {
 
             return () => clearTimeout(timer);
         }
-    }, [stages.stage3Complete]);
+    }, [stages.stage3Complete, navigate, chatRoomId, selectedProfile]);
 
     const handleCloseIntroModal = () => {
         setIsIntroModalOpen(false);
-        sendInitialMessage();
+        if (isFirst) {
+            sendInitialMessage();
+        }
     };
 
     const handleModalDisplay = (stage) => {
@@ -209,14 +181,14 @@ const ChatPage = () => {
 
             if (response.claudeResponse && response.claudeResponse.text) {
                 const responseMessage = {
-                    content: {
-                        text: response.claudeResponse.text,
+                    content: response.claudeResponse.text,
+                    isSent: false,
+                    avatar: image,
+                    botInfo: {
                         feel: response.claudeResponse.feel,
                         score: response.claudeResponse.score,
                         evaluation: response.claudeResponse.evaluation
-                    },
-                    isSent: false,
-                    avatar: image,
+                    }
                 };
                 setMessages(prevMessages => [...prevMessages, responseMessage]);
                 setClaudeResponse(response.claudeResponse);
@@ -267,15 +239,15 @@ const ChatPage = () => {
                     await new Promise(resolve => setTimeout(resolve, 2000)); // 각 메시지마다 2초의 간격
 
                     const responseMessage = {
-                        content: {
-                            text: message,
-                            feel: isLastMessage ? response.claudeResponse.feel : null,
-                            score: isLastMessage ? response.claudeResponse.score : null,
-                            evaluation: isLastMessage ? response.claudeResponse.evaluation : null
-                        },
+                        content: message,
                         isSent: false,
                         avatar: image,
-                        isLastInGroup: isLastMessage
+                        isLastInGroup: isLastMessage,
+                        botInfo: isLastMessage ? {
+                            feel: response.claudeResponse.feel,
+                            score: response.claudeResponse.score,
+                            evaluation: response.claudeResponse.evaluation
+                        } : null
                     };
 
                     setMessages(prevMessages => [...prevMessages, responseMessage]);
@@ -293,6 +265,13 @@ const ChatPage = () => {
     return (
         <main className={`${styles.mainContainer} ${backgroundChanged ? styles.backgroundChanged : ''}`}>
             <div className={styles.contentWrapper}>
+                {!isFirst && (
+                    <ChatHistory
+                        chatRoomId={chatRoomId}
+                        image={image}
+                        onHistoryLoaded={handleHistoryLoaded}
+                    />
+                )}
                 <ChatBox
                     image={image}
                     name={name}
