@@ -1,23 +1,63 @@
-# MZting - LLM 기반 MBTI 가상 인물 소개팅 시뮬레이션
+# 💘 MZting - LLM 기반 MBTI 가상 인물 소개팅 시뮬레이션
 
-## 소개
+**MZting**은 MBTI 성격 유형에 기반한 **가상 인물 소개팅 시뮬레이션 플랫폼**입니다.  
+대형 언어 모델(LLM)을 활용하여 사용자가 다양한 성격의 가상 인물과 자연스럽게 대화하고,  
+소개팅 상황에서의 대화법을 연습할 수 있도록 돕습니다.
 
-**MZting**은 MBTI 성격 유형을 기반으로 한 가상 인물 소개팅 시뮬레이션 서비스입니다. 이 서비스는 사용자가 다양한 MBTI 유형의 가상 인물들과 대화를 나누며 소개팅을 체험할 수 있도록 설계되었습니다. 특히, 연애 경험이 적은 사용자들이 이성과의 대화를 자연스럽게 이끌어나가는 연습을 할 수 있도록 돕는 것을 목표로 합니다.
+---
 
-## 주요 기능
+## 👥 팀원 소개
 
-- **MBTI 기반 가상 캐릭터 생성**: 사용자의 MBTI를 기반으로 가상 캐릭터가 생성됩니다.
-- **LLM 기반 대화**: 대형 언어 모델을 활용해 자연스러운 대화 경험을 제공합니다.
-- **다양한 시나리오**: 여러 상황에서 가상 소개팅을 체험할 수 있습니다.
-- **호감도 확인**: 가상 소개팅 결과에 따라 캐릭터의 호감도를 확인할 수 있습니다.
+| 역할       | 이름       |
+|------------|------------|
+| PL         | 박민주     |
+| Backend    | 최태산, 최재훈 |
+| Frontend   | 이은범     |
+### 개발 기간: 2024.07.12 ~ 2024.08.22
+---
 
-## 기술 스택
+## 시연 영상
+https://www.youtube.com/watch?v=Dasxt6Bl_Tw
 
-- **프론트엔드**: React
-  - 사용자 인터페이스를 제공하며, Flask 및 Spring Boot 백엔드와 상호작용합니다.
-  
-- **백엔드**:
-  - **Flask (Python)**: 특정 기능(예: LLM 기반 텍스트 생성) 담당
-  - **Spring Boot (Java)**: 데이터베이스 연동 및 인증/인가 로직 담당
-  
-- **데이터베이스**: MySQL 또는 H2 (Spring Boot 설정에 따라 다름)
+## 🏗️ 프로젝트 아키텍처
+![image](https://github.com/user-attachments/assets/4a13068c-a4d8-4d29-ae19-bc3b158d24cb)
+
+
+## 🚀 주요 기능
+
+- 🔮 **MBTI 기반 캐릭터 생성**: 사용자의 성격 유형에 따라 캐릭터를 자동 생성
+- 💬 **LLM 기반 대화 시뮬레이션**: GPT, Claude 등과 연동된 자연스러운 대화 경험
+- 🎭 **다양한 소개팅 시나리오**: 장소, 상황에 따라 캐릭터 반응 변화
+- ❤️ **호감도 피드백**: 대화 내용에 따라 상대의 반응과 궁합 점수 확인
+- 🧼 **예절 필터링 & 비속어 차단**: 안전하고 매너 있는 대화 환경 제공
+- 📝 **대화 로그 & 후기 기능**: 지난 대화 확인 및 가상 캐릭터 후기 작성 가능
+
+---
+
+## 🧱 기술 스택
+
+| 구분          | 기술                                 |
+|---------------|--------------------------------------|
+| Frontend      | React, JavaScript                    |
+| Backend       | Spring Boot (Java), Flask (Python)   |
+| LLM 모델       | GPT, Claude                          |
+| Database      | MySQL / H2                           |
+| Tools         | IntelliJ, VSCode, Figma, Notion, Git |
+
+---
+## 로그인 화면
+![image](https://github.com/user-attachments/assets/be9f9c41-d0e7-4ec5-9a95-afc2b7aeac33)
+## 메인 화면
+![image](https://github.com/user-attachments/assets/d4f32249-fe69-4c3b-a01a-23bd15ad8674)
+## 선택지 MBTI 화면
+![image](https://github.com/user-attachments/assets/155d2c7a-6601-4352-9610-581189be0f16)
+## 캐릭터 프로필 화면
+![image](https://github.com/user-attachments/assets/cc07aeae-cf14-46e7-8ed3-ddc84d322d8d)
+## 캐릭터 이미지 생성 화면
+![image](https://github.com/user-attachments/assets/63be3f9b-7a12-4e45-b137-42a85210cb31)
+## 소개팅 시뮬레이션 화면
+![image](https://github.com/user-attachments/assets/63277e3f-8f1b-41a8-960c-098615ca1203)
+
+![image](https://github.com/user-attachments/assets/3d726c6a-5104-4c2a-b18b-0ad7e0b119b4)
+## 시뮬레이션 결과 화면
+![image](https://github.com/user-attachments/assets/70445ab5-ca43-42a4-bcaf-0f1be016cc6d)
