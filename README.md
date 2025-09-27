@@ -1,4 +1,5 @@
 # MZting - LLM 기반 MBTI 가상 인물 소개팅 시뮬레이션
+<img width="1452" height="850" alt="image" src="https://github.com/user-attachments/assets/0ccf9dfb-41f1-4813-b2d5-02e31cc7f6eb" />
 
 **MZting**은 MBTI 성격 유형에 기반한 **가상 인물 소개팅 시뮬레이션 플랫폼**입니다.  
 대형 언어 모델(LLM)을 활용하여 사용자가 다양한 성격의 가상 인물과 자연스럽게 대화하고, 소개팅 상황에서의 대화법을 연습할 수 있도록 돕습니다.
@@ -6,19 +7,20 @@
 ---
 
 ## 팀원 소개
+개발 기간: 2024.07.12 ~ 2024.08.22
 
 | 역할       | 이름       |
 |------------|------------|
 | PL         | 박민주     |
 | Backend    | 최태산, 최재훈 |
 | Frontend   | 이은범     |
-### 개발 기간: 2024.07.12 ~ 2024.08.22
+
 ---
 
 ## 시연 영상
 [![시연 영상](https://github.com/user-attachments/assets/83180c4b-144e-4ea9-bee4-0697bc72a7e7)](https://www.youtube.com/watch?v=Dasxt6Bl_Tw)
 
-## 프로젝트 아키텍처
+## 시스템아키텍처
 ![image](https://github.com/user-attachments/assets/4a13068c-a4d8-4d29-ae19-bc3b158d24cb)
 
 
@@ -44,19 +46,25 @@
 | Tools         | IntelliJ, VSCode, Figma, Notion, Git |
 
 ---
-## 로그인 화면
-![image](https://github.com/user-attachments/assets/be9f9c41-d0e7-4ec5-9a95-afc2b7aeac33)
-## 메인 화면
-![image](https://github.com/user-attachments/assets/d4f32249-fe69-4c3b-a01a-23bd15ad8674)
-## 선택지 MBTI 화면
-![image](https://github.com/user-attachments/assets/155d2c7a-6601-4352-9610-581189be0f16)
-## 캐릭터 프로필 화면
-![image](https://github.com/user-attachments/assets/cc07aeae-cf14-46e7-8ed3-ddc84d322d8d)
-## 캐릭터 이미지 생성 화면
-![image](https://github.com/user-attachments/assets/63be3f9b-7a12-4e45-b137-42a85210cb31)
-## 소개팅 시뮬레이션 화면
-![image](https://github.com/user-attachments/assets/63277e3f-8f1b-41a8-960c-098615ca1203)
+## 로그인
+<img width="1497" height="847" alt="image" src="https://github.com/user-attachments/assets/41b1a85e-a431-41b8-a4de-7a95d62a1246" />
 
-![image](https://github.com/user-attachments/assets/3d726c6a-5104-4c2a-b18b-0ad7e0b119b4)
+## MBTI 추천
+https://github.com/user-attachments/assets/36d45156-df31-4d48-af71-39dde534d889
+
+## 댓글 & 리뷰
+https://github.com/user-attachments/assets/5927621f-2073-45cc-85d8-cde2cfed4afd
+
+## 캐릭터 이미지 생성 및 설정
+https://github.com/user-attachments/assets/6390414c-8272-4618-b967-ee2630cf4024
+
+## 소개팅 시뮬레이션
+https://github.com/user-attachments/assets/a834d564-3d35-46f7-b3b9-b1ce1b410636
+
 ## 시뮬레이션 결과 화면
-![image](https://github.com/user-attachments/assets/70445ab5-ca43-42a4-bcaf-0f1be016cc6d)
+https://github.com/user-attachments/assets/6827d9db-4a54-40e2-94a7-a89780c18457
+
+## 히스토리
+https://github.com/user-attachments/assets/08ec23f9-a0da-4a0c-b0e8-b2cc50748d22
+
+
